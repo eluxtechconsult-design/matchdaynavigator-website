@@ -3,40 +3,46 @@
 <html lang="en">
 <head>
   <!-- Character set & viewport -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>MatchDay Navigator</title>
-  <link rel="canonical" href="https://www.matchdaynavigator.com/">
+  <link rel="canonical" href="https://www.matchdaynavigator.com/" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/favicon.png" sizes="256x256">
+  <!-- Favicon & touch icon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png" sizes="256x256" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+
+  <!-- Mobile browser theme & iOS status bar -->
+  <meta name="theme-color" content="#0a3d62" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/style.css" />
 
   <!-- Basic SEO -->
-  <meta name="description" content="Your match‑day companion for routes, bag policy and kickoff details — delivered on WhatsApp.">
+  <meta name="description" content="Your match‑day companion for routes, bag policy and kickoff details — delivered on WhatsApp." />
 
   <!-- Open Graph (link previews) -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="MatchDay Navigator">
-  <meta property="og:description" content="Match‑day routes, bag rules and kickoff details for your booking — on WhatsApp.">
-  <meta property="og:url" content="https://www.matchdaynavigator.com/">
-  <meta property="og:image" content="https://www.matchdaynavigator.com/assets/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MatchDay Navigator" />
+  <meta property="og:description" content="Match‑day routes, bag rules and kickoff details for your booking — on WhatsApp." />
+  <meta property="og:url" content="https://www.matchdaynavigator.com/" />
+  <meta property="og:image" content="https://www.matchdaynavigator.com/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="MatchDay Navigator">
-  <meta name="twitter:description" content="Match‑day routes, bag rules and kickoff details for your booking — on WhatsApp.">
-  <meta name="twitter:image" content="https://www.matchdaynavigator.com/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MatchDay Navigator" />
+  <meta name="twitter:description" content="Match‑day routes, bag rules and kickoff details for your booking — on WhatsApp." />
+  <meta name="twitter:image" content="https://www.matchdaynavigator.com/assets/og-image.png" />
 
   <!-- Minimal security headers via meta (safe defaults for static sites) -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
 </head>
 
 <body>
@@ -101,6 +107,11 @@
       <p>© 2026 MatchDay Navigator</p>
     </div>
   </footer>
+
+  <!-- Mobile sticky CTA (shows on phones; requires CSS already provided) -->
+  <div class="mobile-sticky-cta">
+    <a href="#how-it-works" aria-label="Learn how MatchDay Navigator works">Learn more</a>
+  </div>
 
 </body>
 </html>
