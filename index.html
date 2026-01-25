@@ -41,10 +41,12 @@
   <meta name="twitter:title" content="MatchDay Navigator" />
   <meta name="twitter:description" content="Match‑day routes, bag rules and kickoff details for your booking — on WhatsApp." />
   <meta name="twitter:image" content="https://www.matchdaynavigator.com/assets/og-image.png" />
-  <!-- If you have an X/Twitter handle, set it here (else remove this line or use your domain) -->
+  <!-- Optional: your X/Twitter handle (remove if not applicable) -->
   <meta name="twitter:site" content="@matchdaynavigator" />
 
-  <!-- Minimal security headers via meta (safe defaults for static sites)nect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
+  <!-- Minimal security headers via meta (safe defaults for static sites) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
 </head>
@@ -58,7 +60,7 @@
       <p class="subtitle">
         Your match‑day companion for routes, policies, and kickoff details — delivered instantly on WhatsApp.
       </p>
-      #how-it-worksHow it Works</a>
+      <a class="btn-primary" href="#how-it-works" aria-label="Jump to How it Works">How it Works</a>
     </div>
   </header>
 
@@ -106,15 +108,15 @@
   <!-- Footer -->
   <footer>
     <div class="container footer-links">
-      privacy.htmlPrivacy Policy</a>
-      terms.htmlTerms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
       <p>© 2026 MatchDay Navigator</p>
     </div>
   </footer>
 
-  <!-- Mobile sticky CTA (shows on phones; styled by your CSS) -->
+  <!-- Mobile sticky CTA (shows on phones; styled in CSS) -->
   <div class="mobile-sticky-cta">
-    #how-it-worksLearn more</a>
+    <a href="#how-it-works" aria-label="Learn how MatchDay Navigator works">Learn more</a>
   </div>
 
 </body>
