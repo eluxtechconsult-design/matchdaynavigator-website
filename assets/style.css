@@ -1,58 +1,173 @@
 
+/* ========== Base & Theme ========== */
+:root {
+  --color-navy: #0a3d62;
+  --color-royal: #1e90ff;
+  --color-royal-700: #197bd8;
+  --color-royal-800: #1468b6;
+  --color-bg: #ffffff;
+  --color-text: #333333;
+  --color-muted: #6b7280;   /* neutral gray */
+  --color-alt: #f3f5f7;
+  --color-link: #1e90ff;
+  --color-link-hover: #1468b6;
+  --color-footer-link: #cde2ff;
+
+  --radius: 8px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 6px 20px rgba(0,0,0,0.12);
+
+  --container-w: 960px;    /* wider than 800 for breathing room */
+  --space-1: 6px;
+  --space-2: 10px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  color: #333;
+  font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.55;
 }
 
+/* Improve default text rendering */
+p { margin: 0 0 var(--space-3) 0; }
+h1, h2, h3 { margin: 0 0 var(--space-3) 0; line-height: 1.2; }
+ul { margin: 0; padding-left: 1.2rem; }
+
+/* Utility */
+.container {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+.section { padding: var(--space-6) 0; }
+.section.alt { background: var(--color-alt); }
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ========== Header / Hero ========== */
 header {
-  background: #0a3d62;
-  color: white;
-  padding: 60px 20px;
+  background: var(--color-navy);
+  color: #ffffff;
+  padding: var(--space-7) 0 var(--space-7);
   text-align: center;
 }
-
+header h1 {
+  font-size: clamp(32px, 4vw, 44px);
+  letter-spacing: 0.2px;
+}
 .subtitle {
-  max-width: 600px;
-  margin: 10px auto 30px auto;
-  font-size: 1.2rem;
+  max-width: 720px;
+  margin: var(--space-2) auto var(--space-5);
+  font-size: clamp(16px, 2.2vw, 20px);
+  color: #e6eef7;
 }
 
-.section {
-  padding: 40px 20px;
-}
-
-.section.alt {
-  background: #f3f5f7;
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
+/* CTA button */
 .btn-primary {
-  background: #1e90ff;
-  color: white;
-  padding: 12px 24px;
+  display: inline-block;
+  background: var(--color-royal);
+  color: #ffffff;
+  padding: 12px 22px;
   text-decoration: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
+  transition: background .15s ease, transform .05s ease, box-shadow .2s ease;
+}
+.btn-primary:hover { background: var(--color-royal-700); }
+.btn-primary:active { transform: translateY(1px); box-shadow: none; }
+.btn-primary:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* ========== Features ========== */
+#features h2,
+#how-it-works h2 { font-size: clamp(22px, 3vw, 28px); }
+
+.feature-list {
+  list-style: none;
+  padding-left: 0;
+  margin: var(--space-4) 0 0 0;
+}
+.feature-list li {
+  margin: 10px 0;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Optional: green tick via pseudo element if you don't want ✔ in HTML
+.feature-list li::before {
+  content: "✔";
+  color: #10b981;
+  font-weight: 700;
+}
+*/
+
+/* ========== Generic links / emphasis ========== */
+a { color: var(--color-link); text-decoration: none; }
+a:hover { color: var(--color-link-hover); text-decoration: underline; }
+strong { font-weight: 700; }
+
+/* ========== Footer ========== */
+footer {
+  background: var(--color-navy);
+  color: #ffffff;
+  padding: var(--space-5) 0;
+  text-align: center;
+}
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2);
+}
+.footer-links a {
+  color: var(--color-footer-link);
+  text-decoration: none;
+  padding: 2px 4px;
   border-radius: 6px;
 }
-
-.feature-list li {
-  margin: 8px 0;
-  font-size: 1.1rem;
+.footer-links a:hover { text-decoration: underline; }
+.footer-links a:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+footer p {
+  opacity: 0.95;
+  margin: 0;
+  font-size: 0.95rem;
 }
 
-footer {
-  background: #0a3d62;
-  color: white;
-  padding: 20px;
-  text-align: center;
+/* ========== Responsive polish ========== */
+@media (max-width: 640px) {
+  .section { padding: var(--space-5) 0; }
+  header { padding: var(--space-6) 0; }
+  .subtitle { margin-bottom: var(--space-4); }
 }
 
-.footer-links a {
-  color: #cde2ff;
-  margin: 0 10px;
-  text-decoration: none;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn-primary { transition: none; }
 }
