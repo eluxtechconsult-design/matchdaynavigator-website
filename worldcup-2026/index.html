@@ -9,17 +9,23 @@
 
   <!-- Page‑scoped CSP to allow Leaflet CDN + OSM tiles -->
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; img-src 'self' data: https:;
+        content="default-src 'self';
+                 img-src 'self' data: https:;
                  style-src 'self' 'unsafe-inline' https://unpkg.com;
                  script-src 'self' https://unpkg.com;
-                 connect-src 'self'; child-src 'none'; frame-ancestors 'none'">
+                 connect-src 'self';
+                 child-src 'none';
+                 frame-ancestors 'none'">
 
-  <!-- Leaflet CSS -->
-  https://unpkg.com/leaflet@1.9.4/dist/leaflet.css
-
-  <!-- MarkerCluster CSS -->
-  https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css
-  https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css
+  <!-- ✅ REAL TAGS (NOT PLAIN TEXT): Leaflet & MarkerCluster CSS -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="anonymous" />
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
   <style>
     :root { --navy:#0a3d62; --blue:#1e90ff; --border:#e5e7eb; --text:#223; }
@@ -27,7 +33,7 @@
     header { background:var(--navy); color:#fff; padding:16px 20px; }
     header h1 { margin:0; font-size:20px; }
     .note { font-size:12px; color:#e6eef7; margin-top:4px; }
-    .wrap { display:grid; grid-template-columns: 1fr 340px; gap:0; height:calc(100vh - 64px); }
+    .wrap { display:grid; grid-template-columns: 1fr 340px; height:calc(100vh - 64px); }
     #map { height:100%; width:100%; }
     aside { border-left:1px solid var(--border); overflow:auto; background:#fff; }
     .panel { padding:14px 16px; }
@@ -36,11 +42,7 @@
     .city a, .stadium a { text-decoration:none; color:var(--blue); }
     .city a:hover, .stadium a:hover { text-decoration:underline; }
     .hint { font-size:12px; color:#555; margin-top:8px; }
-    @media (max-width: 900px) {
-      .wrap { grid-template-columns: 1fr; }
-      aside { height:42vh; }
-      #map { height:58vh; }
-    }
+    @media (max-width: 900px) { .wrap { grid-template-columns:1fr; } aside { height:42vh; } #map { height:58vh; } }
   </style>
 </head>
 <body>
@@ -62,14 +64,14 @@
     </aside>
   </div>
 
-  <!-- Leaflet JS -->
-  https://unpkg.com/leaflet@1.9.4/dist/leaflet.js</script>
-
-  <!-- MarkerCluster JS -->
-  https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js</script>
+  <!-- ✅ REAL TAGS (NOT PLAIN TEXT): Leaflet & MarkerCluster JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
-    const map = L.map('map', { zoomControl: true });
+    const map = L.map('map', { zoomControl:true });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
@@ -81,43 +83,43 @@
     map.addLayer(cityCluster);
     map.addLayer(stCluster);
 
-    const mkInt = (href, label) => `${href}${label}</a>`;
-    const mkExt = (href, label) => `${href}${label}</a>`;
-
     function addCity(city) {
+      // Sidebar entry
       const list = document.getElementById('cityList');
       const el = document.createElement('div');
       el.className = 'city';
-      el.innerHTML = mkInt(`./city.html?id=${city.slug}`, `${city.name} — ${city.country}`);
+      el.innerHTML = `<a href="./city.html?id=${city.slug}">${city.name} — ${city.country}</a>`;
       list.appendChild(el);
 
+      // Marker
       if (city.lat != null && city.lng != null) {
         const m = L.marker([city.lat, city.lng]).bindPopup(
           `<b>${city.name}</b><br/>${city.country}<br/>` +
-          mkInt(`./city.html?id=${city.slug}`, 'Open city page')
+          `<a href="./city.html?id=${city.slug}">Open city page</a>`
         );
         cityCluster.addLayer(m);
       }
     }
 
     function addStadium(st) {
+      // Sidebar entry
       const list = document.getElementById('stadiumList');
       const el = document.createElement('div');
       el.className = 'stadium';
-      el.innerHTML = mkInt(`./stadium.html?id=${st.slug}`, st.name);
+      el.innerHTML = `<a href="./stadium.html?id=${st.slug}">${st.name}</a>`;
       list.appendChild(el);
 
+      // Marker + popup (Official / Route / WhatsApp)
       if (st.lat != null && st.lng != null) {
         const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
-        const html = `
+        const popup = `
           <b>${st.name}</b><br/>
-          ${mkExt(st.official_url, 'Official site')}<br/>
-          ${mkExt('https://concierge.matchdaynavigator.com/route?stadium=' + encodeURIComponent(st.name), 'Open route')}<br/>
-          ${mkExt('https://wa.me/14155238886?text=' + waText, 'Get match‑day details on WhatsApp')}
-          <br/><small>(Pre‑filled WhatsApp message; replace with your WABA number or your own opt‑in page.)</small>
+          <a href="${st.official_url}" target="_blank" rel="noopener">Official site</a><br/>
+          <a href="https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}" target="_blank" rel="noopener">Open route</a><br/>
+          <a href="https://wa.me/14155238886?text=${waText}" target="_blank" rel="noopener">Get match‑day details on WhatsApp</a>
+          <br/><small>(Replace number with your WABA, or link to your own opt‑in page.)</small>
         `;
-        const m = L.marker([st.lat, st.lng]).bindPopup(html);
-        stCluster.addLayer(m);
+        stCluster.addLayer(L.marker([st.lat, st.lng]).bindPopup(popup));
       }
     }
 
@@ -134,7 +136,7 @@
 
     loadData().catch(err => {
       console.error('Data load error', err);
-      alert('Could not load data. Check /assets/data paths and CSP.');
+      alert('Could not load data. Check that /assets/data/*.json exist at those exact paths and are not 404.');
     });
   </script>
 </body>

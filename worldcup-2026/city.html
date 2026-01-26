@@ -22,12 +22,11 @@
     <div id="meta"></div>
     <h2>Stadiums in this city</h2>
     <div id="stadiumList"></div>
-    <p>./index.html← Back to World Cup 2026 map</a></p>
+    <p><a href="./index.html">← Back to World Cup 2026 map</a></p>
   </main>
 
   <script>
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id');
+    const id = new URLSearchParams(location.search).get('id');
 
     async function init() {
       const [cRes, sRes] = await Promise.all([
@@ -55,8 +54,8 @@
           el.className='card';
           el.innerHTML = `
             <b>${st.name}</b><br/>
-            ${st.official_url}Official site</a> ·
-            ./stadium.html?id=${st.slug}Open stadium page</a>
+            <a href="${st.official_url}" target="_blank" rel="noopener">Official site</a> ·
+            <a href="./stadium.html?id=${st.slug}">Open stadium page</a>
           `;
           list.appendChild(el);
         });

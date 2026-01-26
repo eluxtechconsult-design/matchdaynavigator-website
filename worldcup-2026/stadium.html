@@ -21,12 +21,11 @@
   <header><h1 id="title">Stadium</h1></header>
   <main>
     <div id="info" class="card">Loading…</div>
-    <p>./index.html← Back to World Cup 2026 map</a></p>
+    <p><a href="./index.html">← Back to World Cup 2026 map</a></p>
   </main>
 
   <script>
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id');
+    const id = new URLSearchParams(location.search).get('id');
 
     async function init() {
       const [cRes, sRes] = await Promise.all([
@@ -41,24 +40,26 @@
       const city = cities.find(c => c.slug === st.citySlug);
 
       document.getElementById('title').textContent = st.name;
+
       const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
+      const routeUrl = `https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}`;
       const optinUrl = `https://concierge.matchdaynavigator.com/optin?stadium=${encodeURIComponent(st.name)}`;
 
       document.getElementById('info').innerHTML = `
         <div class="row">
-          <b>${st.name}</b> ${city ? `· in ./city.html?id=${city.slug}${city.name}</a>` : ''}
+          <b>${st.name}</b> ${city ? `· in <a href="./city.html?id=${city.slug}">${city.name}</a>` : ''}
         </div>
         <div class="row" style="margin-top:8px;">
-          ${st.official_url}Official site</a>
-          https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}Open route</a>
+          <a href="${st.official_url}" target="_blank" rel="noopener">Official site</a>
+          <a href="${routeUrl}" target="_blank" rel="noopener">Open route</a>
         </div>
         <div class="row" style="margin-top:12px;">
           <!-- Option A: direct WhatsApp click-to-chat (replace with your WABA number) -->
-          https://wa.me/14155238886?text=${waText}Get match‑day details on WhatsApp</a>
-          <!-- Option B (recommended): route users to your own opt‑in page -->
-          <!-- ${optinUrl}Get match‑day details on WhatsApp</a> -->
+          <a href="https://wa.me/14155238886?text=${waText}" target="_blank" rel="noopener">Get match‑day details on WhatsApp</a>
+          <!-- Option B (recommended): route to your own opt‑in page -->
+          <!-- <a href="${optinUrl}" target="_blank" rel="noopener">Get match‑day details on WhatsApp</a> -->
         </div>
-        <p class="small">Replace the number with your official WABA; or use your own opt‑in page (Option B) for compliance.</p>
+        <p class="small">Replace the number with your official WABA; or use your own opt‑in page for compliance.</p>
       `;
     }
     init().catch(console.error);
