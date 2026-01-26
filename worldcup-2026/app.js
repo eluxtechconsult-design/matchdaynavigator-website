@@ -47,7 +47,15 @@ const FALLBACK_STADIUMS = {
   ]
 };
 
-/* ---------- Utilities ---------- */
+/* ---------- Ensure Leaflet marker icons resolve to local files ---------- */
+/* (Make sure the three image files exist at /assets/vendor/leaflet/images/ ) */
+L.Icon.Default.mergeOptions({
+  iconUrl:        '/assets/vendor/leaflet/images/marker-icon.png',
+  iconRetinaUrl:  '/assets/vendor/leaflet/images/marker-icon-2x.png',
+  shadowUrl:      '/assets/vendor/leaflet/images/marker-shadow.png'
+});
+
+/* ---------- Utility to load JSON with fallback (CSP-safe; no eval) ---------- */
 async function loadJSON(url, fallback) {
   try {
     const res = await fetch(url, { cache: 'no-store' });
@@ -72,7 +80,7 @@ const stCluster   = L.markerClusterGroup({ showCoverageOnHover: false, maxCluste
 map.addLayer(cityCluster);
 map.addLayer(stCluster);
 
-/* ---------- Sidebar renderers (now with proper anchors) ---------- */
+/* ---------- Sidebar renderers (proper anchors) ---------- */
 function addCityRow(city) {
   const list = document.getElementById('cityList');
   const el = document.createElement('div');
@@ -89,7 +97,7 @@ function addStadiumRow(st) {
   list.appendChild(el);
 }
 
-/* ---------- Marker builders (with proper anchors in popups) ---------- */
+/* ---------- Marker builders (proper anchors in popups) ---------- */
 function addCityMarker(city) {
   if (city.lat == null || city.lng == null) return;
   const popupHtml =
