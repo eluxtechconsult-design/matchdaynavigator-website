@@ -1,7 +1,8 @@
 
 /* ---------------------------------------------------------------------------
    MatchDay Navigator • World Cup 2026
-   Map logic + clustering + sidebar rendering (CSP-safe: no inline code)
+   Map logic + clustering + sidebar rendering (CSP-safe: no inline code, no CDN)
+   Uses data-URL SVG markers (no external PNGs required).
    --------------------------------------------------------------------------- */
 
 /* ---------- Fallback data (used only if /assets/data/*.json can’t be loaded) ---------- */
@@ -47,15 +48,7 @@ const FALLBACK_STADIUMS = {
   ]
 };
 
-/* ---------- Ensure Leaflet marker icons resolve to local files ---------- */
-/* (Make sure the three image files exist at /assets/vendor/leaflet/images/ ) */
-L.Icon.Default.mergeOptions({
-  iconUrl:        '/assets/vendor/leaflet/images/marker-icon.png',
-  iconRetinaUrl:  '/assets/vendor/leaflet/images/marker-icon-2x.png',
-  shadowUrl:      '/assets/vendor/leaflet/images/marker-shadow.png'
-});
-
-/* ---------- Utility to load JSON with fallback (CSP-safe; no eval) ---------- */
+/* ---------- Load JSON with fallback (CSP-safe; no eval) ---------- */
 async function loadJSON(url, fallback) {
   try {
     const res = await fetch(url, { cache: 'no-store' });
@@ -65,6 +58,25 @@ async function loadJSON(url, fallback) {
     return fallback;
   }
 }
+
+/* ---------- SVG data URL marker (no external PNG files required) ---------- */
+function svgPin(fill = '#1e90ff', stroke = '#0a3d62') {
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">
+       <defs><filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.35"/></filter></defs>
+       <path filter="url(#s)" d="M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z" fill="${fill}" stroke="${stroke}" stroke-width="1"/>
+       <circle cx="12.5" cy="12.5" r="5" fill="#fff"/>
+     </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+const PIN_ICON = L.icon({
+  iconUrl: svgPin(),
+  iconRetinaUrl: svgPin(),   // same SVG works for retina
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [0, -36],
+  shadowUrl: undefined
+});
 
 /* ---------- Map init ---------- */
 const map = L.map('map', { zoomControl: true });
@@ -80,12 +92,20 @@ const stCluster   = L.markerClusterGroup({ showCoverageOnHover: false, maxCluste
 map.addLayer(cityCluster);
 map.addLayer(stCluster);
 
+/* ---------- Helper: safe anchor builder ---------- */
+function a(href, label, { external = false } = {}) {
+  if (external) {
+    return `${href}${label}</a>`;
+  }
+  return `${href}${label}</a>`;
+}
+
 /* ---------- Sidebar renderers (proper anchors) ---------- */
 function addCityRow(city) {
   const list = document.getElementById('cityList');
   const el = document.createElement('div');
   el.className = 'city';
-  el.innerHTML = `./city.html?id=${city.slug}${city.name} — ${city.country}</a>`;
+  el.innerHTML = a(`./city.html?id=${city.slug}`, `${city.name} — ${city.country}`);
   list.appendChild(el);
 }
 
@@ -93,7 +113,7 @@ function addStadiumRow(st) {
   const list = document.getElementById('stadiumList');
   const el = document.createElement('div');
   el.className = 'stadium';
-  el.innerHTML = `./stadium.html?id=${st.slug}${st.name}</a>`;
+  el.innerHTML = a(`./stadium.html?id=${st.slug}`, st.name);
   list.appendChild(el);
 }
 
@@ -102,8 +122,8 @@ function addCityMarker(city) {
   if (city.lat == null || city.lng == null) return;
   const popupHtml =
     `<b>${city.name}</b><br/>${city.country}<br/>` +
-    `./city.html?id=${city.slug}Open city page</a>`;
-  cityCluster.addLayer(L.marker([city.lat, city.lng]).bindPopup(popupHtml));
+    a(`./city.html?id=${city.slug}`, 'Open city page');
+  cityCluster.addLayer(L.marker([city.lat, city.lng], { icon: PIN_ICON }).bindPopup(popupHtml));
 }
 
 function addStadiumMarker(st) {
@@ -111,12 +131,12 @@ function addStadiumMarker(st) {
   const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
   const popupHtml = `
     <b>${st.name}</b><br/>
-    ${st.official_url}Official site</a><br/>
-    https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}Open route</a><br/>
-    https://wa.me/14155238886?text=${waText}Get match‑day details on WhatsApp</a>
-    <br/><small>(Replace with your WABA number or your own opt‑in page.)</small>
+    ${a(st.official_url, 'Official site', { external: true })}<br/>
+    ${a('https://concierge.matchdaynavigator.com/route?stadium=' + encodeURIComponent(st.name), 'Open route', { external: true })}<br/>
+    ${a('https://wa.me/14155238886?text=' + waText, 'Get match‑day details on WhatsApp', { external: true })}
+    <br/><small>(Replace the number with your WABA or point to your own opt‑in page.)</small>
   `;
-  stCluster.addLayer(L.marker([st.lat, st.lng]).bindPopup(popupHtml));
+  stCluster.addLayer(L.marker([st.lat, st.lng], { icon: PIN_ICON }).bindPopup(popupHtml));
 }
 
 /* ---------- Bootstrap ---------- */
