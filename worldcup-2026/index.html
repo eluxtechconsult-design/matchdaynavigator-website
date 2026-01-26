@@ -13,10 +13,12 @@
         content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://unpkg.com; script-src 'self' https://unpkg.com; connect-src 'self'; child-src 'none'; frame-ancestors 'none'">
 
   <!-- Leaflet CSS (CDN) -->
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossorigin="anonymous">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin="anonymous"
+  />
 
   <style>
     :root { --navy:#0a3d62; --blue:#1e90ff; --border:#e5e7eb; --text:#223; }
@@ -62,7 +64,7 @@
         <div id="stadiumList"></div>
 
         <p class="hint">
-          Tip: You can add city <code>lat/lng</code> later for city pins. Stadium pins already appear now.
+          Tip: City markers use stadium coordinates for precise centering (you can change to downtown later).
         </p>
       </div>
     </aside>
@@ -72,7 +74,8 @@
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"
+  ></script>
 
   <script>
     // Map init
@@ -91,14 +94,14 @@
       const list = document.getElementById('cityList');
       const el = document.createElement('div');
       el.className = 'city';
-      el.innerHTML = `<a href="#" data-slug="${city.slug}">${city.name} — ${city.country}</a>`;
+      el.innerHTML = `#${city.name} — ${city.country}</a>`;
       el.querySelector('a').onclick = (e) => {
         e.preventDefault();
         if (city.lat != null && city.lng != null) map.setView([city.lat, city.lng], 11);
       };
       list.appendChild(el);
 
-      // Marker (only if coords exist)
+      // Marker (if coords exist)
       if (city.lat != null && city.lng != null) {
         L.marker([city.lat, city.lng]).addTo(cityMarkers)
           .bindPopup(`<b>${city.name}</b><br/>${city.country}`);
@@ -107,22 +110,26 @@
 
     function addStadium(st) {
       // Sidebar list
-      const list = document.getElementById('stadiumList');
-      const el = document.createElement('div');
-      el.className = 'stadium';
-      el.innerHTML = `<a href="#" data-slug="${st.slug}">${st.name}</a>`;
-      el.querySelector('a').onclick = (e) => {
-        e.preventDefault();
-        if (st.lat != null && st.lng != null) map.setView([st.lat, st.lng], 13);
+      const list = document.getElementById('ap.setView([st.lat, st.lng], 13);
       };
       list.appendChild(el);
 
-      // Marker (only if coords exist)
+      // Marker (if coords exist)
       if (st.lat != null && st.lng != null) {
         L.marker([st.lat, st.lng]).addTo(stMarkers)
           .bindPopup(`
             <b>${st.name}</b><br/>
-            <a href="${st.official_url}"
+            ${st.official_url}Official site</a><br/>
+            https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}Open route</a>
+          `);
+      }
+    }
+
+    async function loadData() {
+      const [cRes, sRes] = await Promise.all([
+        fetch('/assets/data/cities.json'),
+        fetch('/assets/data/stadiums.json')
+      ]);
       const cData = await cRes.json();
       const sData = await sRes.json();
 
