@@ -1,4 +1,3 @@
-
 {
   "cities": [
     { "id": "ny_nj", "slug": "new-york-new-jersey", "name": "New York / New Jersey", "country": "USA", "region": "EAST",    "lat": 40.813528,  "lng": -74.074361 },
