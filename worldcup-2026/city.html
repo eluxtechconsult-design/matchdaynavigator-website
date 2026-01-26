@@ -6,12 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>City • World Cup 2026 • MatchDay Navigator</title>
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self';
-                 img-src 'self' data: https:;
-                 style-src 'self' 'unsafe-inline';
-                 script-src 'self';
-                 connect-src 'self';
-                 frame-ancestors 'none'">
+        content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'">
   <style>
     body{margin:0;font-family:Arial,system-ui,sans-serif;color:#223}
     header{background:#0a3d62;color:#fff;padding:16px 20px}
@@ -19,7 +14,6 @@
     a{color:#1e90ff;text-decoration:none} a:hover{text-decoration:underline}
     .tag{display:inline-block;background:#eef3fb;color:#0a3d62;padding:4px 8px;border-radius:999px;font-size:12px;margin-right:8px}
     .card{border:1px solid #e5e7eb;border-radius:8px;padding:12px 14px;margin:10px 0}
-    .cta{display:inline-block;margin-top:10px;padding:10px 14px;background:#1e90ff;color:#fff;border-radius:6px;text-decoration:none}
   </style>
 </head>
 <body>
@@ -28,8 +22,7 @@
     <div id="meta"></div>
     <h2>Stadiums in this city</h2>
     <div id="stadiumList"></div>
-
-    <p><a href="./index.html">← Back to World Cup 2026 map</a></p>
+    <p>./index.html← Back to World Cup 2026 map</a></p>
   </main>
 
   <script>
@@ -62,3 +55,14 @@
           el.className='card';
           el.innerHTML = `
             <b>${st.name}</b><br/>
+            ${st.official_url}Official site</a> ·
+            ./stadium.html?id=${st.slug}Open stadium page</a>
+          `;
+          list.appendChild(el);
+        });
+      }
+    }
+    init().catch(console.error);
+  </script>
+</body>
+</html>

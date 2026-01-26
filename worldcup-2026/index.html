@@ -5,30 +5,21 @@
   <!-- Basic meta -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>World Cup 2026 Map • MatchDay Navigator</title>
 
   <!-- Page‑scoped CSP to allow Leaflet CDN + OSM tiles -->
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self';
-                 img-src 'self' data: https:;
-                 style-src 'self' 'unsafe-inline' https://unpkg.com;
-                 script-src 'self' https://unpkg.com;
-                 connect-src 'self';
-                 child-src 'none';
-                 frame-ancestors 'none'">
+        content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://unpkg.com; script-src 'self' https://unpkg.com; connect-src 'self'; child-src 'none'; frame-ancestors 'none'">
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossorigin="anonymous" />
+        crossorigin="anonymous">
 
   <!-- MarkerCluster CSS -->
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
 
   <style>
     :root { --navy:#0a3d62; --blue:#1e90ff; --border:#e5e7eb; --text:#223; }
@@ -36,7 +27,6 @@
     header { background:var(--navy); color:#fff; padding:16px 20px; }
     header h1 { margin:0; font-size:20px; }
     .note { font-size:12px; color:#e6eef7; margin-top:4px; }
-
     .wrap { display:grid; grid-template-columns: 1fr 340px; gap:0; height:calc(100vh - 64px); }
     #map { height:100%; width:100%; }
     aside { border-left:1px solid var(--border); overflow:auto; background:#fff; }
@@ -97,55 +87,49 @@
     }).addTo(map);
     map.setView([37.8, -96], 4); // North America
 
-    // Clusters (good for mobile)
+    // Clusters (mobile-friendly)
     const cityCluster = L.markerClusterGroup({ showCoverageOnHover:false, maxClusterRadius: 50 });
     const stCluster   = L.markerClusterGroup({ showCoverageOnHover:false, maxClusterRadius: 50 });
     map.addLayer(cityCluster);
     map.addLayer(stCluster);
 
-    // Sidebar helpers
-    function mkLink(href, text) {
-      return `<a href="${href}" target="_self" rel="noopener">${text}</a>`;
-    }
+    // Helpers
+    const mkExt = (href, label) => `<a href="${href}" target="_blank" rel="noopener">${label}</a>`;
+    const mkInt = (href, label) => `<a href="${href}">${label}</a>`;
 
     function addCity(city) {
-      // Sidebar
       const list = document.getElementById('cityList');
       const el = document.createElement('div');
       el.className = 'city';
-      el.innerHTML = mkLink(`./city.html?id=${city.slug}`, `${city.name} — ${city.country}`);
+      el.innerHTML = mkInt(`./city.html?id=${city.slug}`, `${city.name} — ${city.country}`);
       list.appendChild(el);
 
-      // Marker
       if (city.lat != null && city.lng != null) {
-        const m = L.marker([city.lat, city.lng])
-          .bindPopup(
-            `<b>${city.name}</b><br/>${city.country}<br/>` +
-            mkLink(`./city.html?id=${city.slug}`, 'Open city page')
-          );
+        const m = L.marker([city.lat, city.lng]).bindPopup(
+          `<b>${city.name}</b><br/>${city.country}<br/>` +
+          mkInt(`./city.html?id=${city.slug}`, 'Open city page')
+        );
         cityCluster.addLayer(m);
       }
     }
 
     function addStadium(st) {
-      // Sidebar
       const list = document.getElementById('stadiumList');
       const el = document.createElement('div');
       el.className = 'stadium';
-      el.innerHTML = mkLink(`./stadium.html?id=${st.slug}`, st.name);
+      el.innerHTML = mkInt(`./stadium.html?id=${st.slug}`, st.name);
       list.appendChild(el);
 
-      // Marker + popup with Official + Route + WhatsApp CTA
       if (st.lat != null && st.lng != null) {
         const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
-        const popupHtml = `
+        const html = `
           <b>${st.name}</b><br/>
-          ${mkLink(st.official_url, 'Official site')}<br/>
-          ${mkLink('https://concierge.matchdaynavigator.com/route?stadium=' + encodeURIComponent(st.name), 'Open route')}<br/>
-          ${mkLink('https://wa.me/14155238886?text=' + waText, 'Get match‑day details on WhatsApp')}
+          ${mkExt(st.official_url, 'Official site')}<br/>
+          ${mkExt('https://concierge.matchdaynavigator.com/route?stadium=' + encodeURIComponent(st.name), 'Open route')}<br/>
+          ${mkExt('https://wa.me/14155238886?text=' + waText, 'Get match‑day details on WhatsApp')}
           <br/><small>(Opens WhatsApp with a pre‑filled request)</small>
         `;
-        const m = L.marker([st.lat, st.lng]).bindPopup(popupHtml);
+        const m = L.marker([st.lat, st.lng]).bindPopup(html);
         stCluster.addLayer(m);
       }
     }
@@ -157,7 +141,6 @@
       ]);
       const cData = await cRes.json();
       const sData = await sRes.json();
-
       (cData.cities   || []).forEach(addCity);
       (sData.stadiums || []).forEach(addStadium);
     }
