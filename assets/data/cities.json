@@ -1,0 +1,21 @@
+
+{
+  "cities": [
+    { "id": "ny_nj", "slug": "new-york-new-jersey", "name": "New York / New Jersey", "country": "USA", "region": "EAST", "lat": null, "lng": null },
+    { "id": "dal",  "slug": "dallas",                "name": "Dallas (Arlington)",   "country": "USA", "region": "CENTRAL", "lat": null, "lng": null },
+    { "id": "hou",  "slug": "houston",               "name": "Houston",              "country": "USA", "region": "CENTRAL", "lat": null, "lng": null },
+    { "id": "kc",   "slug": "kansas-city",           "name": "Kansas City",          "country": "USA", "region": "CENTRAL", "lat": null, "lng": null },
+    { "id": "atl",  "slug": "atlanta",               "name": "Atlanta",              "country": "USA", "region": "CENTRAL", "lat": null, "lng": null },
+    { "id": "la",   "slug": "los-angeles",           "name": "Los Angeles (Inglewood)", "country": "USA", "region": "WEST", "lat": null, "lng": null },
+    { "id": "sfbay","slug": "san-francisco-bay-area","name": "San Francisco Bay Area (Santa Clara)", "country": "USA", "region": "WEST", "lat": null, "lng": null },
+    { "id": "sea",  "slug": "seattle",               "name": "Seattle",              "country": "USA", "region": "WEST", "lat": null, "lng": null },
+    { "id": "bos",  "slug": "boston",                "name": "Boston (Foxborough)",  "country": "USA", "region": "EAST", "lat": null, "lng": null },
+    { "id": "phi",  "slug": "philadelphia",          "name": "Philadelphia",         "country": "USA", "region": "EAST", "lat": null, "lng": null },
+    { "id": "mia",  "slug": "miami",                 "name": "Miami (Miami Gardens)","country": "USA", "region": "EAST", "lat": null, "lng": null },
+    { "id": "tor",  "slug": "toronto",               "name": "Toronto",              "country": "Canada", "region": "EAST", "lat": null, "lng": null },
+    { "id": "van",  "slug": "vancouver",             "name": "Vancouver",            "country": "Canada", "region": "WEST", "lat": null, "lng": null },
+    { "id": "mex",  "slug": "mexico-city",           "name": "Mexico City",          "country": "Mexico", "region": "CENTRAL", "lat": null, "lng": null },
+    { "id": "gdl",  "slug": "guadalajara",           "name": "Guadalajara",          "country": "Mexico", "region": "WEST", "lat": null, "lng": null },
+    { "id": "mty",  "slug": "monterrey",             "name": "Monterrey",            "country": "Mexico", "region": "CENTRAL", "lat": null, "lng": null }
+  ]
+}

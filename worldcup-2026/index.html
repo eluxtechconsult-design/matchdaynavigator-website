@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic meta -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>World Cup 2026 Map • MatchDay Navigator</title>
+
+  <!-- Page‑scoped CSP to allow Leaflet CDN + OSM tiles (safe for static hosting) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://unpkg.com; script-src 'self' https://unpkg.com; connect-src 'self'; child-src 'none'; frame-ancestors 'none'">
+
+  <!-- Leaflet CSS (CDN) -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="anonymous">
+
+  <style>
+    :root { --navy:#0a3d62; --blue:#1e90ff; --border:#e5e7eb; --text:#223; }
+    body { margin:0; font-family:Arial,system-ui,sans-serif; color:var(--text); }
+    header { background:var(--navy); color:#fff; padding:16px 20px; }
+    header h1 { margin:0; font-size:20px; }
+    .note { font-size:12px; color:#e6eef7; margin-top:4px; }
+
+    .wrap { display:grid; grid-template-columns: 1fr 340px; gap:0; height:calc(100vh - 64px); }
+    #map { height:100%; width:100%; }
+    aside { border-left:1px solid var(--border); overflow:auto; background:#fff; }
+    .panel { padding:14px 16px; }
+    h2 { margin:10px 0 6px; font-size:16px; color:var(--navy); }
+    .city, .stadium { margin:6px 0; }
+    .city a, .stadium a { text-decoration:none; color:var(--blue); }
+    .city a:hover, .stadium a:hover { text-decoration:underline; }
+    .cta { display:inline-block; margin-top:6px; padding:8px 12px; background:var(--blue); color:#fff; border-radius:6px; text-decoration:none; }
+    .hint { font-size:12px; color:#555; margin-top:8px; }
+    @media (max-width: 900px) {
+      .wrap { grid-template-columns: 1fr; }
+      aside { height:42vh; }
+      #map { height:58vh; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>FIFA World Cup 2026 • Host Cities & Stadiums</h1>
+    <div class="note">
+      Explore host cities and venues across USA, Canada, and Mexico. Click a pin for details; use the sidebar to navigate.
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div id="map"></div>
+    <aside>
+      <div class="panel">
+        <h2>Cities</h2>
+        <div id="cityList"></div>
+
+        <h2>Stadiums</h2>
+        <div id="stadiumList"></div>
+
+        <p class="hint">
+          Tip: You can add city <code>lat/lng</code> later for city pins. Stadium pins already appear now.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Leaflet JS (CDN) -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="anonymous"></script>
+
+  <script>
+    // Map init
+    const map = L.map('map');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    map.setView([37.8, -96], 4); // North America
+
+    const cityMarkers = L.layerGroup().addTo(map);
+    const stMarkers   = L.layerGroup().addTo(map);
+
+    function addCity(city) {
+      // Sidebar list
+      const list = document.getElementById('cityList');
+      const el = document.createElement('div');
+      el.className = 'city';
+      el.innerHTML = `<a href="#" data-slug="${city.slug}">${city.name} — ${city.country}</a>`;
+      el.querySelector('a').onclick = (e) => {
+        e.preventDefault();
+        if (city.lat != null && city.lng != null) map.setView([city.lat, city.lng], 11);
+      };
+      list.appendChild(el);
+
+      // Marker (only if coords exist)
+      if (city.lat != null && city.lng != null) {
+        L.marker([city.lat, city.lng]).addTo(cityMarkers)
+          .bindPopup(`<b>${city.name}</b><br/>${city.country}`);
+      }
+    }
+
+    function addStadium(st) {
+      // Sidebar list
+      const list = document.getElementById('stadiumList');
+      const el = document.createElement('div');
+      el.className = 'stadium';
+      el.innerHTML = `<a href="#" data-slug="${st.slug}">${st.name}</a>`;
+      el.querySelector('a').onclick = (e) => {
+        e.preventDefault();
+        if (st.lat != null && st.lng != null) map.setView([st.lat, st.lng], 13);
+      };
+      list.appendChild(el);
+
+      // Marker (only if coords exist)
+      if (st.lat != null && st.lng != null) {
+        L.marker([st.lat, st.lng]).addTo(stMarkers)
+          .bindPopup(`
+            <b>${st.name}</b><br/>
+            <a href="${st.official_url}"
+      const cData = await cRes.json();
+      const sData = await sRes.json();
+
+      (cData.cities   || []).forEach(addCity);
+      (sData.stadiums || []).forEach(addStadium);
+    }
+
+    loadData().catch(err => console.error('Data load error', err));
+  </script>
+</body>
+</html>
