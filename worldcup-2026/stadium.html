@@ -21,48 +21,71 @@
   <header><h1 id="title">Stadium</h1></header>
   <main>
     <div id="info" class="card">Loading…</div>
-    <p><a href="./index.html">← Back to World Cup 2026 map</a></p>
+    <p>./index.html← Back to World Cup 2026 map</a></p>
   </main>
 
   <script>
     const id = new URLSearchParams(location.search).get('id');
 
-    async function init() {
-      const [cRes, sRes] = await Promise.all([
-        fetch('/assets/data/cities.json'),
-        fetch('/assets/data/stadiums.json')
-      ]);
-      const cities = (await cRes.json()).cities || [];
-      const stadiums = (await sRes.json()).stadiums || [];
+    async function loadJSON(url, fallback) {
+      try { const r = await fetch(url, {cache:'no-store'}); if(!r.ok) throw 0; return r.json(); }
+      catch (e) { return fallback; }
+    }
+
+    const CITIES={"cities":[{"slug":"new-york-new-jersey","name":"New York / New Jersey"},
+      {"slug":"dallas","name":"Dallas (Arlington)"},{"slug":"houston","name":"Houston"},
+      {"slug":"kansas-city","name":"Kansas City"},{"slug":"atlanta","name":"Atlanta"},
+      {"slug":"los-angeles","name":"Los Angeles (Inglewood)"},{"slug":"san-francisco-bay-area","name":"San Francisco Bay Area (Santa Clara)"},
+      {"slug":"seattle","name":"Seattle"},{"slug":"boston","name":"Boston (Foxborough)"},
+      {"slug":"philadelphia","name":"Philadelphia"},{"slug":"miami","name":"Miami (Miami Gardens)"},
+      {"slug":"toronto","name":"Toronto"},{"slug":"vancouver","name":"Vancouver"},
+      {"slug":"mexico-city","name":"Mexico City"},{"slug":"guadalajara","name":"Guadalajara"},
+      {"slug":"monterrey","name":"Monterrey"}]
+    };
+    const STADIUMS={"stadiums":[
+      {"slug":"metlife-stadium","name":"MetLife Stadium","citySlug":"new-york-new-jersey","official_url":"https://www.metlifestadium.com/"},
+      {"slug":"att-stadium","name":"AT&T Stadium","citySlug":"dallas","official_url":"https://attstadium.com/"},
+      {"slug":"nrg-stadium","name":"NRG Stadium","citySlug":"houston","official_url":"https://www.nrgpark.com/venues/nrg-stadium/"},
+      {"slug":"arrowhead-stadium","name":"Arrowhead Stadium","citySlug":"kansas-city","official_url":"https://www.chiefs.com/stadium/"},
+      {"slug":"mercedes-benz-stadium","name":"Mercedes-Benz Stadium","citySlug":"atlanta","official_url":"https://www.mercedesbenzstadium.com/"},
+      {"slug":"sofi-stadium","name":"SoFi Stadium","citySlug":"los-angeles","official_url":"https://www.sofistadium.com/"},
+      {"slug":"levis-stadium","name":"Levi's Stadium","citySlug":"san-francisco-bay-area","official_url":"https://www.levisstadium.com/"},
+      {"slug":"lumen-field","name":"Lumen Field","citySlug":"seattle","official_url":"https://www.lumenfield.com/"},
+      {"slug":"gillette-stadium","name":"Gillette Stadium","citySlug":"boston","official_url":"https://www.gillettestadium.com/"},
+      {"slug":"lincoln-financial-field","name":"Lincoln Financial Field","citySlug":"philadelphia","official_url":"https://www.lincolnfinancialfield.com/"},
+      {"slug":"hard-rock-stadium","name":"Hard Rock Stadium","citySlug":"miami","official_url":"https://hardrockstadium.com/"},
+      {"slug":"bmo-field","name":"BMO Field","citySlug":"toronto","official_url":"https://www.bmofield.com/"},
+      {"slug":"bc-place","name":"BC Place","citySlug":"vancouver","official_url":"https://bcplace.com/"},
+      {"slug":"estadio-azteca","name":"Estadio Azteca","citySlug":"mexico-city","official_url":"https://www.estadioazteca.com.mx/"},
+      {"slug":"estadio-bbva","name":"Estadio BBVA","citySlug":"monterrey","official_url":"https://www.estadiobbva.com/"},
+      {"slug":"estadio-akron","name":"Estadio Akron","citySlug":"guadalajara","official_url":"https://www.estadioakron.mx/"}]};
+
+    (async () => {
+      const cities   = (await loadJSON('/assets/data/cities.json',   CITIES)).cities   || [];
+      const stadiums = (await loadJSON('/assets/data/stadiums.json', STADIUMS)).stadiums || [];
 
       const st = stadiums.find(x => x.slug === id);
       if(!st){ document.getElementById('title').textContent='Stadium not found'; return; }
       const city = cities.find(c => c.slug === st.citySlug);
 
       document.getElementById('title').textContent = st.name;
-
       const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
       const routeUrl = `https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}`;
       const optinUrl = `https://concierge.matchdaynavigator.com/optin?stadium=${encodeURIComponent(st.name)}`;
 
       document.getElementById('info').innerHTML = `
-        <div class="row">
-          <b>${st.name}</b> ${city ? `· in <a href="./city.html?id=${city.slug}">${city.name}</a>` : ''}
-        </div>
+        <div class="row"><b>${st.name}</b>${city ? ` · in ./city.html?id=${city.slug}${city.name}</a>` : ''}</div>
         <div class="row" style="margin-top:8px;">
-          <a href="${st.official_url}" target="_blank" rel="noopener">Official site</a>
-          <a href="${routeUrl}" target="_blank" rel="noopener">Open route</a>
+          ${st.official_url}Official site</a>
+          ${routeUrl}Open route</a>
         </div>
         <div class="row" style="margin-top:12px;">
-          <!-- Option A: direct WhatsApp click-to-chat (replace with your WABA number) -->
-          <a href="https://wa.me/14155238886?text=${waText}" target="_blank" rel="noopener">Get match‑day details on WhatsApp</a>
-          <!-- Option B (recommended): route to your own opt‑in page -->
-          <!-- <a href="${optinUrl}" target="_blank" rel="noopener">Get match‑day details on WhatsApp</a> -->
+          https://wa.me/14155238886?text=${waText}Get match‑day details on WhatsApp</a>
+          <!-- Or: ${optinUrl}Get match‑day details on WhatsApp</a> -->
         </div>
-        <p class="small">Replace the number with your official WABA; or use your own opt‑in page for compliance.</p>
+        <p class="small">Replace the number with your official WABA, or point to your own opt‑in page.</p>
       `;
-    }
-    init().catch(console.error);
+    })().catch(console.error);
   </script>
 </body>
 </html>

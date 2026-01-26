@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Cup 2026 Map • MatchDay Navigator</title>
 
-  <!-- Page‑scoped CSP to allow Leaflet CDN + OSM tiles -->
+  <!-- Page‑scoped CSP (allows Leaflet CDN + OSM tiles) -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
                  img-src 'self' data: https:;
@@ -17,11 +17,14 @@
                  child-src 'none';
                  frame-ancestors 'none'">
 
-  <!-- REAL TAGS (NOT PLAIN TEXT): Leaflet & MarkerCluster CSS -->
+  <!-- ✅ REAL TAGS (do NOT paste as plain text) -->
+  <!-- Leaflet CSS -->
   <link rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        integrity="sha512-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin="anonymous" />
+
+  <!-- MarkerCluster CSS -->
   <link rel="stylesheet"
         href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet"
@@ -64,79 +67,133 @@
     </aside>
   </div>
 
-  <!-- REAL TAGS (NOT PLAIN TEXT): Leaflet & MarkerCluster JS -->
+  <!-- ✅ REAL TAGS -->
+  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          integrity="sha512-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
           crossorigin="anonymous"></script>
+
+  <!-- MarkerCluster JS -->
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
+  <!-- Fallback embedded data (used only if external JSON fails to load) -->
+  <script id="mdn-cities" type="application/json">
+  {
+    "cities": [
+      { "id":"ny_nj","slug":"new-york-new-jersey","name":"New York / New Jersey","country":"USA","region":"EAST","lat":40.813528,"lng":-74.074361 },
+      { "id":"dal","slug":"dallas","name":"Dallas (Arlington)","country":"USA","region":"CENTRAL","lat":32.74778,"lng":-97.09278 },
+      { "id":"hou","slug":"houston","name":"Houston","country":"USA","region":"CENTRAL","lat":29.68472,"lng":-95.41083 },
+      { "id":"kc","slug":"kansas-city","name":"Kansas City","country":"USA","region":"CENTRAL","lat":39.04889,"lng":-94.48389 },
+      { "id":"atl","slug":"atlanta","name":"Atlanta","country":"USA","region":"CENTRAL","lat":33.75556,"lng":-84.4 },
+      { "id":"la","slug":"los-angeles","name":"Los Angeles (Inglewood)","country":"USA","region":"WEST","lat":33.953,"lng":-118.339 },
+      { "id":"sfbay","slug":"san-francisco-bay-area","name":"San Francisco Bay Area (Santa Clara)","country":"USA","region":"WEST","lat":37.403,"lng":-121.97 },
+      { "id":"sea","slug":"seattle","name":"Seattle","country":"USA","region":"WEST","lat":47.5952,"lng":-122.3316 },
+      { "id":"bos","slug":"boston","name":"Boston (Foxborough)","country":"USA","region":"EAST","lat":42.091,"lng":-71.264 },
+      { "id":"phi","slug":"philadelphia","name":"Philadelphia","country":"USA","region":"EAST","lat":39.90083,"lng":-75.1675 },
+      { "id":"mia","slug":"miami","name":"Miami (Miami Gardens)","country":"USA","region":"EAST","lat":25.95806,"lng":-80.23889 },
+      { "id":"tor","slug":"toronto","name":"Toronto","country":"Canada","region":"EAST","lat":43.63333,"lng":-79.41861 },
+      { "id":"van","slug":"vancouver","name":"Vancouver","country":"Canada","region":"WEST","lat":49.276684,"lng":-123.112404 },
+      { "id":"mex","slug":"mexico-city","name":"Mexico City","country":"Mexico","region":"CENTRAL","lat":19.30306,"lng":-99.15056 },
+      { "id":"gdl","slug":"guadalajara","name":"Guadalajara","country":"Mexico","region":"WEST","lat":20.68167,"lng":-103.46278 },
+      { "id":"mty","slug":"monterrey","name":"Monterrey","country":"Mexico","region":"CENTRAL","lat":25.66917,"lng":-100.24444 }
+    ]
+  }
+  </script>
+
+  <script id="mdn-stadiums" type="application/json">
+  {
+    "stadiums": [
+      { "slug":"metlife-stadium","name":"MetLife Stadium","citySlug":"new-york-new-jersey","official_url":"https://www.metlifestadium.com/","lat":40.813528,"lng":-74.074361 },
+      { "slug":"att-stadium","name":"AT&T Stadium","citySlug":"dallas","official_url":"https://attstadium.com/","lat":32.74778,"lng":-97.09278 },
+      { "slug":"nrg-stadium","name":"NRG Stadium","citySlug":"houston","official_url":"https://www.nrgpark.com/venues/nrg-stadium/","lat":29.68472,"lng":-95.41083 },
+      { "slug":"arrowhead-stadium","name":"Arrowhead Stadium","citySlug":"kansas-city","official_url":"https://www.chiefs.com/stadium/","lat":39.04889,"lng":-94.48389 },
+      { "slug":"mercedes-benz-stadium","name":"Mercedes-Benz Stadium","citySlug":"atlanta","official_url":"https://www.mercedesbenzstadium.com/","lat":33.75556,"lng":-84.4 },
+      { "slug":"sofi-stadium","name":"SoFi Stadium","citySlug":"los-angeles","official_url":"https://www.sofistadium.com/","lat":33.953,"lng":-118.339 },
+      { "slug":"levis-stadium","name":"Levi's Stadium","citySlug":"san-francisco-bay-area","official_url":"https://www.levisstadium.com/","lat":37.403,"lng":-121.97 },
+      { "slug":"lumen-field","name":"Lumen Field","citySlug":"seattle","official_url":"https://www.lumenfield.com/","lat":47.5952,"lng":-122.3316 },
+      { "slug":"gillette-stadium","name":"Gillette Stadium","citySlug":"boston","official_url":"https://www.gillettestadium.com/","lat":42.091,"lng":-71.264 },
+      { "slug":"lincoln-financial-field","name":"Lincoln Financial Field","citySlug":"philadelphia","official_url":"https://www.lincolnfinancialfield.com/","lat":39.90083,"lng":-75.1675 },
+      { "slug":"hard-rock-stadium","name":"Hard Rock Stadium","citySlug":"miami","official_url":"https://hardrockstadium.com/","lat":25.95806,"lng":-80.23889 },
+      { "slug":"bmo-field","name":"BMO Field","citySlug":"toronto","official_url":"https://www.bmofield.com/","lat":43.63333,"lng":-79.41861 },
+      { "slug":"bc-place","name":"BC Place","citySlug":"vancouver","official_url":"https://bcplace.com/","lat":49.276684,"lng":-123.112404 },
+      { "slug":"estadio-azteca","name":"Estadio Azteca","citySlug":"mexico-city","official_url":"https://www.estadioazteca.com.mx/","lat":19.30306,"lng":-99.15056 },
+      { "slug":"estadio-bbva","name":"Estadio BBVA","citySlug":"monterrey","official_url":"https://www.estadiobbva.com/","lat":25.66917,"lng":-100.24444 },
+      { "slug":"estadio-akron","name":"Estadio Akron","citySlug":"guadalajara","official_url":"https://www.estadioakron.mx/","lat":20.68167,"lng":-103.46278 }
+    ]
+  }
+  </script>
+
   <script>
+    // Helpers to load external JSON with embedded fallback
+    async function loadJSON(url, fallbackScriptId) {
+      try {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP '+res.status);
+        return await res.json();
+      } catch (e) {
+        const el = document.getElementById(fallbackScriptId);
+        return el ? JSON.parse(el.textContent) : {};
+      }
+    }
+
+    // Map init
     const map = L.map('map', { zoomControl:true });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
-    map.setView([37.8, -96], 4); // North America
+    map.setView([37.8, -96], 4);
 
     const cityCluster = L.markerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:50 });
     const stCluster   = L.markerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:50 });
     map.addLayer(cityCluster);
     map.addLayer(stCluster);
 
-    function addCity(city) {
-      // Sidebar entry
+    function cityRow(city) {
       const list = document.getElementById('cityList');
       const el = document.createElement('div');
       el.className = 'city';
-      el.innerHTML = `<a href="./city.html?id=${city.slug}">${city.name} — ${city.country}</a>`;
+      el.innerHTML = `./city.html?id=${city.slug}${city.name} — ${city.country}</a>`;
       list.appendChild(el);
-
-      // Marker
-      if (city.lat != null && city.lng != null) {
-        const m = L.marker([city.lat, city.lng]).bindPopup(
-          `<b>${city.name}</b><br/>${city.country}<br/>` +
-          `<a href="./city.html?id=${city.slug}">Open city page</a>`
-        );
-        cityCluster.addLayer(m);
-      }
     }
 
-    function addStadium(st) {
-      // Sidebar entry
+    function stadiumRow(st) {
       const list = document.getElementById('stadiumList');
       const el = document.createElement('div');
       el.className = 'stadium';
-      el.innerHTML = `<a href="./stadium.html?id=${st.slug}">${st.name}</a>`;
+      el.innerHTML = `./stadium.html?id=${st.slug}${st.name}</a>`;
       list.appendChild(el);
-
-      // Marker + popup (Official / Route / WhatsApp)
-      if (st.lat != null && st.lng != null) {
-        const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
-        const popup = `
-          <b>${st.name}</b><br/>
-          <a href="${st.official_url}" target="_blank" rel="noopener">Official site</a><br/>
-          <a href="https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}" target="_blank" rel="noopener">Open route</a><br/>
-          <a href="https://wa.me/14155238886?text=${waText}" target="_blank" rel="noopener">Get match‑day details on WhatsApp</a>
-          <br/><small>(Replace number with your WABA, or link to your own opt‑in page.)</small>
-        `;
-        stCluster.addLayer(L.marker([st.lat, st.lng]).bindPopup(popup));
-      }
     }
 
-    async function loadData() {
-      const [cRes, sRes] = await Promise.all([
-        fetch('/assets/data/cities.json'),
-        fetch('/assets/data/stadiums.json')
-      ]);
-      const cData = await cRes.json();
-      const sData = await sRes.json();
-      (cData.cities   || []).forEach(addCity);
-      (sData.stadiums || []).forEach(addStadium);
+    function addCityMarker(city) {
+      if (city.lat == null || city.lng == null) return;
+      const m = L.marker([city.lat, city.lng]).bindPopup(
+        `<b>${city.name}</b><br/>${city.country}<br/>./city.html?id=${city.slug}Open city page</a>`
+      );
+      cityCluster.addLayer(m);
     }
 
-    loadData().catch(err => {
-      console.error('Data load error', err);
-      alert('Could not load data. Check that /assets/data/*.json exist at those exact paths and are not 404.');
+    function addStadiumMarker(st) {
+      if (st.lat == null || st.lng == null) return;
+      const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
+      const html = `
+        <b>${st.name}</b><br/>
+        ${st.official_url}Official site</a><br/>
+        https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}Open route</a><br/>
+        https://wa.me/14155238886?text=${waText}Get match‑day details on WhatsApp</a>
+        <br/><small>(Replace with your WABA number, or link to your opt‑in page.)</small>
+      `;
+      stCluster.addLayer(L.marker([st.lat, st.lng]).bindPopup(html));
+    }
+
+    (async () => {
+      const citiesData   = await loadJSON('/assets/data/cities.json',   'mdn-cities');
+      const stadiumsData = await loadJSON('/assets/data/stadiums.json', 'mdn-stadiums');
+      (citiesData.cities   || []).forEach(c => { cityRow(c);   addCityMarker(c); });
+      (stadiumsData.stadiums || []).forEach(s => { stadiumRow(s); addStadiumMarker(s); });
+    })().catch(err => {
+      console.error(err);
+      alert('Could not initialize map.');
     });
   </script>
 </body>
