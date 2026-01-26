@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>City • World Cup 2026 • MatchDay Navigator</title>
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 img-src 'self' data: https:;
+                 style-src 'self' 'unsafe-inline';
+                 script-src 'self';
+                 connect-src 'self';
+                 frame-ancestors 'none'">
+  <style>
+    body{margin:0;font-family:Arial,system-ui,sans-serif;color:#223}
+    header{background:#0a3d62;color:#fff;padding:16px 20px}
+    main{max-width:960px;margin:0 auto;padding:20px}
+    a{color:#1e90ff;text-decoration:none} a:hover{text-decoration:underline}
+    .tag{display:inline-block;background:#eef3fb;color:#0a3d62;padding:4px 8px;border-radius:999px;font-size:12px;margin-right:8px}
+    .card{border:1px solid #e5e7eb;border-radius:8px;padding:12px 14px;margin:10px 0}
+    .cta{display:inline-block;margin-top:10px;padding:10px 14px;background:#1e90ff;color:#fff;border-radius:6px;text-decoration:none}
+  </style>
+</head>
+<body>
+  <header><h1 id="cityTitle">City</h1></header>
+  <main>
+    <div id="meta"></div>
+    <h2>Stadiums in this city</h2>
+    <div id="stadiumList"></div>
+
+    <p><a href="./index.html">← Back to World Cup 2026 map</a></p>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+
+    async function init() {
+      const [cRes, sRes] = await Promise.all([
+        fetch('/assets/data/cities.json'),
+        fetch('/assets/data/stadiums.json')
+      ]);
+      const cities = (await cRes.json()).cities || [];
+      const stadiums = (await sRes.json()).stadiums || [];
+
+      const city = cities.find(c => c.slug === id);
+      if(!city){ document.getElementById('cityTitle').textContent='City not found'; return; }
+
+      document.getElementById('cityTitle').textContent = city.name;
+      document.getElementById('meta').innerHTML =
+        `<span class="tag">${city.country}</span>`+
+        `<span class="tag">Region: ${city.region}</span>`;
+
+      const list = document.getElementById('stadiumList');
+      const inCity = stadiums.filter(st => st.citySlug === city.slug);
+      if(inCity.length === 0){
+        list.innerHTML = '<div class="card">No stadium found for this city.</div>';
+      } else {
+        inCity.forEach(st => {
+          const el = document.createElement('div');
+          el.className='card';
+          el.innerHTML = `
+            <b>${st.name}</b><br/>

@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stadium • World Cup 2026 • MatchDay Navigator</title>
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 img-src 'self' data: https:;
+                 style-src 'self' 'unsafe-inline';
+                 script-src 'self';
+                 connect-src 'self';
+                 frame-ancestors 'none'">
+  <style>
+    body{margin:0;font-family:Arial,system-ui,sans-serif;color:#223}
+    header{background:#0a3d62;color:#fff;padding:16px 20px}
+    main{max-width:960px;margin:0 auto;padding:20px}
+    a{color:#1e90ff;text-decoration:none} a:hover{text-decoration:underline}
+    .card{border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin:12px 0}
+    .cta{display:inline-block;margin-top:10px;padding:10px 14px;background:#1e90ff;color:#fff;border-radius:6px;text-decoration:none}
+    .row a{margin-right:12px}
+    .small{font-size:12px;color:#555}
+  </style>
+</head>
+<body>
+  <header><h1 id="title">Stadium</h1></header>
+  <main>
+    <div id="info" class="card">Loading…</div>
+    <p><a href="./index.html">← Back to World Cup 2026 map</a></p>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+
+    async function init() {
+      const [cRes, sRes] = await Promise.all([
+        fetch('/assets/data/cities.json'),
+        fetch('/assets/data/stadiums.json')
+      ]);
+      const cities = (await cRes.json()).cities || [];
+      const stadiums = (await sRes.json()).stadiums || [];
+
+      const st = stadiums.find(x => x.slug === id);
+      if(!st){ document.getElementById('title').textContent='Stadium not found'; return; }
+      const city = cities.find(c => c.slug === st.citySlug);
+
+      document.getElementById('title').textContent = st.name;
+
+      const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
+      const optinUrl = `https://concierge.matchdaynavigator.com/optin?stadium=${encodeURIComponent(st.name)}`;
+
+      document.getElementById('info').innerHTML = `
+        <div class="row">
+          <b>${st.name}</b> ${city ? `· in <a href="./city.html?id=${city.slug}">${city.name}</a>` : ''}
+        </div>
+        <div class="row" style="margin-top:8px;">
+          <a href="${st.official_url}" target="_blank" rel="noopener">Official site</a>
+          <a href="https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}" target="_blank" rel="noopener">Open route</a>
+        </div>
+        <div class="row" style="margin-top:12px;">
+          <!-- WhatsApp CTA (choose one). #1: direct click-to-chat (replace number with your WABA) -->
+          <a class="cta" href="https://wa.me/14155238886?text=${waText}" target="_blank" rel="noopener">Get match‑day details on WhatsApp</a>
+          <!-- Or #2: route to your own opt-in page (recommended) -->
+          <!-- <a class="cta" href="${optinUrl}" target="_self" rel="noopener">Get match‑day details on WhatsApp</a> -->
+        </div>
+        <p class="small">This opens WhatsApp with a pre‑filled request. Replace the number with your official WABA phone when ready.</p>
+      `;
+    }
+    init().catch(console.error);
+  </script>
+</body>
+</html>
