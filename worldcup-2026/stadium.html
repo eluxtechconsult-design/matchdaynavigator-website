@@ -5,87 +5,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Stadium • World Cup 2026 • MatchDay Navigator</title>
-  <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'">
-  <style>
-    body{margin:0;font-family:Arial,system-ui,sans-serif;color:#223}
-    header{background:#0a3d62;color:#fff;padding:16px 20px}
-    main{max-width:960px;margin:0 auto;padding:20px}
-    a{color:#1e90ff;text-decoration:none} a:hover{text-decoration:underline}
-    .card{border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin:12px 0}
-    .row a{margin-right:12px}
-    .small{font-size:12px;color:#555}
-  </style>
+  <link rel="stylesheet" href="/worldcup-2026/app.css">
 </head>
 <body>
-  <header><h1 id="title">Stadium</h1></header>
-  <main>
-    <div id="info" class="card">Loading…</div>
-    <p>./index.html← Back to World Cup 2026 map</a></p>
-  </main>
-
-  <script>
-    const id = new URLSearchParams(location.search).get('id');
-
-    async function loadJSON(url, fallback) {
-      try { const r = await fetch(url, {cache:'no-store'}); if(!r.ok) throw 0; return r.json(); }
-      catch (e) { return fallback; }
-    }
-
-    const CITIES={"cities":[{"slug":"new-york-new-jersey","name":"New York / New Jersey"},
-      {"slug":"dallas","name":"Dallas (Arlington)"},{"slug":"houston","name":"Houston"},
-      {"slug":"kansas-city","name":"Kansas City"},{"slug":"atlanta","name":"Atlanta"},
-      {"slug":"los-angeles","name":"Los Angeles (Inglewood)"},{"slug":"san-francisco-bay-area","name":"San Francisco Bay Area (Santa Clara)"},
-      {"slug":"seattle","name":"Seattle"},{"slug":"boston","name":"Boston (Foxborough)"},
-      {"slug":"philadelphia","name":"Philadelphia"},{"slug":"miami","name":"Miami (Miami Gardens)"},
-      {"slug":"toronto","name":"Toronto"},{"slug":"vancouver","name":"Vancouver"},
-      {"slug":"mexico-city","name":"Mexico City"},{"slug":"guadalajara","name":"Guadalajara"},
-      {"slug":"monterrey","name":"Monterrey"}]
-    };
-    const STADIUMS={"stadiums":[
-      {"slug":"metlife-stadium","name":"MetLife Stadium","citySlug":"new-york-new-jersey","official_url":"https://www.metlifestadium.com/"},
-      {"slug":"att-stadium","name":"AT&T Stadium","citySlug":"dallas","official_url":"https://attstadium.com/"},
-      {"slug":"nrg-stadium","name":"NRG Stadium","citySlug":"houston","official_url":"https://www.nrgpark.com/venues/nrg-stadium/"},
-      {"slug":"arrowhead-stadium","name":"Arrowhead Stadium","citySlug":"kansas-city","official_url":"https://www.chiefs.com/stadium/"},
-      {"slug":"mercedes-benz-stadium","name":"Mercedes-Benz Stadium","citySlug":"atlanta","official_url":"https://www.mercedesbenzstadium.com/"},
-      {"slug":"sofi-stadium","name":"SoFi Stadium","citySlug":"los-angeles","official_url":"https://www.sofistadium.com/"},
-      {"slug":"levis-stadium","name":"Levi's Stadium","citySlug":"san-francisco-bay-area","official_url":"https://www.levisstadium.com/"},
-      {"slug":"lumen-field","name":"Lumen Field","citySlug":"seattle","official_url":"https://www.lumenfield.com/"},
-      {"slug":"gillette-stadium","name":"Gillette Stadium","citySlug":"boston","official_url":"https://www.gillettestadium.com/"},
-      {"slug":"lincoln-financial-field","name":"Lincoln Financial Field","citySlug":"philadelphia","official_url":"https://www.lincolnfinancialfield.com/"},
-      {"slug":"hard-rock-stadium","name":"Hard Rock Stadium","citySlug":"miami","official_url":"https://hardrockstadium.com/"},
-      {"slug":"bmo-field","name":"BMO Field","citySlug":"toronto","official_url":"https://www.bmofield.com/"},
-      {"slug":"bc-place","name":"BC Place","citySlug":"vancouver","official_url":"https://bcplace.com/"},
-      {"slug":"estadio-azteca","name":"Estadio Azteca","citySlug":"mexico-city","official_url":"https://www.estadioazteca.com.mx/"},
-      {"slug":"estadio-bbva","name":"Estadio BBVA","citySlug":"monterrey","official_url":"https://www.estadiobbva.com/"},
-      {"slug":"estadio-akron","name":"Estadio Akron","citySlug":"guadalajara","official_url":"https://www.estadioakron.mx/"}]};
-
-    (async () => {
-      const cities   = (await loadJSON('/assets/data/cities.json',   CITIES)).cities   || [];
-      const stadiums = (await loadJSON('/assets/data/stadiums.json', STADIUMS)).stadiums || [];
-
-      const st = stadiums.find(x => x.slug === id);
-      if(!st){ document.getElementById('title').textContent='Stadium not found'; return; }
-      const city = cities.find(c => c.slug === st.citySlug);
-
-      document.getElementById('title').textContent = st.name;
-      const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
-      const routeUrl = `https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(st.name)}`;
-      const optinUrl = `https://concierge.matchdaynavigator.com/optin?stadium=${encodeURIComponent(st.name)}`;
-
-      document.getElementById('info').innerHTML = `
-        <div class="row"><b>${st.name}</b>${city ? ` · in ./city.html?id=${city.slug}${city.name}</a>` : ''}</div>
-        <div class="row" style="margin-top:8px;">
-          ${st.official_url}Official site</a>
-          ${routeUrl}Open route</a>
-        </div>
-        <div class="row" style="margin-top:12px;">
-          https://wa.me/14155238886?text=${waText}Get match‑day details on WhatsApp</a>
-          <!-- Or: ${optinUrl}Get match‑day details on WhatsApp</a> -->
-        </div>
-        <p class="small">Replace the number with your official WABA, or point to your own opt‑in page.</p>
-      `;
-    })().catch(console.error);
-  </script>
+  <header class="top"><h1 id="title">Stadium</h1></header>
+  <div class="wrap" style="grid-template-columns: 1fr;">
+    <main class="panel" style="border:none;">
+      <div id="info"></div>
+      <p style="margin-top:18px;">./index.html← Back to World Cup 2026 map</a></p>
+    </main>
+  </div>
+  <script src="/worldcup-2026/stadium.js" defer></script>
 </body>
 </html>

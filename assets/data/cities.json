@@ -1,21 +1,21 @@
 
 {
   "cities": [
-    { "id": "ny_nj", "slug": "new-york-new-jersey", "name": "New York / New Jersey", "country": "USA", "region": "EAST",    "lat": 40.813528,  "lng": -74.074361 },
-    { "id": "dal",   "slug": "dallas",               "name": "Dallas (Arlington)",   "country": "USA", "region": "CENTRAL", "lat": 32.747780,  "lng": -97.092780 },
-    { "id": "hou",   "slug": "houston",              "name": "Houston",              "country": "USA", "region": "CENTRAL", "lat": 29.684720,  "lng": -95.410830 },
-    { "id": "kc",    "slug": "kansas-city",          "name": "Kansas City",          "country": "USA", "region": "CENTRAL", "lat": 39.048890,  "lng": -94.483890 },
-    { "id": "atl",   "slug": "atlanta",              "name": "Atlanta",              "country": "USA", "region": "CENTRAL", "lat": 33.755560,  "lng": -84.400000 },
-    { "id": "la",    "slug": "los-angeles",          "name": "Los Angeles (Inglewood)", "country": "USA", "region": "WEST", "lat": 33.953000,  "lng": -118.339000 },
-    { "id": "sfbay", "slug": "san-francisco-bay-area","name": "San Francisco Bay Area (Santa Clara)", "country": "USA", "region": "WEST", "lat": 37.403000,  "lng": -121.970000 },
-    { "id": "sea",   "slug": "seattle",              "name": "Seattle",              "country": "USA", "region": "WEST",   "lat": 47.595200,  "lng": -122.331600 },
-    { "id": "bos",   "slug": "boston",               "name": "Boston (Foxborough)",  "country": "USA", "region": "EAST",   "lat": 42.091000,  "lng": -71.264000 },
-    { "id": "phi",   "slug": "philadelphia",         "name": "Philadelphia",         "country": "USA", "region": "EAST",   "lat": 39.900830,  "lng": -75.167500 },
-    { "id": "mia",   "slug": "miami",                "name": "Miami (Miami Gardens)","country": "USA", "region": "EAST",   "lat": 25.958060,  "lng": -80.238890 },
-    { "id": "tor",   "slug": "toronto",              "name": "Toronto",              "country": "Canada", "region": "EAST","lat": 43.633330,  "lng": -79.418610 },
-    { "id": "van",   "slug": "vancouver",            "name": "Vancouver",            "country": "Canada", "region": "WEST","lat": 49.276684,  "lng": -123.112404 },
-    { "id": "mex",   "slug": "mexico-city",          "name": "Mexico City",          "country": "Mexico", "region": "CENTRAL", "lat": 19.303060, "lng": -99.150560 },
-    { "id": "gdl",   "slug": "guadalajara",          "name": "Guadalajara",          "country": "Mexico", "region": "WEST","lat": 20.681670,  "lng": -103.462780 },
-    { "id": "mty",   "slug": "monterrey",            "name": "Monterrey",            "country": "Mexico", "region": "CENTRAL", "lat": 25.669170, "lng": -100.244440 }
+    { "slug":"new-york-new-jersey","name":"New York / New Jersey","country":"USA","region":"EAST","lat":40.813528,"lng":-74.074361 },
+    { "slug":"dallas","name":"Dallas (Arlington)","country":"USA","region":"CENTRAL","lat":32.74778,"lng":-97.09278 },
+    { "slug":"houston","name":"Houston","country":"USA","region":"CENTRAL","lat":29.68472,"lng":-95.41083 },
+    { "slug":"kansas-city","name":"Kansas City","country":"USA","region":"CENTRAL","lat":39.04889,"lng":-94.48389 },
+    { "slug":"atlanta","name":"Atlanta","country":"USA","region":"CENTRAL","lat":33.75556,"lng":-84.4 },
+    { "slug":"los-angeles","name":"Los Angeles (Inglewood)","country":"USA","region":"WEST","lat":33.953,"lng":-118.339 },
+    { "slug":"san-francisco-bay-area","name":"San Francisco Bay Area (Santa Clara)","country":"USA","region":"WEST","lat":37.403,"lng":-121.97 },
+    { "slug":"seattle","name":"Seattle","country":"USA","region":"WEST","lat":47.5952,"lng":-122.3316 },
+    { "slug":"boston","name":"Boston (Foxborough)","country":"USA","region":"EAST","lat":42.091,"lng":-71.264 },
+    { "slug":"philadelphia","name":"Philadelphia","country":"USA","region":"EAST","lat":39.90083,"lng":-75.1675 },
+    { "slug":"miami","name":"Miami (Miami Gardens)","country":"USA","region":"EAST","lat":25.95806,"lng":-80.23889 },
+    { "slug":"toronto","name":"Toronto","country":"Canada","region":"EAST","lat":43.63333,"lng":-79.41861 },
+    { "slug":"vancouver","name":"Vancouver","country":"Canada","region":"WEST","lat":49.276684,"lng":-123.112404 },
+    { "slug":"mexico-city","name":"Mexico City","country":"Mexico","region":"CENTRAL","lat":19.30306,"lng":-99.15056 },
+    { "slug":"guadalajara","name":"Guadalajara","country":"Mexico","region":"WEST","lat":20.68167,"lng":-103.46278 },
+    { "slug":"monterrey","name":"Monterrey","country":"Mexico","region":"CENTRAL","lat":25.66917,"lng":-100.24444 }
   ]
 }

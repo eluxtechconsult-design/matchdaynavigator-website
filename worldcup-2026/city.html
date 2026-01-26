@@ -5,76 +5,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>City • World Cup 2026 • MatchDay Navigator</title>
-  <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'">
-  <style>
-    body{margin:0;font-family:Arial,system-ui,sans-serif;color:#223}
-    header{background:#0a3d62;color:#fff;padding:16px 20px}
-    main{max-width:960px;margin:0 auto;padding:20px}
-    a{color:#1e90ff;text-decoration:none} a:hover{text-decoration:underline}
-    .tag{display:inline-block;background:#eef3fb;color:#0a3d62;padding:4px 8px;border-radius:999px;font-size:12px;margin-right:8px}
-    .card{border:1px solid #e5e7eb;border-radius:8px;padding:12px 14px;margin:10px 0}
-  </style>
+  <link rel="stylesheet" href="/worldcup-2026/app.css">
 </head>
 <body>
-  <header><h1 id="cityTitle">City</h1></header>
-  <main>
-    <div id="meta"></div>
-    <h2>Stadiums in this city</h2>
-    <div id="stadiumList"></div>
-    <p>./index.html← Back to World Cup 2026 map</a></p>
-  </main>
-
-  <script>
-    const id = new URLSearchParams(location.search).get('id');
-
-    async function loadJSON(url, fallback) {
-      try {
-        const r = await fetch(url, {cache:'no-store'}); if(!r.ok) throw 0; return r.json();
-      } catch (e) { return fallback; }
-    }
-
-    // minimal fallback (only for this page)
-    const CITIES = {"cities":[{"slug":"new-york-new-jersey","name":"New York / New Jersey","country":"USA","region":"EAST"},
-      {"slug":"dallas","name":"Dallas (Arlington)","country":"USA","region":"CENTRAL"},
-      {"slug":"houston","name":"Houston","country":"USA","region":"CENTRAL"},
-      {"slug":"kansas-city","name":"Kansas City","country":"USA","region":"CENTRAL"},
-      {"slug":"atlanta","name":"Atlanta","country":"USA","region":"CENTRAL"},
-      {"slug":"los-angeles","name":"Los Angeles (Inglewood)","country":"USA","region":"WEST"},
-      {"slug":"san-francisco-bay-area","name":"San Francisco Bay Area (Santa Clara)","country":"USA","region":"WEST"},
-      {"slug":"seattle","name":"Seattle","country":"USA","region":"WEST"},
-      {"slug":"boston","name":"Boston (Foxborough)","country":"USA","region":"EAST"},
-      {"slug":"philadelphia","name":"Philadelphia","country":"USA","region":"EAST"},
-      {"slug":"miami","name":"Miami (Miami Gardens)","country":"USA","region":"EAST"},
-      {"slug":"toronto","name":"Toronto","country":"Canada","region":"EAST"},
-      {"slug":"vancouver","name":"Vancouver","country":"Canada","region":"WEST"},
-      {"slug":"mexico-city","name":"Mexico City","country":"Mexico","region":"CENTRAL"},
-      {"slug":"guadalajara","name":"Guadalajara","country":"Mexico","region":"WEST"},
-      {"slug":"monterrey","name":"Monterrey","country":"Mexico","region":"CENTRAL"}]};
-    const STADIUMS={"stadiums":[
-      {"slug":"metlife-stadium","name":"MetLife Stadium","citySlug":"new-york-new-jersey","official_url":"https://www.metlifestadium.com/"},
-      {"slug":"att-stadium","name":"AT&T Stadium","citySlug":"dallas","official_url":"https://attstadium.com/"},
-      {"slug":"nrg-stadium","name":"NRG Stadium","citySlug":"houston","official_url":"https://www.nrgpark.com/venues/nrg-stadium/"},
-      {"slug":"arrowhead-stadium","name":"Arrowhead Stadium","citySlug":"kansas-city","official_url":"https://www.chiefs.com/stadium/"},
-      {"slug":"mercedes-benz-stadium","name":"Mercedes-Benz Stadium","citySlug":"atlanta","official_url":"https://www.mercedesbenzstadium.com/"},
-      {"slug":"sofi-stadium","name":"SoFi Stadium","citySlug":"los-angeles","official_url":"https://www.sofistadium.com/"},
-      {"slug":"levis-stadium","name":"Levi's Stadium","citySlug":"san-francisco-bay-area","official_url":"https://www.levisstadium.com/"},
-      {"slug":"lumen-field","name":"Lumen Field","citySlug":"seattle","official_url":"https://www.lumenfield.com/"},
-      {"slug":"gillette-stadium","name":"Gillette Stadium","citySlug":"boston","official_url":"https://www.gillettestadium.com/"},
-      {"slug":"lincoln-financial-field","name":"Lincoln Financial Field","citySlug":"philadelphia","official_url":"https://www.lincolnfinancialfield.com/"},
-      {"slug":"hard-rock-stadium","name":"Hard Rock Stadium","citySlug":"miami","official_url":"https://hardrockstadium.com/"},
-      {"slug":"bmo-field","name":"BMO Field","citySlug":"toronto","official_url":"https://www.bmofield.com/"},
-      {"slug":"bc-place","name":"BC Place","citySlug":"vancouver","official_url":"https://bcplace.com/"},
-      {"slug":"estadio-azteca","name":"Estadio Azteca","citySlug":"mexico-city","official_url":"https://www.estadioazteca.com.mx/"},
-      {"slug":"estadio-bbva","name":"Estadio BBVA","citySlug":"monterrey","official_url":"https://www.estadiobbva.com/"},
-      {"slug":"estadio-akron","name":"Estadio Akron","citySlug":"guadalajara","official_url":"https://www.estadioakron.mx/"}]};
-
-    (async () => {
-      const cities   = (await loadJSON('/assets/data/cities.json',   CITIES)).cities   || [];
-      const stadiums = (await loadJSON('/assets/data/stadiums.json', STADIUMS)).stadiums || [];
-
-      const city = cities.find(c => c.slug === id);
-      if(!city){ document.getElementById('cityTitle').textContent='City not found'; return; }
-
-      document.getElementById('cityTitle').textContent = city.name;
-      document.getElement
+  <header class="top"><h1 id="cityTitle">City</h1></header>
+  <div class="wrap" style="grid-template-columns: 1fr;">
+    <main class="panel" style="border:none;">
+      <div id="meta" style="margin-bottom:8px;"></div>
+      <h2>Stadiums in this city</h2>
+      <div id="stadiumList"></div>
+      <p style="margin-top:18px;">./index.html← Back to World Cup 2026 map</a></p>
+    </main>
+  </div>
+  <script src="/worldcup-2026/city.js" defer></script>
+</body>
+</html>
