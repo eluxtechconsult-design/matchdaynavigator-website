@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MatchDay Navigator • World Cup 2026 (Interactive + Clustering, tuned)</title>
+<title>MatchDay Navigator • World Cup 2026 (Interactive + Clustering + Active Glow)</title>
 
 <style>
   /* ====== Dark base theme ====== */
@@ -31,7 +31,7 @@
   aside h2 { margin:6px 0 8px; font-size:12px; color:#88a9ff; text-transform:uppercase; letter-spacing:.06em; }
 
   /* Sidebar list — compact + auto-packed columns (no scroll on desktop) */
-  #cityList { column-gap: 12px; }  /* JS will set column-count = 1..4 */
+  #cityList { column-gap: 12px; }  /* JS sets column-count = 1..4 */
   .item { break-inside: avoid; padding:4px 6px; margin:2px 0; border-radius:6px; cursor:pointer; }
   .item:hover { background:var(--hover); }
   .line { display:flex; gap:6px; align-items:baseline; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:13px; line-height:1.25; }
@@ -148,19 +148,30 @@
         .on('tileerror',()=>{ if(!switched){ switched=true; map.removeLayer(base); L.tileLayer(osmUrl,{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(map); showErr('Carto tiles unavailable, switched to OpenStreetMap.'); }})
         .addTo(map);
 
-      // Icons
+      /* ---------- ICONS (normal + active‑glow variants) ---------- */
       function svgPin(fill, stroke){ stroke=stroke||'#0a3d62';
         const svg="<svg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'>"
-                +"<path d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z' fill='"+fill+"' stroke='"+stroke+"' stroke-width='1'/>"
+                +"<defs><filter id='g'><feDropShadow dx='0' dy='0' stdDeviation='2' flood-color='"+fill+"' flood-opacity='0.85'/></filter></defs>"
+                +"<path filter='url(#g)' d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z' fill='"+fill+"' stroke='"+stroke+"' stroke-width='1'/>"
                 +"<circle cx='12.5' cy='12.5' r='5' fill='#fff'/></svg>";
         return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
       }
+      function svgPinActive(fill){ // larger, brighter glow
+        const svg="<svg xmlns='http://www.w3.org/2000/svg' width='30' height='50' viewBox='0 0 25 41'>"
+                +"<defs><filter id='ag'><feDropShadow dx='0' dy='0' stdDeviation='3' flood-color='"+fill+"' flood-opacity='0.95'/></filter></defs>"
+                +"<path filter='url(#ag)' d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z' fill='"+fill+"' stroke='#07243a' stroke-width='1'/>"
+                +"<circle cx='12.5' cy='12.5' r='5' fill='#fff'/></svg>";
+        return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+      }
+
       const ICONS = {
-        city:    L.icon({ iconUrl: svgPin('#1e90ff'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] }),
-        stadium: L.icon({ iconUrl: svgPin('#f7d354'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] })
+        city:          L.icon({ iconUrl: svgPin('#1e90ff'),     iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] }),
+        stadium:       L.icon({ iconUrl: svgPin('#f7d354'),     iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] }),
+        cityActive:    L.icon({ iconUrl: svgPinActive('#1e90ff'), iconSize:[30,50], iconAnchor:[15,50], popupAnchor:[0,-44] }),
+        stadiumActive: L.icon({ iconUrl: svgPinActive('#f7d354'), iconSize:[30,50], iconAnchor:[15,50], popupAnchor:[0,-44] })
       };
 
-      // Custom neon cluster (label shows count)
+      /* ---------- CUSTOM CLUSTERS (Option A tuning) ---------- */
       function neonCluster(size){
         const s = Math.max(30, 22 + (size.toString().length*6) + Math.min(40, size));
         return L.divIcon({
@@ -172,52 +183,78 @@
         });
       }
       function clusterIconCreate(cluster){ return neonCluster(cluster.getChildCount()); }
-
-      // Option A: tuned clustering (uncluster earlier + spiderfy)
       const cityCluster = (window.L.MarkerClusterGroup)
         ? new L.MarkerClusterGroup({
             showCoverageOnHover:false,
-            maxClusterRadius:40,        // tighter (was 50)
-            disableClusteringAtZoom:6,  // uncluster earlier (so “2” rarely shows at start)
+            maxClusterRadius:40,
+            disableClusteringAtZoom:6,
             spiderfyOnMaxZoom:true,
             iconCreateFunction:clusterIconCreate
           })
         : null;
-
       const stadiumCluster = (window.L.MarkerClusterGroup)
         ? new L.MarkerClusterGroup({
             showCoverageOnHover:false,
-            maxClusterRadius:35,        // tighter for stadiums
-            disableClusteringAtZoom:6,  // uncluster earlier
+            maxClusterRadius:35,
+            disableClusteringAtZoom:6,
             spiderfyOnMaxZoom:true,
             iconCreateFunction:clusterIconCreate
           })
         : null;
+      if(cityCluster) cityCluster.on('clusterclick', e => e.layer.spiderfy());
+      if(stadiumCluster) stadiumCluster.on('clusterclick', e => e.layer.spiderfy());
 
-      if(cityCluster){ cityCluster.on('clusterclick', e => e.layer.spiderfy()); }
-      if(stadiumCluster){ stadiumCluster.on('clusterclick', e => e.layer.spiderfy()); }
-
-      // Stadium lookup + refs
+      /* ---------- Stadium lookup + refs ---------- */
       const stadiumByCitySlug={}; const stadiumMarkersBySlug={};
       STADIUMS.forEach(s=>{ if(!stadiumByCitySlug[s.citySlug]) stadiumByCitySlug[s.citySlug]=s.name; });
 
-      // Markers
+      /* ---------- ACTIVE MARKER STATE ---------- */
+      let active = { type:null, slug:null, marker:null };
+      function clearActive(){
+        if(!active.marker) return;
+        if(active.type==='city'){
+          active.marker.setIcon(ICONS.city);
+        }else if(active.type==='stadium'){
+          active.marker.setIcon(ICONS.stadium);
+        }
+        active.marker = null; active.slug=null; active.type=null;
+      }
+      function setActive(type, slug){
+        // reset previous
+        clearActive();
+        // apply to new
+        let m = (type==='city') ? cityMarkersBySlug[slug] : stadiumMarkersBySlug[slug];
+        if(!m) return;
+        m.setIcon(type==='city' ? ICONS.cityActive : ICONS.stadiumActive);
+        if(m.bringToFront) m.bringToFront();
+        active = { type, slug, marker:m };
+      }
+
+      /* ---------- Markers ---------- */
       const cityMarkersBySlug={}; const allMarkers=[];
       CITIES.forEach(c=>{
         const popup = "<b>"+c.name+"</b><br/>"+c.country+(stadiumByCitySlug[c.slug]?"<br/><small>"+stadiumByCitySlug[c.slug]+"</small>":"");
-        const m = L.marker([c.lat,c.lng],{icon:ICONS.city}).bindPopup(popup).bindTooltip(c.name);
+        const m = L.marker([c.lat,c.lng],{icon:ICONS.city})
+          .bindPopup(popup)
+          .bindTooltip(c.name)
+          .on('popupopen', ()=> setActive('city', c.slug)); // glow when popup opens
         cityMarkersBySlug[c.slug]=m; allMarkers.push(m);
         if(cityCluster) cityCluster.addLayer(m); else m.addTo(map);
       });
 
       STADIUMS.forEach(s=>{
-        const m = L.marker([s.lat,s.lng],{icon:ICONS.stadium}).bindPopup("<b>"+s.name+"</b>");
+        const m = L.marker([s.lat,s.lng],{icon:ICONS.stadium})
+          .bindPopup("<b>"+s.name+"</b>")
+          .on('popupopen', ()=> setActive('stadium', s.slug));
         stadiumMarkersBySlug[s.slug]=m; allMarkers.push(m);
         if(stadiumCluster) stadiumCluster.addLayer(m); else m.addTo(map);
       });
 
       if(cityCluster) map.addLayer(cityCluster);
       if(stadiumCluster) map.addLayer(stadiumCluster);
+
+      // Reset glow when clicking empty map area
+      map.on('click', clearActive);
 
       // Fit + route handling
       function fitAll(){ if(allMarkers.length){ const fg=L.featureGroup(allMarkers); map.fitBounds(fg.getBounds(),{padding:[40,40]}); } else { map.setView([37.8,-96],4); } }
@@ -234,13 +271,26 @@
             +"<span class='country'>"+c.country+"</span>"
             +(st?"<small class='sep'>·</small><span class='stadium' data-city='"+c.slug+"'>"+st+"</span>":"")
             +"</div>";
-          el.addEventListener('click',()=>focusCity(c.slug,true,true));
+          // Click city → fly & glow city
+          el.addEventListener('click',()=>{
+            const m=cityMarkersBySlug[c.slug]; if(!m) return;
+            setActive('city', c.slug);
+            setQuery('city', c.slug); setQuery('stadium', null);
+            map.flyTo(m.getLatLng(), 6, {duration:.8});
+            setTimeout(()=>m.openPopup(), 850);
+          });
+          // Click stadium name → fly & glow stadium
           el.querySelectorAll('.stadium').forEach(node=>{
             node.addEventListener('click',ev=>{
               ev.stopPropagation();
               const citySlug=node.getAttribute('data-city');
               const stadium=STADIUMS.find(s=>s.citySlug===citySlug);
-              if(stadium) focusStadium(stadium.slug,true,true);
+              if(!stadium) return;
+              const m=stadiumMarkersBySlug[stadium.slug]; if(!m) return;
+              setActive('stadium', stadium.slug);
+              setQuery('stadium', stadium.slug); setQuery('city', null);
+              map.flyTo(m.getLatLng(), 12, {duration:.8});
+              setTimeout(()=>m.openPopup(), 850);
             });
           });
           listEl.appendChild(el);
@@ -253,11 +303,13 @@
       function focusCity(slug, open, push){
         const m=cityMarkersBySlug[slug]; if(!m) return;
         if(push){ setQuery('city',slug); setQuery('stadium',null); }
+        setActive('city', slug);
         map.flyTo(m.getLatLng(), 6, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850);
       }
       function focusStadium(slug, open, push){
         const m=stadiumMarkersBySlug[slug]; if(!m) return;
         if(push){ setQuery('stadium',slug); setQuery('city',null); }
+        setActive('stadium', slug);
         map.flyTo(m.getLatLng(), 12, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850);
       }
       function handleRoute(open){
