@@ -13,35 +13,26 @@ L.tileLayer(
   }
 ).addTo(map);
 
+// Start somewhere neutral; we'll fit later
 map.setView([37.8, -96], 4);
 
 // Helper: SVG pin icon
 function svgPin(fill, stroke = '#0a3d62') {
   const svg = `
     <svg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'>
-      <path d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 
-      25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z' fill='${fill}' stroke='${stroke}' stroke-width='1'/>
+      <path d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z'
+            fill='${fill}' stroke='${stroke}' stroke-width='1'/>
       <circle cx='12.5' cy='12.5' r='5' fill='#fff'/>
     </svg>`;
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
 }
 
 const ICONS = {
-  city: L.icon({
-    iconUrl: svgPin('#1e90ff'),
-    iconSize: [25,41],
-    iconAnchor: [12,41],
-    popupAnchor: [0,-36]
-  }),
-  stadium: L.icon({
-    iconUrl: svgPin('#f7d354'),
-    iconSize: [25,41],
-    iconAnchor: [12,41],
-    popupAnchor: [0,-36]
-  })
+  city: L.icon({ iconUrl: svgPin('#1e90ff'), iconSize: [25,41], iconAnchor: [12,41], popupAnchor: [0,-36] }),
+  stadium: L.icon({ iconUrl: svgPin('#f7d354'), iconSize: [25,41], iconAnchor: [12,41], popupAnchor: [0,-36] })
 };
 
-// Fallback data (used if JSON fails)
+// Fallback data (only used if JSON fetch fails)
 const FALLBACK_CITIES = { "cities": [
   {"name":"New York / New Jersey","country":"USA","lat":40.813528,"lng":-74.074361},
   {"name":"Dallas (Arlington)","country":"USA","lat":32.74778,"lng":-97.09278},
@@ -53,25 +44,20 @@ const FALLBACK_CITIES = { "cities": [
   {"name":"Toronto","country":"Canada","lat":43.63333,"lng":-79.41861}
 ]};
 
-const FALLBACK_STADIUMS = {"stadiums":[]};
-
-// Fetch JSON with fallback
-async function getJSON(url, fallback) {
+async function getJSON(url, fb) {
   try {
-    const r = await fetch(url, { cache:'no-store' });
+    const r = await fetch(url, { cache: 'no-store' });
     if (!r.ok) throw 0;
     return await r.json();
   } catch {
-    return fallback;
+    return fb;
   }
 }
 
 (async () => {
-  const cities = (await getJSON('/assets/data/cities.json', FALLBACK_CITIES)).cities;
+  const cities = (await getJSON('/assets/data/cities.json', FALLBACK_CITIES)).cities || [];
 
   const markers = [];
-
-  // City pins
   cities.forEach(c => {
     const m = L.marker([c.lat, c.lng], { icon: ICONS.city })
       .bindPopup(`<b>${c.name}</b><br/>${c.country}`)
@@ -80,9 +66,13 @@ async function getJSON(url, fallback) {
     markers.push(m);
   });
 
-  // Fit to all markers
-  const g = L.featureGroup(markers);
-  map.fitBounds(g.getBounds(), { padding: [40,40] });
+  if (markers.length) {
+    const fg = L.featureGroup(markers);
+    map.fitBounds(fg.getBounds(), { padding: [40, 40] });
+  }
 
+  // IMPORTANT: force Leaflet to recalc tile layout after first paint
+  // (prevents the “patchy tiles” you saw)
+  setTimeout(() => map.invalidateSize(), 150);
   window.addEventListener('resize', () => map.invalidateSize());
 })();
