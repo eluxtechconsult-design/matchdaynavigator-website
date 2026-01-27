@@ -1,13 +1,10 @@
-/* Popup and tooltip theme */
+/* Dark popups/tooltips */
 .leaflet-popup-content-wrapper {
   background:#0f141c;
   color:#eaf2ff;
   border:1px solid #1a2230;
 }
-
-.leaflet-popup-tip {
-  background:#0f141c;
-}
+.leaflet-popup-tip { background:#0f141c; }
 
 .leaflet-tooltip {
   background:#0f141c;

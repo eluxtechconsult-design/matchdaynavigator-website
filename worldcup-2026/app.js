@@ -13,7 +13,7 @@ L.tileLayer(
   }
 ).addTo(map);
 
-// Start somewhere neutral; we'll fit later
+// Start neutral; fit later
 map.setView([37.8, -96], 4);
 
 // Helper: SVG pin icon
@@ -32,7 +32,7 @@ const ICONS = {
   stadium: L.icon({ iconUrl: svgPin('#f7d354'), iconSize: [25,41], iconAnchor: [12,41], popupAnchor: [0,-36] })
 };
 
-// Fallback data (only used if JSON fetch fails)
+// Fallback data (only if JSON fetch fails)
 const FALLBACK_CITIES = { "cities": [
   {"name":"New York / New Jersey","country":"USA","lat":40.813528,"lng":-74.074361},
   {"name":"Dallas (Arlington)","country":"USA","lat":32.74778,"lng":-97.09278},
@@ -44,17 +44,18 @@ const FALLBACK_CITIES = { "cities": [
   {"name":"Toronto","country":"Canada","lat":43.63333,"lng":-79.41861}
 ]};
 
-async function getJSON(url, fb) {
+async function getJSON(url, fallback) {
   try {
     const r = await fetch(url, { cache: 'no-store' });
     if (!r.ok) throw 0;
     return await r.json();
   } catch {
-    return fb;
+    return fallback;
   }
 }
 
 (async () => {
+  // Use your data if present; fallback otherwise
   const cities = (await getJSON('/assets/data/cities.json', FALLBACK_CITIES)).cities || [];
 
   const markers = [];
@@ -71,8 +72,7 @@ async function getJSON(url, fb) {
     map.fitBounds(fg.getBounds(), { padding: [40, 40] });
   }
 
-  // IMPORTANT: force Leaflet to recalc tile layout after first paint
-  // (prevents the “patchy tiles” you saw)
-  setTimeout(() => map.invalidateSize(), 150);
+  // Force Leaflet to recalc after layout paint (fixes “patchy tiles”)
+  requestAnimationFrame(() => { map.invalidateSize(); });
   window.addEventListener('resize', () => map.invalidateSize());
 })();
