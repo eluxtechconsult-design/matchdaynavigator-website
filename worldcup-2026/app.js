@@ -71,7 +71,7 @@ function svgPin(fill = '#1e90ff', stroke = '#0a3d62') {
 }
 const PIN_ICON = L.icon({
   iconUrl: svgPin(),
-  iconRetinaUrl: svgPin(),   // same SVG works for retina
+  iconRetinaUrl: svgPin(),
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [0, -36],
@@ -92,15 +92,15 @@ const stCluster   = L.markerClusterGroup({ showCoverageOnHover: false, maxCluste
 map.addLayer(cityCluster);
 map.addLayer(stCluster);
 
-/* ---------- Helper: safe anchor builder ---------- */
+/* ---------- Correct anchor builder ---------- */
 function a(href, label, { external = false } = {}) {
-  if (external) {
-    return `${href}${label}</a>`;
-  }
-  return `${href}${label}</a>`;
+  const safeHref = String(href);
+  const safeLabel = String(label);
+  const extAttrs = external ? ' target="_blank" rel="noopener noreferrer"' : '';
+  return `${safeHref}${safeLabel}</a>`;
 }
 
-/* ---------- Sidebar renderers (proper anchors) ---------- */
+/* ---------- Sidebar renderers (now proper anchors) ---------- */
 function addCityRow(city) {
   const list = document.getElementById('cityList');
   const el = document.createElement('div');
@@ -134,7 +134,7 @@ function addStadiumMarker(st) {
     ${a(st.official_url, 'Official site', { external: true })}<br/>
     ${a('https://concierge.matchdaynavigator.com/route?stadium=' + encodeURIComponent(st.name), 'Open route', { external: true })}<br/>
     ${a('https://wa.me/14155238886?text=' + waText, 'Get match‑day details on WhatsApp', { external: true })}
-    <br/><small>(Replace the number with your WABA or point to your own opt‑in page.)</small>
+    <br/><small>(Replace the number with your WABA or link to your own opt‑in page.)</small>
   `;
   stCluster.addLayer(L.marker([st.lat, st.lng], { icon: PIN_ICON }).bindPopup(popupHtml));
 }
