@@ -3,43 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MatchDay Navigator • World Cup 2026 (Cities + Search + Filters)</title>
+  <title>MatchDay Navigator • World Cup 2026 (Cities + Stadiums inline)</title>
 
   <!-- We intentionally keep Leaflet CSS external removed; critical rules are inlined below -->
 
   <style>
-    /* ====== Your dark base theme ====== */
+    /* ====== Dark base theme (same feel as you have now) ====== */
     :root { --bg:#0b0e12; --text:#dfe7f3; --muted:#a7b6cc; --line:#1c2430; --brand:#1e90ff; --hover:#111823; }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
     body { background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, Arial, sans-serif; }
 
-    /* Header with tools */
     header.top {
       display:flex; align-items:center; justify-content:space-between;
       height:56px; padding:8px 14px; border-bottom:1px solid var(--line); background:#0d1117;
       position:sticky; top:0; z-index:5;
     }
     header .brand { font-weight:700; color:#eaf2ff; }
-    header .tools { display:flex; align-items:center; gap:10px; }
-    #search {
-      background:#0b1220; color:var(--text); border:1px solid var(--line);
-      padding:8px 10px; border-radius:6px; min-width:240px;
-    }
-    .filters label { color:var(--muted); margin-left:8px; }
 
-    /* Two‑column layout: map + sidebar */
-    main.layout { display:grid; grid-template-columns: 1fr 340px; height: calc(100vh - 56px); }
+    /* Map + simple sidebar (one column for now; we’ll compact later) */
+    main.layout { display:grid; grid-template-columns: 1fr 320px; height: calc(100vh - 56px); }
     #map { width:100%; height:100%; background:#000; }
 
-    aside.panel { border-left:1px solid var(--line); background:#0f1319; overflow:auto; padding:12px; }
-    aside h2 { margin:8px 0 6px; font-size:12px; color:#88a9ff; text-transform:uppercase; letter-spacing:.06em; }
-    .item { padding:6px 8px; border-radius:6px; cursor:pointer; }
+    aside.panel { border-left:1px solid var(--line); background:#0f1319; overflow:auto; padding:10px; }
+    aside h2 { margin:6px 0 8px; font-size:12px; color:#88a9ff; text-transform:uppercase; letter-spacing:.06em; }
+    .item { padding:6px 8px; border-radius:6px; cursor:pointer; margin:2px 0; }
     .item:hover { background:var(--hover); }
-    .item .name { color:#cfe5ff; }
-    .item small { color:var(--muted); }
+    .line { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .city { color:#cfe5ff; font-weight:600; }
+    .country { color:#b8c6dd; }
+    .stadium { color:#ffd970; }
+    small.sep { color:#3a475b; }
 
-    /* Responsive: collapse sidebar to bottom tray on mobile */
+    /* Mobile: bottom tray (unchanged from before) */
     @media (max-width: 900px) {
       main.layout { grid-template-columns: 1fr; }
       #map { height: 55vh; }
@@ -84,14 +80,6 @@
 <body>
   <header class="top">
     <div class="brand">MatchDay Navigator</div>
-    <div class="tools">
-      <input id="search" type="text" placeholder="Search city…" />
-      <span class="filters">
-        <label><input type="checkbox" id="fUSA" checked> USA</label>
-        <label><input type="checkbox" id="fCAN" checked> Canada</label>
-        <label><input type="checkbox" id="fMEX" checked> Mexico</label>
-      </span>
-    </div>
   </header>
 
   <main class="layout">
@@ -108,7 +96,7 @@
           crossorigin="anonymous"></script>
 
   <script>
-    /* --- Map init (Dark Matter, no animation on first paint for stability) --- */
+    /* --- Map init (Dark Matter, keep animation off for stability) --- */
     const map = L.map('map', {
       zoomControl: true,
       worldCopyJump: true,
@@ -134,7 +122,7 @@
     };
     const ICON_CITY = L.icon({ iconUrl: svgPin('#1e90ff'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] });
 
-    /* --- Cities dataset (same as your working pins) --- */
+    /* --- Cities (your current working set) --- */
     const CITIES = [
       { slug:'new-york-new-jersey', name:'New York / New Jersey', country:'USA',    lat:40.813528, lng:-74.074361 },
       { slug:'dallas',              name:'Dallas (Arlington)',    country:'USA',    lat:32.747780, lng:-97.092780 },
@@ -149,12 +137,38 @@
       { slug:'monterrey',           name:'Monterrey',             country:'Mexico', lat:25.669170, lng:-100.244440 }
     ];
 
-    /* --- Build markers and index them by slug --- */
+    /* --- Stadiums (inline) --- */
+    const STADIUMS = [
+      { slug:'metlife-stadium',        name:'MetLife Stadium',            citySlug:'new-york-new-jersey' },
+      { slug:'att-stadium',            name:'AT&T Stadium',               citySlug:'dallas' },
+      { slug:'nrg-stadium',            name:'NRG Stadium',                citySlug:'houston' },
+      { slug:'arrowhead-stadium',      name:'Arrowhead Stadium',          citySlug:'kansas-city' },
+      { slug:'mercedes-benz-stadium',  name:'Mercedes-Benz Stadium',      citySlug:'atlanta' },
+      { slug:'sofi-stadium',           name:'SoFi Stadium',               citySlug:'los-angeles' },
+      { slug:'levis-stadium',          name:\"Levi's Stadium\",            citySlug:'san-francisco-bay-area' }, /* Not shown (no SF city in list) */
+      { slug:'lumen-field',            name:'Lumen Field',                citySlug:'seattle' },                 /* Not shown (no Seattle in list) */
+      { slug:'gillette-stadium',       name:'Gillette Stadium',           citySlug:'boston' },                  /* Not shown (no Boston in list) */
+      { slug:'lincoln-financial-field',name:'Lincoln Financial Field',    citySlug:'philadelphia' },           /* Not shown (no Philly in list) */
+      { slug:'hard-rock-stadium',      name:'Hard Rock Stadium',          citySlug:'miami' },                   /* Not shown (no Miami in list) */
+      { slug:'bmo-field',              name:'BMO Field',                  citySlug:'toronto' },
+      { slug:'bc-place',               name:'BC Place',                   citySlug:'vancouver' },
+      { slug:'estadio-azteca',         name:'Estadio Azteca',             citySlug:'mexico-city' },
+      { slug:'estadio-bbva',           name:'Estadio BBVA',               citySlug:'monterrey' },
+      { slug:'estadio-akron',          name:'Estadio Akron',              citySlug:'guadalajara' }
+    ];
+
+    /* Build stadium lookup by citySlug (first stadium shown if multiple) */
+    const stadiumByCitySlug = {};
+    STADIUMS.forEach(s => {
+      if (!stadiumByCitySlug[s.citySlug]) stadiumByCitySlug[s.citySlug] = s.name;
+    });
+
+    /* --- Build city markers (same as before) --- */
     const cityMarkers = {};
     const markers = [];
     CITIES.forEach(c => {
       const m = L.marker([c.lat, c.lng], { icon: ICON_CITY })
-        .bindPopup(`<b>${c.name}</b><br/>${c.country}`)
+        .bindPopup(`<b>${c.name}</b><br/>${c.country}${stadiumByCitySlug[c.slug] ? `<br/><small>${stadiumByCitySlug[c.slug]}</small>` : ''}`)
         .bindTooltip(c.name);
       m.addTo(map);
       cityMarkers[c.slug] = m;
@@ -168,14 +182,22 @@
       map.setView([37.8, -96], 4);
     }
 
-    /* --- Sidebar rendering --- */
+    /* --- Sidebar: City — Country · Stadium (inline) --- */
     const listEl = document.getElementById('cityList');
     function renderList(items) {
       listEl.innerHTML = '';
       items.forEach(c => {
+        const stadiumName = stadiumByCitySlug[c.slug] || '';
         const el = document.createElement('div');
         el.className = 'item';
-        el.innerHTML = `<div class="name">${c.name}</div><small>${c.country}</small>`;
+        el.innerHTML = `
+          <div class="line">
+            <span class="city">${c.name}</span>
+            <small class="sep">—</small>
+            <span class="country">${c.country}</span>
+            ${stadiumName ? `<small class="sep">·</small><span class="stadium">${stadiumName}</span>` : ''}
+          </div>
+        `;
         el.addEventListener('click', () => {
           const m = cityMarkers[c.slug];
           if (!m) return;
@@ -187,34 +209,7 @@
     }
     renderList(CITIES);
 
-    /* --- Search + Region filters --- */
-    const searchEl = document.getElementById('search');
-    const fUSA = document.getElementById('fUSA');
-    const fCAN = document.getElementById('fCAN');
-    const fMEX = document.getElementById('fMEX');
-
-    function applyFilters() {
-      const q = (searchEl.value || '').trim().toLowerCase();
-      const allowed = c =>
-        (c.country === 'USA'    && fUSA.checked) ||
-        (c.country === 'Canada' && fCAN.checked) ||
-        (c.country === 'Mexico' && fMEX.checked);
-
-      const matches = CITIES.filter(c => allowed(c) && (c.name.toLowerCase().includes(q) || c.country.toLowerCase().includes(q)));
-      renderList(matches);
-
-      // Optional: fit to filtered set
-      const filteredMarkers = matches.map(c => cityMarkers[c.slug]).filter(Boolean);
-      if (filteredMarkers.length) {
-        const fg = L.featureGroup(filteredMarkers);
-        map.fitBounds(fg.getBounds(), { padding:[40,40] });
-      }
-    }
-
-    [searchEl, fUSA, fCAN, fMEX].forEach(ctrl => ctrl.addEventListener('input', applyFilters));
-    [fUSA, fCAN, fMEX].forEach(ctrl => ctrl.addEventListener('change', applyFilters));
-
-    /* --- Final layout reflows for safety --- */
+    /* --- Keep the map stable --- */
     window.addEventListener('load', () => map.invalidateSize());
     tiles.on('load', () => map.invalidateSize());
     requestAnimationFrame(() => map.invalidateSize());
