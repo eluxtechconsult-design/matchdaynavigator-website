@@ -59,7 +59,7 @@ async function loadJSON(url, fallback) {
   }
 }
 
-/* ---------- Use SVG data‑URL pin (no external PNG files) ---------- */
+/* ---------- Use SVG data‑URL pin (no external PNGs) ---------- */
 function svgPin(fill = '#1e90ff', stroke = '#0a3d62') {
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">
@@ -69,6 +69,7 @@ function svgPin(fill = '#1e90ff', stroke = '#0a3d62') {
      </svg>`;
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
 }
+
 const PIN_ICON = L.icon({
   iconUrl: svgPin(),
   iconRetinaUrl: svgPin(),
@@ -86,18 +87,18 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 map.setView([37.8, -96], 4);
 
-/* ---------- Clusters (mobile‑friendly) ---------- */
+/* ---------- Clusters ---------- */
 const cityCluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 50 });
 const stCluster   = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 50 });
 map.addLayer(cityCluster);
 map.addLayer(stCluster);
 
-/* ---------- Anchor builder (REAL <a> tag) ---------- */
+/* ---------- ✅ Correct anchor builder ---------- */
 function a(href, label, { external = false } = {}) {
   const ext = external ? ' target="_blank" rel="noopener noreferrer"' : '';
   const safeHref = String(href);
   const safeLabel = String(label);
-  return `${safeHref}${safeLabel}</a>`;
+  return `<a href="${safeHref}"${ext}>${safeLabel}</a>`;
 }
 
 /* ---------- Sidebar rows ---------- */
