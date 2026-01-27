@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MatchDay Navigator • World Cup 2026 (Interactive + Clustering + Active Glow)</title>
+<title>MatchDay Navigator • World Cup 2026 (Cities & Stadiums Tabs + Glow)</title>
 
 <style>
   /* ====== Dark base theme ====== */
@@ -20,24 +20,31 @@
   }
   .brand { font-weight:700; color:#eaf2ff; }
   .tools { display:flex; gap:10px; align-items:center; }
-  #search { background:#0b1220; color:var(--text); border:1px solid var(--line); padding:6px 8px; border-radius:6px; min-width:220px; }
+  #search { background:#0b1220; color:var(--text); border:1px solid var(--line); padding:6px 8px; border-radius:6px; min-width:240px; }
   .filters label { color:var(--muted); margin-left:8px; font-size:12px; }
 
   /* Map + sidebar */
-  main.layout { display:grid; grid-template-columns: 1fr 340px; height: calc(100vh - 56px); }
+  main.layout { display:grid; grid-template-columns: 1fr 360px; height: calc(100vh - 56px); }
   #map { width:100%; height:100%; background:#000; }
 
-  aside.panel { border-left:1px solid var(--line); background:#0f1319; overflow:hidden; padding:10px; }
-  aside h2 { margin:6px 0 8px; font-size:12px; color:#88a9ff; text-transform:uppercase; letter-spacing:.06em; }
+  aside.panel { border-left:1px solid var(--line); background:#0f1319; overflow:hidden; padding:10px; display:flex; flex-direction:column; }
+  .tabs { display:flex; gap:8px; margin-bottom:6px; }
+  .tabs button{
+    background:#0b1220; color:#cfe5ff; border:1px solid #1a2230; padding:6px 10px; border-radius:6px; cursor:pointer; font-weight:600;
+  }
+  .tabs button.active{ background:#102239; border-color:#23406a; color:#fff; }
+  h2 { margin:6px 0 8px; font-size:12px; color:#88a9ff; text-transform:uppercase; letter-spacing:.06em; }
 
-  /* Sidebar list — compact + auto-packed columns (no scroll on desktop) */
-  #cityList { column-gap: 12px; }  /* JS sets column-count = 1..4 */
+  /* Lists — compact + column-packed (set by JS) */
+  .list { flex:1 1 auto; overflow:hidden; }   /* container for columns */
+  .colpack { column-gap: 12px; }              /* actual columns live here */
   .item { break-inside: avoid; padding:4px 6px; margin:2px 0; border-radius:6px; cursor:pointer; }
   .item:hover { background:var(--hover); }
   .line { display:flex; gap:6px; align-items:baseline; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:13px; line-height:1.25; }
   .city { color:#cfe5ff; font-weight:600; }
   .country { color:#b8c6dd; }
-  .stadium { color:var(--gold); text-decoration: underline; cursor: pointer; }
+  .stadium { color:var(--gold); font-weight:600; }
+  .stadium.link { text-decoration: underline; cursor: pointer; }
   small.sep { color:#3a475b; }
 
   /* Mobile: single column list in bottom tray */
@@ -45,7 +52,7 @@
     main.layout { grid-template-columns: 1fr; }
     #map { height: 55vh; }
     aside.panel { height: 45vh; position:fixed; inset:auto 0 0 0; border-left:0; border-top:1px solid var(--line); overflow:auto; }
-    #cityList { column-count: 1 !important; }
+    .colpack { column-count: 1 !important; }
   }
 
   /* ====== CRITICAL Leaflet layout rules (subset) — prevents patchy tiles ====== */
@@ -91,8 +98,20 @@
   <main class="layout">
     <section id="map" aria-label="World Cup 2026 Map"></section>
     <aside class="panel">
-      <h2>Cities</h2>
-      <div id="cityList"></div>
+      <nav class="tabs">
+        <button id="tabCities" class="active" data-tab="cities">Cities</button>
+        <button id="tabStadiums" data-tab="stadiums">Stadiums</button>
+      </nav>
+
+      <div id="citiesPane" class="list" role="region" aria-label="Cities list">
+        <h2>Cities</h2>
+        <div id="cityList" class="colpack"></div>
+      </div>
+
+      <div id="stadiumsPane" class="list" role="region" aria-label="Stadiums list" style="display:none">
+        <h2>Stadiums</h2>
+        <div id="stadiumList" class="colpack"></div>
+      </div>
     </aside>
   </main>
 
@@ -156,7 +175,7 @@
                 +"<circle cx='12.5' cy='12.5' r='5' fill='#fff'/></svg>";
         return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
       }
-      function svgPinActive(fill){ // larger, brighter glow
+      function svgPinActive(fill){
         const svg="<svg xmlns='http://www.w3.org/2000/svg' width='30' height='50' viewBox='0 0 25 41'>"
                 +"<defs><filter id='ag'><feDropShadow dx='0' dy='0' stdDeviation='3' flood-color='"+fill+"' flood-opacity='0.95'/></filter></defs>"
                 +"<path filter='url(#ag)' d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z' fill='"+fill+"' stroke='#07243a' stroke-width='1'/>"
@@ -165,13 +184,13 @@
       }
 
       const ICONS = {
-        city:          L.icon({ iconUrl: svgPin('#1e90ff'),     iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] }),
-        stadium:       L.icon({ iconUrl: svgPin('#f7d354'),     iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] }),
+        city:          L.icon({ iconUrl: svgPin('#1e90ff'),       iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] }),
+        stadium:       L.icon({ iconUrl: svgPin('#f7d354'),       iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] }),
         cityActive:    L.icon({ iconUrl: svgPinActive('#1e90ff'), iconSize:[30,50], iconAnchor:[15,50], popupAnchor:[0,-44] }),
         stadiumActive: L.icon({ iconUrl: svgPinActive('#f7d354'), iconSize:[30,50], iconAnchor:[15,50], popupAnchor:[0,-44] })
       };
 
-      /* ---------- CUSTOM CLUSTERS (Option A tuning) ---------- */
+      /* ---------- CUSTOM CLUSTERS (tuned to reduce “2” bubbles) ---------- */
       function neonCluster(size){
         const s = Math.max(30, 22 + (size.toString().length*6) + Math.min(40, size));
         return L.divIcon({
@@ -183,6 +202,7 @@
         });
       }
       function clusterIconCreate(cluster){ return neonCluster(cluster.getChildCount()); }
+
       const cityCluster = (window.L.MarkerClusterGroup)
         ? new L.MarkerClusterGroup({
             showCoverageOnHover:false,
@@ -192,6 +212,7 @@
             iconCreateFunction:clusterIconCreate
           })
         : null;
+
       const stadiumCluster = (window.L.MarkerClusterGroup)
         ? new L.MarkerClusterGroup({
             showCoverageOnHover:false,
@@ -201,47 +222,40 @@
             iconCreateFunction:clusterIconCreate
           })
         : null;
+
       if(cityCluster) cityCluster.on('clusterclick', e => e.layer.spiderfy());
       if(stadiumCluster) stadiumCluster.on('clusterclick', e => e.layer.spiderfy());
-
-      /* ---------- Stadium lookup + refs ---------- */
-      const stadiumByCitySlug={}; const stadiumMarkersBySlug={};
-      STADIUMS.forEach(s=>{ if(!stadiumByCitySlug[s.citySlug]) stadiumByCitySlug[s.citySlug]=s.name; });
 
       /* ---------- ACTIVE MARKER STATE ---------- */
       let active = { type:null, slug:null, marker:null };
       function clearActive(){
         if(!active.marker) return;
-        if(active.type==='city'){
-          active.marker.setIcon(ICONS.city);
-        }else if(active.type==='stadium'){
-          active.marker.setIcon(ICONS.stadium);
-        }
-        active.marker = null; active.slug=null; active.type=null;
+        if(active.type==='city'){ active.marker.setIcon(ICONS.city); }
+        else if(active.type==='stadium'){ active.marker.setIcon(ICONS.stadium); }
+        active = { type:null, slug:null, marker:null };
       }
       function setActive(type, slug){
-        // reset previous
         clearActive();
-        // apply to new
-        let m = (type==='city') ? cityMarkersBySlug[slug] : stadiumMarkersBySlug[slug];
+        const m = (type==='city') ? cityMarkersBySlug[slug] : stadiumMarkersBySlug[slug];
         if(!m) return;
         m.setIcon(type==='city' ? ICONS.cityActive : ICONS.stadiumActive);
         if(m.bringToFront) m.bringToFront();
         active = { type, slug, marker:m };
       }
 
+      /* ---------- Build lookups ---------- */
+      const stadiumByCitySlug={}; STADIUMS.forEach(s=>{ if(!stadiumByCitySlug[s.citySlug]) stadiumByCitySlug[s.citySlug]=s.name; });
+
       /* ---------- Markers ---------- */
-      const cityMarkersBySlug={}; const allMarkers=[];
+      const cityMarkersBySlug={}; const stadiumMarkersBySlug={}; const allMarkers=[];
       CITIES.forEach(c=>{
         const popup = "<b>"+c.name+"</b><br/>"+c.country+(stadiumByCitySlug[c.slug]?"<br/><small>"+stadiumByCitySlug[c.slug]+"</small>":"");
         const m = L.marker([c.lat,c.lng],{icon:ICONS.city})
-          .bindPopup(popup)
-          .bindTooltip(c.name)
-          .on('popupopen', ()=> setActive('city', c.slug)); // glow when popup opens
+          .bindPopup(popup).bindTooltip(c.name)
+          .on('popupopen', ()=> setActive('city', c.slug));
         cityMarkersBySlug[c.slug]=m; allMarkers.push(m);
         if(cityCluster) cityCluster.addLayer(m); else m.addTo(map);
       });
-
       STADIUMS.forEach(s=>{
         const m = L.marker([s.lat,s.lng],{icon:ICONS.stadium})
           .bindPopup("<b>"+s.name+"</b>")
@@ -249,105 +263,137 @@
         stadiumMarkersBySlug[s.slug]=m; allMarkers.push(m);
         if(stadiumCluster) stadiumCluster.addLayer(m); else m.addTo(map);
       });
-
       if(cityCluster) map.addLayer(cityCluster);
       if(stadiumCluster) map.addLayer(stadiumCluster);
 
-      // Reset glow when clicking empty map area
-      map.on('click', clearActive);
-
-      // Fit + route handling
+      // Fit
       function fitAll(){ if(allMarkers.length){ const fg=L.featureGroup(allMarkers); map.fitBounds(fg.getBounds(),{padding:[40,40]}); } else { map.setView([37.8,-96],4); } }
 
-      // Sidebar
-      const listEl=document.getElementById('cityList');
-      function renderList(items){
-        listEl.innerHTML='';
+      /* ---------- Sidebar rendering (tabs) ---------- */
+      const listCities = document.getElementById('cityList');
+      const listStads  = document.getElementById('stadiumList');
+      const tabCities  = document.getElementById('tabCities');
+      const tabStadiums= document.getElementById('tabStadiums');
+      const paneCities = document.getElementById('citiesPane');
+      const paneStads  = document.getElementById('stadiumsPane');
+
+      function setTab(which){
+        if(which==='cities'){
+          tabCities.classList.add('active'); tabStadiums.classList.remove('active');
+          paneCities.style.display='block';   paneStads.style.display='none';
+          packIntoColumns(listCities);
+        }else{
+          tabStadiums.classList.add('active'); tabCities.classList.remove('active');
+          paneStads.style.display='block';     paneCities.style.display='none';
+          packIntoColumns(listStads);
+        }
+      }
+      tabCities.addEventListener('click', ()=> setTab('cities'));
+      tabStadiums.addEventListener('click', ()=> setTab('stadiums'));
+
+      function renderCityList(items){
+        listCities.innerHTML='';
         items.forEach(c=>{
           const st=stadiumByCitySlug[c.slug]||'';
           const el=document.createElement('div'); el.className='item';
           el.innerHTML="<div class='line'>"
             +"<span class='city'>"+c.name+"</span><small class='sep'>—</small>"
             +"<span class='country'>"+c.country+"</span>"
-            +(st?"<small class='sep'>·</small><span class='stadium' data-city='"+c.slug+"'>"+st+"</span>":"")
+            +(st?"<small class='sep'>·</small><span class='stadium link' data-city='"+c.slug+"'>"+st+"</span>":"")
             +"</div>";
-          // Click city → fly & glow city
           el.addEventListener('click',()=>{
             const m=cityMarkersBySlug[c.slug]; if(!m) return;
-            setActive('city', c.slug);
-            setQuery('city', c.slug); setQuery('stadium', null);
-            map.flyTo(m.getLatLng(), 6, {duration:.8});
-            setTimeout(()=>m.openPopup(), 850);
+            setActive('city', c.slug); setQuery('city', c.slug); setQuery('stadium', null);
+            map.flyTo(m.getLatLng(), 6, {duration:.8}); setTimeout(()=>m.openPopup(), 850);
           });
-          // Click stadium name → fly & glow stadium
-          el.querySelectorAll('.stadium').forEach(node=>{
+          el.querySelectorAll('.stadium.link').forEach(node=>{
             node.addEventListener('click',ev=>{
               ev.stopPropagation();
               const citySlug=node.getAttribute('data-city');
-              const stadium=STADIUMS.find(s=>s.citySlug===citySlug);
-              if(!stadium) return;
-              const m=stadiumMarkersBySlug[stadium.slug]; if(!m) return;
-              setActive('stadium', stadium.slug);
-              setQuery('stadium', stadium.slug); setQuery('city', null);
-              map.flyTo(m.getLatLng(), 12, {duration:.8});
-              setTimeout(()=>m.openPopup(), 850);
+              const s=STADIUMS.find(x=>x.citySlug===citySlug);
+              if(!s) return;
+              const m=stadiumMarkersBySlug[s.slug]; if(!m) return;
+              setActive('stadium', s.slug); setQuery('stadium', s.slug); setQuery('city', null);
+              setTab('stadiums');
+              map.flyTo(m.getLatLng(), 12, {duration:.8}); setTimeout(()=>m.openPopup(), 850);
             });
           });
-          listEl.appendChild(el);
+          listCities.appendChild(el);
         });
-        packIntoColumns();
+        packIntoColumns(listCities);
       }
-      renderList(CITIES);
 
-      // SPA routes
-      function focusCity(slug, open, push){
-        const m=cityMarkersBySlug[slug]; if(!m) return;
-        if(push){ setQuery('city',slug); setQuery('stadium',null); }
-        setActive('city', slug);
-        map.flyTo(m.getLatLng(), 6, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850);
+      function renderStadiumList(items){
+        listStads.innerHTML='';
+        items.forEach(s=>{
+          const city=CITIES.find(c=>c.slug===s.citySlug) || { name:'', country:'' };
+          const el=document.createElement('div'); el.className='item';
+          el.innerHTML="<div class='line'>"
+            +"<span class='stadium'>"+s.name+"</span><small class='sep'>—</small>"
+            +"<span class='city'>"+city.name+"</span>"
+            +(city.country? "<small class='sep'>·</small><span class='country'>"+city.country+"</span>": "")
+            +"</div>";
+          el.addEventListener('click',()=>{
+            const m=stadiumMarkersBySlug[s.slug]; if(!m) return;
+            setActive('stadium', s.slug); setQuery('stadium', s.slug); setQuery('city', null);
+            map.flyTo(m.getLatLng(), 12, {duration:.8}); setTimeout(()=>m.openPopup(), 850);
+          });
+          listStads.appendChild(el);
+        });
+        packIntoColumns(listStads);
       }
-      function focusStadium(slug, open, push){
-        const m=stadiumMarkersBySlug[slug]; if(!m) return;
-        if(push){ setQuery('stadium',slug); setQuery('city',null); }
-        setActive('stadium', slug);
-        map.flyTo(m.getLatLng(), 12, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850);
-      }
+
+      renderCityList(CITIES);
+      renderStadiumList(STADIUMS);
+
+      /* ---------- SPA routes ---------- */
       function handleRoute(open){
         const s=getQ('stadium'); const c=getQ('city');
-        if(s && stadiumMarkersBySlug[s]) focusStadium(s, open, false);
-        else if(c && cityMarkersBySlug[c]) focusCity(c, open, false);
-        else fitAll();
+        if(s && stadiumMarkersBySlug[s]){ setTab('stadiums'); const m=stadiumMarkersBySlug[s]; setActive('stadium', s); map.flyTo(m.getLatLng(), 12, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850); }
+        else if(c && cityMarkersBySlug[c]){ setTab('cities'); const m=cityMarkersBySlug[c]; setActive('city', c); map.flyTo(m.getLatLng(), 6, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850); }
+        else { setTab('cities'); fitAll(); }
       }
-      window.addEventListener('popstate',()=>handleRoute(true));
+      window.addEventListener('popstate', ()=>handleRoute(true));
 
-      // Search + filters
+      /* ---------- Search + filters (both tabs) ---------- */
       const searchEl=document.getElementById('search');
       const fUSA=document.getElementById('fUSA'), fCAN=document.getElementById('fCAN'), fMEX=document.getElementById('fMEX');
       const allowedCountry = c => (c==='USA'&&fUSA.checked)||(c==='Canada'&&fCAN.checked)||(c==='Mexico'&&fMEX.checked);
 
       function applyFilters(){
         const q=(searchEl.value||'').trim().toLowerCase();
-        const matched=CITIES.filter(c=> allowedCountry(c.country) &&
+
+        const cityMatches = CITIES.filter(c =>
+          allowedCountry(c.country) &&
           (c.name.toLowerCase().includes(q) || (stadiumByCitySlug[c.slug]||'').toLowerCase().includes(q))
         );
-        renderList(matched);
-        // fit to filtered cities (optional)
-        const ms = matched.map(c=>cityMarkersBySlug[c.slug]).filter(Boolean);
-        if(ms.length){ const fg=L.featureGroup(ms); map.fitBounds(fg.getBounds(),{padding:[40,40]}); }
-      }
-      [searchEl,fUSA,fCAN,fMEX].forEach(ctrl=> (ctrl===searchEl ? ctrl.addEventListener('input',applyFilters) : ctrl.addEventListener('change',applyFilters)));
+        const stadiumMatches = STADIUMS.filter(s=>{
+          const city=CITIES.find(c=>c.slug===s.citySlug) || {country:'', name:''};
+          return allowedCountry(city.country) && (s.name.toLowerCase().includes(q) || city.name.toLowerCase().includes(q));
+        });
 
-      // Column packing (no‑scroll desktop)
-      function packIntoColumns(){
-        if (window.matchMedia('(max-width: 900px)').matches){ listEl.style.columnCount=1; return; }
-        const panel=listEl.closest('aside.panel'); const available=panel.clientHeight - 50;
-        const sample=listEl.querySelector('.item'); const rowH=sample?Math.max(18,sample.getBoundingClientRect().height):20;
-        const rows=listEl.children.length||1; const needed=Math.ceil((rows*rowH)/Math.max(1,available));
-        listEl.style.columnCount=Math.min(Math.max(needed,1),4);
+        renderCityList(cityMatches);
+        renderStadiumList(stadiumMatches);
       }
-      window.addEventListener('resize',()=>{ map.invalidateSize(); packIntoColumns(); });
 
-      // First paint stabilization + route
+      [searchEl,fUSA,fCAN,fMEX].forEach(ctrl => (ctrl===searchEl ? ctrl.addEventListener('input',applyFilters)
+                                                                  : ctrl.addEventListener('change',applyFilters)));
+
+      /* ---------- Column packing (no‑scroll desktop) ---------- */
+      function packIntoColumns(container){
+        if (window.matchMedia('(max-width: 900px)').matches){ container.style.columnCount=1; return; }
+        const panel=container.closest('.list'); const h=panel.clientHeight - 50;
+        const sample=container.querySelector('.item'); const rowH=sample?Math.max(18,sample.getBoundingClientRect().height):20;
+        const rows=container.children.length||1; const needed=Math.ceil((rows*rowH)/Math.max(1,h));
+        container.style.columnCount=Math.min(Math.max(needed,1),4);
+      }
+      window.addEventListener('resize', ()=>{
+        map.invalidateSize();
+        const currentPane = (paneStads.style.display==='block') ? listStads : listCities;
+        packIntoColumns(currentPane);
+      });
+
+      /* ---------- First paint stabilization + initial route ---------- */
       window.addEventListener('load',()=>map.invalidateSize());
       base.on('load',()=>map.invalidateSize());
       requestAnimationFrame(()=>map.invalidateSize());
