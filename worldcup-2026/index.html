@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MatchDay Navigator • World Cup 2026 (Single-file with inline Leaflet CSS)</title>
+  <title>MatchDay Navigator • World Cup 2026 (Single-file, No-Animation)</title>
 
-  <!-- REMOVE the external Leaflet CSS link for now to avoid any blocked/failed load -->
+  <!-- (We intentionally do NOT link external leaflet.css here) -->
 
   <style>
     /* ====== Your dark layout ====== */
@@ -18,8 +18,7 @@
     main { height: calc(100vh - 56px); }
     #map { width:100%; height:100%; background:#000; }
 
-    /* ====== CRITICAL Leaflet layout rules (subset) ======
-       These are enough to avoid “patchy/offset tiles” even without the full leaflet.css */
+    /* ====== CRITICAL Leaflet layout rules (subset) ====== */
     .leaflet-container { overflow: hidden; outline: 0; }
     .leaflet-pane,
     .leaflet-tile,
@@ -41,7 +40,8 @@
     .leaflet-tile { width:256px; height:256px; user-select:none; -webkit-user-drag:none; }
     .leaflet-container img { max-width: none !important; }
     .leaflet-zoom-animated { transform-origin: 0 0; }
-    .leaflet-zoom-anim .leaflet-zoom-animated { transition: transform 200ms; }
+    /* We’re disabling animation in JS anyway, but keep this for safety */
+    .leaflet-zoom-anim .leaflet-zoom-animated { transition: none !important; }
     .leaflet-tile-container { pointer-events: none; }
     .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path { pointer-events:auto; }
 
@@ -67,8 +67,13 @@
           crossorigin="anonymous"></script>
 
   <script>
-    // Init dark base map (Carto Dark Matter)
-    const map = L.map('map', { zoomControl:true, worldCopyJump:true });
+    // Init dark base map (Carto Dark Matter) with animations OFF
+    const map = L.map('map', {
+      zoomControl: true,
+      worldCopyJump: true,
+      zoomAnimation: false,
+      fadeAnimation: false
+    });
 
     const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
@@ -77,7 +82,7 @@
     }).addTo(map);
 
     // Simple SVG pin (city=blue)
-    const svgPin = (fill, stroke='#0a3d62') => {
+    const svgPin = (fill, stroke = '#0a3d62') => {
       const svg = `
         <svg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'>
           <path d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z'
@@ -119,6 +124,7 @@
     }
 
     // Finalize layout to prevent any residual patchiness
+    window.addEventListener('load', () => map.invalidateSize());
     tiles.on('load', () => map.invalidateSize());
     requestAnimationFrame(() => map.invalidateSize());
     window.addEventListener('resize', () => map.invalidateSize());
