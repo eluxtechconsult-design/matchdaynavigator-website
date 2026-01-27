@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Cup 2026 Map • MatchDay Navigator</title>
 
-  <!-- Vendor CSS (local, CSP‑safe) -->
-  <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="/assets/vendor/markercluster/MarkerCluster.css">
-  <link rel="stylesheet" href="/assets/vendor/markercluster/MarkerCluster.Default.css">
+  <!-- Local vendor CSS (CSP-safe, no CDN) -->
+  <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="/assets/vendor/markercluster/MarkerCluster.css" />
+  <link rel="stylesheet" href="/assets/vendor/markercluster/MarkerCluster.Default.css" />
 
-  <!-- App CSS (local, CSP‑safe) -->
-  <link rel="stylesheet" href="/worldcup-2026/app.css">
+  <!-- App CSS -->
+  <link rel="stylesheet" href="/worldcup-2026/app.css?v=3" />
 </head>
 <body>
   <header class="top">
@@ -28,8 +28,10 @@
       <div class="panel">
         <h2>Cities</h2>
         <div id="cityList"></div>
+
         <h2>Stadiums</h2>
         <div id="stadiumList"></div>
+
         <p class="hint">
           City markers use stadium coordinates for precise centering (change to downtown later if you prefer).
         </p>
@@ -37,11 +39,15 @@
     </aside>
   </div>
 
-  <!-- Vendor JS (local, CSP‑safe) -->
+  <noscript>
+    <p style="padding:12px;color:#b91c1c;background:#fff3f3;border-top:1px solid #f3dada;">
+      JavaScript is required to load the map and lists. Please enable JavaScript and reload.
+    </p>
+  </noscript>
+
+  <!-- Local vendor JS (CSP-safe) -->
   <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
   <script src="/assets/vendor/markercluster/leaflet.markercluster.js" defer></script>
 
-  <!-- App JS (local, CSP‑safe) -->
-  <script src="/worldcup-2026/app.js?v=2" defer></script>
-</body>
-</html>
+  <!-- App JS (bump the version query when you change app.js to bust caches) -->
+  <script src="/worldcup-2026/app.js?v=3
