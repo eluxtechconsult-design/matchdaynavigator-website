@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MatchDay Navigator • World Cup 2026 (Single-file, Known-good)</title>
 
-  <!-- Leaflet CSS (MUST be a real <link>) -->
+  <!-- Leaflet CSS (REAL <link> TAG – this is critical) -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4WxkYVzw9M86gMm7zGv0XvS+T1CkHkYhYBf8Q8b+0o="
-    crossorigin=""
+    crossorigin="anonymous"
   />
 
   <style>
@@ -45,18 +45,18 @@
     <div id="map" aria-label="World Cup 2026 Map"></div>
   </main>
 
-  <!-- Leaflet JS (MUST be a real <script src>) -->
+  <!-- Leaflet JS (REAL <script src> TAG – this is critical) -->
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
+    crossorigin="anonymous"
   ></script>
 
   <script>
     // Init dark base map (Carto Dark Matter)
     const map = L.map('map', { zoomControl:true, worldCopyJump:true });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
       subdomains: 'abcd',
       maxZoom: 20
@@ -104,7 +104,8 @@
       map.setView([37.8, -96], 4);
     }
 
-    // Critical: finalize layout after first paint & on resize
+    // Finalize layout (prevents “patchy tiles”)
+    tiles.on('load', () => { map.invalidateSize(); });
     requestAnimationFrame(() => map.invalidateSize());
     window.addEventListener('resize', () => map.invalidateSize());
   </script>
