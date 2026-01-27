@@ -5,35 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MatchDay Navigator • World Cup 2026 (Dark Minimal)</title>
 
-  <!-- Leaflet CSS -->
-  <link 
-    rel="stylesheet" 
+  <!-- Leaflet CSS (CDN) -->
+  <link
+    rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4WxkYVzw9M86gMm7zGv0XvS+T1CkHkYhYBf8Q8b+0o="
-    />
-  <link rel="stylesheet" href="/worldcup-2026/ui.css" />
-  <link rel="stylesheet" href="/worldcup-2026/clusters.css" />
+    crossorigin="anonymous"
+  />
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="/worldcup-2026/app.css?v=1" />
+  <link rel="stylesheet" href="/worldcup-2026/ui.css?v=1" />
+  <link rel="stylesheet" href="/worldcup-2026/clusters.css?v=1" />
 </head>
 
 <body class="dark">
-
   <header class="top">
     <div class="brand">MatchDay Navigator</div>
   </header>
 
   <main class="layout">
-    <div id="map"></div>
+    <div id="map" aria-label="World Cup 2026 Map"></div>
   </main>
 
-  <!-- Leaflet JS -->
-  <script 
+  <!-- Leaflet JS (CDN) -->
+  <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin="anonymous">
-  </script>
+    crossorigin="anonymous"
+    defer
+  ></script>
 
   <!-- App JS -->
-  <script src="/worldcup-2026/app.js"></script>
-
+  <script src="/worldcup-2026/app.js?v=1" defer></script>
 </body>
 </html>
