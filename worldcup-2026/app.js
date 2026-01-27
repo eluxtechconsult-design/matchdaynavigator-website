@@ -97,7 +97,7 @@ function a(href, label, { external = false } = {}) {
   const ext = external ? ' target="_blank" rel="noopener noreferrer"' : '';
   const h = String(href);
   const l = String(label);
-  return `${h}${l}</a>`;
+  return `<a href="${h}"${ext}>${l}</a>`;
 }
 
 /* ---------- Sidebar renderers ---------- */
@@ -133,7 +133,7 @@ function addStadiumMarker(st) {
     <b>${st.name}</b><br/>
     ${a(st.official_url, 'Official site', { external: true })}<br/>
     ${a('https://concierge.matchdaynavigator.com/route?stadium=' + encodeURIComponent(st.name), 'Open route', { external: true })}<br/>
-    ${a('https://wa.me/14155238886?text=' + waText, 'Get match‑day details on WhatsApp', { external: true })}
+    ${a('https://wa.me/14155238886?text=' + waText, 'Get match‑day details on WhatsApp', })}
     <br/><small>(Replace the number with your WABA or link to your own opt‑in page.)</small>
   `;
   stCluster.addLayer(L.marker([st.lat, st.lng], { icon: PIN_ICON }).bindPopup(popupHtml));
