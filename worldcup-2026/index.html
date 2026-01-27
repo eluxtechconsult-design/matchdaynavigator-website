@@ -3,33 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MatchDay Navigator • World Cup 2026 (Single-file, Known-good)</title>
+  <title>MatchDay Navigator • World Cup 2026 (Single-file with inline Leaflet CSS)</title>
 
-  <!-- Leaflet CSS (MUST be a real <link> tag) -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4WxkYVzw9M86gMm7zGv0XvS+T1CkHkYhYBf8Q8b+0o="
-    crossorigin="anonymous"
-  />
+  <!-- REMOVE the external Leaflet CSS link for now to avoid any blocked/failed load -->
 
   <style>
+    /* ====== Your dark layout ====== */
     :root { --bg:#0b0e12; --text:#dfe7f3; --line:#1c2430; }
-    * { box-sizing:border-box; }
-    html, body { height:100%; margin:0; }
-    body { background:var(--bg); color:var(--text); font:14px/1.4 system-ui, Arial, sans-serif; }
-
-    header.top {
-      height:56px; display:flex; align-items:center;
-      padding:8px 14px; border-bottom:1px solid var(--line); background:#0d1117;
-    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, Arial, sans-serif; }
+    header.top { height:56px; display:flex; align-items:center; padding:8px 14px; border-bottom:1px solid var(--line); background:#0d1117; }
     header .brand { font-weight:700; color:#eaf2ff; }
-
-    /* Map fills the rest of the viewport */
     main { height: calc(100vh - 56px); }
     #map { width:100%; height:100%; background:#000; }
 
-    /* Dark styling for Leaflet UI */
+    /* ====== CRITICAL Leaflet layout rules (subset) ======
+       These are enough to avoid “patchy/offset tiles” even without the full leaflet.css */
+    .leaflet-container { overflow: hidden; outline: 0; }
+    .leaflet-pane,
+    .leaflet-tile,
+    .leaflet-marker-icon,
+    .leaflet-marker-shadow,
+    .leaflet-tile-container,
+    .leaflet-pane > svg,
+    .leaflet-pane > canvas,
+    .leaflet-zoom-box,
+    .leaflet-image-layer,
+    .leaflet-layer { position: absolute; left: 0; top: 0; }
+    .leaflet-pane { z-index: 400; }
+    .leaflet-map-pane    { z-index: 200; }
+    .leaflet-tile-pane   { z-index: 200; }
+    .leaflet-overlay-pane{ z-index: 400; }
+    .leaflet-marker-pane { z-index: 600; }
+    .leaflet-tooltip-pane{ z-index: 650; }
+    .leaflet-popup-pane  { z-index: 700; }
+    .leaflet-tile { width:256px; height:256px; user-select:none; -webkit-user-drag:none; }
+    .leaflet-container img { max-width: none !important; }
+    .leaflet-zoom-animated { transform-origin: 0 0; }
+    .leaflet-zoom-anim .leaflet-zoom-animated { transition: transform 200ms; }
+    .leaflet-tile-container { pointer-events: none; }
+    .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path { pointer-events:auto; }
+
+    /* (Dark UI polish for controls & popups) */
     .leaflet-control-zoom a { background:#0f141c; color:#cfe5ff; border:1px solid #1a2230; }
     .leaflet-popup-content-wrapper { background:#0f141c; color:#eaf2ff; border:1px solid #1a2230; }
     .leaflet-popup-tip { background:#0f141c; }
@@ -45,115 +61,11 @@
     <div id="map" aria-label="World Cup 2026 Map"></div>
   </main>
 
-  <!-- Leaflet JS (MUST be a real <script src> tag) -->
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin="anonymous"
-  ></script>
+  <!-- Leaflet JS (CDN) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin="anonymous"></script>
 
-  <!-- Map logic -->
-  <script>
-    const map = L.map('map', { zoomControl:true, worldCopyJump:true });
-
-    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-      subdomains: 'abcd',
-      maxZoom: 20
-    }).addTo(map);
-
-    const svgPin = (fill, stroke='#0a3d62') => {
-      const svg = `
-        <svg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'>
-          <path d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z'
-                fill='${fill}' stroke='${stroke}' stroke-width='1'/>
-          <circle cx='12.5' cy='12.5' r='5' fill='#fff'/>
-        </svg>`;
-      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
-    };
-    const ICON_CITY = L.icon({ iconUrl: svgPin('#1e90ff'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] });
-
-    // Fallback cities (so you see pins immediately)
-    const CITIES = [
-      { name:'New York / New Jersey', country:'USA', lat:40.813528, lng:-74.074361 },
-      { name:'Dallas (Arlington)',    country:'USA', lat:32.747780, lng:-97.092780 },
-      { name:'Houston',               country:'USA', lat:29.684720, lng:-95.410830 },
-      { name:'Kansas City',           country:'USA', lat:39.048890, lng:-94.483890 },
-      { name:'Atlanta',               country:'USA', lat:33.755560, lng:-84.400000 },
-      { name:'Los Angeles',           country:'USA', lat:33.953000, lng:-118.339000 },
-      { name:'Toronto',               country:'Canada', lat:43.633330, lng:-79.418610 },
-      { name:'Vancouver',             country:'Canada', lat:49.276684, lng:-123.112404 },
-      { name:'Mexico City',           country:'Mexico', lat:19.303060, lng:-99.150560 },
-      { name:'Guadalajara',           country:'Mexico', lat:20.681670, lng:-103.462780 },
-You’re absolutely right to be frustrated, Elhadji. The “patchy/offset tiles” **only** happen when Leaflet’s **CSS is not actually loaded**. Everything else you did is fine.
-
-Let’s fix this in a way that **cannot** be mis‑interpreted by the browser:
-
----
-
-## ✅ Replace `worldcup-2026/index.html` with this **exact** file
-
-> **Important:** Notice the **real `<link>`** and **real `<script src>`** tags for Leaflet.  
-> If your current file shows just bare URLs on separate lines, the browser will treat them as text and **not** load CSS/JS.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MatchDay Navigator • World Cup 2026 (Single-file, Known-good)</title>
-
-  <!-- ✅ Leaflet CSS (MUST be a real <link> tag) -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4WxkYVzw9M86gMm7zGv0XvS+T1CkHkYhYBf8Q8b+0o="
-    crossorigin="anonymous"
-  />
-
-  <!-- Minimal dark UI so the map fills the viewport -->
-  <style>
-    :root { --bg:#0b0e12; --text:#dfe7f3; --line:#1c2430; }
-    * { box-sizing:border-box; }
-    html, body { height:100%; margin:0; }
-    body { background:var(--bg); color:var(--text); font:14px/1.4 system-ui, Arial, sans-serif; }
-
-    header.top {
-      height:56px; display:flex; align-items:center;
-      padding:8px 14px; border-bottom:1px solid var(--line); background:#0d1117;
-    }
-    header .brand { font-weight:700; color:#eaf2ff; }
-
-    /* Map fills the rest of the viewport */
-    main { height: calc(100vh - 56px); }
-    #map { width:100%; height:100%; background:#000; }
-
-    /* Dark styling for Leaflet UI */
-    .leaflet-control-zoom a { background:#0f141c; color:#cfe5ff; border:1px solid #1a2230; }
-    .leaflet-popup-content-wrapper { background:#0f141c; color:#eaf2ff; border:1px solid #1a2230; }
-    .leaflet-popup-tip { background:#0f141c; }
-    .leaflet-tooltip { background:#0f141c; color:#cfe5ff; border:1px solid #1a2230; }
-  </style>
-</head>
-<body>
-  <header class="top">
-    <div class="brand">MatchDay Navigator</div>
-  </header>
-
-  <main>
-    <div id="map" aria-label="World Cup 2026 Map"></div>
-  </main>
-
-  <!-- ✅ Leaflet JS (MUST be a real <script> tag) -->
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin="anonymous"
-  ></script>
-
-  <!-- Your map logic -->
   <script>
     // Init dark base map (Carto Dark Matter)
     const map = L.map('map', { zoomControl:true, worldCopyJump:true });
@@ -176,7 +88,7 @@ Let’s fix this in a way that **cannot** be mis‑interpreted by the browser:
     };
     const ICON_CITY = L.icon({ iconUrl: svgPin('#1e90ff'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] });
 
-    // Fallback cities so you see pins immediately (remove later if you prefer)
+    // Fallback cities so you see pins immediately
     const CITIES = [
       { name:'New York / New Jersey', country:'USA', lat:40.813528, lng:-74.074361 },
       { name:'Dallas (Arlington)',    country:'USA', lat:32.747780, lng:-97.092780 },
@@ -206,7 +118,7 @@ Let’s fix this in a way that **cannot** be mis‑interpreted by the browser:
       map.setView([37.8, -96], 4);
     }
 
-    // Finalize layout (prevents “patchy tiles” after first paint & on resize)
+    // Finalize layout to prevent any residual patchiness
     tiles.on('load', () => map.invalidateSize());
     requestAnimationFrame(() => map.invalidateSize());
     window.addEventListener('resize', () => map.invalidateSize());
