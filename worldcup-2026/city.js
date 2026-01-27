@@ -39,7 +39,7 @@ const STADIUMS_FALLBACK={"stadiums":[
 ]};
 
 async function loadOrFallback(url, fb) {
-  try { const r = await fetch(url, {cache:'no-store'}); if(!r.ok) throw 0; return await r.json(); }
+  try { const r = await fetch(url, {cache:'no-store'}); if(!r.ok) throw 0; return r.json(); }
   catch { return fb; }
 }
 
@@ -61,8 +61,8 @@ async function loadOrFallback(url, fb) {
   } else {
     inCity.forEach(st => {
       const el = document.createElement('div');
-      el.className = 'city';
-      el.innerHTML = `${st.official_url}Official site</a> · ./stadium.html?id=${st.slug}Open stadium page</a>`;
+      el.className='city';
+      el.innerHTML = `${st.official_url}Official site</a> · /worldcup-2026/stadium.html?id=${st.slug}Open stadium page</a>`;
       list.appendChild(el);
     });
   }

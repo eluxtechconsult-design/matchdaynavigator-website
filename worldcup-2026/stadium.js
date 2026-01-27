@@ -51,11 +51,7 @@ async function loadOrFallback(url, fb) {
   const titleEl = document.getElementById('title');
   const infoEl  = document.getElementById('info');
 
-  if (!st) {
-    titleEl.textContent = 'Stadium not found';
-    infoEl.textContent = 'Invalid or missing stadium id.';
-    return;
-  }
+  if (!st) { titleEl.textContent = 'Stadium not found'; infoEl.textContent = 'Invalid or missing stadium id.'; return; }
 
   const city = cities.find(c => c.slug === st.citySlug);
   titleEl.textContent = st.name;
@@ -66,11 +62,11 @@ async function loadOrFallback(url, fb) {
 
   infoEl.innerHTML = `
     <div style="margin:6px 0;">
-      ${city ? `City: ./city.html?id=${city.slug}${city.name}</a><br/>` : ''}
+      ${city ? `City: /worldcup-2026/city.html?id=${city.slug}${city.name}</a><br/>` : ''}
       ${st.official_url}Official site</a><br/>
       ${routeUrl}Open route</a><br/>
       https://wa.me/14155238886?text=${waText}Get match‑day details on WhatsApp</a>
-      <!-- Or use your own opt-in: ${optinUrl}Get match‑day details on WhatsApp</a> -->
+      <!-- Or: ${optinUrl}Get match‑day details on WhatsApp</a> -->
     </div>
   `;
 })();
