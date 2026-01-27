@@ -50,18 +50,16 @@ const FALLBACK_STADIUMS = {
   ]
 };
 
-/* ---------- JSON loader with fallback ---------- */
+/* ---------- loader with fallback ---------- */
 async function loadJSON(url, fallback) {
   try {
     const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     return await res.json();
-  } catch {
-    return fallback;
-  }
+  } catch { return fallback; }
 }
 
-/* ---------- SVG pin (no external PNGs) ---------- */
+/* ---------- SVG pin (no PNGs) ---------- */
 function svgPin(fill = '#1e90ff', stroke = '#0a3d62') {
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">
@@ -83,8 +81,7 @@ const PIN_ICON = L.icon({
 /* ---------- Map init ---------- */
 const map = L.map('map', { zoomControl: true });
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-  attribution: '© OpenStreetMap contributors'
+  maxZoom: 19, attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 map.setView([37.8, -96], 4);
 
@@ -98,16 +95,17 @@ map.addLayer(stCluster);
 const cityMarkersBySlug = Object.create(null);
 const stadiumMarkersBySlug = Object.create(null);
 
-/* ---------- Link builders ---------- */
+/* ---------- Build SPA links and real <a> tags ---------- */
 function internalUrl(type, slug) {
   return `/worldcup-2026/?${type}=${encodeURIComponent(slug)}`;
 }
 function a(href, label, { external = false } = {}) {
   const ext = external ? ' target="_blank" rel="noopener noreferrer"' : '';
-  return `${href}${label}</a>`;
+  // IMPORTANT: return a REAL anchor tag
+  return `<a href="${href}"${ext}>${label}</a>`;
 }
 
-/* ---------- Sidebar rows (SPA anchors + click intercept) ---------- */
+/* ---------- Sidebar rows (intercept clicks to SPA‑navigate) ---------- */
 function addCityRow(city) {
   const list = document.getElementById('cityList');
   const el = document.createElement('div');
@@ -116,14 +114,10 @@ function addCityRow(city) {
   el.innerHTML = a(href, `${city.name} — ${city.country}`);
   list.appendChild(el);
 
-  const link = el.querySelector('a');
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    history.pushState({}, '', href);
-    focusCity(city.slug, true);
+  el.querySelector('a').addEventListener('click', (e) => {
+    e.preventDefault(); history.pushState({}, '', href); focusCity(city.slug, true);
   });
 }
-
 function addStadiumRow(st) {
   const list = document.getElementById('stadiumList');
   const el = document.createElement('div');
@@ -132,41 +126,34 @@ function addStadiumRow(st) {
   el.innerHTML = a(href, st.name);
   list.appendChild(el);
 
-  const link = el.querySelector('a');
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    history.pushState({}, '', href);
-    focusStadium(st.slug, true);
+  el.querySelector('a').addEventListener('click', (e) => {
+    e.preventDefault(); history.pushState({}, '', href); focusStadium(st.slug, true);
   });
 }
 
 /* ---------- Markers & popups ---------- */
 function addCityMarker(city) {
   if (city.lat == null || city.lng == null) return;
-  const popupHtml =
-    `<b>${city.name}</b><br/>${city.country}<br/>` +
-    a(internalUrl('city', city.slug), 'Open city details');
-  const m = L.marker([city.lat, city.lng], { icon: PIN_ICON }).bindPopup(popupHtml);
-  cityMarkersBySlug[city.slug] = m;
-  cityCluster.addLayer(m);
+  const html = `<b>${city.name}</b><br/>${city.country}<br/>` +
+               a(internalUrl('city', city.slug), 'Open city details');
+  const m = L.marker([city.lat, city.lng], { icon: PIN_ICON }).bindPopup(html);
+  cityMarkersBySlug[city.slug] = m; cityCluster.addLayer(m);
 }
-
 function addStadiumMarker(st) {
   if (st.lat == null || st.lng == null) return;
   const wa = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
-  const popupHtml = `
+  const html = `
     <b>${st.name}</b><br/>
     ${a(st.official_url, 'Official site', { external: true })}<br/>
     ${a('https://concierge.matchdaynavigator.com/route?stadium=' + encodeURIComponent(st.name), 'Open route', { external: true })}<br/>
     ${a('https://wa.me/14155238886?text=' + wa, 'Get match‑day details on WhatsApp', { external: true })}<br/>
     ${a(internalUrl('stadium', st.slug), 'Open stadium details')}
   `;
-  const m = L.marker([st.lat, st.lng], { icon: PIN_ICON }).bindPopup(popupHtml);
-  stadiumMarkersBySlug[st.slug] = m;
-  stCluster.addLayer(m);
+  const m = L.marker([st.lat, st.lng], { icon: PIN_ICON }).bindPopup(html);
+  stadiumMarkersBySlug[st.slug] = m; stCluster.addLayer(m);
 }
 
-/* ---------- SPA focus helpers (work for initial load & on clicks) ---------- */
+/* ---------- SPA focus helpers ---------- */
 function zoomToShow(layerGroup, marker, open = true, zoom = 12) {
   if (!marker) return;
   layerGroup.zoomToShowLayer(marker, () => {
@@ -174,24 +161,13 @@ function zoomToShow(layerGroup, marker, open = true, zoom = 12) {
     if (open) marker.openPopup();
   });
 }
-function focusCity(slug, open) {
-  const m = cityMarkersBySlug[slug];
-  zoomToShow(cityCluster, m, open, 11);
-}
-function focusStadium(slug, open) {
-  const m = stadiumMarkersBySlug[slug];
-  zoomToShow(stCluster, m, open, 13);
-}
+function focusCity(slug, open)    { zoomToShow(cityCluster,    cityMarkersBySlug[slug], open, 11); }
+function focusStadium(slug, open) { zoomToShow(stCluster, stadiumMarkersBySlug[slug], open, 13); }
 
 function handleRouteFromUrl(open = true) {
-  const params = new URLSearchParams(location.search);
-  const citySlug = params.get('city');
-  const stadiumSlug = params.get('stadium');
-  if (stadiumSlug) {
-    focusStadium(stadiumSlug, open);
-  } else if (citySlug) {
-    focusCity(citySlug, open);
-  }
+  const q = new URLSearchParams(location.search);
+  const s = q.get('stadium'); const c = q.get('city');
+  if (s) focusStadium(s, open); else if (c) focusCity(c, open);
 }
 
 /* ---------- Bootstrap ---------- */
