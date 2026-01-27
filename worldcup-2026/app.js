@@ -1,7 +1,7 @@
 
 /* ---------------------------------------------------------------------------
    MatchDay Navigator • World Cup 2026
-   Map logic + clustering + sidebar rendering (CSP-safe: no inline code, no CDN)
+   Map logic + clustering + sidebar rendering (CSP-safe: no inline code)
    Uses data-URL SVG markers (no external PNGs required).
    --------------------------------------------------------------------------- */
 
@@ -48,7 +48,7 @@ const FALLBACK_STADIUMS = {
   ]
 };
 
-/* ---------- Load JSON with fallback (CSP-safe; no eval) ---------- */
+/* ---------- Load JSON with fallback ---------- */
 async function loadJSON(url, fallback) {
   try {
     const res = await fetch(url, { cache: 'no-store' });
@@ -59,7 +59,7 @@ async function loadJSON(url, fallback) {
   }
 }
 
-/* ---------- SVG data URL marker (no external PNG files required) ---------- */
+/* ---------- SVG data URL marker (no external PNGs needed) ---------- */
 function svgPin(fill = '#1e90ff', stroke = '#0a3d62') {
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">
@@ -92,15 +92,15 @@ const stCluster   = L.markerClusterGroup({ showCoverageOnHover: false, maxCluste
 map.addLayer(cityCluster);
 map.addLayer(stCluster);
 
-/* ---------- Correct anchor builder ---------- */
+/* ---------- Correct anchor builder (THIS WAS THE PROBLEM) ---------- */
 function a(href, label, { external = false } = {}) {
-  const safeHref = String(href);
-  const safeLabel = String(label);
-  const extAttrs = external ? ' target="_blank" rel="noopener noreferrer"' : '';
-  return `${safeHref}${safeLabel}</a>`;
+  const ext = external ? ' target="_blank" rel="noopener noreferrer"' : '';
+  const h = String(href);
+  const l = String(label);
+  return `${h}${l}</a>`;
 }
 
-/* ---------- Sidebar renderers (now proper anchors) ---------- */
+/* ---------- Sidebar renderers ---------- */
 function addCityRow(city) {
   const list = document.getElementById('cityList');
   const el = document.createElement('div');
@@ -117,7 +117,7 @@ function addStadiumRow(st) {
   list.appendChild(el);
 }
 
-/* ---------- Marker builders (proper anchors in popups) ---------- */
+/* ---------- Marker builders ---------- */
 function addCityMarker(city) {
   if (city.lat == null || city.lng == null) return;
   const popupHtml =
