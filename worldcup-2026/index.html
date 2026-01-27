@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MatchDay Navigator • World Cup 2026 (Interactive + Clustering)</title>
+<title>MatchDay Navigator • World Cup 2026 (Interactive + Clustering, tuned)</title>
 
 <style>
   /* ====== Dark base theme ====== */
@@ -12,7 +12,7 @@
   html, body { height: 100%; margin: 0; }
   body { background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, Arial, sans-serif; }
 
-  /* Header + tools (search + region filters) */
+  /* Header + tools */
   header.top {
     display:flex; align-items:center; justify-content:space-between;
     height:56px; padding:8px 14px; border-bottom:1px solid var(--line); background:#0d1117;
@@ -30,11 +30,11 @@
   aside.panel { border-left:1px solid var(--line); background:#0f1319; overflow:hidden; padding:10px; }
   aside h2 { margin:6px 0 8px; font-size:12px; color:#88a9ff; text-transform:uppercase; letter-spacing:.06em; }
 
-  /* Sidebar list — compact and column‑packed (no scroll on desktop) */
-  #cityList { column-gap: 12px; }          /* column-count decided by JS */
+  /* Sidebar list — compact + auto-packed columns (no scroll on desktop) */
+  #cityList { column-gap: 12px; }  /* JS will set column-count = 1..4 */
   .item { break-inside: avoid; padding:4px 6px; margin:2px 0; border-radius:6px; cursor:pointer; }
   .item:hover { background:var(--hover); }
-  .line { display:flex; gap:6px; align-items:baseline; white-space:nowrap; overflow: hidden; text-overflow:ellipsis; font-size:13px; line-height:1.25; }
+  .line { display:flex; gap:6px; align-items:baseline; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:13px; line-height:1.25; }
   .city { color:#cfe5ff; font-weight:600; }
   .country { color:#b8c6dd; }
   .stadium { color:var(--gold); text-decoration: underline; cursor: pointer; }
@@ -70,7 +70,7 @@
   .leaflet-popup-tip { background:#0f141c; }
   .leaflet-tooltip { background:#0f141c; color:#cfe5ff; border:1px solid #1a2230; }
 
-  /* Tiny error bubble (if a CDN is blocked we can see it quickly) */
+  /* Tiny error bubble (shows if a CDN/tile fails) */
   #err { position: fixed; right: 10px; bottom: 10px; max-width: 48ch; padding: 8px 10px;
          background: #311; color: #ffdada; border: 1px solid #633; border-radius: 6px; font-size: 12px; display:none; z-index:9999; }
 </style>
@@ -99,13 +99,13 @@
   <div id="err"></div>
 
   <script>
-    /* ---------- small helpers ---------- */
-    function showErr(msg){ var b=document.getElementById('err'); b.textContent=msg; b.style.display='block'; console.error('[MDN]',msg); }
-    function addScript(src, ok, fail){ var s=document.createElement('script'); s.src=src; s.async=true; s.onload=ok; s.onerror=function(){ fail&&fail(src); }; document.head.appendChild(s); }
-    function setQuery(p){ const url=new URL(location.href); const [k,v]=p; if(v==null){url.searchParams.delete(k);} else {url.searchParams.set(k,v);} history.pushState({},'',url); }
-    function getQ(name){ return new URLSearchParams(location.search).get(name); }
+    /* ---------- helpers ---------- */
+    function showErr(msg){ const b=document.getElementById('err'); b.textContent=msg; b.style.display='block'; console.error('[MDN]',msg); }
+    function addScript(src, ok, fail){ const s=document.createElement('script'); s.src=src; s.async=true; s.onload=ok; s.onerror=()=>fail&&fail(src); document.head.appendChild(s); }
+    function setQuery(k, v){ const url=new URL(location.href); if(v==null){url.searchParams.delete(k);} else {url.searchParams.set(k,v);} history.pushState({},"",url); }
+    const getQ = name => new URLSearchParams(location.search).get(name);
 
-    /* ---------- dataset ---------- */
+    /* ---------- data ---------- */
     const CITIES = [
       { slug:'new-york-new-jersey', name:'New York / New Jersey', country:'USA',    lat:40.813528, lng:-74.074361 },
       { slug:'dallas',              name:'Dallas (Arlington)',    country:'USA',    lat:32.747780, lng:-97.092780 },
@@ -133,11 +133,11 @@
       { slug:'estadio-akron',         name:'Estadio Akron',         citySlug:'guadalajara',         lat:20.681670, lng:-103.462780 }
     ];
 
-    /* ---------- boot after Leaflet+Cluster load ---------- */
-    function bootWithCluster(){
+    /* ---------- boot after Leaflet + MarkerCluster loaded ---------- */
+    function boot(){
       if(!window.L){ showErr('Leaflet failed to load'); return; }
 
-      // Map (first paint: animations off for stability)
+      // Map (animations off on first paint for stability)
       const map = L.map('map',{ zoomControl:true, worldCopyJump:true, zoomAnimation:false, fadeAnimation:false });
 
       // Tiles: Carto → OSM fallback
@@ -145,7 +145,7 @@
       const osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
       let switched=false;
       const base = L.tileLayer(cartoUrl,{ attribution:'© OpenStreetMap contributors © CARTO', subdomains:'abcd', maxZoom:20 })
-        .on('tileerror',()=>{ if(!switched){ switched=true; map.removeLayer(base); L.tileLayer(osmUrl,{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(map); showErr('Carto tiles unavailable, switched to OSM.'); }})
+        .on('tileerror',()=>{ if(!switched){ switched=true; map.removeLayer(base); L.tileLayer(osmUrl,{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(map); showErr('Carto tiles unavailable, switched to OpenStreetMap.'); }})
         .addTo(map);
 
       // Icons
@@ -160,29 +160,44 @@
         stadium: L.icon({ iconUrl: svgPin('#f7d354'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] })
       };
 
-      // Custom neon cluster (no external CSS)
+      // Custom neon cluster (label shows count)
       function neonCluster(size){
         const s = Math.max(30, 22 + (size.toString().length*6) + Math.min(40, size));
         return L.divIcon({
-          html: "<div style=\""
-                +"display:flex;align-items:center;justify-content:center;"
-                +"width:"+s+"px;height:"+s+"px;border-radius:50%;"
-                +"background:radial-gradient(ellipse at center, rgba(30,144,255,.95) 0%, rgba(30,144,255,.65) 60%, rgba(30,144,255,.25) 100%);"
-                +"box-shadow:0 0 14px rgba(30,144,255,.6);color:#fff;font-weight:700;\">"+size+"</div>",
-          className: '',
-          iconSize: [s,s]
+          html: "<div style=\"display:flex;align-items:center;justify-content:center;"
+              +"width:"+s+"px;height:"+s+"px;border-radius:50%;"
+              +"background:radial-gradient(ellipse at center, rgba(30,144,255,.95) 0%, rgba(30,144,255,.65) 60%, rgba(30,144,255,.25) 100%);"
+              +"box-shadow:0 0 14px rgba(30,144,255,.6);color:#fff;font-weight:700;\">"+size+"</div>",
+          className: '', iconSize: [s,s]
         });
       }
       function clusterIconCreate(cluster){ return neonCluster(cluster.getChildCount()); }
 
-      const cityCluster    = (window.L.MarkerClusterGroup)
-        ? new L.MarkerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:50, iconCreateFunction:clusterIconCreate })
-        : null;
-      const stadiumCluster = (window.L.MarkerClusterGroup)
-        ? new L.MarkerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:50, iconCreateFunction:clusterIconCreate })
+      // Option A: tuned clustering (uncluster earlier + spiderfy)
+      const cityCluster = (window.L.MarkerClusterGroup)
+        ? new L.MarkerClusterGroup({
+            showCoverageOnHover:false,
+            maxClusterRadius:40,        // tighter (was 50)
+            disableClusteringAtZoom:6,  // uncluster earlier (so “2” rarely shows at start)
+            spiderfyOnMaxZoom:true,
+            iconCreateFunction:clusterIconCreate
+          })
         : null;
 
-      // Build stadium lookup
+      const stadiumCluster = (window.L.MarkerClusterGroup)
+        ? new L.MarkerClusterGroup({
+            showCoverageOnHover:false,
+            maxClusterRadius:35,        // tighter for stadiums
+            disableClusteringAtZoom:6,  // uncluster earlier
+            spiderfyOnMaxZoom:true,
+            iconCreateFunction:clusterIconCreate
+          })
+        : null;
+
+      if(cityCluster){ cityCluster.on('clusterclick', e => e.layer.spiderfy()); }
+      if(stadiumCluster){ stadiumCluster.on('clusterclick', e => e.layer.spiderfy()); }
+
+      // Stadium lookup + refs
       const stadiumByCitySlug={}; const stadiumMarkersBySlug={};
       STADIUMS.forEach(s=>{ if(!stadiumByCitySlug[s.citySlug]) stadiumByCitySlug[s.citySlug]=s.name; });
 
@@ -195,7 +210,6 @@
         if(cityCluster) cityCluster.addLayer(m); else m.addTo(map);
       });
 
-      // Stadium pins (gold)
       STADIUMS.forEach(s=>{
         const m = L.marker([s.lat,s.lng],{icon:ICONS.stadium}).bindPopup("<b>"+s.name+"</b>");
         stadiumMarkersBySlug[s.slug]=m; allMarkers.push(m);
@@ -205,14 +219,10 @@
       if(cityCluster) map.addLayer(cityCluster);
       if(stadiumCluster) map.addLayer(stadiumCluster);
 
-      // Fit to everything initially (unless a deep link focuses later)
-      function fitAll(){
-        if(allMarkers.length){
-          const fg=L.featureGroup(allMarkers); map.fitBounds(fg.getBounds(),{padding:[40,40]});
-        } else { map.setView([37.8,-96],4); }
-      }
+      // Fit + route handling
+      function fitAll(){ if(allMarkers.length){ const fg=L.featureGroup(allMarkers); map.fitBounds(fg.getBounds(),{padding:[40,40]}); } else { map.setView([37.8,-96],4); } }
 
-      /* ---------- sidebar render (City — Country · Stadium) ---------- */
+      // Sidebar
       const listEl=document.getElementById('cityList');
       function renderList(items){
         listEl.innerHTML='';
@@ -225,60 +235,57 @@
             +(st?"<small class='sep'>·</small><span class='stadium' data-city='"+c.slug+"'>"+st+"</span>":"")
             +"</div>";
           el.addEventListener('click',()=>focusCity(c.slug,true,true));
-          // Make stadium name clickable to fly to stadium pin (if present)
           el.querySelectorAll('.stadium').forEach(node=>{
-            node.addEventListener('click',(ev)=>{
+            node.addEventListener('click',ev=>{
               ev.stopPropagation();
-              const citySlug = node.getAttribute('data-city');
-              const stadium = STADIUMS.find(s=>s.citySlug===citySlug);
+              const citySlug=node.getAttribute('data-city');
+              const stadium=STADIUMS.find(s=>s.citySlug===citySlug);
               if(stadium) focusStadium(stadium.slug,true,true);
             });
           });
           listEl.appendChild(el);
         });
-        packIntoColumns();  // keep list visible without scroll on desktop
+        packIntoColumns();
       }
       renderList(CITIES);
 
-      /* ---------- focus helpers + SPA URLs ---------- */
+      // SPA routes
       function focusCity(slug, open, push){
         const m=cityMarkersBySlug[slug]; if(!m) return;
-        if(push) setQuery(['city',slug]), setQuery(['stadium',null]);
+        if(push){ setQuery('city',slug); setQuery('stadium',null); }
         map.flyTo(m.getLatLng(), 6, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850);
       }
       function focusStadium(slug, open, push){
         const m=stadiumMarkersBySlug[slug]; if(!m) return;
-        if(push) setQuery(['stadium',slug]), setQuery(['city',null]);
+        if(push){ setQuery('stadium',slug); setQuery('city',null); }
         map.flyTo(m.getLatLng(), 12, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850);
       }
       function handleRoute(open){
-        const c=getQ('city'), s=getQ('stadium');
+        const s=getQ('stadium'); const c=getQ('city');
         if(s && stadiumMarkersBySlug[s]) focusStadium(s, open, false);
         else if(c && cityMarkersBySlug[c]) focusCity(c, open, false);
         else fitAll();
       }
       window.addEventListener('popstate',()=>handleRoute(true));
 
-      /* ---------- search + region filters ---------- */
+      // Search + filters
       const searchEl=document.getElementById('search');
       const fUSA=document.getElementById('fUSA'), fCAN=document.getElementById('fCAN'), fMEX=document.getElementById('fMEX');
-      function allowedCountry(c){
-        return (c==='USA'&&fUSA.checked)||(c==='Canada'&&fCAN.checked)||(c==='Mexico'&&fMEX.checked);
-      }
+      const allowedCountry = c => (c==='USA'&&fUSA.checked)||(c==='Canada'&&fCAN.checked)||(c==='Mexico'&&fMEX.checked);
+
       function applyFilters(){
         const q=(searchEl.value||'').trim().toLowerCase();
-        const matched=CITIES.filter(c=>allowedCountry(c.country) && (c.name.toLowerCase().includes(q) || (stadiumByCitySlug[c.slug]||'').toLowerCase().includes(q)));
+        const matched=CITIES.filter(c=> allowedCountry(c.country) &&
+          (c.name.toLowerCase().includes(q) || (stadiumByCitySlug[c.slug]||'').toLowerCase().includes(q))
+        );
         renderList(matched);
-        // optionally fit to current filtered set
+        // fit to filtered cities (optional)
         const ms = matched.map(c=>cityMarkersBySlug[c.slug]).filter(Boolean);
         if(ms.length){ const fg=L.featureGroup(ms); map.fitBounds(fg.getBounds(),{padding:[40,40]}); }
       }
-      [searchEl,fUSA,fCAN,fMEX].forEach(ctrl=>{
-        const evt = (ctrl===searchEl)?'input':'change';
-        ctrl.addEventListener(evt,applyFilters);
-      });
+      [searchEl,fUSA,fCAN,fMEX].forEach(ctrl=> (ctrl===searchEl ? ctrl.addEventListener('input',applyFilters) : ctrl.addEventListener('change',applyFilters)));
 
-      /* ---------- column packing so the list fits without scroll ---------- */
+      // Column packing (no‑scroll desktop)
       function packIntoColumns(){
         if (window.matchMedia('(max-width: 900px)').matches){ listEl.style.columnCount=1; return; }
         const panel=listEl.closest('aside.panel'); const available=panel.clientHeight - 50;
@@ -288,31 +295,26 @@
       }
       window.addEventListener('resize',()=>{ map.invalidateSize(); packIntoColumns(); });
 
-      /* ---------- first paint stabilization + route ---------- */
+      // First paint stabilization + route
       window.addEventListener('load',()=>map.invalidateSize());
       base.on('load',()=>map.invalidateSize());
       requestAnimationFrame(()=>map.invalidateSize());
-
-      // Deep‑link or default fit
       handleRoute(true);
     }
 
-    /* ---------- Load Leaflet, then MarkerCluster, with 2‑CDN fallbacks ---------- */
+    /* ---------- Load Leaflet JS then MarkerCluster (with 2‑CDN fallback) ---------- */
     function loadClusterThenBoot(){
-      if (!window.L){ showErr('Leaflet JS did not load'); return; }
-      // markercluster plugin JS (no CSS needed; we create custom icons)
+      if(!window.L){ showErr('Leaflet JS did not load'); return; }
       addScript('https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
-        bootWithCluster,
-        ()=>addScript('https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
-          bootWithCluster,
-          ()=>{ showErr('MarkerCluster JS could not be loaded. Falling back to no clustering.'); bootWithCluster(); }
-        )
+        boot,
+        ()=>addScript('https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js', boot,
+          ()=>{ showErr('MarkerCluster JS could not be loaded. Falling back to no clustering.'); boot(); })
       );
     }
-
     addScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
       loadClusterThenBoot,
-      ()=>addScript('https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', loadClusterThenBoot, ()=>showErr('Leaflet JS could not be loaded from CDNs.'))
+      ()=>addScript('https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', loadClusterThenBoot,
+        ()=>showErr('Leaflet JS could not be loaded from CDNs.'))
     );
   </script>
 </body>
