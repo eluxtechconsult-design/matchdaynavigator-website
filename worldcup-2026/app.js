@@ -1,8 +1,8 @@
 
 /* ---------------------------------------------------------------------------
    MatchDay Navigator • World Cup 2026
-   Map logic + clustering + sidebar rendering (CSP-safe: no inline code)
-   Uses data-URL SVG markers (no external PNGs required).
+   Map + clustering + sidebar (CSP-safe: no inline code, no CDN)
+   Uses a data-URL SVG marker (no external PNGs required).
    --------------------------------------------------------------------------- */
 
 /* ---------- Fallback data (used only if /assets/data/*.json can’t be loaded) ---------- */
@@ -48,7 +48,7 @@ const FALLBACK_STADIUMS = {
   ]
 };
 
-/* ---------- Load JSON with fallback ---------- */
+/* ---------- Helper: fetch JSON with fallback ---------- */
 async function loadJSON(url, fallback) {
   try {
     const res = await fetch(url, { cache: 'no-store' });
@@ -59,7 +59,7 @@ async function loadJSON(url, fallback) {
   }
 }
 
-/* ---------- SVG data URL marker (no external PNGs needed) ---------- */
+/* ---------- Use SVG data‑URL pin (no external PNG files) ---------- */
 function svgPin(fill = '#1e90ff', stroke = '#0a3d62') {
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">
@@ -86,21 +86,21 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 map.setView([37.8, -96], 4);
 
-/* ---------- Clusters ---------- */
+/* ---------- Clusters (mobile‑friendly) ---------- */
 const cityCluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 50 });
 const stCluster   = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 50 });
 map.addLayer(cityCluster);
 map.addLayer(stCluster);
 
-/* ---------- Correct anchor builder (THIS WAS THE PROBLEM) ---------- */
+/* ---------- Anchor builder (REAL <a> tag) ---------- */
 function a(href, label, { external = false } = {}) {
   const ext = external ? ' target="_blank" rel="noopener noreferrer"' : '';
-  const h = String(href);
-  const l = String(label);
-  return `<a href="${h}"${ext}>${l}</a>`;
+  const safeHref = String(href);
+  const safeLabel = String(label);
+  return `${safeHref}${safeLabel}</a>`;
 }
 
-/* ---------- Sidebar renderers ---------- */
+/* ---------- Sidebar rows ---------- */
 function addCityRow(city) {
   const list = document.getElementById('cityList');
   const el = document.createElement('div');
@@ -117,26 +117,26 @@ function addStadiumRow(st) {
   list.appendChild(el);
 }
 
-/* ---------- Marker builders ---------- */
+/* ---------- Markers & popups ---------- */
 function addCityMarker(city) {
   if (city.lat == null || city.lng == null) return;
-  const popupHtml =
+  const html =
     `<b>${city.name}</b><br/>${city.country}<br/>` +
     a(`./city.html?id=${city.slug}`, 'Open city page');
-  cityCluster.addLayer(L.marker([city.lat, city.lng], { icon: PIN_ICON }).bindPopup(popupHtml));
+  cityCluster.addLayer(L.marker([city.lat, city.lng], { icon: PIN_ICON }).bindPopup(html));
 }
 
 function addStadiumMarker(st) {
   if (st.lat == null || st.lng == null) return;
-  const waText = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
-  const popupHtml = `
+  const wa = encodeURIComponent(`Hi, I'd like match‑day details for ${st.name}.`);
+  const html = `
     <b>${st.name}</b><br/>
     ${a(st.official_url, 'Official site', { external: true })}<br/>
     ${a('https://concierge.matchdaynavigator.com/route?stadium=' + encodeURIComponent(st.name), 'Open route', { external: true })}<br/>
-    ${a('https://wa.me/14155238886?text=' + waText, 'Get match‑day details on WhatsApp', })}
+    ${a('https://wa.me/14155238886?text=' + wa, 'Get match‑day details on WhatsApp', { external: true })}
     <br/><small>(Replace the number with your WABA or link to your own opt‑in page.)</small>
   `;
-  stCluster.addLayer(L.marker([st.lat, st.lng], { icon: PIN_ICON }).bindPopup(popupHtml));
+  stCluster.addLayer(L.marker([st.lat, st.lng], { icon: PIN_ICON }).bindPopup(html));
 }
 
 /* ---------- Bootstrap ---------- */
