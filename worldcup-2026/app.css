@@ -1,29 +1,38 @@
-
-:root{
-  --bg:#0b0e12; --panel:#0f1319; --text:#dfe7f3; --muted:#96a3b8;
-  --brand:#1e90ff; --accent:#f7d354; --line:#1c2430; --hover:#111823;
+:root {
+  --bg:#0b0e12;
+  --panel:#0f1319;
+  --text:#dfe7f3;
+  --line:#1c2430;
 }
-*{box-sizing:border-box}
-html,body{height:100%}
-body.dark{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 system-ui,Segoe UI,Arial}
-header.top{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);background:#0d1117;position:sticky;top:0;z-index:5}
-header .brand{font-weight:700;color:#eaf2ff}
-header .tools{display:flex;gap:12px;align-items:center}
-#search{background:#0b1220;border:1px solid var(--line);color:var(--text);padding:8px 10px;border-radius:6px;min-width:240px}
-.filters label{margin-right:10px;color:var(--muted)}
 
-main.layout{display:grid;grid-template-columns:1fr 360px;height:calc(100vh - 52px)}
-#map{height:100%;width:100%}
-#panel{background:var(--panel);border-left:1px solid var(--line);overflow:auto;padding:12px}
-#panel h2{font-size:13px;text-transform:uppercase;color:#7fa7ff;letter-spacing:.07em;margin:10px 0 6px}
-.item{padding:6px 6px;border-radius:6px;cursor:pointer}
-.item:hover{background:var(--hover)}
-.item a{color:#9fccff;text-decoration:none}
-.item small{color:var(--muted)}
+* { box-sizing: border-box; }
 
-/* Responsive */
-@media (max-width: 900px){
-  main.layout{grid-template-columns:1fr}
-  #panel{position:fixed;inset:auto 0 0 0;height:45vh;border-left:none;border-top:1px solid var(--line)}
-  #map{height:55vh}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
+
+body.dark {
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 system-ui, Arial, sans-serif;
+}
+
+header.top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 14px;
+  border-bottom:1px solid var(--line);
+  background:#0d1117;
+  height:60px;
+}
+
+header .brand {
+  font-weight:700;
+  color:#eaf2ff;
+}
+
+main.layout {
+  height: calc(100vh - 60px

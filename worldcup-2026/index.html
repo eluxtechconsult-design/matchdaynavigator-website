@@ -1,49 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MatchDay Navigator • World Cup 2026 (Dark)</title>
 
-  <!-- Leaflet & MarkerCluster via CDN (fast). If your host adds strict CSP, switch to local vendors later. -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4WxkYVzw9M86gMm7zGv0XvS+T1CkHkYhYBf8Q8b+0o=" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" integrity="sha256-fcK4+kqE0d2H8b5o9o0wRljfHn0FjgW9K/p5yR5Qnaw=" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" integrity="sha256-+Jq9OaLZq8nEwc0eA1bEZq+4mYv9oUzY3i9E3b9oHMo=" crossorigin="anonymous" />
+  • World Cup 2026 (Dark Minimal)</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4WxkYVzw9M86gMm7zGv0XvS+T1CkHkYhYBf8Q8b+0o="
+        crossorigin="anonymous" />
 
   <!-- App CSS -->
-  <link rel="stylesheet" href="/worldcup-2026/app.css?v=1" />
-  <link rel="stylesheet" href="/worldcup-2026/ui.css?v=1" />
-  <link rel="stylesheet" href="/worldcup-2026/clusters.css?v=1" />
-</head>
-<body class="dark">
-  <header class="top">
+  <link rel="stylesheet" href="/worldcup-2026/app.css" />
+  <link rel="stylesheet" href="/worldcup-2026/ui.css" />
+ header class="top">
     <div class="brand">MatchDay Navigator</div>
-    <div class="tools">
-      <input id="search" type="text" placeholder="Search city or stadium…" />
-      <div class="filters">
-        <label><input type="checkbox" id="fUSA" checked> USA</label>
-        <label><input type="checkbox" id="fCAN" checked> Canada</label>
-        <label><input type="checkbox" id="fMEX" checked> Mexico</label>
-      </div>
-    </div>
   </header>
 
   <main class="layout">
-    <section id="map"></section>
-    <aside id="panel">
-      <h2>Cities</h2>
-      <div id="cityList"></div>
-      <h2>Stadiums</h2>
-      <div id="stadiumList"></div>
-    </aside>
+    <section id="map" aria-label="World Cup 2026 Map"></section>
   </main>
 
-  <!-- Vendor JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" integrity="sha256-3HMTbL3c3uC4JffY0kQxJ4FQ+uKroB3H7O0mHfP1Q0U=" crossorigin="anonymous"></script>
-
-  <!-- App JS -->
-  <script src="/worldcup-2026/app.js?v=1" defer></script>
-</body>
-</html>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQC

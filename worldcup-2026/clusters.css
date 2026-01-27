@@ -1,1 +1,6 @@
-/* reserved for future cluster overrides */
+/* Future clustering styles */
+.marker-cluster div {
+  background: transparent;
+  color: #fff;
+  font-weight: bold;
+}
