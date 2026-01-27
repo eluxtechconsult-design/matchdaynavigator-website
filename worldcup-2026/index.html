@@ -3,20 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MatchDay Navigator • World Cup 2026 (Single-file, No-Animation)</title>
+  <title>MatchDay Navigator • World Cup 2026 (Cities + Search + Filters)</title>
 
-  <!-- (We intentionally do NOT link external leaflet.css here) -->
+  <!-- We intentionally keep Leaflet CSS external removed; critical rules are inlined below -->
 
   <style>
-    /* ====== Your dark layout ====== */
-    :root { --bg:#0b0e12; --text:#dfe7f3; --line:#1c2430; }
+    /* ====== Your dark base theme ====== */
+    :root { --bg:#0b0e12; --text:#dfe7f3; --muted:#a7b6cc; --line:#1c2430; --brand:#1e90ff; --hover:#111823; }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
     body { background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, Arial, sans-serif; }
-    header.top { height:56px; display:flex; align-items:center; padding:8px 14px; border-bottom:1px solid var(--line); background:#0d1117; }
+
+    /* Header with tools */
+    header.top {
+      display:flex; align-items:center; justify-content:space-between;
+      height:56px; padding:8px 14px; border-bottom:1px solid var(--line); background:#0d1117;
+      position:sticky; top:0; z-index:5;
+    }
     header .brand { font-weight:700; color:#eaf2ff; }
-    main { height: calc(100vh - 56px); }
+    header .tools { display:flex; align-items:center; gap:10px; }
+    #search {
+      background:#0b1220; color:var(--text); border:1px solid var(--line);
+      padding:8px 10px; border-radius:6px; min-width:240px;
+    }
+    .filters label { color:var(--muted); margin-left:8px; }
+
+    /* Two‑column layout: map + sidebar */
+    main.layout { display:grid; grid-template-columns: 1fr 340px; height: calc(100vh - 56px); }
     #map { width:100%; height:100%; background:#000; }
+
+    aside.panel { border-left:1px solid var(--line); background:#0f1319; overflow:auto; padding:12px; }
+    aside h2 { margin:8px 0 6px; font-size:12px; color:#88a9ff; text-transform:uppercase; letter-spacing:.06em; }
+    .item { padding:6px 8px; border-radius:6px; cursor:pointer; }
+    .item:hover { background:var(--hover); }
+    .item .name { color:#cfe5ff; }
+    .item small { color:var(--muted); }
+
+    /* Responsive: collapse sidebar to bottom tray on mobile */
+    @media (max-width: 900px) {
+      main.layout { grid-template-columns: 1fr; }
+      #map { height: 55vh; }
+      aside.panel {
+        height: 45vh; position:fixed; inset:auto 0 0 0; border-left:0; border-top:1px solid var(--line);
+      }
+    }
 
     /* ====== CRITICAL Leaflet layout rules (subset) ====== */
     .leaflet-container { overflow: hidden; outline: 0; }
@@ -40,12 +70,11 @@
     .leaflet-tile { width:256px; height:256px; user-select:none; -webkit-user-drag:none; }
     .leaflet-container img { max-width: none !important; }
     .leaflet-zoom-animated { transform-origin: 0 0; }
-    /* We’re disabling animation in JS anyway, but keep this for safety */
-    .leaflet-zoom-anim .leaflet-zoom-animated { transition: none !important; }
+    .leaflet-zoom-anim .leaflet-zoom-animated { transition: none !important; } /* keep stable */
     .leaflet-tile-container { pointer-events: none; }
     .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path { pointer-events:auto; }
 
-    /* (Dark UI polish for controls & popups) */
+    /* Dark UI polish for Leaflet controls & popups */
     .leaflet-control-zoom a { background:#0f141c; color:#cfe5ff; border:1px solid #1a2230; }
     .leaflet-popup-content-wrapper { background:#0f141c; color:#eaf2ff; border:1px solid #1a2230; }
     .leaflet-popup-tip { background:#0f141c; }
@@ -55,10 +84,22 @@
 <body>
   <header class="top">
     <div class="brand">MatchDay Navigator</div>
+    <div class="tools">
+      <input id="search" type="text" placeholder="Search city…" />
+      <span class="filters">
+        <label><input type="checkbox" id="fUSA" checked> USA</label>
+        <label><input type="checkbox" id="fCAN" checked> Canada</label>
+        <label><input type="checkbox" id="fMEX" checked> Mexico</label>
+      </span>
+    </div>
   </header>
 
-  <main>
-    <div id="map" aria-label="World Cup 2026 Map"></div>
+  <main class="layout">
+    <section id="map" aria-label="World Cup 2026 Map"></section>
+    <aside class="panel">
+      <h2>Cities</h2>
+      <div id="cityList"></div>
+    </aside>
   </main>
 
   <!-- Leaflet JS (CDN) -->
@@ -67,7 +108,7 @@
           crossorigin="anonymous"></script>
 
   <script>
-    // Init dark base map (Carto Dark Matter) with animations OFF
+    /* --- Map init (Dark Matter, no animation on first paint for stability) --- */
     const map = L.map('map', {
       zoomControl: true,
       worldCopyJump: true,
@@ -81,7 +122,7 @@
       maxZoom: 20
     }).addTo(map);
 
-    // Simple SVG pin (city=blue)
+    /* --- Simple SVG pin --- */
     const svgPin = (fill, stroke = '#0a3d62') => {
       const svg = `
         <svg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'>
@@ -93,27 +134,31 @@
     };
     const ICON_CITY = L.icon({ iconUrl: svgPin('#1e90ff'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] });
 
-    // Fallback cities so you see pins immediately
+    /* --- Cities dataset (same as your working pins) --- */
     const CITIES = [
-      { name:'New York / New Jersey', country:'USA', lat:40.813528, lng:-74.074361 },
-      { name:'Dallas (Arlington)',    country:'USA', lat:32.747780, lng:-97.092780 },
-      { name:'Houston',               country:'USA', lat:29.684720, lng:-95.410830 },
-      { name:'Kansas City',           country:'USA', lat:39.048890, lng:-94.483890 },
-      { name:'Atlanta',               country:'USA', lat:33.755560, lng:-84.400000 },
-      { name:'Los Angeles',           country:'USA', lat:33.953000, lng:-118.339000 },
-      { name:'Toronto',               country:'Canada', lat:43.633330, lng:-79.418610 },
-      { name:'Vancouver',             country:'Canada', lat:49.276684, lng:-123.112404 },
-      { name:'Mexico City',           country:'Mexico', lat:19.303060, lng:-99.150560 },
-      { name:'Guadalajara',           country:'Mexico', lat:20.681670, lng:-103.462780 },
-      { name:'Monterrey',             country:'Mexico', lat:25.669170, lng:-100.244440 }
+      { slug:'new-york-new-jersey', name:'New York / New Jersey', country:'USA',    lat:40.813528, lng:-74.074361 },
+      { slug:'dallas',              name:'Dallas (Arlington)',    country:'USA',    lat:32.747780, lng:-97.092780 },
+      { slug:'houston',             name:'Houston',               country:'USA',    lat:29.684720, lng:-95.410830 },
+      { slug:'kansas-city',         name:'Kansas City',           country:'USA',    lat:39.048890, lng:-94.483890 },
+      { slug:'atlanta',             name:'Atlanta',               country:'USA',    lat:33.755560, lng:-84.400000 },
+      { slug:'los-angeles',         name:'Los Angeles (Inglewood)',country:'USA',  lat:33.953000, lng:-118.339000 },
+      { slug:'toronto',             name:'Toronto',               country:'Canada', lat:43.633330, lng:-79.418610 },
+      { slug:'vancouver',           name:'Vancouver',             country:'Canada', lat:49.276684, lng:-123.112404 },
+      { slug:'mexico-city',         name:'Mexico City',           country:'Mexico', lat:19.303060, lng:-99.150560 },
+      { slug:'guadalajara',         name:'Guadalajara',           country:'Mexico', lat:20.681670, lng:-103.462780 },
+      { slug:'monterrey',           name:'Monterrey',             country:'Mexico', lat:25.669170, lng:-100.244440 }
     ];
 
-    const markers = CITIES.map(c => {
+    /* --- Build markers and index them by slug --- */
+    const cityMarkers = {};
+    const markers = [];
+    CITIES.forEach(c => {
       const m = L.marker([c.lat, c.lng], { icon: ICON_CITY })
         .bindPopup(`<b>${c.name}</b><br/>${c.country}`)
         .bindTooltip(c.name);
       m.addTo(map);
-      return m;
+      cityMarkers[c.slug] = m;
+      markers.push(m);
     });
 
     if (markers.length) {
@@ -123,7 +168,53 @@
       map.setView([37.8, -96], 4);
     }
 
-    // Finalize layout to prevent any residual patchiness
+    /* --- Sidebar rendering --- */
+    const listEl = document.getElementById('cityList');
+    function renderList(items) {
+      listEl.innerHTML = '';
+      items.forEach(c => {
+        const el = document.createElement('div');
+        el.className = 'item';
+        el.innerHTML = `<div class="name">${c.name}</div><small>${c.country}</small>`;
+        el.addEventListener('click', () => {
+          const m = cityMarkers[c.slug];
+          if (!m) return;
+          map.flyTo(m.getLatLng(), 6, { duration: 0.8 });
+          setTimeout(() => m.openPopup(), 850);
+        });
+        listEl.appendChild(el);
+      });
+    }
+    renderList(CITIES);
+
+    /* --- Search + Region filters --- */
+    const searchEl = document.getElementById('search');
+    const fUSA = document.getElementById('fUSA');
+    const fCAN = document.getElementById('fCAN');
+    const fMEX = document.getElementById('fMEX');
+
+    function applyFilters() {
+      const q = (searchEl.value || '').trim().toLowerCase();
+      const allowed = c =>
+        (c.country === 'USA'    && fUSA.checked) ||
+        (c.country === 'Canada' && fCAN.checked) ||
+        (c.country === 'Mexico' && fMEX.checked);
+
+      const matches = CITIES.filter(c => allowed(c) && (c.name.toLowerCase().includes(q) || c.country.toLowerCase().includes(q)));
+      renderList(matches);
+
+      // Optional: fit to filtered set
+      const filteredMarkers = matches.map(c => cityMarkers[c.slug]).filter(Boolean);
+      if (filteredMarkers.length) {
+        const fg = L.featureGroup(filteredMarkers);
+        map.fitBounds(fg.getBounds(), { padding:[40,40] });
+      }
+    }
+
+    [searchEl, fUSA, fCAN, fMEX].forEach(ctrl => ctrl.addEventListener('input', applyFilters));
+    [fUSA, fCAN, fMEX].forEach(ctrl => ctrl.addEventListener('change', applyFilters));
+
+    /* --- Final layout reflows for safety --- */
     window.addEventListener('load', () => map.invalidateSize());
     tiles.on('load', () => map.invalidateSize());
     requestAnimationFrame(() => map.invalidateSize());
