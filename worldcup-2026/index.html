@@ -1,87 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MatchDay Navigator • World Cup 2026 (Resilient single-file)</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MatchDay Navigator • World Cup 2026 (Interactive + Clustering)</title>
 
-  <style>
-    /* ====== Dark base theme ====== */
-    :root { --bg:#0b0e12; --text:#dfe7f3; --muted:#a7b6cc; --line:#1c2430; --brand:#1e90ff; --hover:#111823; }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; }
-    body { background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, Arial, sans-serif; }
+<style>
+  /* ====== Dark base theme ====== */
+  :root { --bg:#0b0e12; --text:#dfe7f3; --muted:#a7b6cc; --line:#1c2430; --brand:#1e90ff; --hover:#111823; --gold:#f7d354; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, Arial, sans-serif; }
 
-    header.top {
-      display:flex; align-items:center; justify-content:space-between;
-      height:56px; padding:8px 14px; border-bottom:1px solid var(--line); background:#0d1117;
-      position:sticky; top:0; z-index:5;
-    }
-    header .brand { font-weight:700; color:#eaf2ff; }
+  /* Header + tools (search + region filters) */
+  header.top {
+    display:flex; align-items:center; justify-content:space-between;
+    height:56px; padding:8px 14px; border-bottom:1px solid var(--line); background:#0d1117;
+    position:sticky; top:0; z-index:5;
+  }
+  .brand { font-weight:700; color:#eaf2ff; }
+  .tools { display:flex; gap:10px; align-items:center; }
+  #search { background:#0b1220; color:var(--text); border:1px solid var(--line); padding:6px 8px; border-radius:6px; min-width:220px; }
+  .filters label { color:var(--muted); margin-left:8px; font-size:12px; }
 
-    /* Map + simple sidebar */
-    main.layout { display:grid; grid-template-columns: 1fr 320px; height: calc(100vh - 56px); }
-    #map { width:100%; height:100%; background:#000; }
+  /* Map + sidebar */
+  main.layout { display:grid; grid-template-columns: 1fr 340px; height: calc(100vh - 56px); }
+  #map { width:100%; height:100%; background:#000; }
 
-    aside.panel { border-left:1px solid var(--line); background:#0f1319; overflow:auto; padding:10px; }
-    aside h2 { margin:6px 0 8px; font-size:12px; color:#88a9ff; text-transform:uppercase; letter-spacing:.06em; }
-    .item { padding:6px 8px; border-radius:6px; cursor:pointer; margin:2px 0; }
-    .item:hover { background:var(--hover); }
-    .line { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .city { color:#cfe5ff; font-weight:600; }
-    .country { color:#b8c6dd; }
-    .stadium { color:#ffd970; }
-    small.sep { color:#3a475b; }
+  aside.panel { border-left:1px solid var(--line); background:#0f1319; overflow:hidden; padding:10px; }
+  aside h2 { margin:6px 0 8px; font-size:12px; color:#88a9ff; text-transform:uppercase; letter-spacing:.06em; }
 
-    /* Mobile: bottom tray */
-    @media (max-width: 900px) {
-      main.layout { grid-template-columns: 1fr; }
-      #map { height: 55vh; }
-      aside.panel {
-        height: 45vh; position:fixed; inset:auto 0 0 0; border-left:0; border-top:1px solid var(--line);
-      }
-    }
+  /* Sidebar list — compact and column‑packed (no scroll on desktop) */
+  #cityList { column-gap: 12px; }          /* column-count decided by JS */
+  .item { break-inside: avoid; padding:4px 6px; margin:2px 0; border-radius:6px; cursor:pointer; }
+  .item:hover { background:var(--hover); }
+  .line { display:flex; gap:6px; align-items:baseline; white-space:nowrap; overflow: hidden; text-overflow:ellipsis; font-size:13px; line-height:1.25; }
+  .city { color:#cfe5ff; font-weight:600; }
+  .country { color:#b8c6dd; }
+  .stadium { color:var(--gold); text-decoration: underline; cursor: pointer; }
+  small.sep { color:#3a475b; }
 
-    /* ====== CRITICAL Leaflet layout rules (subset, prevents patchy tiles) ====== */
-    .leaflet-container { overflow: hidden; outline: 0; }
-    .leaflet-pane,
-    .leaflet-tile,
-    .leaflet-marker-icon,
-    .leaflet-marker-shadow,
-    .leaflet-tile-container,
-    .leaflet-pane > svg,
-    .leaflet-pane > canvas,
-    .leaflet-zoom-box,
-    .leaflet-image-layer,
-    .leaflet-layer { position: absolute; left: 0; top: 0; }
-    .leaflet-pane { z-index: 400; }
-    .leaflet-map-pane    { z-index: 200; }
-    .leaflet-tile-pane   { z-index: 200; }
-    .leaflet-overlay-pane{ z-index: 400; }
-    .leaflet-marker-pane { z-index: 600; }
-    .leaflet-tooltip-pane{ z-index: 650; }
-    .leaflet-popup-pane  { z-index: 700; }
-    .leaflet-tile { width:256px; height:256px; user-select:none; -webkit-user-drag:none; }
-    .leaflet-container img { max-width: none !important; }
-    .leaflet-zoom-animated { transform-origin: 0 0; }
-    .leaflet-zoom-anim .leaflet-zoom-animated { transition: none !important; }
-    .leaflet-tile-container { pointer-events: none; }
-    .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path { pointer-events:auto; }
+  /* Mobile: single column list in bottom tray */
+  @media (max-width: 900px) {
+    main.layout { grid-template-columns: 1fr; }
+    #map { height: 55vh; }
+    aside.panel { height: 45vh; position:fixed; inset:auto 0 0 0; border-left:0; border-top:1px solid var(--line); overflow:auto; }
+    #cityList { column-count: 1 !important; }
+  }
 
-    /* Dark UI for controls & popups */
-    .leaflet-control-zoom a { background:#0f141c; color:#cfe5ff; border:1px solid #1a2230; }
-    .leaflet-popup-content-wrapper { background:#0f141c; color:#eaf2ff; border:1px solid #1a2230; }
-    .leaflet-popup-tip { background:#0f141c; }
-    .leaflet-tooltip { background:#0f141c; color:#cfe5ff; border:1px solid #1a2230; }
+  /* ====== CRITICAL Leaflet layout rules (subset) — prevents patchy tiles ====== */
+  .leaflet-container { overflow: hidden; outline: 0; }
+  .leaflet-pane, .leaflet-tile, .leaflet-marker-icon, .leaflet-marker-shadow,
+  .leaflet-tile-container, .leaflet-pane > svg, .leaflet-pane > canvas,
+  .leaflet-zoom-box, .leaflet-image-layer, .leaflet-layer { position: absolute; left: 0; top: 0; }
+  .leaflet-pane { z-index: 400; }
+  .leaflet-map-pane { z-index: 200; } .leaflet-tile-pane { z-index: 200; }
+  .leaflet-overlay-pane { z-index: 400; } .leaflet-marker-pane { z-index: 600; }
+  .leaflet-tooltip-pane { z-index: 650; } .leaflet-popup-pane { z-index: 700; }
+  .leaflet-tile { width:256px; height:256px; user-select:none; -webkit-user-drag:none; }
+  .leaflet-container img { max-width: none !important; }
+  .leaflet-zoom-animated { transform-origin: 0 0; }
+  .leaflet-zoom-anim .leaflet-zoom-animated { transition: none !important; }
+  .leaflet-tile-container { pointer-events: none; }
+  .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path { pointer-events:auto; }
 
-    /* Tiny overlay to surface fatal errors (so we don’t guess) */
-    #err { position: fixed; right: 10px; bottom: 10px; max-width: 48ch; padding: 8px 10px;
-           background: #311; color: #ffdada; border: 1px solid #633; border-radius: 6px; font-size: 12px; display:none; z-index:9999; }
-  </style>
+  /* Dark UI for controls & popups */
+  .leaflet-control-zoom a { background:#0f141c; color:#cfe5ff; border:1px solid #1a2230; }
+  .leaflet-popup-content-wrapper { background:#0f141c; color:#eaf2ff; border:1px solid #1a2230; }
+  .leaflet-popup-tip { background:#0f141c; }
+  .leaflet-tooltip { background:#0f141c; color:#cfe5ff; border:1px solid #1a2230; }
+
+  /* Tiny error bubble (if a CDN is blocked we can see it quickly) */
+  #err { position: fixed; right: 10px; bottom: 10px; max-width: 48ch; padding: 8px 10px;
+         background: #311; color: #ffdada; border: 1px solid #633; border-radius: 6px; font-size: 12px; display:none; z-index:9999; }
+</style>
 </head>
 <body>
   <header class="top">
     <div class="brand">MatchDay Navigator</div>
+    <div class="tools">
+      <input id="search" type="text" placeholder="Search city or stadium…" />
+      <span class="filters">
+        <label><input type="checkbox" id="fUSA" checked> USA</label>
+        <label><input type="checkbox" id="fCAN" checked> Canada</label>
+        <label><input type="checkbox" id="fMEX" checked> Mexico</label>
+      </span>
+    </div>
   </header>
 
   <main class="layout">
@@ -96,21 +100,13 @@
 
   <script>
     /* ---------- small helpers ---------- */
-    function showErr(msg){
-      var box = document.getElementById('err');
-      box.textContent = msg;
-      box.style.display = 'block';
-      console.error('[MDN]', msg);
-    }
-    function addScript(src, ok, fail){
-      var s = document.createElement('script');
-      s.src = src; s.async = true;
-      s.onload = ok; s.onerror = function(){ fail && fail(src); };
-      document.head.appendChild(s);
-    }
+    function showErr(msg){ var b=document.getElementById('err'); b.textContent=msg; b.style.display='block'; console.error('[MDN]',msg); }
+    function addScript(src, ok, fail){ var s=document.createElement('script'); s.src=src; s.async=true; s.onload=ok; s.onerror=function(){ fail&&fail(src); }; document.head.appendChild(s); }
+    function setQuery(p){ const url=new URL(location.href); const [k,v]=p; if(v==null){url.searchParams.delete(k);} else {url.searchParams.set(k,v);} history.pushState({},'',url); }
+    function getQ(name){ return new URLSearchParams(location.search).get(name); }
 
     /* ---------- dataset ---------- */
-    var CITIES = [
+    const CITIES = [
       { slug:'new-york-new-jersey', name:'New York / New Jersey', country:'USA',    lat:40.813528, lng:-74.074361 },
       { slug:'dallas',              name:'Dallas (Arlington)',    country:'USA',    lat:32.747780, lng:-97.092780 },
       { slug:'houston',             name:'Houston',               country:'USA',    lat:29.684720, lng:-95.410830 },
@@ -123,115 +119,200 @@
       { slug:'guadalajara',         name:'Guadalajara',           country:'Mexico', lat:20.681670, lng:-103.462780 },
       { slug:'monterrey',           name:'Monterrey',             country:'Mexico', lat:25.669170, lng:-100.244440 }
     ];
-    var STADIUMS = [
-      { slug:'metlife-stadium',       name:'MetLife Stadium',       citySlug:'new-york-new-jersey' },
-      { slug:'att-stadium',           name:'AT&T Stadium',          citySlug:'dallas' },
-      { slug:'nrg-stadium',           name:'NRG Stadium',           citySlug:'houston' },
-      { slug:'arrowhead-stadium',     name:'Arrowhead Stadium',     citySlug:'kansas-city' },
-      { slug:'mercedes-benz-stadium', name:'Mercedes-Benz Stadium', citySlug:'atlanta' },
-      { slug:'sofi-stadium',          name:'SoFi Stadium',          citySlug:'los-angeles' },
-      { slug:'bmo-field',             name:'BMO Field',             citySlug:'toronto' },
-      { slug:'bc-place',              name:'BC Place',              citySlug:'vancouver' },
-      { slug:'estadio-azteca',        name:'Estadio Azteca',        citySlug:'mexico-city' },
-      { slug:'estadio-bbva',          name:'Estadio BBVA',          citySlug:'monterrey' },
-      { slug:'estadio-akron',         name:'Estadio Akron',         citySlug:'guadalajara' }
+    const STADIUMS = [
+      { slug:'metlife-stadium',       name:'MetLife Stadium',       citySlug:'new-york-new-jersey', lat:40.813528, lng:-74.074361 },
+      { slug:'att-stadium',           name:'AT&T Stadium',          citySlug:'dallas',              lat:32.747780, lng:-97.092780 },
+      { slug:'nrg-stadium',           name:'NRG Stadium',           citySlug:'houston',             lat:29.684720, lng:-95.410830 },
+      { slug:'arrowhead-stadium',     name:'Arrowhead Stadium',     citySlug:'kansas-city',         lat:39.048890, lng:-94.483890 },
+      { slug:'mercedes-benz-stadium', name:'Mercedes-Benz Stadium', citySlug:'atlanta',             lat:33.755560, lng:-84.400000 },
+      { slug:'sofi-stadium',          name:'SoFi Stadium',          citySlug:'los-angeles',         lat:33.953000, lng:-118.339000 },
+      { slug:'bmo-field',             name:'BMO Field',             citySlug:'toronto',             lat:43.633330, lng:-79.418610 },
+      { slug:'bc-place',              name:'BC Place',              citySlug:'vancouver',           lat:49.276684, lng:-123.112404 },
+      { slug:'estadio-azteca',        name:'Estadio Azteca',        citySlug:'mexico-city',         lat:19.303060, lng:-99.150560 },
+      { slug:'estadio-bbva',          name:'Estadio BBVA',          citySlug:'monterrey',           lat:25.669170, lng:-100.244440 },
+      { slug:'estadio-akron',         name:'Estadio Akron',         citySlug:'guadalajara',         lat:20.681670, lng:-103.462780 }
     ];
 
-    /* ---------- boot once Leaflet is loaded ---------- */
-    function boot(){
-      if (!window.L) { showErr('Leaflet failed to load'); return; }
+    /* ---------- boot after Leaflet+Cluster load ---------- */
+    function bootWithCluster(){
+      if(!window.L){ showErr('Leaflet failed to load'); return; }
 
-      // Map (no animations on first paint)
-      var map = L.map('map', { zoomControl:true, worldCopyJump:true, zoomAnimation:false, fadeAnimation:false });
+      // Map (first paint: animations off for stability)
+      const map = L.map('map',{ zoomControl:true, worldCopyJump:true, zoomAnimation:false, fadeAnimation:false });
 
-      // Try Carto Dark Matter, fall back to OSM if tile errors occur
-      var cartoUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-      var osmUrl   = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-
-      var base = L.tileLayer(cartoUrl, {
-        attribution: '© OpenStreetMap contributors © CARTO',
-        subdomains: 'abcd', maxZoom: 20
-      }).addTo(map);
-
-      var switched = false;
-      base.on('tileerror', function(){
-        if (!switched) {
-          switched = true;
-          map.removeLayer(base);
-          L.tileLayer(osmUrl, {
-            attribution: '© OpenStreetMap contributors',
-            maxZoom: 19
-          }).addTo(map);
-          showErr('Carto tiles unavailable, switched to OpenStreetMap.');
-        }
-      });
+      // Tiles: Carto → OSM fallback
+      const cartoUrl='https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+      const osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      let switched=false;
+      const base = L.tileLayer(cartoUrl,{ attribution:'© OpenStreetMap contributors © CARTO', subdomains:'abcd', maxZoom:20 })
+        .on('tileerror',()=>{ if(!switched){ switched=true; map.removeLayer(base); L.tileLayer(osmUrl,{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(map); showErr('Carto tiles unavailable, switched to OSM.'); }})
+        .addTo(map);
 
       // Icons
-      function svgPin(fill, stroke){
-        stroke = stroke || '#0a3d62';
-        var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'>"
-                + "<path d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z' fill='" + fill + "' stroke='" + stroke + "' stroke-width='1'/>"
-                + "<circle cx='12.5' cy='12.5' r='5' fill='#fff'/></svg>";
-        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+      function svgPin(fill, stroke){ stroke=stroke||'#0a3d62';
+        const svg="<svg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'>"
+                +"<path d='M12.5 0C5.6 0 0 5.6 0 12.5c0 9.2 10.6 17.2 11.2 17.7a2 2 0 0 0 2.6 0C14.4 29.7 25 21.7 25 12.5 25 5.6 19.4 0 12.5 0z' fill='"+fill+"' stroke='"+stroke+"' stroke-width='1'/>"
+                +"<circle cx='12.5' cy='12.5' r='5' fill='#fff'/></svg>";
+        return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
       }
-      var ICON_CITY = L.icon({ iconUrl: svgPin('#1e90ff'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] });
+      const ICONS = {
+        city:    L.icon({ iconUrl: svgPin('#1e90ff'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] }),
+        stadium: L.icon({ iconUrl: svgPin('#f7d354'), iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[0,-36] })
+      };
 
-      // Stadium lookup
-      var stadiumByCitySlug = {};
-      for (var i=0;i<STADIUMS.length;i++){ var s=STADIUMS[i]; if (!stadiumByCitySlug[s.citySlug]) stadiumByCitySlug[s.citySlug] = s.name; }
+      // Custom neon cluster (no external CSS)
+      function neonCluster(size){
+        const s = Math.max(30, 22 + (size.toString().length*6) + Math.min(40, size));
+        return L.divIcon({
+          html: "<div style=\""
+                +"display:flex;align-items:center;justify-content:center;"
+                +"width:"+s+"px;height:"+s+"px;border-radius:50%;"
+                +"background:radial-gradient(ellipse at center, rgba(30,144,255,.95) 0%, rgba(30,144,255,.65) 60%, rgba(30,144,255,.25) 100%);"
+                +"box-shadow:0 0 14px rgba(30,144,255,.6);color:#fff;font-weight:700;\">"+size+"</div>",
+          className: '',
+          iconSize: [s,s]
+        });
+      }
+      function clusterIconCreate(cluster){ return neonCluster(cluster.getChildCount()); }
+
+      const cityCluster    = (window.L.MarkerClusterGroup)
+        ? new L.MarkerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:50, iconCreateFunction:clusterIconCreate })
+        : null;
+      const stadiumCluster = (window.L.MarkerClusterGroup)
+        ? new L.MarkerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:50, iconCreateFunction:clusterIconCreate })
+        : null;
+
+      // Build stadium lookup
+      const stadiumByCitySlug={}; const stadiumMarkersBySlug={};
+      STADIUMS.forEach(s=>{ if(!stadiumByCitySlug[s.citySlug]) stadiumByCitySlug[s.citySlug]=s.name; });
 
       // Markers
-      var cityMarkers = {}, all = [];
-      for (var j=0;j<CITIES.length;j++){
-        var c = CITIES[j];
-        var popup = "<b>" + c.name + "</b><br/>" + c.country;
-        if (stadiumByCitySlug[c.slug]) popup += "<br/><small>" + stadiumByCitySlug[c.slug] + "</small>";
-        var m = L.marker([c.lat, c.lng], { icon: ICON_CITY }).bindPopup(popup).bindTooltip(c.name);
-        m.addTo(map);
-        cityMarkers[c.slug] = m; all.push(m);
-      }
-      if (all.length){ var fg = L.featureGroup(all); map.fitBounds(fg.getBounds(), { padding:[40,40] }); }
-      else { map.setView([37.8,-96],4); }
+      const cityMarkersBySlug={}; const allMarkers=[];
+      CITIES.forEach(c=>{
+        const popup = "<b>"+c.name+"</b><br/>"+c.country+(stadiumByCitySlug[c.slug]?"<br/><small>"+stadiumByCitySlug[c.slug]+"</small>":"");
+        const m = L.marker([c.lat,c.lng],{icon:ICONS.city}).bindPopup(popup).bindTooltip(c.name);
+        cityMarkersBySlug[c.slug]=m; allMarkers.push(m);
+        if(cityCluster) cityCluster.addLayer(m); else m.addTo(map);
+      });
 
-      // Sidebar
-      var listEl = document.getElementById('cityList');
-      function render(items){
+      // Stadium pins (gold)
+      STADIUMS.forEach(s=>{
+        const m = L.marker([s.lat,s.lng],{icon:ICONS.stadium}).bindPopup("<b>"+s.name+"</b>");
+        stadiumMarkersBySlug[s.slug]=m; allMarkers.push(m);
+        if(stadiumCluster) stadiumCluster.addLayer(m); else m.addTo(map);
+      });
+
+      if(cityCluster) map.addLayer(cityCluster);
+      if(stadiumCluster) map.addLayer(stadiumCluster);
+
+      // Fit to everything initially (unless a deep link focuses later)
+      function fitAll(){
+        if(allMarkers.length){
+          const fg=L.featureGroup(allMarkers); map.fitBounds(fg.getBounds(),{padding:[40,40]});
+        } else { map.setView([37.8,-96],4); }
+      }
+
+      /* ---------- sidebar render (City — Country · Stadium) ---------- */
+      const listEl=document.getElementById('cityList');
+      function renderList(items){
         listEl.innerHTML='';
-        for (var k=0;k<items.length;k++){
-          var c = items[k], st = stadiumByCitySlug[c.slug] || '';
-          var el = document.createElement('div'); el.className='item';
-          el.innerHTML = "<div class='line'><span class='city'>" + c.name + "</span>"
-                       + "<small class='sep'>—</small><span class='country'>" + c.country + "</span>"
-                       + (st ? "<small class='sep'>·</small><span class='stadium'>" + st + "</span>" : "")
-                       + "</div>";
-          (function(slug){
-            el.addEventListener('click', function(){
-              var m = cityMarkers[slug]; if (!m) return;
-              map.flyTo(m.getLatLng(), 6, { duration: 0.8 });
-              setTimeout(function(){ m.openPopup(); }, 850);
+        items.forEach(c=>{
+          const st=stadiumByCitySlug[c.slug]||'';
+          const el=document.createElement('div'); el.className='item';
+          el.innerHTML="<div class='line'>"
+            +"<span class='city'>"+c.name+"</span><small class='sep'>—</small>"
+            +"<span class='country'>"+c.country+"</span>"
+            +(st?"<small class='sep'>·</small><span class='stadium' data-city='"+c.slug+"'>"+st+"</span>":"")
+            +"</div>";
+          el.addEventListener('click',()=>focusCity(c.slug,true,true));
+          // Make stadium name clickable to fly to stadium pin (if present)
+          el.querySelectorAll('.stadium').forEach(node=>{
+            node.addEventListener('click',(ev)=>{
+              ev.stopPropagation();
+              const citySlug = node.getAttribute('data-city');
+              const stadium = STADIUMS.find(s=>s.citySlug===citySlug);
+              if(stadium) focusStadium(stadium.slug,true,true);
             });
-          })(c.slug);
+          });
           listEl.appendChild(el);
-        }
+        });
+        packIntoColumns();  // keep list visible without scroll on desktop
       }
-      render(CITIES);
+      renderList(CITIES);
 
-      // Finalize layout
-      window.addEventListener('load', function(){ map.invalidateSize(); });
-      base.on('load', function(){ map.invalidateSize(); });
-      requestAnimationFrame(function(){ map.invalidateSize(); });
-      window.addEventListener('resize', function(){ map.invalidateSize(); });
+      /* ---------- focus helpers + SPA URLs ---------- */
+      function focusCity(slug, open, push){
+        const m=cityMarkersBySlug[slug]; if(!m) return;
+        if(push) setQuery(['city',slug]), setQuery(['stadium',null]);
+        map.flyTo(m.getLatLng(), 6, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850);
+      }
+      function focusStadium(slug, open, push){
+        const m=stadiumMarkersBySlug[slug]; if(!m) return;
+        if(push) setQuery(['stadium',slug]), setQuery(['city',null]);
+        map.flyTo(m.getLatLng(), 12, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850);
+      }
+      function handleRoute(open){
+        const c=getQ('city'), s=getQ('stadium');
+        if(s && stadiumMarkersBySlug[s]) focusStadium(s, open, false);
+        else if(c && cityMarkersBySlug[c]) focusCity(c, open, false);
+        else fitAll();
+      }
+      window.addEventListener('popstate',()=>handleRoute(true));
+
+      /* ---------- search + region filters ---------- */
+      const searchEl=document.getElementById('search');
+      const fUSA=document.getElementById('fUSA'), fCAN=document.getElementById('fCAN'), fMEX=document.getElementById('fMEX');
+      function allowedCountry(c){
+        return (c==='USA'&&fUSA.checked)||(c==='Canada'&&fCAN.checked)||(c==='Mexico'&&fMEX.checked);
+      }
+      function applyFilters(){
+        const q=(searchEl.value||'').trim().toLowerCase();
+        const matched=CITIES.filter(c=>allowedCountry(c.country) && (c.name.toLowerCase().includes(q) || (stadiumByCitySlug[c.slug]||'').toLowerCase().includes(q)));
+        renderList(matched);
+        // optionally fit to current filtered set
+        const ms = matched.map(c=>cityMarkersBySlug[c.slug]).filter(Boolean);
+        if(ms.length){ const fg=L.featureGroup(ms); map.fitBounds(fg.getBounds(),{padding:[40,40]}); }
+      }
+      [searchEl,fUSA,fCAN,fMEX].forEach(ctrl=>{
+        const evt = (ctrl===searchEl)?'input':'change';
+        ctrl.addEventListener(evt,applyFilters);
+      });
+
+      /* ---------- column packing so the list fits without scroll ---------- */
+      function packIntoColumns(){
+        if (window.matchMedia('(max-width: 900px)').matches){ listEl.style.columnCount=1; return; }
+        const panel=listEl.closest('aside.panel'); const available=panel.clientHeight - 50;
+        const sample=listEl.querySelector('.item'); const rowH=sample?Math.max(18,sample.getBoundingClientRect().height):20;
+        const rows=listEl.children.length||1; const needed=Math.ceil((rows*rowH)/Math.max(1,available));
+        listEl.style.columnCount=Math.min(Math.max(needed,1),4);
+      }
+      window.addEventListener('resize',()=>{ map.invalidateSize(); packIntoColumns(); });
+
+      /* ---------- first paint stabilization + route ---------- */
+      window.addEventListener('load',()=>map.invalidateSize());
+      base.on('load',()=>map.invalidateSize());
+      requestAnimationFrame(()=>map.invalidateSize());
+
+      // Deep‑link or default fit
+      handleRoute(true);
     }
 
-    /* ---------- Load Leaflet JS with 2‑CDN fallback ---------- */
-    addScript(
-      'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
-      function(){ boot(); },
-      function(){ addScript(
-        'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js',
-        function(){ boot(); },
-        function(){ showErr('Leaflet JS could not be loaded from CDN.'); }
-      );}
+    /* ---------- Load Leaflet, then MarkerCluster, with 2‑CDN fallbacks ---------- */
+    function loadClusterThenBoot(){
+      if (!window.L){ showErr('Leaflet JS did not load'); return; }
+      // markercluster plugin JS (no CSS needed; we create custom icons)
+      addScript('https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
+        bootWithCluster,
+        ()=>addScript('https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
+          bootWithCluster,
+          ()=>{ showErr('MarkerCluster JS could not be loaded. Falling back to no clustering.'); bootWithCluster(); }
+        )
+      );
+    }
+
+    addScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+      loadClusterThenBoot,
+      ()=>addScript('https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', loadClusterThenBoot, ()=>showErr('Leaflet JS could not be loaded from CDNs.'))
     );
   </script>
 </body>
