@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MatchDay Navigator • World Cup 2026 (Accurate Labels + Hover Copy)</title>
+<title>MatchDay Navigator • World Cup 2026 (CDN-first + Accurate Labels + 10px)</title>
 
 <style>
   /* ===== Theme tokens ===== */
@@ -66,18 +66,20 @@
   .country{ color:var(--muted) }
   .stadium{ color:var(--gold); font-weight:600 }
   .stadium.link{ text-decoration:underline; cursor:pointer }
+
+  /* Hover-only actions */
   .actions{ display:flex; gap:6px; margin-left:8px; opacity:0; visibility:hidden; transition:opacity .15s ease }
   .item:hover .actions{ opacity:1; visibility:visible }
   .btn{ font-size:11px; color:var(--text); background:transparent; border:1px solid var(--line); padding:2px 6px; border-radius:5px; cursor:pointer }
   .btn:hover{ background:var(--hover) }
 
-  /* Map tooltips (labels) — small & themed */
+  /* Map tooltips (labels) — small & themed (10px) */
   .label-city, .label-stadium{
-    background:var(--label-bg) !important; color:var(--label-city);
-    border:1px solid var(--line); border-radius:4px; padding:1px 4px; font-size:11px; line-height:1.15;
+    background:var(--label-bg) !important; border:1px solid var(--line);
+    border-radius:4px; padding:1px 4px; font-size:10px; line-height:1.1; color:var(--label-city);
   }
   .label-stadium{ color:var(--label-stadium) }
-  .leaflet-tooltip-top:before{ border-top-color:var(--label-bg) !important } /* arrow color */
+  .leaflet-tooltip-top:before{ border-top-color:var(--label-bg) !important }
 
   /* Mobile */
   @media (max-width:900px){
@@ -157,7 +159,6 @@
     const $ = sel => document.querySelector(sel);
     function showErr(msg){ const b=$("#err"); b.textContent=msg; b.style.display='block'; console.error('[MDN]',msg); }
     function toast(msg){ const t=$("#toast"); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none', 1200); }
-    function addScript(src, ok, fail){ const s=document.createElement('script'); s.src=src; s.async=true; s.onload=ok; s.onerror=()=>fail&&fail(src); document.head.appendChild(s); }
     function setQuery(k, v){ const url=new URL(location.href); if(v==null){url.searchParams.delete(k);} else {url.searchParams.set(k,v);} history.pushState({},"",url); }
     const getQ = name => new URLSearchParams(location.search).get(name);
 
@@ -189,7 +190,7 @@
       { slug:'estadio-akron',         name:'Estadio Akron',         citySlug:'guadalajara',         lat:20.681670, lng:-103.462780 }
     ];
 
-    /* ===== boot (after Leaflet + Cluster) ===== */
+    /* ================== boot (after Leaflet + (optional) Cluster) ================== */
     function boot(){
       if(!window.L){ showErr('Leaflet failed to load'); return; }
 
@@ -201,7 +202,7 @@
 
       /* map + tiles */
       const map = L.map('map',{ zoomControl:true, worldCopyJump:true, zoomAnimation:false, fadeAnimation:false });
-      map.attributionControl.setPrefix(''); // hide “Leaflet” link, keep providers
+      map.attributionControl.setPrefix(''); // remove “Leaflet” link, keep providers
 
       const LAYERS = {
         dark:  { url:'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',  attr:'© OpenStreetMap contributors © CARTO', max:20 },
@@ -227,7 +228,7 @@
         setTiles(next);
       });
 
-      /* icons */
+      /* icons (normal + glow) */
       function svgPin(fill, stroke){ stroke=stroke||'#0a3d62';
         const svg="<svg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'>"
                 +"<defs><filter id='g'><feDropShadow dx='0' dy='0' stdDeviation='2' flood-color='"+fill+"' flood-opacity='0.85'/></filter></defs>"
@@ -249,7 +250,7 @@
         stadiumActive: L.icon({ iconUrl: svgPinActive('#f7d354'), iconSize:[30,50], iconAnchor:[15,50], popupAnchor:[0,-44] })
       };
 
-      /* clusters (tuned to reduce “2” bubbles) */
+      /* clusters (tuned) — present only if plugin loaded */
       function neonCluster(size){
         const s=Math.max(30, 22+(size.toString().length*6)+Math.min(40,size));
         return L.divIcon({ html:
@@ -258,13 +259,9 @@
           +"box-shadow:0 0 14px rgba(30,144,255,.6);color:#fff;font-weight:700;\">"+size+"</div>",
           className:'', iconSize:[s,s] });
       }
-      function clusterIconCreate(cluster){ return neonCluster(cluster.getChildCount()); }
-      const cityCluster = (window.L.MarkerClusterGroup)
-        ? new L.MarkerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:40, disableClusteringAtZoom:6, spiderfyOnMaxZoom:true, iconCreateFunction:clusterIconCreate })
-        : null;
-      const stadiumCluster = (window.L.MarkerClusterGroup)
-        ? new L.MarkerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:35, disableClusteringAtZoom:6, spiderfyOnMaxZoom:true, iconCreateFunction:clusterIconCreate })
-        : null;
+      const hasCluster = !!window.L.MarkerClusterGroup;
+      const cityCluster    = hasCluster ? new L.MarkerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:40, disableClusteringAtZoom:6, spiderfyOnMaxZoom:true, iconCreateFunction:c=>neonCluster(c.getChildCount()) }) : null;
+      const stadiumCluster = hasCluster ? new L.MarkerClusterGroup({ showCoverageOnHover:false, maxClusterRadius:35, disableClusteringAtZoom:6, spiderfyOnMaxZoom:true, iconCreateFunction:c=>neonCluster(c.getChildCount()) }) : null;
       if(cityCluster) cityCluster.on('clusterclick', e => e.layer.spiderfy());
       if(stadiumCluster) stadiumCluster.on('clusterclick', e => e.layer.spiderfy());
 
@@ -283,17 +280,11 @@
         active={ type, slug, marker:m };
       }
 
-      /* markers + tooltips (labels bound to marker) */
+      /* markers + labels (tooltips bound to the marker) */
       const cityMarkersBySlug={}, stadiumMarkersBySlug={};
-      function bindLabelIf(m, text, className){
-        // (Re)bind a small permanent tooltip to a marker
-        m.bindTooltip(text, { permanent:true, direction:'top', offset:[0,-12], className:className, opacity:1, interactive:false });
-      }
-      function unbindLabel(m){ if(m && m.getTooltip()) m.unbindTooltip(); }
 
-      /* visibility helpers */
       function visibleUnclustered(m){
-        // If using clusters, a marker is visibly unclustered only when getVisibleParent(m) === m
+        if(!hasCluster) return !!m._icon;
         if(cityCluster && cityCluster.hasLayer(m)){
           const vp = cityCluster.getVisibleParent ? cityCluster.getVisibleParent(m) : null;
           return vp ? (vp === m) : !!m._icon;
@@ -302,11 +293,23 @@
           const vp = stadiumCluster.getVisibleParent ? stadiumCluster.getVisibleParent(m) : null;
           return vp ? (vp === m) : !!m._icon;
         }
-        return !!m._icon; // non-clustered: rendered if it has an _icon
+        return !!m._icon;
       }
+
+      function bindLabelIf(m, text, className){
+        // (Re)bind only when we actually want it visible; unbound otherwise
+        m.bindTooltip(text, { permanent:true, direction:'top', offset:[0,-12], className:className, opacity:1, interactive:false });
+      }
+      function unbindLabel(m){ if(m && m.getTooltip()) m.unbindTooltip(); }
 
       function syncLabels(){
         const b = map.getBounds();
+        const minZoom = 3; // hide labels if zoomed out too far
+        if(map.getZoom() < minZoom){
+          Object.values(cityMarkersBySlug).forEach(unbindLabel);
+          Object.values(stadiumMarkersBySlug).forEach(unbindLabel);
+          return;
+        }
         Object.entries(cityMarkersBySlug).forEach(([slug, m])=>{
           const should = visibleUnclustered(m) && b.contains(m.getLatLng());
           const has = !!m.getTooltip();
@@ -486,60 +489,40 @@
       handleRoute();
     }
 
-    /* ===== Load local vendors first, fallback to CDNs ===== */
-    function loadClusterThenBoot(){
-      if(!window.L){ showErr('Leaflet JS did not load'); return; }
-      addScript('/assets/vendor/leaflet.markercluster/leaflet.markercluster.js',
-        boot,
-        ()=>addScript('https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
-          boot,
-          ()=>addScript('https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js', boot,
-            ()=>{ showErr('MarkerCluster JS could not be loaded. Falling back to no clustering.'); boot(); }
-          )
-        )
-      );
-    }
-    addScript('<script>
-  // Robust loader: CDN first (reliable), then verify, then cluster, then (optionally) local
-  function robustLoad(srcList, done) {
-    const next = () => {
-      const src = srcList.shift();
-      if (!src) return done(new Error('All sources failed'));
-      const s = document.createElement('script');
-      s.src = src; s.async = true;
-      s.onload = () => done(null, src);
-      s.onerror = () => next();
-      document.head.appendChild(s);
-    };
-    next();
-  }
+    /* ================== CDN-first loader (avoids 404/MIME issues) ================== */
+    (function(){
+      function robustLoad(srcList, done) {
+        const next = () => {
+          const src = srcList.shift();
+          if (!src) return done(new Error('All sources failed'));
+          const s = document.createElement('script');
+          s.src = src; s.async = true;
+          s.onload = () => done(null, src);
+          s.onerror = () => next();
+          document.head.appendChild(s);
+        };
+        next();
+      }
 
-  // 1) Load Leaflet (prefer CDN)
-  robustLoad([
-    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
-    'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js',
-    '/assets/vendor/leaflet/leaflet.js' // local (optional) as last resort
-  ], (err) => {
-    if (err || !window.L) { console.error('Leaflet failed to load'); return; }
+      // 1) Load Leaflet (prefer CDN)
+      robustLoad([
+        'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+        'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js',
+        '/assets/vendor/leaflet/leaflet.js' // local (optional) as last resort
+      ], (err) => {
+        if (err || !window.L) { console.error('Leaflet failed to load'); return; }
 
-    // 2) Load MarkerCluster (prefer CDN)
-    robustLoad([
-      'https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
-      'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
-      '/assets/vendor/leaflet.markercluster/leaflet.markercluster.js' // local (optional)
-    ], () => {
-      // Even if cluster failed, boot anyway (we handle no-cluster gracefully)
-      boot();
-    });
-  });
-</script>',
-      loadClusterThenBoot,
-      ()=>addScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', loadClusterThenBoot,
-        ()=>addScript('https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', loadClusterThenBoot,
-          ()=>showErr('Leaflet JS could not be loaded from CDNs.')
-        )
-      )
-    );
+        // 2) Load MarkerCluster (prefer CDN)
+        robustLoad([
+          'https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
+          'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
+          '/assets/vendor/leaflet.markercluster/leaflet.markercluster.js' // local (optional)
+        ], () => {
+          // Even if cluster fails, boot gracefully
+          boot();
+        });
+      });
+    })();
   </script>
 </body>
 </html>
