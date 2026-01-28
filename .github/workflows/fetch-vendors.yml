@@ -1,0 +1,43 @@
+
+name: Fetch local vendor files
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write   # allow committing the downloaded files back to the repo
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create vendor folders
+        run: |
+          mkdir -p assets/vendor/leaflet
+          mkdir -p assets/vendor/leaflet.markercluster
+
+      - name: Download Leaflet 1.9.4
+        run: |
+          curl -fsSL https://unpkg.com/leaflet@1.9.4/dist/leaflet.js -o assets/vendor/leaflet/leaflet.js
+          curl -fsSL https://unpkg.com/leaflet@1.9.4/dist/leaflet.css -o assets/vendor/leaflet/leaflet.css
+
+      - name: Download Leaflet.MarkerCluster 1.5.3
+        run: |
+          curl -fsSL https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js -o assets/vendor/leaflet.markercluster/leaflet.markercluster.js
+          curl -fsSL https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css -o assets/vendor/leaflet.markercluster/MarkerCluster.css
+
+      - name: Commit changes
+        run: |
+          set -e
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add assets/vendor
+            git commit -m "chore(vendors): fetch Leaflet 1.9.4 + MarkerCluster 1.5.3"
+            git push
+          else
+            echo "No changes to commit"
+          fi
