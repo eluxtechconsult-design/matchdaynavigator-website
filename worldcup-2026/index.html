@@ -499,7 +499,40 @@
         )
       );
     }
-    addScript('/assets/vendor/leaflet/leaflet.js',
+    addScript('<script>
+  // Robust loader: CDN first (reliable), then verify, then cluster, then (optionally) local
+  function robustLoad(srcList, done) {
+    const next = () => {
+      const src = srcList.shift();
+      if (!src) return done(new Error('All sources failed'));
+      const s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload = () => done(null, src);
+      s.onerror = () => next();
+      document.head.appendChild(s);
+    };
+    next();
+  }
+
+  // 1) Load Leaflet (prefer CDN)
+  robustLoad([
+    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+    'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js',
+    '/assets/vendor/leaflet/leaflet.js' // local (optional) as last resort
+  ], (err) => {
+    if (err || !window.L) { console.error('Leaflet failed to load'); return; }
+
+    // 2) Load MarkerCluster (prefer CDN)
+    robustLoad([
+      'https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
+      'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
+      '/assets/vendor/leaflet.markercluster/leaflet.markercluster.js' // local (optional)
+    ], () => {
+      // Even if cluster failed, boot anyway (we handle no-cluster gracefully)
+      boot();
+    });
+  });
+</script>',
       loadClusterThenBoot,
       ()=>addScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', loadClusterThenBoot,
         ()=>addScript('https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js', loadClusterThenBoot,
