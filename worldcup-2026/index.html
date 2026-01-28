@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MatchDay Navigator • World Cup 2026 (Cities & Stadiums Tabs + Glow)</title>
+<title>MatchDay Navigator • World Cup 2026 (Target-in-place, no zoom)</title>
 
 <style>
   /* ====== Dark base theme ====== */
@@ -190,7 +190,7 @@
         stadiumActive: L.icon({ iconUrl: svgPinActive('#f7d354'), iconSize:[30,50], iconAnchor:[15,50], popupAnchor:[0,-44] })
       };
 
-      /* ---------- CUSTOM CLUSTERS (tuned to reduce “2” bubbles) ---------- */
+      /* ---------- CUSTOM CLUSTERS (tuned) ---------- */
       function neonCluster(size){
         const s = Math.max(30, 22 + (size.toString().length*6) + Math.min(40, size));
         return L.divIcon({
@@ -243,6 +243,26 @@
         active = { type, slug, marker:m };
       }
 
+      /* ---------- helper: reveal a marker WITHOUT zooming ---------- */
+      function revealMarker(m, type){
+        if(!m) return;
+        // If the marker currently belongs to a cluster at this zoom, try spiderfying that cluster
+        const parent = m.__parent; // internal ref used by markercluster
+        if (parent && parent.spiderfy && parent._zoom === map.getZoom()) {
+          try { parent.spiderfy(); } catch(e){}
+        }
+        // Pan just enough so popup is fully visible (leave room for right sidebar)
+        const sidebarWidth = 360; // matches CSS column width
+        const padding = { paddingTopLeft:[20,20], paddingBottomRight:[sidebarWidth+20, 20] };
+        map.panInside(m.getLatLng(), { animate:true, ...padding });
+        // Open its popup and glow
+        if(type) setActive(type, (type==='city')
+          ? Object.keys(cityMarkersBySlug).find(k => cityMarkersBySlug[k]===m)
+          : Object.keys(stadiumMarkersBySlug).find(k => stadiumMarkersBySlug[k]===m)
+        );
+        setTimeout(()=> m.openPopup(), 250);
+      }
+
       /* ---------- Build lookups ---------- */
       const stadiumByCitySlug={}; STADIUMS.forEach(s=>{ if(!stadiumByCitySlug[s.citySlug]) stadiumByCitySlug[s.citySlug]=s.name; });
 
@@ -266,7 +286,7 @@
       if(cityCluster) map.addLayer(cityCluster);
       if(stadiumCluster) map.addLayer(stadiumCluster);
 
-      // Fit
+      // Fit all markers initially (no side effects)
       function fitAll(){ if(allMarkers.length){ const fg=L.featureGroup(allMarkers); map.fitBounds(fg.getBounds(),{padding:[40,40]}); } else { map.setView([37.8,-96],4); } }
 
       /* ---------- Sidebar rendering (tabs) ---------- */
@@ -301,11 +321,13 @@
             +"<span class='country'>"+c.country+"</span>"
             +(st?"<small class='sep'>·</small><span class='stadium link' data-city='"+c.slug+"'>"+st+"</span>":"")
             +"</div>";
+          // Click city → target-in-place (no zoom)
           el.addEventListener('click',()=>{
             const m=cityMarkersBySlug[c.slug]; if(!m) return;
-            setActive('city', c.slug); setQuery('city', c.slug); setQuery('stadium', null);
-            map.flyTo(m.getLatLng(), 6, {duration:.8}); setTimeout(()=>m.openPopup(), 850);
+            setQuery('city', c.slug); setQuery('stadium', null);
+            revealMarker(m, 'city');
           });
+          // Click stadium name inside city row → target-in-place stadium
           el.querySelectorAll('.stadium.link').forEach(node=>{
             node.addEventListener('click',ev=>{
               ev.stopPropagation();
@@ -313,9 +335,9 @@
               const s=STADIUMS.find(x=>x.citySlug===citySlug);
               if(!s) return;
               const m=stadiumMarkersBySlug[s.slug]; if(!m) return;
-              setActive('stadium', s.slug); setQuery('stadium', s.slug); setQuery('city', null);
+              setQuery('stadium', s.slug); setQuery('city', null);
               setTab('stadiums');
-              map.flyTo(m.getLatLng(), 12, {duration:.8}); setTimeout(()=>m.openPopup(), 850);
+              revealMarker(m, 'stadium');
             });
           });
           listCities.appendChild(el);
@@ -335,8 +357,8 @@
             +"</div>";
           el.addEventListener('click',()=>{
             const m=stadiumMarkersBySlug[s.slug]; if(!m) return;
-            setActive('stadium', s.slug); setQuery('stadium', s.slug); setQuery('city', null);
-            map.flyTo(m.getLatLng(), 12, {duration:.8}); setTimeout(()=>m.openPopup(), 850);
+            setQuery('stadium', s.slug); setQuery('city', null);
+            revealMarker(m, 'stadium');
           });
           listStads.appendChild(el);
         });
@@ -349,8 +371,8 @@
       /* ---------- SPA routes ---------- */
       function handleRoute(open){
         const s=getQ('stadium'); const c=getQ('city');
-        if(s && stadiumMarkersBySlug[s]){ setTab('stadiums'); const m=stadiumMarkersBySlug[s]; setActive('stadium', s); map.flyTo(m.getLatLng(), 12, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850); }
-        else if(c && cityMarkersBySlug[c]){ setTab('cities'); const m=cityMarkersBySlug[c]; setActive('city', c); map.flyTo(m.getLatLng(), 6, {duration:.8}); if(open) setTimeout(()=>m.openPopup(), 850); }
+        if(s && stadiumMarkersBySlug[s]){ setTab('stadiums'); const m=stadiumMarkersBySlug[s]; revealMarker(m, 'stadium'); if(open) setTimeout(()=>m.openPopup(), 250); }
+        else if(c && cityMarkersBySlug[c]){ setTab('cities'); const m=cityMarkersBySlug[c]; revealMarker(m, 'city'); if(open) setTimeout(()=>m.openPopup(), 250); }
         else { setTab('cities'); fitAll(); }
       }
       window.addEventListener('popstate', ()=>handleRoute(true));
