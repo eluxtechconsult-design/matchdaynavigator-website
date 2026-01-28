@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MatchDay Navigator • World Cup 2026 (CDN-first + Accurate Labels + 10px)</title>
+<title>MatchDay Navigator • World Cup 2026 (No wrap + Accurate 10px labels)</title>
 
 <style>
   /* ===== Theme tokens ===== */
@@ -190,7 +190,7 @@
       { slug:'estadio-akron',         name:'Estadio Akron',         citySlug:'guadalajara',         lat:20.681670, lng:-103.462780 }
     ];
 
-    /* ================== boot (after Leaflet + (optional) Cluster) ================== */
+    /* ================== boot (Leaflet + optional Cluster) ================== */
     function boot(){
       if(!window.L){ showErr('Leaflet failed to load'); return; }
 
@@ -200,8 +200,13 @@
       document.documentElement.setAttribute('data-theme', savedTheme);
       themeBtn.textContent = savedTheme==='dark' ? 'Dark' : 'Light';
 
-      /* map + tiles */
-      const map = L.map('map',{ zoomControl:true, worldCopyJump:true, zoomAnimation:false, fadeAnimation:false });
+      /* map + tiles — IMPORTANT: no wrap, no worldCopyJump */
+      const map = L.map('map',{
+        zoomControl:true,
+        worldCopyJump:false,   // <— prevents repeat worlds (fixes far-right labels)
+        zoomAnimation:false,
+        fadeAnimation:false
+      });
       map.attributionControl.setPrefix(''); // remove “Leaflet” link, keep providers
 
       const LAYERS = {
@@ -215,8 +220,13 @@
         if(activeTile) map.removeLayer(activeTile);
         const cfg = (mode==='light') ? LAYERS.light : LAYERS.dark;
         let switched=false;
-        activeTile = L.tileLayer(cfg.url,{ attribution:cfg.attr, subdomains:'abcd', maxZoom:cfg.max })
-          .on('tileerror',()=>{ if(!switched){ switched=true; map.removeLayer(activeTile); activeTile=L.tileLayer(OSM.url,{attribution:OSM.attr,maxZoom:OSM.max}).addTo(map); showErr('Primary tiles unavailable, switched to OSM.'); }})
+        activeTile = L.tileLayer(cfg.url,{
+            attribution:cfg.attr, subdomains:'abcd', maxZoom:cfg.max,
+            noWrap:true          // <— key: do not repeat world (tooltips stay aligned)
+          })
+          .on('tileerror',()=>{ if(!switched){ switched=true; map.removeLayer(activeTile);
+                activeTile=L.tileLayer(OSM.url,{attribution:OSM.attr,maxZoom:OSM.max,noWrap:true}).addTo(map);
+                showErr('Primary tiles unavailable, switched to OSM.'); }})
           .addTo(map);
       }
       setTiles(savedTheme);
@@ -250,7 +260,7 @@
         stadiumActive: L.icon({ iconUrl: svgPinActive('#f7d354'), iconSize:[30,50], iconAnchor:[15,50], popupAnchor:[0,-44] })
       };
 
-      /* clusters (tuned) — present only if plugin loaded */
+      /* clusters (tuned) — only if plugin loaded */
       function neonCluster(size){
         const s=Math.max(30, 22+(size.toString().length*6)+Math.min(40,size));
         return L.divIcon({ html:
@@ -297,30 +307,43 @@
       }
 
       function bindLabelIf(m, text, className){
-        // (Re)bind only when we actually want it visible; unbound otherwise
         m.bindTooltip(text, { permanent:true, direction:'top', offset:[0,-12], className:className, opacity:1, interactive:false });
       }
       function unbindLabel(m){ if(m && m.getTooltip()) m.unbindTooltip(); }
 
       function syncLabels(){
         const b = map.getBounds();
-        const minZoom = 3; // hide labels if zoomed out too far
+        const minZoom = 4; // be a little stricter to reduce clutter
         if(map.getZoom() < minZoom){
           Object.values(cityMarkersBySlug).forEach(unbindLabel);
           Object.values(stadiumMarkersBySlug).forEach(unbindLabel);
           return;
         }
+        // simple collision avoidance (~22 px)
+        const used = [];
+        const near = (p,q)=> (Math.hypot(p.x-q.x, p.y-q.y) < 22);
+
+        // Show city labels first, then stadiums (stadiums yield on collisions)
         Object.entries(cityMarkersBySlug).forEach(([slug, m])=>{
           const should = visibleUnclustered(m) && b.contains(m.getLatLng());
           const has = !!m.getTooltip();
-          if(should && !has) bindLabelIf(m, CITIES.find(c=>c.slug===slug).name, 'label-city');
-          if(!should && has) unbindLabel(m);
+          if(should){
+            const pt = map.latLngToLayerPoint(m.getLatLng());
+            const collide = used.some(u=>near(u,pt));
+            if(!collide){ if(!has) bindLabelIf(m, CITIES.find(c=>c.slug===slug).name, 'label-city'); used.push(pt); }
+            else if(has){ unbindLabel(m); }
+          } else if(has){ unbindLabel(m); }
         });
+
         Object.entries(stadiumMarkersBySlug).forEach(([slug, m])=>{
           const should = visibleUnclustered(m) && b.contains(m.getLatLng());
           const has = !!m.getTooltip();
-          if(should && !has) bindLabelIf(m, STADIUMS.find(s=>s.slug===slug).name, 'label-stadium');
-          if(!should && has) unbindLabel(m);
+          if(should){
+            const pt = map.latLngToLayerPoint(m.getLatLng());
+            const collide = used.some(u=>near(u,pt));
+            if(!collide){ if(!has) bindLabelIf(m, STADIUMS.find(s=>s.slug===slug).name, 'label-stadium'); used.push(pt); }
+            else if(has){ unbindLabel(m); }
+          } else if(has){ unbindLabel(m); }
         });
       }
 
@@ -508,7 +531,7 @@
       robustLoad([
         'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
         'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js',
-        '/assets/vendor/leaflet/leaflet.js' // local (optional) as last resort
+        '/assets/vendor/leaflet/leaflet.js' // local (optional) last
       ], (err) => {
         if (err || !window.L) { console.error('Leaflet failed to load'); return; }
 
@@ -518,7 +541,7 @@
           'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
           '/assets/vendor/leaflet.markercluster/leaflet.markercluster.js' // local (optional)
         ], () => {
-          // Even if cluster fails, boot gracefully
+          // Boot even if cluster failed (we detect hasCluster)
           boot();
         });
       });
