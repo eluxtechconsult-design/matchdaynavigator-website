@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MatchDay Navigator • World Cup 2026 (No wrap + Accurate 10px labels)</title>
+<title>MatchDay Navigator • World Cup 2026 (DivIcon Labels + No Wrap + 10px)</title>
 
 <style>
   /* ===== Theme tokens ===== */
@@ -73,13 +73,14 @@
   .btn{ font-size:11px; color:var(--text); background:transparent; border:1px solid var(--line); padding:2px 6px; border-radius:5px; cursor:pointer }
   .btn:hover{ background:var(--hover) }
 
-  /* Map tooltips (labels) — small & themed (10px) */
-  .label-city, .label-stadium{
-    background:var(--label-bg) !important; border:1px solid var(--line);
-    border-radius:4px; padding:1px 4px; font-size:10px; line-height:1.1; color:var(--label-city);
+  /* EXACT map labels (DivIcon markers) — 10px, centered over pin tip */
+  .mdn-label{ transform: translate(-50%, -16px); pointer-events:none; }
+  .mdn-label span{
+    display:inline-block; background:var(--label-bg); color:var(--label-city);
+    border:1px solid var(--line); border-radius:4px; padding:1px 4px;
+    font-size:10px; line-height:1.1; white-space:nowrap; box-shadow:0 0 0 1px rgba(0,0,0,.06);
   }
-  .label-stadium{ color:var(--label-stadium) }
-  .leaflet-tooltip-top:before{ border-top-color:var(--label-bg) !important }
+  .mdn-label.stadium span{ color:var(--label-stadium) }
 
   /* Mobile */
   @media (max-width:900px){
@@ -203,7 +204,7 @@
       /* map + tiles — IMPORTANT: no wrap, no worldCopyJump */
       const map = L.map('map',{
         zoomControl:true,
-        worldCopyJump:false,   // <— prevents repeat worlds (fixes far-right labels)
+        worldCopyJump:false,   // prevent repeat worlds
         zoomAnimation:false,
         fadeAnimation:false
       });
@@ -222,7 +223,7 @@
         let switched=false;
         activeTile = L.tileLayer(cfg.url,{
             attribution:cfg.attr, subdomains:'abcd', maxZoom:cfg.max,
-            noWrap:true          // <— key: do not repeat world (tooltips stay aligned)
+            noWrap:true           // do not repeat world (keeps labels aligned)
           })
           .on('tileerror',()=>{ if(!switched){ switched=true; map.removeLayer(activeTile);
                 activeTile=L.tileLayer(OSM.url,{attribution:OSM.attr,maxZoom:OSM.max,noWrap:true}).addTo(map);
@@ -290,10 +291,23 @@
         active={ type, slug, marker:m };
       }
 
-      /* markers + labels (tooltips bound to the marker) */
-      const cityMarkersBySlug={}, stadiumMarkersBySlug={};
+      /* ===== EXACT labels as DivIcon markers (pixel-locked) ===== */
+      function makeDivLabel(latlng, text, cls){
+        return L.marker(latlng, {
+          interactive:false,
+          pane:'markerPane',
+          icon:L.divIcon({
+            className:'mdn-label '+cls,
+            html:'<span>'+text+'</span>',
+            iconSize:[0,0] // we position with CSS transform
+          })
+        });
+      }
 
-      function visibleUnclustered(m){
+      const cityMarkersBySlug={}, stadiumMarkersBySlug={};
+      const cityLabelsBySlug={}, stadiumLabelsBySlug={};
+
+      function isVisibleUnclustered(m){
         if(!hasCluster) return !!m._icon;
         if(cityCluster && cityCluster.hasLayer(m)){
           const vp = cityCluster.getVisibleParent ? cityCluster.getVisibleParent(m) : null;
@@ -306,66 +320,75 @@
         return !!m._icon;
       }
 
-      function bindLabelIf(m, text, className){
-        m.bindTooltip(text, { permanent:true, direction:'top', offset:[0,-12], className:className, opacity:1, interactive:false });
-      }
-      function unbindLabel(m){ if(m && m.getTooltip()) m.unbindTooltip(); }
-
       function syncLabels(){
-        const b = map.getBounds();
-        const minZoom = 4; // be a little stricter to reduce clutter
+        const bounds = map.getBounds();
+        const minZoom = 4; // hide all labels below this zoom to reduce clutter
         if(map.getZoom() < minZoom){
-          Object.values(cityMarkersBySlug).forEach(unbindLabel);
-          Object.values(stadiumMarkersBySlug).forEach(unbindLabel);
+          Object.values(cityLabelsBySlug).forEach(l => map.hasLayer(l) && map.removeLayer(l));
+          Object.values(stadiumLabelsBySlug).forEach(l => map.hasLayer(l) && map.removeLayer(l));
           return;
         }
-        // simple collision avoidance (~22 px)
-        const used = [];
-        const near = (p,q)=> (Math.hypot(p.x-q.x, p.y-q.y) < 22);
 
-        // Show city labels first, then stadiums (stadiums yield on collisions)
-        Object.entries(cityMarkersBySlug).forEach(([slug, m])=>{
-          const should = visibleUnclustered(m) && b.contains(m.getLatLng());
-          const has = !!m.getTooltip();
+        // simple collision avoidance (~22 px)
+        const taken = [];
+        const tooClose = (a,b)=> Math.hypot(a.x-b.x, a.y-b.y) < 22;
+
+        // Cities first (higher priority)
+        Object.keys(cityMarkersBySlug).forEach(slug=>{
+          const m = cityMarkersBySlug[slug];
+          const lbl = cityLabelsBySlug[slug];
+          const should = isVisibleUnclustered(m) && bounds.contains(m.getLatLng());
+          const on = map.hasLayer(lbl);
           if(should){
-            const pt = map.latLngToLayerPoint(m.getLatLng());
-            const collide = used.some(u=>near(u,pt));
-            if(!collide){ if(!has) bindLabelIf(m, CITIES.find(c=>c.slug===slug).name, 'label-city'); used.push(pt); }
-            else if(has){ unbindLabel(m); }
-          } else if(has){ unbindLabel(m); }
+            const p = map.latLngToLayerPoint(m.getLatLng());
+            const collide = taken.some(tp=>tooClose(tp,p));
+            if(!collide){ if(!on) lbl.addTo(map); taken.push(p); }
+            else if(on){ map.removeLayer(lbl); }
+          }else if(on){ map.removeLayer(lbl); }
         });
 
-        Object.entries(stadiumMarkersBySlug).forEach(([slug, m])=>{
-          const should = visibleUnclustered(m) && b.contains(m.getLatLng());
-          const has = !!m.getTooltip();
+        // Stadiums next (yield to cities)
+        Object.keys(stadiumMarkersBySlug).forEach(slug=>{
+          const m = stadiumMarkersBySlug[slug];
+          const lbl = stadiumLabelsBySlug[slug];
+          const should = isVisibleUnclustered(m) && bounds.contains(m.getLatLng());
+          const on = map.hasLayer(lbl);
           if(should){
-            const pt = map.latLngToLayerPoint(m.getLatLng());
-            const collide = used.some(u=>near(u,pt));
-            if(!collide){ if(!has) bindLabelIf(m, STADIUMS.find(s=>s.slug===slug).name, 'label-stadium'); used.push(pt); }
-            else if(has){ unbindLabel(m); }
-          } else if(has){ unbindLabel(m); }
+            const p = map.latLngToLayerPoint(m.getLatLng());
+            const collide = taken.some(tp=>tooClose(tp,p));
+            if(!collide){ if(!on) lbl.addTo(map); taken.push(p); }
+            else if(on){ map.removeLayer(lbl); }
+          }else if(on){ map.removeLayer(lbl); }
         });
       }
 
-      /* build markers */
+      /* ===== build markers + labels ===== */
       CITIES.forEach(c=>{
-        const m = L.marker([c.lat,c.lng],{icon:ICONS.city})
+        const ll=[c.lat,c.lng];
+        const m = L.marker(ll,{icon:ICONS.city})
           .bindPopup("<b>"+c.name+"</b><br/>"+c.country)
           .on('popupopen', ()=> setActive('city', c.slug));
         cityMarkersBySlug[c.slug]=m;
         if(cityCluster) cityCluster.addLayer(m); else m.addTo(map);
+
+        cityLabelsBySlug[c.slug] = makeDivLabel(ll, c.name, 'city');
       });
+
       STADIUMS.forEach(s=>{
-        const m = L.marker([s.lat,s.lng],{icon:ICONS.stadium})
+        const ll=[s.lat,s.lng];
+        const m = L.marker(ll,{icon:ICONS.stadium})
           .bindPopup("<b>"+s.name+"</b>")
           .on('popupopen', ()=> setActive('stadium', s.slug));
         stadiumMarkersBySlug[s.slug]=m;
         if(stadiumCluster) stadiumCluster.addLayer(m); else m.addTo(map);
+
+        stadiumLabelsBySlug[s.slug] = makeDivLabel(ll, s.name, 'stadium');
       });
+
       if(cityCluster) map.addLayer(cityCluster);
       if(stadiumCluster) map.addLayer(stadiumCluster);
 
-      /* reveal without zoom */
+      /* ===== reveal without zoom ===== */
       function revealMarker(m, type){
         if(!m) return;
         const parent = m.__parent;
@@ -383,7 +406,7 @@
         setTimeout(()=>m.openPopup(), 250);
       }
 
-      /* fit & label sync */
+      /* ===== fit & label sync ===== */
       const allMarkers = Object.values(cityMarkersBySlug).concat(Object.values(stadiumMarkersBySlug));
       function fitAll(){
         if(allMarkers.length){
@@ -395,7 +418,7 @@
       if(cityCluster) cityCluster.on('spiderfied unspiderfied', syncLabels);
       if(stadiumCluster) stadiumCluster.on('spiderfied unspiderfied', syncLabels);
 
-      /* ----- Sidebar (tabs + hover copy) ----- */
+      /* ===== Sidebar (tabs + hover copy) ===== */
       const listCities = $("#cityList"), listStads=$("#stadiumList");
       const tabCities=$("#tabCities"), tabStadiums=$("#tabStadiums");
       const paneCities=$("#citiesPane"), paneStads=$("#stadiumsPane");
@@ -541,7 +564,7 @@
           'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js',
           '/assets/vendor/leaflet.markercluster/leaflet.markercluster.js' // local (optional)
         ], () => {
-          // Boot even if cluster failed (we detect hasCluster)
+          // Boot even if cluster fails (we detect hasCluster)
           boot();
         });
       });
