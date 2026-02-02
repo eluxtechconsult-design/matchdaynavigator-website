@@ -1,0 +1,9 @@
+.btn{font-family:var(--mdn-font-body);font-weight:600;border-radius:8px;padding:10px 14px;}
+.btn-primary{background:var(--mdn-color-primary);color:#fff}
+.btn-accent{background:var(--mdn-color-accent);color:#fff}
+.badge{border-radius:6px;padding:2px 8px;font-weight:600}
+.badge-success{background:var(--mdn-color-success);color:#fff}
+.badge-warning{background:var(--mdn-color-warning);color:#111}
+.badge-danger{background:var(--mdn-color-danger);color:#fff}
+.mdn-popup h3{font-family:var(--mdn-font-heading);margin:0 0 4px}
+.mdn-popup p{font-family:var(--mdn-font-body);margin:4px 0}

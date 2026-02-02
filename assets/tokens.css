@@ -1,0 +1,13 @@
+:root{
+  --mdn-color-primary:#0A3D62;
+  --mdn-color-accent:#25D366;
+  --mdn-color-highlight:#FF6B00;
+  --mdn-color-neutral-dark:#111418;
+  --mdn-color-neutral-mid:#6B7280;
+  --mdn-color-neutral-light:#F3F4F6;
+  --mdn-color-success:#16A34A;
+  --mdn-color-warning:#F59E0B;
+  --mdn-color-danger:#DC2626;
+  --mdn-font-heading:'Space Grotesk', Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --mdn-font-body:'Inter', Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
