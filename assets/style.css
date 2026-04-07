@@ -1,184 +1,82 @@
-/* =====================
-   GLOBAL FOUNDATION
-===================== */
-
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-  color: #1f2933;
+  font-family: Arial, sans-serif;
+  color: #222;
   background: #ffffff;
-  line-height: 1.6;
 }
-
-h1, h2, h3 {
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-h2 {
-  font-size: 2rem;
-  margin: 80px 0 20px;
-  text-align: center;
-}
-
-p {
-  max-width: 720px;
-  margin: 0 auto;
-  font-size: 1.05rem;
-  color: #4b5563;
-}
-
-/* =====================
-   HERO
-===================== */
 
 .hero {
-  background: linear-gradient(
-    rgba(0,0,0,0.55),
-    rgba(0,0,0,0.65)
-  ), url('hero-stadium.jpg') no-repeat center / cover;
-  padding: 140px 20px 120px;
+  background: url('hero-stadium.jpg') no-repeat center/cover;
+  padding: 120px 20px;
   text-align: center;
-  color: #ffffff;
+  color: white;
 }
-
-.hero h1 {
-  font-size: 3rem;
-  margin-bottom: 12px;
-}
-
-.hero p {
-  font-size: 1.25rem;
-  max-width: 760px;
-  margin: 0 auto 30px;
-  color: #e5e7eb;
-}
-
-/* =====================
-   CTA BUTTONS
-===================== */
 
 .cta-primary {
   display: inline-block;
-  background: #111827;
-  color: #ffffff;
-  padding: 16px 36px;
-  border-radius: 10px;
+  background: #ff3b3f;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 8px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background 0.2s ease;
-}
-
-.cta-primary:hover {
-  background: #000000;
+  font-weight: bold;
+  margin-top: 20px;
 }
 
 .cta-secondary {
   display: inline-block;
-  background: transparent;
-  color: #111827;
-  padding: 14px 30px;
-  margin-top: 16px;
-  border-radius: 10px;
+  background: white;
+  color: #333;
+  padding: 12px 24px;
+  margin-top: 15px;
+  border-radius: 8px;
   text-decoration: none;
-  border: 2px solid #d1d5db;
-  font-weight: 500;
+  border: 2px solid #ccc;
 }
 
-/* =====================
-   MISSION
-===================== */
-
-.mission {
-  padding: 80px 20px 40px;
+h2 {
   text-align: center;
-}
-
-/* =====================
-   FEATURES
-===================== */
-
-.features {
-  padding: 40px 0;
+  margin-top: 60px;
 }
 
 .features .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 32px;
-  padding: 40px 32px 0;
-  max-width: 1200px;
-  margin: 0 auto;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  padding: 40px;
 }
 
 .feature-box {
-  background: #f8fafc;
-  padding: 32px 26px;
-  border-radius: 14px;
+  background: #f9f9f9;
+  padding: 25px;
+  border-radius: 10px;
   text-align: center;
-  border: 1px solid #e5e7eb;
-}
-
-/* =====================
-   PRICING
-===================== */
-
-.pricing {
-  padding: 80px 20px;
-  background: #f9fafb;
 }
 
 .pricing-grid {
   display: flex;
   justify-content: center;
-  gap: 36px;
-  padding-top: 40px;
-  flex-wrap: wrap;
+  gap: 30px;
+  padding: 40px;
 }
 
 .pricing-card {
-  background: #ffffff;
-  padding: 36px;
-  border-radius: 16px;
-  width: 280px;
+  background: #f9f9f9;
+  padding: 30px;
+  border-radius: 10px;
+  width: 260px;
   text-align: center;
-  border: 1px solid #e5e7eb;
 }
 
 .price {
-  font-size: 36px;
-  font-weight: 700;
-  margin: 12px 0;
+  font-size: 32px;
+  font-weight: bold;
 }
 
-/* =====================
-   PARTNERS
-===================== */
-
-.partners {
-  padding: 80px 20px;
+footer {
   text-align: center;
-}
-
-/* =====================
-   FOOTER
-===================== */
-
-.footer {
-  background: #111827;
-  color: #d1d5db;
-  padding: 32px 20px 40px;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-.footer strong {
-  color: #ffffff;
-}
-
-.footer-small {
-  margin-top: 12px;
-  font-size: 0.8rem;
-  color: #9ca3af;
+  padding: 20px;
+  margin-top: 40px;
+  background: #222;
+  color: white;
 }
