@@ -1,82 +1,93 @@
+/* ======================================================
+   MATCHDAY NAVIGATOR — SINGLE SOURCE STYLESHEET
+   No images. No overrides. Production‑ready.
+====================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  color: #222;
-  background: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter",
+               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1f2933;
+  background-color: #ffffff;
+  line-height: 1.6;
 }
 
-.hero {
-  background: url('hero-stadium.jpg') no-repeat center/cover;
-  padding: 120px 20px;
-  text-align: center;
-  color: white;
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0;
 }
 
-.cta-primary {
-  display: inline-block;
-  background: #ff3b3f;
-  color: white;
-  padding: 14px 28px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-.cta-secondary {
-  display: inline-block;
-  background: white;
-  color: #333;
-  padding: 12px 24px;
-  margin-top: 15px;
-  border-radius: 8px;
-  text-decoration: none;
-  border: 2px solid #ccc;
+h1 {
+  font-size: 3rem;
 }
 
 h2 {
+  font-size: 2rem;
+  margin: 80px 0 24px;
   text-align: center;
-  margin-top: 60px;
 }
 
-.features .feature-grid {
+h3 {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+p {
+  font-size: 1.05rem;
+  color: #4b5563;
+  max-width: 760px;
+  margin: 0 auto 1.25rem;
+}
+
+/* ---------- HERO ---------- */
+
+.hero {
+  background: linear-gradient(135deg, #1f2933 0%, #111827 100%);
+  padding: 140px 20px 120px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.hero p {
+  color: #d1d5db;
+  font-size: 1.25rem;
+  margin-bottom: 32px;
+}
+
+/* ---------- CTA ---------- */
+
+.cta-primary {
+  display: inline-block;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 14px 34px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.cta-primary:hover {
+  background-color: #111827;
+}
+
+/* ---------- MISSION ---------- */
+
+.mission {
+  padding: 80px 20px 40px;
+  text-align: center;
+}
+
+/* ---------- FEATURES ---------- */
+
+.features {
+  padding: 40px 0;
+}
+
+.feature-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-  padding: 40px;
-}
-
-.feature-box {
-  background: #f9f9f9;
-  padding: 25px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.pricing-grid {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding: 40px;
-}
-
-.pricing-card {
-  background: #f9f9f9;
-  padding: 30px;
-  border-radius: 10px;
-  width: 260px;
-  text-align: center;
-}
-
-.price {
-  font-size: 32px;
-  font-weight: bold;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  margin-top: 40px;
-  background: #222;
-  color: white;
-}
