@@ -1,6 +1,6 @@
 /* ======================================================
-   MATCHDAY NAVIGATOR — SINGLE SOURCE STYLESHEET
-   No images. No overrides. Production‑ready.
+   MATCHDAY NAVIGATOR — FINAL PRODUCTION STYLESHEET
+   WhatsApp‑aligned, boxed, premium, scalable
 ====================================================== */
 
 * {
@@ -16,18 +16,20 @@ body {
   line-height: 1.6;
 }
 
+/* ---------- Typography ---------- */
+
 h1, h2, h3 {
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
   margin: 0;
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2.9rem;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.95rem;
   margin: 80px 0 24px;
   text-align: center;
 }
@@ -47,33 +49,36 @@ p {
 /* ---------- HERO ---------- */
 
 .hero {
-  background: linear-gradient(135deg, #1f2933 0%, #111827 100%);
-  padding: 140px 20px 120px;
+  background: #f9fafb;
+  padding: 120px 20px 100px;
   text-align: center;
-  color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .hero p {
-  color: #d1d5db;
-  font-size: 1.25rem;
-  margin-bottom: 32px;
+  font-size: 1.2rem;
+  margin-top: 12px;
+  margin-bottom: 28px;
 }
 
-/* ---------- CTA ---------- */
+/* ---------- CTA (WHATSAPP ALIGNED) ---------- */
 
 .cta-primary {
   display: inline-block;
-  background-color: #000000;
+  background-color: #ff3b3b; /* WhatsApp‑aligned red */
   color: #ffffff;
-  padding: 14px 34px;
+  padding: 14px 36px;
   border-radius: 10px;
   text-decoration: none;
   font-weight: 600;
   font-size: 1rem;
+  box-shadow: 0 6px 18px rgba(255, 59, 59, 0.25);
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .cta-primary:hover {
-  background-color: #111827;
+  background-color: #e53131;
+  transform: translateY(-1px);
 }
 
 /* ---------- MISSION ---------- */
@@ -91,3 +96,64 @@ p {
 
 .feature-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  padding: 40px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-box {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 32px 26px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.feature-box p {
+  font-size: 0.95rem;
+}
+
+/* ---------- FOOTER ---------- */
+
+.footer {
+  background-color: #111827;
+  color: #d1d5db;
+  text-align: center;
+  padding: 36px 20px 44px;
+  margin-top: 80px;
+  font-size: 0.9rem;
+}
+
+.footer strong {
+  color: #ffffff;
+}
+
+.footer-small {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-top: 10px;
+}
+
+.footer a {
+  color: #9ca3af;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.25rem;
+  }
+
+  .hero {
+    padding: 90px 20px 70px;
+  }
+}
