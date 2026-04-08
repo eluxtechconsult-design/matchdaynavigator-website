@@ -1,7 +1,5 @@
 (async function () {
-  const map = L.map("map", {
-    scrollWheelZoom: false
-  });
+  const map = L.map("map", { scrollWheelZoom: false });
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors"
@@ -25,18 +23,13 @@
     bounds.push([city.lat, city.lng]);
   });
 
-  map.fitBounds(bounds, {
-    padding: [40, 40]
-  });
+  map.fitBounds(bounds, { padding: [40, 40] });
 
-  // Connect city list to map
   document.querySelectorAll("[data-city]").forEach(item => {
     item.addEventListener("click", () => {
       const cityId = item.dataset.city;
       const city = cities.find(c => c.id === cityId);
-
       if (!city) return;
-
       map.setView([city.lat, city.lng], 6);
       markers[cityId].openTooltip();
     });
