@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>World Cup 2026 Stadium – MatchDay Navigator</title>
+
+  <title id="seo-title">World Cup 2026 Stadium – MatchDay Navigator</title>
+  <meta id="seo-description" name="description" content="" />
 
   ../../assets/style.css
   ../assets/wc-map.css
 
   <meta name="robots" content="index,follow" />
+
+  <script type="application/ld+json" id="stadium-schema"></script>
 </head>
 
 <body>
@@ -25,10 +29,16 @@
   <p><strong>Bag policy:</strong> <span id="bag-policy"></span></p>
 
   <p>
-    https://concierge.matchdaynavigator.com/route?stadium=" target="_blank">
+    <a id="route-link" target="_blank">
       📍 Open route
     </a>
   </p>
+
+  <!-- Sponsorship block -->
+  <section class="sponsor-block">
+    <p class="sponsor-label">Official stadium partner</p>
+    <p id="sponsor-name">Available for sponsorship</p>
+  </section>
 
   <p class="cta">
     📲 Matchday details are delivered via WhatsApp once you have a booking.
@@ -43,7 +53,7 @@
 
 <script>
 (async function () {
-  const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(location.search);
   const stadiumId = params.get("id");
 
   const stadiums = await fetch("../../data/stadiums.json").then(r => r.json());
@@ -59,6 +69,26 @@
   document.getElementById("capacity").textContent =
     stadium.capacity.toLocaleString();
   document.getElementById("bag-policy").textContent = stadium.bagPolicy;
+
+  document.getElementById("seo-title").textContent =
+    `${stadium.name} – World Cup 2026 Stadium`;
+
+  document.getElementById("seo-description").content =
+    `Matchday information for ${stadium.name}, a FIFA World Cup 2026 stadium in ${city.name}.`;
+
+  document.getElementById("route-link").href =
+    `https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(stadium.name)}`;
+
+  document.getElementById("stadium-schema").textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SportsActivityLocation",
+    "name": stadium.name,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": city.name,
+      "addressCountry": city.country
+    }
+  });
 })();
 </script>
 
