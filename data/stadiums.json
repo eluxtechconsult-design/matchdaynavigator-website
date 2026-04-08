@@ -1,0 +1,72 @@
+[
+  {
+    "id": "metlife-stadium",
+    "name": "MetLife Stadium",
+    "cityId": "new-york-nj",
+    "capacity": 82500,
+    "lat": 40.8135,
+    "lng": -74.0743,
+    "bagPolicy": "Clear bags recommended; size limits apply.",
+    "officialUrl": "https://www.metlifestadium.com"
+  },
+  {
+    "id": "att-stadium",
+    "name": "AT&T Stadium",
+    "cityId": "dallas",
+    "capacity": 80000,
+    "lat": 32.7478,
+    "lng": -97.0928,
+    "bagPolicy": "Small clutch bags allowed; clear bags preferred.",
+    "officialUrl": "https://attstadium.com"
+  },
+  {
+    "id": "sofi-stadium",
+    "name": "SoFi Stadium",
+    "cityId": "los-angeles",
+    "capacity": 70000,
+    "lat": 33.9530,
+    "lng": -118.3390,
+    "bagPolicy": "Clear bag policy enforced; check venue site.",
+    "officialUrl": "https://www.sofistadium.com"
+  },
+  {
+    "id": "hard-rock-stadium",
+    "name": "Hard Rock Stadium",
+    "cityId": "miami",
+    "capacity": 65326,
+    "lat": 25.9580,
+    "lng": -80.2389,
+    "bagPolicy": "Clear bags only; medical exceptions apply.",
+    "officialUrl": "https://hardrockstadium.com"
+  },
+  {
+    "id": "bmo-field",
+    "name": "BMO Field",
+    "cityId": "toronto",
+    "capacity": 30000,
+    "lat": 43.6333,
+    "lng": -79.4186,
+    "bagPolicy": "Small bags only; check official guidance.",
+    "officialUrl": "https://www.bmofield.com"
+  },
+  {
+    "id": "bc-place",
+    "name": "BC Place",
+    "cityId": "vancouver",
+    "capacity": 54000,
+    "lat": 49.2767,
+    "lng": -123.1124,
+    "bagPolicy": "Clear bags recommended; restrictions apply.",
+    "officialUrl": "https://www.bcplace.com"
+  },
+  {
+    "id": "estadio-azteca",
+    "name": "Estadio Azteca",
+    "cityId": "mexico-city",
+    "capacity": 87000,
+    "lat": 19.3031,
+    "lng": -99.1506,
+    "bagPolicy": "Small bags only; subject to event rules.",
+    "officialUrl": "https://www.estadioazteca.com.mx"
+  }
+]
