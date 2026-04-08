@@ -1,11 +1,35 @@
-/* ===============================
-   Layout
-   =============================== */
+/* ==============================
+   Header
+   ============================== */
 
-.wc-layout {
+.wc-map-header {
+  background: #f8fafc;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 32px 0;
+}
+
+.wc-map-header h1 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+}
+
+.wc-map-header p {
+  margin: 0;
+  color: #475569;
+}
+
+/* ==============================
+   Layout
+   ============================== */
+
+.wc-map-layout {
   display: grid;
-  grid-template-columns: 1fr 360px;
-  height: calc(100vh - 220px);
+  grid-template-columns: 70% 30%;
+  min-height: calc(100vh - 160px);
+}
+
+.wc-map-canvas {
+  position: relative;
 }
 
 #map {
@@ -13,76 +37,87 @@
   height: 100%;
 }
 
-/* ===============================
-   Info Panel
-   =============================== */
+/* ==============================
+   City Panel
+   ============================== */
 
-.wc-panel {
-  background: #f9fafb;
+.wc-city-panel {
+  background: #ffffff;
   border-left: 1px solid #e5e7eb;
-  padding: 20px;
+  padding: 24px;
   overflow-y: auto;
 }
 
-.wc-panel .cta {
-  margin-top: 16px;
-  font-size: 0.95rem;
-  color: #374151;
+.wc-city-panel h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
 }
 
-/* ===============================
-   Buttons
-   =============================== */
+.city-group {
+  margin-bottom: 20px;
+}
 
-.save-btn,
-.share-btn,
-.export-btn {
-  display: inline-block;
-  margin: 6px 0;
-  padding: 6px 10px;
-  border-radius: 6px;
+.city-group h3 {
+  margin-bottom: 6px;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.city-group ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.city-group li {
+  padding: 6px 0;
   cursor: pointer;
-  font-weight: 600;
+  color: #2563eb;
+  font-weight: 500;
 }
 
-.save-btn {
-  border: 1px solid #d4af37;
-  color: #d4af37;
+.city-group li:hover {
+  text-decoration: underline;
 }
 
-.share-btn {
-  border: 1px solid #6b7280;
+.panel-helper {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: #64748b;
 }
 
-.export-btn {
-  border: 1px solid #374151;
+/* ==============================
+   Footer
+   ============================== */
+
+.wc-footer {
+  border-top: 1px solid #e5e7eb;
+  padding: 16px 0;
+  font-size: 0.85rem;
+  color: #64748b;
 }
 
-/* ===============================
-   Gold pins (saved cities)
-   =============================== */
+/* ==============================
+   Leaflet Attribution Softening
+   ============================== */
 
-.gold-pin {
-  background: gold;
-  color: black;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 50%;
+.leaflet-control-attribution {
+  font-size: 0.7rem;
+  opacity: 0.7;
 }
 
-/* ===============================
-   Print
-   =============================== */
+/* ==============================
+   Responsive
+   ============================== */
 
-@media print {
-  header,
-  footer,
-  .wc-panel {
-    display: none !important;
+@media (max-width: 900px) {
+  .wc-map-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 50vh auto;
   }
 
-  #map {
-    width: 100vw;
-    height: 100vh;
+  .wc-city-panel {
+    border-left: none;
+    border-top: 1px solid #e5e7eb;
   }
 }
