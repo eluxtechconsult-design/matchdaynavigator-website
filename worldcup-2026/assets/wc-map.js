@@ -7,52 +7,57 @@
   }).addTo(map);
 
   const cities = await fetch("../data/cities.json").then(r => r.json());
-  const stadiums = await fetch("../data/stadiums.json").then(r => r.json());
 
-  // Load saved cities from URL OR localStorage
-  const params = new URLSearchParams(window.location.search);
-  let saved = [];
+  /* --------------------------------
+     STATE (local + URL)
+  -------------------------------- */
+  const params = new URLSearchParams(location.search);
 
-  if (params.get("saved")) {
-    saved = params.get("saved").split(",");
-  } else {
-    saved = JSON.parse(localStorage.getItem("wc26-saved") || "[]");
-  }
+  let saved = params.get("saved")
+    ? params.get("saved").split(",")
+    : JSON.parse(localStorage.getItem("wc26-saved") || "[]");
 
-  function persistSaved() {
+  let group = params.get("group") || "solo";
+
+  function syncState() {
     localStorage.setItem("wc26-saved", JSON.stringify(saved));
-    const shareUrl =
-      `${window.location.origin}${window.location.pathname}?saved=${saved.join(",")}`;
-    history.replaceState(null, "", shareUrl);
+    const url =
+      `${location.pathname}?saved=${saved.join(",")}&group=${group}`;
+    history.replaceState(null, "", url);
   }
 
   function toggleSave(cityId) {
-    const idx = saved.indexOf(cityId);
-    if (idx >= 0) saved.splice(idx, 1);
-    else saved.push(cityId);
-    persistSaved();
+    saved.includes(cityId)
+      ? saved.splice(saved.indexOf(cityId), 1)
+      : saved.push(cityId);
+    syncState();
   }
 
+  /* --------------------------------
+     UI
+  -------------------------------- */
   const panelTitle = document.getElementById("panel-title");
   const panelBody = document.getElementById("panel-body");
 
   function renderCity(city) {
-    const isSaved = saved.includes(city.id);
-
     panelTitle.textContent = city.name;
     panelBody.innerHTML = `
       <button class="save-btn">
-        ${isSaved ? "★ Saved" : "☆ Save this city"}
+        ${saved.includes(city.id) ? "★ Saved" : "☆ Save city"}
       </button>
 
-      <button class="share-btn">🔗 Share my WC map</button>
+      <button class="share-btn">🔗 Share map</button>
+      <button class="export-btn">🖨 Export / Print</button>
 
-      <button class="export-btn">🖨 Export / Print map</button>
-
-      <p><strong>${city.country}</strong> · ${city.region}</p>
+      <p><strong>${city.country}</strong></p>
 
       <p class="cta">
         📲 Matchday details are delivered via WhatsApp once you have a booking.
+      </p>
+
+      <p class="print-upsell">
+        🖼 Turn this into a framed World Cup 2026 push‑pin map.
+        <a href="/print.html">View print options</a>
       </p>
     `;
 
@@ -62,10 +67,8 @@
     };
 
     panelBody.querySelector(".share-btn").onclick = () => {
-      const url =
-        `${window.location.origin}${window.location.pathname}?saved=${saved.join(",")}`;
-      navigator.clipboard.writeText(url);
-      alert("Share link copied to clipboard");
+      navigator.clipboard.writeText(location.href);
+      alert("Share link copied");
     };
 
     panelBody.querySelector(".export-btn").onclick = () => {
@@ -73,13 +76,22 @@
     };
   }
 
+  /* --------------------------------
+     Markers (gold if saved)
+  -------------------------------- */
   cities.forEach(city => {
-    const marker = L.marker([city.lat, city.lng]).addTo(map);
-    marker.on("click", () => renderCity(city));
+    const icon = saved.includes(city.id)
+      ? L.divIcon({
+          className: "gold-pin",
+          html: "★",
+          iconSize: [20, 20]
+        })
+      : undefined;
 
-    // Highlight saved cities visually (optional future enhancement)
-    if (saved.includes(city.id)) {
-      marker.bindTooltip("★ " + city.name);
-    }
+    const marker = L.marker([city.lat, city.lng], icon ? { icon } : {})
+      .addTo(map);
+
+    marker.on("click", () => renderCity(city));
   });
+
 })();
