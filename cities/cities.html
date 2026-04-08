@@ -9,15 +9,16 @@
 
   <meta
     name="description"
-    content="WhatsApp-based matchday guidance service for cities and venues hosting large-scale events."
+    content="MatchDay Navigator is a WhatsApp-based matchday guidance service designed to help cities and venues reduce operational friction during large-scale events."
   />
 </head>
 
 <body>
 
+  <!-- Header -->
   <header class="hero" style="padding: 80px 20px 60px;">
     <div class="brand">
-      <img src="assets/logo-symbol.svg" alt="MatchDay Navigator logo" />
+      <img src="assets/logo-symbol.svg" alt="MatchDay Navigator" />
     </div>
 
     <h1>Matchday guidance support for large‑scale events</h1>
@@ -29,20 +30,24 @@
     </p>
   </header>
 
+  <!-- Context -->
   <section class="mission">
-    <h2>For cities, venues, and organisers</h2>
+    <h2>For cities, venues, and event organisers</h2>
 
     <p>
-      MatchDay Navigator is designed to complement existing city and venue
-      operations by reducing avoidable informational pressure during large events.
+      Large events place predictable pressure on arrival routes, entry points,
+      and front‑line staff. In many cases, these challenges are informational
+      rather than operational.
     </p>
 
     <p>
-      The service focuses on arrival guidance, entry expectations, and
-      last‑mile orientation through a channel most visitors already use.
+      MatchDay Navigator provides a lightweight guidance layer that complements
+      existing city and venue operations by helping visitors arrive better
+      prepared and with clearer expectations.
     </p>
   </section>
 
+  <!-- How it works -->
   <section class="features">
     <h2>How cities use MatchDay Navigator</h2>
 
@@ -50,43 +55,97 @@
       <div class="feature-box">
         <h3>Digital distribution</h3>
         <p>
-          Official websites, fan guides, itineraries, and booking confirmations.
+          Links and QR codes can be shared via official websites, fan guides,
+          itineraries, and booking confirmations.
         </p>
       </div>
 
       <div class="feature-box">
         <h3>Operational support</h3>
         <p>
-          Reduced repetitive questions and smoother flow at key touchpoints.
+          Reduces repetitive questions and last‑minute confusion at key
+          touchpoints such as transport hubs and stadium approaches.
         </p>
       </div>
 
       <div class="feature-box">
         <h3>Multilingual visitors</h3>
         <p>
-          Clear guidance for international audiences without added staff load.
+          Provides clear guidance for international audiences without adding
+          additional staff or systems.
         </p>
       </div>
     </div>
   </section>
 
+  <!-- Benefits -->
+  <section class="mission">
+    <h2>What cities and organisers gain</h2>
+
+    <p>
+      Fewer avoidable disputes, smoother crowd flow, reduced strain on staff and
+      volunteers, and a calmer matchday experience for visitors.
+    </p>
+
+    <p>
+      The service is intentionally lightweight and adaptable to different event
+      sizes and operational models.
+    </p>
+  </section>
+
+  <!-- Status -->
+  <section class="mission">
+    <h2>Current status</h2>
+
+    <p>
+      MatchDay Navigator is currently running controlled pilots to understand
+      real‑world usage patterns before larger deployments.
+    </p>
+
+    <p>
+      The approach is incremental and evidence‑based: pilot first, learn from
+      real behaviour, and scale where appropriate.
+    </p>
+
+    <p>
+      There is no requirement for long‑term commitment at early stages.
+    </p>
+  </section>
+
+  <!-- Contact Form -->
   <section class="mission">
     <h2>Request information</h2>
 
     <p>
-      If you would like to understand how MatchDay Navigator could fit
-      alongside existing city or venue communications, get in touch below.
+      If you would like to understand how MatchDay Navigator could fit alongside
+      existing city or venue communications, please contact us below.
     </p>
 
     <form
       class="contact-form"
-      action="mailto:admin@matchdaynavigator.com"
-      method="post"
-      enctype="text/plain"
+      action="/contact"
+      method="POST"
     >
-      <input type="text" name="Name" placeholder="Your name" required />
-      <input type="email" name="Email" placeholder="Your email" required />
-      <input type="text" name="Organisation" placeholder="City / Organisation" />
+      <input
+        type="text"
+        name="Name"
+        placeholder="Your name"
+        required
+      />
+
+      <input
+        type="email"
+        name="Email"
+        placeholder="Your email"
+        required
+      />
+
+      <input
+        type="text"
+        name="Organisation"
+        placeholder="City / Organisation"
+      />
+
       <textarea
         name="Message"
         placeholder="Brief context or question"
@@ -99,13 +158,16 @@
     </form>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <p class="footer-small">
       MatchDay Navigator provides informational guidance only.
-      Event‑specific rules and operations remain the responsibility of the organiser.
+      Event‑specific rules, security decisions, and operations remain
+      the responsibility of the organiser.
     </p>
 
     <p class="footer-small">
+      <a href="privacy.html">Privacy Policy</a> ·
       <a href="index.html">Back to main site</a>
     </p>
   </footer>
