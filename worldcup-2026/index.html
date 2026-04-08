@@ -3,205 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>World Cup 2026 Locations Explorer – MatchDay Navigator</title>
 
-  <style>
-    /* ===== Theme tokens ===== */
-    :root{
-      --bg:#0b0e12; --panel:#0f1319; --text:#dfe7f3; --muted:#a7b6cc; --line:#1c2430;
-      --brand:#1e90ff; --hover:#111823; --gold:#f7d354; --accent:#88a9ff;
-      --label-bg:rgba(0,0,0,.55); --label-city:#cfe5ff; --label-stadium:#ffd970;
-    }
-    :root[data-theme="light"]{
-      --bg:#f7f9fc; --panel:#ffffff; --text:#1b2430; --muted:#5b6a82; --line:#d8e0ea;
-      --brand:#0d6efd; --hover:#eef3fb; --gold:#bc8a00; --accent:#0d6efd;
-      --label-bg:rgba(255,255,255,.9); --label-city:#223a63; --label-stadium:#8b6b00;
-    }
-    *{ box-sizing:border-box }
-    html,body{ height:100%; margin:0 }
-    body{
-      background:var(--bg);
-      color:var(--text);
-      font:14px/1.4 system-ui,Segoe UI,Arial;
-    }
+  <title>World Cup 2026 Match Map – MatchDay Navigator</title>
 
-    /* ===== Framing Header ===== */
-    header.top{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      height:64px;
-      padding:10px 16px;
-      border-bottom:1px solid var(--line);
-      background:var(--panel);
-      position:sticky;
-      top:0;
-      z-index:5;
-    }
-    header.top img{
-      height:28px;
-    }
-    header.top .title{
-      display:flex;
-      flex-direction:column;
-    }
-    header.top .title strong{
-      font-size:14px;
-      letter-spacing:.02em;
-    }
-    header.top .title span{
-      font-size:11px;
-      color:var(--muted);
-    }
+  <link rel="canonical" href="https://www.matchdaynavigator.com/worldcup-2026/" />
+  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="./assets/wc-map.css" />
 
-    /* ===== Layout ===== */
-    main.layout{
-      display:grid;
-      grid-template-columns: 1fr 360px;
-      height:calc(100vh - 64px);
-    }
-    #map{ width:100%; height:100%; background:#000 }
+  <meta
+    name="description"
+    content="Explore World Cup 2026 host cities and stadiums across the USA, Canada, and Mexico. Plan your journey and get matchday details on WhatsApp."
+  />
 
-    aside.panel{
-      border-left:1px solid var(--line);
-      background:var(--panel);
-      overflow:hidden;
-      padding:10px;
-      display:flex;
-      flex-direction:column;
-    }
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="World Cup 2026 Match Map" />
+  <meta
+    property="og:description"
+    content="Discover all World Cup 2026 host cities and stadiums. Plan travel and receive matchday details on WhatsApp."
+  />
+  <meta property="og:url" content="https://www.matchdaynavigator.com/worldcup-2026/" />
+  <meta property="og:image" content="https://www.matchdaynavigator.com/assets/og-image.png" />
 
-    /* ===== Context Block ===== */
-    .context{
-      font-size:12px;
-      color:var(--muted);
-      padding:8px 6px 10px;
-      border-bottom:1px solid var(--line);
-      margin-bottom:6px;
-    }
-
-    /* ===== Tabs ===== */
-    .tabs{ display:flex; gap:8px; margin-bottom:6px }
-    .tabs button{
-      background:transparent;
-      color:var(--text);
-      border:1px solid var(--line);
-      padding:6px 10px;
-      border-radius:6px;
-      cursor:pointer;
-      font-weight:600;
-      font-size:12px;
-    }
-    .tabs button.active{
-      background:var(--hover);
-      border-color:var(--accent);
-    }
-
-    h2{
-      margin:6px 0 8px;
-      font-size:11px;
-      color:var(--accent);
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    /* ===== Lists ===== */
-    .list{ flex:1 1 auto; overflow:hidden }
-    .colpack{ column-gap:12px }
-    .item{
-      break-inside:avoid;
-      padding:4px 6px;
-      margin:2px 0;
-      border-radius:6px;
-      cursor:pointer;
-      display:flex;
-    }
-    .item:hover{ background:var(--hover) }
-    .line{
-      display:flex;
-      gap:6px;
-      align-items:baseline;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      font-size:13px;
-      line-height:1.25;
-      flex:1;
-    }
-    .city{ color:var(--text); font-weight:700 }
-    .country{ color:var(--muted) }
-    .stadium{ color:var(--gold); font-weight:600 }
-
-    /* ===== Map label styles preserved ===== */
-    .mdn-label{ transform: translate(-50%, -16px); pointer-events:none; }
-    .mdn-label span{
-      display:inline-block;
-      background:var(--label-bg);
-      color:var(--label-city);
-      border:1px solid var(--line);
-      border-radius:4px;
-      padding:1px 4px;
-      font-size:10px;
-      white-space:nowrap;
-    }
-    .mdn-label.stadium span{ color:var(--label-stadium) }
-
-    /* ===== Mobile ===== */
-    @media (max-width:900px){
-      main.layout{ grid-template-columns:1fr }
-      #map{ height:55vh }
-      aside.panel{
-        height:45vh;
-        position:fixed;
-        inset:auto 0 0 0;
-        border-left:0;
-        border-top:1px solid var(--line);
-      }
-      .colpack{ column-count:1 !important }
-    }
-  </style>
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
 </head>
 
 <body>
 
-  <!-- Framing Header -->
-  <header class="top">
-    <img src="/assets/logo-symbol.svg" alt="MatchDay Navigator" />
-    <div class="title">
-      <strong>World Cup 2026 Locations Explorer</strong>
-      <span>Reference map · Not an official FIFA site</span>
-    </div>
-  </header>
+<header class="wc-header">
+  <div class="container">
+    <h1>World Cup 2026 Match Map</h1>
+    <p>
+      Explore all host cities and stadiums across the USA, Canada, and Mexico.
+      Plan your journey and receive matchday details via WhatsApp.
+    </p>
+  </div>
+</header>
 
-  <main class="layout">
-    <section id="map" aria-label="World Cup 2026 Map"></section>
+<main class="wc-layout">
+  <div id="map"></div>
 
-    <aside class="panel">
-      <div class="context">
-        This map provides an overview of World Cup 2026 host cities and stadiums.
-        MatchDay Navigator uses this structure internally to support city‑specific
-        matchday guidance via WhatsApp.
-      </div>
+  <aside class="wc-panel" id="info-panel">
+    <h2 id="panel-title">Select a city</h2>
+    <p id="panel-body">
+      Click on a city pin to view stadiums and matchday information.
+    </p>
+  </aside>
+</main>
 
-      <nav class="tabs">
-        <button id="tabCities" class="active" data-tab="cities">Cities</button>
-        <button id="tabStadiums" data-tab="stadiums">Stadiums</button>
-      </nav>
+<footer class="footer">
+  <div class="container footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../privacy.html">Privacy Policy</a>
+    <a href="../terms.html">Terms of Service</a>
+  </div>
+</footer>
 
-      <div id="citiesPane" class="list">
-        <h2>Cities</h2>
-        <div id="cityList" class="colpack"></div>
-      </div>
-
-      <div id="stadiumsPane" class="list" style="display:none">
-        <h2>Stadiums</h2>
-        <div id="stadiumList" class="colpack"></div>
-      </div>
-    </aside>
-  </main>
-
-  <!-- JS unchanged: Leaflet loader, map logic, data, clustering, labels -->
-  <!-- (Your existing script block stays exactly as-is below this point) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./assets/wc-map.js"></script>
 
 </body>
 </html>

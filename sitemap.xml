@@ -1,45 +1,24 @@
-# MatchDay Navigator
-**Clarity at scale.**
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-MatchDay Navigator is a matchday navigation and information platform designed to support
-large‑scale live events such as the FIFA World Cup 2026.  
-It provides clear, trusted guidance to participants at scale, delivered through a
-static web interface and WhatsApp‑based messaging services.
+  <url>
+    <loc>https://www.matchdaynavigator.com/</loc>
+    <priority>1.0</priority>
+  </url>
 
-The service is operated by **SUKA CONSULTING SERVICES, LLC** (Seattle, WA, USA).
+  <url>
+    <loc>https://www.matchdaynavigator.com/worldcup-2026/</loc>
+    <priority>0.9</priority>
+  </url>
 
----
+  <url>
+    <loc>https://www.matchdaynavigator.com/privacy.html</loc>
+    <priority>0.5</priority>
+  </url>
 
-## Platform Purpose
+  <url>
+    <loc>https://www.matchdaynavigator.com/terms.html</loc>
+    <priority>0.5</priority>
+  </url>
 
-Large sporting events introduce complexity: transportation, access rules, safety updates,
-and real‑time disruptions. MatchDay Navigator exists to reduce friction, improve flow,
-and help people move with confidence on matchdays.
-
-The platform is intentionally designed around:
-- Clarity over volume
-- Trust over novelty
-- Responsible use of automation
-
----
-
-## Deployment Architecture
-
-This repository hosts a **static web application** deployed on Render.  
-All logic is client‑side; there is no server build step.
-
-### Render Configuration (Confirmed)
-
-- **Service Type:** Static Site
-- **Build Command:** *(empty)*
-- **Publish / Root Directory:** `./`  
-  *(or `/public` if using sub‑folder deployment — see below)*
-- **Auto‑Deploy:** Enabled (on commit to `main`)
-
----
-
-## File & Directory Structure
-
-Depending on deployment mode, files may be hosted directly at the root or under `/public`.
-
-### Example Structure
+</urlset>
