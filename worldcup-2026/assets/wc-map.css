@@ -1,5 +1,11 @@
+/* =====================================================
+   World Cup 2026 Match Map – Stylesheet
+   Authoritative, full replacement
+   ===================================================== */
+
+
 /* ===============================
-   World Cup 2026 Map – Base
+   Header
    =============================== */
 
 .wc-header {
@@ -10,8 +16,22 @@
 }
 
 .wc-header h1 {
-  margin-bottom: 12px;
+  margin: 0 0 12px;
 }
+
+.wc-header p {
+  margin: 0;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+
+/* ===============================
+   Layout
+   =============================== */
 
 .wc-layout {
   display: grid;
@@ -23,6 +43,7 @@
   width: 100%;
   height: 100%;
 }
+
 
 /* ===============================
    Info Panel
@@ -41,6 +62,7 @@
 
 .wc-panel ul {
   padding-left: 18px;
+  margin: 12px 0;
 }
 
 .wc-panel li {
@@ -52,3 +74,140 @@
   text-decoration: none;
 }
 
+.wc-panel a:hover {
+  text-decoration: underline;
+}
+
+.wc-panel .cta {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+
+/* ===============================
+   My World Cup Map – Save City
+   =============================== */
+
+.save-btn {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 6px 10px;
+  border: 1px solid #1e90ff;
+  background: #ffffff;
+  color: #1e90ff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.save-btn:hover {
+  background: #1e90ff;
+  color: #ffffff;
+}
+
+
+/* ===============================
+   Share Map Button
+   =============================== */
+
+.share-btn {
+  display: inline-block;
+  margin: 8px 0;
+  padding: 6px 10px;
+  border: 1px solid #6b7280;
+  background: #ffffff;
+  color: #374151;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.share-btn:hover {
+  background: #374151;
+  color: #ffffff;
+}
+
+
+/* ===============================
+   Export / Print Button
+   =============================== */
+
+.export-btn {
+  display: inline-block;
+  margin: 8px 0 16px;
+  padding: 6px 10px;
+  border: 1px solid #374151;
+  background: #ffffff;
+  color: #374151;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.export-btn:hover {
+  background: #374151;
+  color: #ffffff;
+}
+
+
+/* ===============================
+   Sponsorship Blocks
+   =============================== */
+
+.sponsor-block {
+  margin: 24px 0;
+  padding: 14px;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.sponsor-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+
+/* ===============================
+   Responsive – Mobile
+   =============================== */
+
+@media (max-width: 900px) {
+  .wc-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 55vh 45vh;
+  }
+
+  .wc-panel {
+    border-left: none;
+    border-top: 1px solid #e5e7eb;
+  }
+}
+
+
+/* ===============================
+   Print / PDF Export
+   =============================== */
+
+@media print {
+  header,
+  footer,
+  .save-btn,
+  .share-btn,
+  .export-btn,
+  .sponsor-block {
+    display: none !important;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  #map {
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+}
