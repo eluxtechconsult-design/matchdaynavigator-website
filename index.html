@@ -11,7 +11,7 @@
     content="Explore World Cup 2026 host cities and stadiums across the USA, Canada and Mexico. Discover the matchday experience with MatchDay Navigator."
   />
 
-  <!-- ✅ CORRECT CSS LINK -->
+  <!-- Base styles -->
   <link rel="stylesheet" href="/assets/style.css" />
 
   <!-- Open Graph -->
@@ -27,8 +27,19 @@
 
 <body>
 
+<!-- =====================================================
+     HERO — PLATFORM + WORLD CUP 2026
+     ===================================================== -->
+
 <header class="hero">
-  <div class="container">
+  <div class="container center">
+
+    <img
+      src="/assets/logo-symbol.svg"
+      alt="MatchDay Navigator logo"
+      class="hero-logo"
+    />
+
     <h1>MatchDay Navigator</h1>
 
     <p class="hero-subtitle">
@@ -36,44 +47,112 @@
       across the USA, Canada and Mexico
     </p>
 
-    <a class="primary-button" href="/worldcup-2026/">
+    <a href="/worldcup-2026/" class="primary-button">
       Explore World Cup 2026 Match Map
     </a>
+
   </div>
 </header>
 
+<!-- =====================================================
+     WORLD CUP 2026 — TWO DISTINCT EXPERIENCES
+     ===================================================== -->
+
 <section class="section wc-entry">
   <div class="container">
-    <h2>World Cup 2026 Host Cities</h2>
+
+    <h2 class="section-title">World Cup 2026</h2>
 
     <p class="section-intro">
-      Discover the host cities behind the tournament — travel context,
-      local atmosphere, and upcoming experiences.
+      Discover how World Cup 2026 will be experienced across host cities,
+      stadiums and matchdays.
     </p>
 
-    <p class="coming-soon">
-      Host city experiences coming soon.
-    </p>
+    <div class="wc-entry-grid">
+
+      <!-- MATCHDAYS & STADIUMS -->
+      <div class="wc-entry-card">
+        <h3>Matchdays & Stadiums</h3>
+        <p>
+          Interactive map of official host cities and stadiums.
+          Explore where matches take place and plan matchday journeys.
+        </p>
+
+        <a href="/worldcup-2026/" class="text-link">
+          View Matchday Map →
+        </a>
+      </div>
+
+      <!-- HOST CITIES & EXPERIENCE -->
+      <div class="wc-entry-card subtle">
+        <h3>Host Cities & World Cup Experience</h3>
+        <p>
+          Explore the host cities behind the tournament —
+          travel context, city atmosphere and local initiatives.
+        </p>
+
+        <a href="/worldcup-2026/host-cities/" class="text-link">
+          Explore Host Cities →
+        </a>
+      </div>
+
+    </div>
   </div>
 </section>
+
+<!-- =====================================================
+     WHAT MATCHDAY NAVIGATOR PROVIDES
+     ===================================================== -->
 
 <section class="section section-light">
-  <div class="container">
+  <div class="container center">
+
     <h2>What MatchDay Navigator provides</h2>
 
-    <ul class="feature-list">
-      <li>Official stadium and kickoff confirmation</li>
-      <li>Recommended routes and arrival guidance</li>
-      <li>Bag policies and entry requirements</li>
-      <li>Matchday updates delivered at the right moment</li>
-    </ul>
+    <div class="feature-cards">
+
+      <div class="card">
+        <h3>Stadium & kickoff confirmation</h3>
+        <p>
+          Clear, official matchday information you can rely on.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Arrival & routes</h3>
+        <p>
+          Guidance from major transport hubs to the stadium.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Entry & bag rules</h3>
+        <p>
+          Understand what you can bring and how to enter.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Timely updates</h3>
+        <p>
+          Matchday updates delivered only when they matter.
+        </p>
+      </div>
+
+    </div>
+
   </div>
 </section>
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
 
 <footer class="footer">
   <div class="container footer-links">
     <a href="/privacy.html">Privacy Policy</a>
     <a href="/terms.html">Terms of Service</a>
+    <p class="footer-note">© MatchDay Navigator</p>
   </div>
 </footer>
 

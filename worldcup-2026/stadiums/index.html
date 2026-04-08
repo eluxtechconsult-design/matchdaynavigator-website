@@ -4,64 +4,73 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title id="seo-title">World Cup 2026 Stadium – MatchDay Navigator</title>
-  <meta id="seo-description" name="description" content="" />
+  <title>Stadium Information – World Cup 2026</title>
 
-  ../../assets/style.css
-  ../assets/wc-map.css
+  <meta
+    name="description"
+    content="World Cup 2026 stadium information including access, bag policies and matchday guidance."
+  />
 
-  <meta name="robots" content="index,follow" />
-
-  <script type="application/ld+json" id="stadium-schema"></script>
+  <link rel="stylesheet" href="/assets/style.css" />
 </head>
 
 <body>
 
-<header class="wc-header">
-  <div class="container">
+<header class="hero hero-light">
+  <div class="container narrow">
     <h1 id="stadium-name">Stadium</h1>
-    <p id="stadium-city"></p>
+    <p id="stadium-city" class="hero-subtitle"></p>
   </div>
 </header>
 
-<main class="container wc-detail">
-  <p><strong>Capacity:</strong> <span id="capacity"></span></p>
-  <p><strong>Bag policy:</strong> <span id="bag-policy"></span></p>
+<section class="section">
+  <div class="container narrow">
 
-  <p>
-    <a id="route-link" target="_blank">
-      📍 Open route
-    </a>
-  </p>
+    <div class="info-grid">
+      <div>
+        <h3>Capacity</h3>
+        <p id="capacity"></p>
+      </div>
 
-  <!-- Sponsorship block -->
-  <section class="sponsor-block">
-    <p class="sponsor-label">Official stadium partner</p>
-    <p id="sponsor-name">Available for sponsorship</p>
-  </section>
+      <div>
+        <h3>Bag policy</h3>
+        <p id="bag-policy"></p>
+      </div>
+    </div>
 
-  <p class="cta">
-    📲 Matchday details are delivered via WhatsApp once you have a booking.
-  </p>
-</main>
+    <div class="cta-box">
+      <h3>Get matchday details on WhatsApp</h3>
+      <p>
+        Receive arrival guidance, entry rules and updates for this stadium.
+      </p>
+
+      <a
+        id="whatsapp-link"
+        class="primary-button"
+        target="_blank"
+      >
+        Open MatchDay Navigator on WhatsApp
+      </a>
+    </div>
+
+  </div>
+</section>
 
 <footer class="footer">
-  <div class="container footer-links">
-    ../index.htmlBack to map</a>
+  <div class="container">
+    <a href="/worldcup-2026/">← Back to Match Map</a>
   </div>
 </footer>
 
 <script>
 (async function () {
   const params = new URLSearchParams(location.search);
-  const stadiumId = params.get("id");
+  const id = params.get("id");
 
-  const stadiums = await fetch("../../data/stadiums.json").then(r => r.json());
-  const cities = await fetch("../../data/cities.json").then(r => r.json());
+  const stadiums = await fetch("../data/stadiums.json").then(r => r.json());
+  const cities = await fetch("../data/cities.json").then(r => r.json());
 
-  const stadium = stadiums.find(s => s.id === stadiumId);
-  if (!stadium) return;
-
+  const stadium = stadiums.find(s => s.id === id);
   const city = cities.find(c => c.id === stadium.cityId);
 
   document.getElementById("stadium-name").textContent = stadium.name;
@@ -70,25 +79,8 @@
     stadium.capacity.toLocaleString();
   document.getElementById("bag-policy").textContent = stadium.bagPolicy;
 
-  document.getElementById("seo-title").textContent =
-    `${stadium.name} – World Cup 2026 Stadium`;
-
-  document.getElementById("seo-description").content =
-    `Matchday information for ${stadium.name}, a FIFA World Cup 2026 stadium in ${city.name}.`;
-
-  document.getElementById("route-link").href =
-    `https://concierge.matchdaynavigator.com/route?stadium=${encodeURIComponent(stadium.name)}`;
-
-  document.getElementById("stadium-schema").textContent = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "SportsActivityLocation",
-    "name": stadium.name,
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": city.name,
-      "addressCountry": city.country
-    }
-  });
+  document.getElementById("whatsapp-link").href =
+    "https://wa.me/15558273850"; // example
 })();
 </script>
 
