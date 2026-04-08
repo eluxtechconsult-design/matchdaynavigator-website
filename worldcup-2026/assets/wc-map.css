@@ -50,6 +50,24 @@
   color: #374151;
 }
 
+/* Save button (My World Cup Map) */
+.save-btn {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 6px 10px;
+  border: 1px solid #1e90ff;
+  background: #ffffff;
+  color: #1e90ff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.save-btn:hover {
+  background: #1e90ff;
+  color: #ffffff;
+}
+
 @media (max-width: 900px) {
   .wc-layout {
     grid-template-columns: 1fr;

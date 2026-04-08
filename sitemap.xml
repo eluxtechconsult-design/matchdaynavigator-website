@@ -12,6 +12,16 @@
   </url>
 
   <url>
+    <loc>https://www.matchdaynavigator.com/worldcup-2026/cities/</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.matchdaynavigator.com/worldcup-2026/stadiums/</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://www.matchdaynavigator.com/privacy.html</loc>
     <priority>0.5</priority>
   </url>

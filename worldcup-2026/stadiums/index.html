@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Cup 2026 Stadium – MatchDay Navigator</title>
+
+  ../../assets/style.css
+  ../assets/wc-map.css
+
+  <meta name="robots" content="index,follow" />
+</head>
+
+<body>
+
+<header class="wc-header">
+  <div class="container">
+    <h1 id="stadium-name">Stadium</h1>
+    <p id="stadium-city"></p>
+  </div>
+</header>
+
+<main class="container wc-detail">
+  <p><strong>Capacity:</strong> <span id="capacity"></span></p>
+  <p><strong>Bag policy:</strong> <span id="bag-policy"></span></p>
+
+  <p>
+    https://concierge.matchdaynavigator.com/route?stadium=" target="_blank">
+      📍 Open route
+    </a>
+  </p>
+
+  <p class="cta">
+    📲 Matchday details are delivered via WhatsApp once you have a booking.
+  </p>
+</main>
+
+<footer class="footer">
+  <div class="container footer-links">
+    ../index.htmlBack to map</a>
+  </div>
+</footer>
+
+<script>
+(async function () {
+  const params = new URLSearchParams(window.location.search);
+  const stadiumId = params.get("id");
+
+  const stadiums = await fetch("../../data/stadiums.json").then(r => r.json());
+  const cities = await fetch("../../data/cities.json").then(r => r.json());
+
+  const stadium = stadiums.find(s => s.id === stadiumId);
+  if (!stadium) return;
+
+  const city = cities.find(c => c.id === stadium.cityId);
+
+  document.getElementById("stadium-name").textContent = stadium.name;
+  document.getElementById("stadium-city").textContent = city.name;
+  document.getElementById("capacity").textContent =
+    stadium.capacity.toLocaleString();
+  document.getElementById("bag-policy").textContent = stadium.bagPolicy;
+})();
+</script>
+
+</body>
+</html>

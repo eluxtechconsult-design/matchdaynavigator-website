@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Cup 2026 Host City – MatchDay Navigator</title>
+
+  ../../assets/style.css
+  ../assets/wc-map.css
+
+  <meta name="robots" content="index,follow" />
+</head>
+
+<body>
+
+<header class="wc-header">
+  <div class="container">
+    <h1 id="city-name">City</h1>
+    <p id="city-meta"></p>
+  </div>
+</header>
+
+<main class="container wc-detail">
+  <h2>Stadiums</h2>
+  <ul id="stadium-list"></ul>
+
+  <p class="cta">
+    📲 Matchday details are delivered via WhatsApp once you have a booking.
+  </p>
+</main>
+
+<footer class="footer">
+  <div class="container footer-links">
+    ../index.htmlBack to map</a>
+  </div>
+</footer>
+
+<script>
+(async function () {
+  const params = new URLSearchParams(window.location.search);
+  const cityId = params.get("id");
+
+  const cities = await fetch("../../data/cities.json").then(r => r.json());
+  const stadiums = await fetch("../../data/stadiums.json").then(r => r.json());
+
+  const city = cities.find(c => c.id === cityId);
+  if (!city) return;
+
+  document.getElementById("city-name").textContent = city.name;
+  document.getElementById("city-meta").textContent =
+    `${city.country} · ${city.region}`;
+
+  const list = document.getElementById("stadium-list");
+  stadiums
+    .filter(s => s.cityId === city.id)
+    .forEach(s => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${s.name}</strong><br/>
+        Capacity: ${s.capacity.toLocaleString()}<br/>
+        ../stadiums/index.html?id=${s.id}">View stadium</a>
+      `;
+      list.appendChild(li);
+    });
+})();
+</script>
+
+</body>
+</html>
