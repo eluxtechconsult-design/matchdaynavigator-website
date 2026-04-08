@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title id="seo-title">World Cup 2026 Host City – MatchDay Navigator</title>
+  <title id="seo-title">World Cup 2026 Host City</title>
   <meta id="seo-description" name="description" content="" />
 
   ../../assets/style.css
@@ -12,7 +12,7 @@
 
   <meta name="robots" content="index,follow" />
 
-  <!-- Structured data injected dynamically -->
+  <!-- Structured Data -->
   <script type="application/ld+json" id="city-schema"></script>
 </head>
 
@@ -28,12 +28,6 @@
 <main class="container wc-detail">
   <h2>Stadiums</h2>
   <ul id="stadium-list"></ul>
-
-  <!-- Sponsorship block -->
-  <section class="sponsor-block">
-    <p class="sponsor-label">Official city partner</p>
-    <p id="sponsor-name">Available for sponsorship</p>
-  </section>
 
   <p class="cta">
     📲 Matchday details are delivered via WhatsApp once you have a booking.
@@ -61,23 +55,23 @@
   document.getElementById("city-meta").textContent =
     `${city.country} · ${city.region}`;
 
-  document.getElementById("seo-title").textContent =
-    `${city.name} – World Cup 2026 Host City`;
+  // SEO
+  document.getElementById("seo-title").textContent = city.seo.title;
+  document.getElementById("seo-description").content = city.seo.description;
 
-  document.getElementById("seo-description").content =
-    `Explore ${city.name}, a host city for the FIFA World Cup 2026. View stadiums, travel tips, and matchday guidance.`;
+  // JSON-LD
+  document.getElementById("city-schema").textContent =
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "TouristDestination",
+      "name": city.name,
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": city.country
+      }
+    });
 
-  // Structured data
-  document.getElementById("city-schema").textContent = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "TouristDestination",
-    "name": city.name,
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": city.country
-    }
-  });
-
+  // Stadium list
   const list = document.getElementById("stadium-list");
   stadiums.filter(s => s.cityId === city.id).forEach(s => {
     const li = document.createElement("li");
@@ -88,6 +82,7 @@
     `;
     list.appendChild(li);
   });
+
 })();
 </script>
 

@@ -1,116 +1,89 @@
-{
-  "cities": [
-    {
-      "slug": "new-york-new-jersey",
-      "name": "New York / New Jersey",
-      "country": "USA",
-      "lat": 40.813528,
-      "lng": -74.074361
+[
+  {
+    "id": "new-york-nj",
+    "name": "New York / New Jersey",
+    "country": "USA",
+    "countryCode": "US",
+    "region": "East",
+    "lat": 40.8135,
+    "lng": -74.0743,
+    "stadiums": ["metlife-stadium"],
+    "seo": {
+      "title": "New York / New Jersey – World Cup 2026 Host City",
+      "description": "Explore New York / New Jersey, a host city of the FIFA World Cup 2026. Discover stadiums, travel planning, and matchday information."
     },
-    {
-      "slug": "dallas",
-      "name": "Dallas (Arlington)",
-      "country": "USA",
-      "lat": 32.74778,
-      "lng": -97.09278
-    },
-    {
-      "slug": "houston",
-      "name": "Houston",
-      "country": "USA",
-      "lat": 29.68472,
-      "lng": -95.41083
-    },
-    {
-      "slug": "kansas-city",
-      "name": "Kansas City",
-      "country": "USA",
-      "lat": 39.04889,
-      "lng": -94.48389
-    },
-    {
-      "slug": "atlanta",
-      "name": "Atlanta",
-      "country": "USA",
-      "lat": 33.75556,
-      "lng": -84.4
-    },
-    {
-      "slug": "los-angeles",
-      "name": "Los Angeles (Inglewood)",
-      "country": "USA",
-      "lat": 33.953,
-      "lng": -118.339
-    },
-    {
-      "slug": "san-francisco-bay-area",
-      "name": "San Francisco Bay Area (Santa Clara)",
-      "country": "USA",
-      "lat": 37.403,
-      "lng": -121.97
-    },
-    {
-      "slug": "seattle",
-      "name": "Seattle",
-      "country": "USA",
-      "lat": 47.5952,
-      "lng": -122.3316
-    },
-    {
-      "slug": "boston",
-      "name": "Boston (Foxborough)",
-      "country": "USA",
-      "lat": 42.091,
-      "lng": -71.264
-    },
-    {
-      "slug": "philadelphia",
-      "name": "Philadelphia",
-      "country": "USA",
-      "lat": 39.90083,
-      "lng": -75.1675
-    },
-    {
-      "slug": "miami",
-      "name": "Miami (Miami Gardens)",
-      "country": "USA",
-      "lat": 25.95806,
-      "lng": -80.23889
-    },
-    {
-      "slug": "toronto",
-      "name": "Toronto",
-      "country": "Canada",
-      "lat": 43.63333,
-      "lng": -79.41861
-    },
-    {
-      "slug": "vancouver",
-      "name": "Vancouver",
-      "country": "Canada",
-      "lat": 49.276684,
-      "lng": -123.112404
-    },
-    {
-      "slug": "mexico-city",
-      "name": "Mexico City",
-      "country": "Mexico",
-      "lat": 19.30306,
-      "lng": -99.15056
-    },
-    {
-      "slug": "guadalajara",
-      "name": "Guadalajara",
-      "country": "Mexico",
-      "lat": 20.68167,
-      "lng": -103.46278
-    },
-    {
-      "slug": "monterrey",
-      "name": "Monterrey",
-      "country": "Mexico",
-      "lat": 25.66917,
-      "lng": -100.24444
+    "printEdition": {
+      "enabled": true,
+      "theme": "gold",
+      "label": "NY/NJ Host City Edition",
+      "sponsor": "Potential City Partner"
     }
-  ]
-}
+  },
+  {
+    "id": "dallas",
+    "name": "Dallas",
+    "country": "USA",
+    "countryCode": "US",
+    "region": "Central",
+    "lat": 32.7478,
+    "lng": -97.0928,
+    "stadiums": ["att-stadium"],
+    "seo": {
+      "title": "Dallas – World Cup 2026 Host City",
+      "description": "Plan your World Cup 2026 journey to Dallas. View stadium details, travel tips, and matchday guidance."
+    },
+    "printEdition": {
+      "enabled": true,
+      "theme": "midnight-blue",
+      "label": "Dallas Host City Edition"
+    }
+  },
+  {
+    "id": "los-angeles",
+    "name": "Los Angeles",
+    "country": "USA",
+    "countryCode": "US",
+    "region": "West",
+    "lat": 33.9530,
+    "lng": -118.3390,
+    "stadiums": ["sofi-stadium"],
+    "seo": {
+      "title": "Los Angeles – World Cup 2026 Host City",
+      "description": "Los Angeles will host matches at the FIFA World Cup 2026. Explore stadiums, transport, and matchday information."
+    },
+    "printEdition": {
+      "enabled": true,
+      "theme": "sunset",
+      "label": "Los Angeles Host City Edition"
+    }
+  },
+  {
+    "id": "miami",
+    "name": "Miami",
+    "country": "USA",
+    "countryCode": "US",
+    "region": "East",
+    "lat": 25.9580,
+    "lng": -80.2389,
+    "stadiums": ["hard-rock-stadium"],
+    "seo": {
+      "title": "Miami – World Cup 2026 Host City",
+      "description": "Miami is a host city for the FIFA World Cup 2026. Discover stadium access, travel planning, and matchday advice."
+    },
+    "printEdition": {
+      "enabled": true,
+      "theme": "aqua",
+      "label": "Miami Host City Edition"
+    }
+  },
+  {
+    "id": "toronto",
+    "name": "Toronto",
+    "country": "Canada",
+    "countryCode": "CA",
+    "region": "East",
+    "lat": 43.6333,
+    "lng": -79.4186,
+    "stadiums": ["bmo-field"],
+    "seo": {
+      "title": "Toronto – World Cup 2026 Host City",
