@@ -4,16 +4,16 @@
     "name": "MetLife Stadium",
     "cityId": "new-york-nj",
     "capacity": "82,500",
-    "description": "MetLife Stadium is one of the largest stadiums in the world and will host key knockout matches, including the FIFA World Cup 2026 Final.",
+    "description": "MetLife Stadium will host the FIFA World Cup 2026 Final and key knockout matches. It is one of the largest stadiums in the world and a centerpiece of the tournament.",
     "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for MetLife Stadium."
   },
   {
-    "id": "att-stadium",
-    "name": "AT&T Stadium",
-    "cityId": "dallas",
-    "capacity": "80,000+",
-    "description": "AT&T Stadium in Dallas is renowned for its retractable roof and massive video board and will host multiple World Cup 2026 matches.",
-    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for AT&T Stadium."
+    "id": "gillette-stadium",
+    "name": "Gillette Stadium",
+    "cityId": "boston",
+    "capacity": "65,878",
+    "description": "Gillette Stadium will host multiple World Cup 2026 group and knockout matches in the Boston area.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for Gillette Stadium."
   },
   {
     "id": "mercedes-benz-stadium",
@@ -24,11 +24,107 @@
     "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for Mercedes‑Benz Stadium."
   },
   {
+    "id": "att-stadium",
+    "name": "AT&T Stadium",
+    "cityId": "dallas",
+    "capacity": "80,000+",
+    "description": "AT&T Stadium is one of the largest venues at World Cup 2026 and will play a major role in the knockout rounds.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for AT&T Stadium."
+  },
+  {
+    "id": "nrg-stadium",
+    "name": "NRG Stadium",
+    "cityId": "houston",
+    "capacity": "72,000",
+    "description": "NRG Stadium is a retractable‑roof venue in Houston that will host multiple World Cup 2026 matches.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for NRG Stadium."
+  },
+  {
     "id": "geha-field",
     "name": "GEHA Field at Arrowhead Stadium",
     "cityId": "kansas-city",
     "capacity": "76,000",
-    "description": "GEHA Field at Arrowhead Stadium is known for its exceptional atmosphere and will host World Cup 2026 matches in Kansas City.",
+    "description": "GEHA Field at Arrowhead Stadium is known for its atmosphere and will host World Cup 2026 matches in Kansas City.",
     "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for GEHA Field at Arrowhead Stadium."
+  },
+  {
+    "id": "sofi-stadium",
+    "name": "SoFi Stadium",
+    "cityId": "los-angeles",
+    "capacity": "70,240",
+    "description": "SoFi Stadium is one of the most technologically advanced venues in the world and will host key World Cup 2026 matches.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for SoFi Stadium."
+  },
+  {
+    "id": "hard-rock-stadium",
+    "name": "Hard Rock Stadium",
+    "cityId": "miami",
+    "capacity": "64,767",
+    "description": "Hard Rock Stadium in Miami will host World Cup 2026 matches in a vibrant, international football city.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for Hard Rock Stadium."
+  },
+  {
+    "id": "lincoln-financial-field",
+    "name": "Lincoln Financial Field",
+    "cityId": "philadelphia",
+    "capacity": "69,796",
+    "description": "Lincoln Financial Field will host World Cup 2026 matches in the historic city of Philadelphia.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for Lincoln Financial Field."
+  },
+  {
+    "id": "levis-stadium",
+    "name": "Levi’s Stadium",
+    "cityId": "san-francisco",
+    "capacity": "70,909",
+    "description": "Levi’s Stadium will bring World Cup 2026 to the San Francisco Bay Area with modern facilities and sustainable design.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for Levi’s Stadium."
+  },
+  {
+    "id": "lumen-field",
+    "name": "Lumen Field",
+    "cityId": "seattle",
+    "capacity": "69,000",
+    "description": "Lumen Field’s iconic atmosphere will be on display during World Cup 2026 matches in Seattle.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for Lumen Field."
+  },
+  {
+    "id": "bmo-field",
+    "name": "BMO Field",
+    "cityId": "toronto",
+    "capacity": "45,000+",
+    "description": "BMO Field will host World Cup 2026 matches in Toronto after significant expansion and upgrades.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for BMO Field."
+  },
+  {
+    "id": "bc-place",
+    "name": "BC Place",
+    "cityId": "vancouver",
+    "capacity": "54,500",
+    "description": "BC Place is Canada’s largest World Cup 2026 venue and will host matches up to the knockout stages.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for BC Place."
+  },
+  {
+    "id": "estadio-azteca",
+    "name": "Estadio Azteca",
+    "cityId": "mexico-city",
+    "capacity": "87,523",
+    "description": "Estadio Azteca will become the first stadium to host matches in three different World Cups, opening the 2026 tournament.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for Estadio Azteca."
+  },
+  {
+    "id": "estadio-bbva",
+    "name": "Estadio BBVA",
+    "cityId": "monterrey",
+    "capacity": "53,500",
+    "description": "Estadio BBVA in Monterrey is one of Mexico’s most modern stadiums and will host World Cup 2026 matches.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for Estadio BBVA."
+  },
+  {
+    "id": "estadio-akron",
+    "name": "Estadio Akron",
+    "cityId": "guadalajara",
+    "capacity": "46,232",
+    "description": "Estadio Akron will host World Cup 2026 matches in Guadalajara, bringing top‑level football to western Mexico.",
+    "whatsappIntent": "Get matchday updates, entry rules and arrival guidance for Estadio Akron."
   }
 ]
