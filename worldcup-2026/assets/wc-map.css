@@ -1,66 +1,107 @@
+/* ================= HEADER ================= */
+
 .wc-map-header {
-  background: #f8fafc;
+  background: linear-gradient(180deg, #f8fafc, #eef2f7);
+  padding: 36px 0 32px;
   border-bottom: 1px solid #e5e7eb;
-  padding: 32px 0;
 }
+
+.subtitle {
+  color: #475569;
+  font-size: 1.05rem;
+}
+
+/* ================= LAYOUT ================= */
 
 .wc-map-layout {
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 68% 32%;
   min-height: calc(100vh - 160px);
 }
 
-#wc-map,
+.wc-map-canvas {
+  position: relative;
+}
+
 #map {
   width: 100%;
   height: 100%;
 }
 
+/* ================= CITY PANEL ================= */
+
 .wc-city-panel {
-  background: #ffffff;
+  background: #f1f5f9; /* ✅ anchored background */
   border-left: 1px solid #e5e7eb;
-  padding: 24px;
+  padding: 20px 18px;
 }
 
-.city-group h3 {
+.wc-city-panel h2 {
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+.city-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.city-columns h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   margin-bottom: 6px;
+  color: #1f2937;
 }
 
-.city-group ul {
+.city-columns ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.city-group li {
-  padding: 6px 0;
+.city-columns li {
+  font-size: 0.82rem;      /* ✅ smaller font */
+  padding: 3px 0;
   cursor: pointer;
   color: #2563eb;
+  line-height: 1.25;
 }
 
-.city-group li:hover {
+.city-columns li:hover {
   text-decoration: underline;
 }
 
-.panel-helper {
-  margin-top: 24px;
-  font-size: 0.9rem;
+.mt {
+  margin-top: 10px;
+}
+
+/* ================= FOOTER ================= */
+
+.wc-footer {
+  border-top: 1px solid #e5e7eb;
+  padding: 14px 0;
+  font-size: 0.8rem;
   color: #64748b;
 }
 
+/* ================= MAP ATTRIBUTION ================= */
+
 .leaflet-control-attribution {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   opacity: 0.6;
 }
 
-@media (max-width: 900px) {
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 960px) {
   .wc-map-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: 50vh auto;
+    grid-template-rows: 55vh auto;
   }
 
-  .wc-city-panel {
-    border-left: none;
-    border-top: 1px solid #e5e7eb;
+  .city-columns {
+    grid-template-columns: 1fr;
   }
 }

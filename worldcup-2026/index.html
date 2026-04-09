@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>World Cup 2026 Match Map – Host Cities & Stadiums</title>
+  <title>World Cup 2026 Match Map – Host Cities</title>
 
   <meta
     name="description"
-    content="Explore all official World Cup 2026 host cities and stadiums across the USA, Canada, and Mexico."
+    content="Explore all official FIFA World Cup 2026 host cities across the USA, Canada, and Mexico."
   />
 
-  <!-- ✅ FIXED: Correct CSS loading -->
+  <!-- ✅ Styles -->
   <link rel="stylesheet" href="/assets/style.css" />
   <link rel="stylesheet" href="./assets/wc-map.css" />
 
-  <!-- ✅ Leaflet CSS -->
+  <!-- ✅ Leaflet -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -25,11 +25,10 @@
 <body>
 
 <header class="wc-map-header">
-  <div class="container">
+  <div class="container center">
     <h1>World Cup 2026 Match Map</h1>
-    <p>
-      Explore official host cities and stadiums across
-      the USA, Canada and Mexico.
+    <p class="subtitle">
+      Official host cities across the United States, Canada, and Mexico.
     </p>
   </div>
 </header>
@@ -45,58 +44,51 @@
   <aside class="wc-city-panel">
     <h2>Select a host city</h2>
 
-    <div class="city-group">
-      <h3>🇺🇸 United States</h3>
-      <ul>
-        <li data-city="new-york-nj">New York / New Jersey</li>
-        <li data-city="atlanta">Atlanta</li>
-        <li data-city="boston">Boston</li>
-        <li data-city="dallas">Dallas</li>
-        <li data-city="houston">Houston</li>
-        <li data-city="kansas-city">Kansas City</li>
-        <li data-city="los-angeles">Los Angeles</li>
-        <li data-city="miami">Miami</li>
-        <li data-city="philadelphia">Philadelphia</li>
-        <li data-city="san-francisco">San Francisco Bay Area</li>
-        <li data-city="seattle">Seattle</li>
-      </ul>
-    </div>
+    <div class="city-columns">
 
-    <div class="city-group">
-      <h3>🇨🇦 Canada</h3>
-      <ul>
-        <li data-city="toronto">Toronto</li>
-        <li data-city="vancouver">Vancouver</li>
-      </ul>
-    </div>
+      <div>
+        <h3>United States</h3>
+        <ul>
+          <li data-city="new-york-nj">New York / New Jersey</li>
+          <li data-city="atlanta">Atlanta</li>
+          <li data-city="boston">Boston</li>
+          <li data-city="dallas">Dallas</li>
+          <li data-city="houston">Houston</li>
+          <li data-city="kansas-city">Kansas City</li>
+          <li data-city="los-angeles">Los Angeles</li>
+          <li data-city="miami">Miami</li>
+          <li data-city="philadelphia">Philadelphia</li>
+          <li data-city="san-francisco">San Francisco Bay Area</li>
+          <li data-city="seattle">Seattle</li>
+        </ul>
+      </div>
 
-    <div class="city-group">
-      <h3>🇲🇽 Mexico</h3>
-      <ul>
-        <li data-city="mexico-city">Mexico City</li>
-        <li data-city="guadalajara">Guadalajara</li>
-        <li data-city="monterrey">Monterrey</li>
-      </ul>
-    </div>
+      <div>
+        <h3>Canada</h3>
+        <ul>
+          <li data-city="toronto">Toronto</li>
+          <li data-city="vancouver">Vancouver</li>
+        </ul>
 
-    <p class="panel-helper">
-      Select a city to explore its stadiums and matchday information.
-    </p>
+        <h3 class="mt">Mexico</h3>
+        <ul>
+          <li data-city="mexico-city">Mexico City</li>
+          <li data-city="guadalajara">Guadalajara</li>
+          <li data-city="monterrey">Monterrey</li>
+        </ul>
+      </div>
+
+    </div>
   </aside>
 
 </main>
 
-<footer class="wc-footer">
-  <div class="container">
-    <a href="/privacy.html">Privacy Policy</a> ·
-    <a href="/terms.html">Terms of Service</a>
-  </div>
+<footer class="wc-footer center">
+  <p>© MatchDay Navigator</p>
 </footer>
 
-<!-- ✅ Leaflet JS -->
+<!-- ✅ Scripts -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- ✅ Map logic -->
 <script src="./assets/wc-map.js"></script>
 
 </body>

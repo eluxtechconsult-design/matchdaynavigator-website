@@ -1,6 +1,7 @@
 (async function () {
   const map = L.map("map", {
-    scrollWheelZoom: false
+    scrollWheelZoom: false,
+    zoomControl: true
   });
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -17,25 +18,39 @@
       radius: 7,
       color: "#16a34a",
       fillColor: "#16a34a",
-      fillOpacity: 0.9
+      fillOpacity: 0.95
     }).addTo(map);
 
-    marker.bindTooltip(city.name, { direction: "top", offset: [0, -8] });
+    marker.bindTooltip(city.name, {
+      permanent: false,
+      direction: "top",
+      offset: [0, -6]
+    });
 
     markers[city.id] = marker;
     bounds.push([city.lat, city.lng]);
   });
 
-  map.fitBounds(bounds, { padding: [48, 48] });
+  /* ✅ Anchor map exactly to all cities */
+  map.fitBounds(bounds, {
+    paddingTopLeft: [40, 40],
+    paddingBottomRight: [40, 40],
+    maxZoom: 4
+  });
 
+  /* ✅ City selector interaction */
   document.querySelectorAll("[data-city]").forEach(item => {
     item.addEventListener("click", () => {
-      const cityId = item.dataset.city;
-      const city = cities.find(c => c.id === cityId);
+      const id = item.dataset.city;
+      const city = cities.find(c => c.id === id);
       if (!city) return;
 
-      map.setView([city.lat, city.lng], 6);
-      markers[cityId].openTooltip();
+      map.setView([city.lat, city.lng], 6, {
+        animate: true,
+        duration: 0.5
+      });
+
+      markers[id].openTooltip();
     });
   });
 })();
