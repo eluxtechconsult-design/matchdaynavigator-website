@@ -1,10 +1,3 @@
-/**
- * WC 2026 Match Map – FINAL (Adjusted bullet size & alignment)
- * - Half-size bullets
- * - City names aligned to bullets
- * - Fully interactive
- */
-
 (async function () {
   const map = L.map("map", {
     scrollWheelZoom: false,
@@ -16,30 +9,26 @@
   }).addTo(map);
 
   const cities = await fetch("../data/cities.json").then(r => r.json());
+  const stadiums = await fetch("../data/stadiums.json").then(r => r.json());
+
   const bounds = [];
   const cityById = {};
 
-  /**
-   * Label offsets so name visually "hits" bullet
-   * Smaller offsets now that bullets are smaller
-   */
   function labelOffset(city) {
-    if (city.lng < -120) return [8, -2];   // West Coast
-    if (city.lng > -80) return [-8, -2];   // East Coast
-    if (city.lat < 23) return [0, 8];      // Mexico
-    return [8, -2];                         // Default
+    if (city.lng < -120) return [8, -2];
+    if (city.lng > -80) return [-8, -2];
+    if (city.lat < 23) return [0, 8];
+    return [8, -2];
   }
 
   cities.forEach(city => {
-    // ✅ HALF-SIZE bullet
     const bullet = L.circleMarker([city.lat, city.lng], {
-      radius: 3,                 // was 6
+      radius: 3,
       fillColor: "#15803d",
       color: "#15803d",
       fillOpacity: 1
     }).addTo(map);
 
-    // ✅ City name aligned tightly to bullet
     L.marker([city.lat, city.lng], {
       icon: L.divIcon({
         className: "wc-city-label",
@@ -49,17 +38,29 @@
       interactive: false
     }).addTo(map);
 
-    bullet.on("click", () => zoomTo(city));
-
+    bullet.on("click", () => activateCity(city.id));
     cityById[city.id] = city;
     bounds.push([city.lat, city.lng]);
   });
 
-  function zoomTo(city) {
-    map.setView([city.lat, city.lng], 6, {
-      animate: true,
-      duration: 0.4
-    });
+  function activateCity(cityId) {
+    const city = cityById[cityId];
+    map.setView([city.lat, city.lng], 6, { animate: true });
+
+    // Collapse all
+    document.querySelectorAll(".stadium-list").forEach(el => el.innerHTML = "");
+
+    // Expand selected
+    const container = document.querySelector(`[data-city="${cityId}"] .stadium-list`);
+    if (!container) return;
+
+    stadiums
+      .filter(s => s.cityId === cityId)
+      .forEach(s => {
+        const li = document.createElement("li");
+        li.innerHTML = `/worldcup-2026/stadiums/?id=${s.id}">${s.name}</a>`;
+        container.appendChild(li);
+      });
   }
 
   function resetMap() {
@@ -67,19 +68,14 @@
       padding: [100, 100],
       maxZoom: 4
     });
+    document.querySelectorAll(".stadium-list").forEach(el => el.innerHTML = "");
   }
 
-  // Initial landing state
   resetMap();
 
-  // List → map interaction
   document.querySelectorAll("[data-city]").forEach(el => {
-    el.addEventListener("click", () => {
-      zoomTo(cityById[el.dataset.city]);
-    });
+    el.addEventListener("click", () => activateCity(el.dataset.city));
   });
 
-  // Reset control
-  document.getElementById("reset-map")
-    ?.addEventListener("click", resetMap);
+  document.getElementById("reset-map")?.addEventListener("click", resetMap);
 })();
