@@ -1,7 +1,73 @@
+/* =====================================================
+   World Cup 2026 Match Map – FINAL CSS
+   ===================================================== */
+
+/* ================= HEADER ================= */
+
+.wc-map-header {
+  position: relative;              /* ✅ ensures clickability */
+  z-index: 1000;                   /* ✅ above Leaflet layers */
+  background: linear-gradient(180deg, #f8fafc, #eef2f7);
+  padding: 26px 0 22px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.wc-map-header h1 {
+  margin: 0;
+}
+
+.subtitle {
+  margin-top: 4px;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+/* Header navigation (Back + Reset) */
+.wc-map-nav {
+  display: flex;
+  gap: 14px;
+  margin-top: 6px;
+  font-size: 0.8rem;
+}
+
+.back-home {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.back-home:hover {
+  text-decoration: underline;
+}
+
+.reset-map {
+  background: transparent;
+  border: none;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #047857;                  /* ✅ accent color */
+  cursor: pointer;
+  pointer-events: auto;            /* ✅ explicitly clickable */
+}
+
+.reset-map:hover {
+  background: rgba(4, 120, 87, 0.08);
+  border-radius: 6px;
+}
+
+/* ================= LAYOUT ================= */
+
 .wc-map-layout {
   display: grid;
-  grid-template-columns: 78% 22%;
-  min-height: calc(100vh - 110px);
+  grid-template-columns: 78% 22%;   /* ✅ big landing map */
+  min-height: calc(100vh - 120px);
+}
+
+/* ================= MAP ================= */
+
+.wc-map-canvas {
+  position: relative;
 }
 
 #map {
@@ -9,62 +75,92 @@
   height: 100%;
 }
 
-/* Header nav */
-.wc-map-nav {
-  display: flex;
-  gap: 12px;
-  margin-top: 4px;
+/* Ensure Leaflet stays behind the header */
+.leaflet-container {
+  z-index: 1;
 }
 
-.back-home {
-  font-size: 0.8rem;
-  text-decoration: none;
-}
+/* ================= MAP CITY LABELS ================= */
+/* Small, clean text-only labels (no background) */
 
-.reset-map {
-  font-size: 0.75rem;
-  background: none;
-  border: none;
-  color: #047857;
-  cursor: pointer;
+.wc-city-label {
+  font-size: 9px;                  /* ✅ 3 grades smaller */
   font-weight: 600;
+  color: #064e3b;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
-/* Side panel */
+/* ================= CITY SELECTOR PANEL ================= */
+
 .wc-city-panel {
-  background: #064e3b;
+  background: #064e3b;              /* ✅ dark green anchor */
   color: #ecfdf5;
   padding: 12px;
 }
 
 .panel-title {
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.9rem;               /* ✅ smaller, bold */
+  font-weight: 800;
   color: #d1fae5;
+  margin-bottom: 2px;
 }
 
 .panel-subtitle {
-  font-size: 0.7rem;
+  font-size: 0.7rem;               /* ✅ compact text */
+  color: #a7f3d0;
   margin-bottom: 8px;
-  opacity: 0.85;
+}
+
+/* Compact two-column layout */
+.city-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 .city-columns h3 {
+  margin: 4px 0;
   font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: #a7f3d0;
 }
 
+.city-columns ul {
+  list-style: disc;
+  margin: 0;
+  padding-left: 14px;
+}
+
 .city-columns li {
-  font-size: 0.72rem;
+  font-size: 0.72rem;              /* ✅ fits all cities */
+  line-height: 1.2;
   padding: 1px 0;
   cursor: pointer;
 }
 
-/* Map labels */
-.wc-city-label {
-  font-size: 9px; /* ✅ 3 grades smaller */
-  font-weight: 600;
-  color: #064e3b;
-  white-space: nowrap;
-  pointer-events: none;
+.city-columns li:hover,
+.city-columns li.active {
+  text-decoration: underline;
+}
+
+/* ================= MAP ATTRIBUTION ================= */
+
+.leaflet-control-attribution {
+  font-size: 0.65rem;
+  opacity: 0.6;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 960px) {
+  .wc-map-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 65vh auto;
+  }
+
+  .city-columns {
+    grid-template-columns: 1fr;
+  }
 }
