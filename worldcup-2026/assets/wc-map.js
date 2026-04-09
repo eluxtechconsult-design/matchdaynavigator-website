@@ -8,7 +8,6 @@
     attribution: "© OpenStreetMap contributors"
   }).addTo(map);
 
-  // Absolute paths – never fail
   const cities = await fetch("/data/cities.json").then(r => r.json());
   const stadiums = await fetch("/data/stadiums.json").then(r => r.json());
 
@@ -22,7 +21,7 @@
     return [8, -2];
   }
 
-  /* ========== RENDER CITY BULLETS ========== */
+  // ---------- Cities on map ----------
   cities.forEach(city => {
     const bullet = L.circleMarker([city.lat, city.lng], {
       radius: 3,
@@ -46,67 +45,60 @@
     bounds.push([city.lat, city.lng]);
   });
 
-  /* ========== ACTIVATE CITY ========== */
+  // ---------- City → Stadium expansion ----------
   function activateCity(cityId) {
     const city = cityById[cityId];
     if (!city) return;
 
     map.setView([city.lat, city.lng], 6, { animate: true });
 
-    // Clear all stadium lists
+    // Collapse all stadium lists
     document.querySelectorAll(".stadium-list").forEach(list => {
       list.innerHTML = "";
     });
 
     const container =
       document.querySelector(`[data-city="${cityId}"] .stadium-list`);
+    if (!container) return;
 
-    if (!container) {
-      console.warn("No stadium container found for city:", cityId);
-      return;
-    }
+    stadiums
+      .filter(s => s.cityId === cityId)
+      .forEach(s => {
+        const li = document.createElement("li");
 
-    const matches = stadiums.filter(s => s.cityId === cityId);
+        // ✅ VALID, CLICKABLE LINK
+        const a = document.createElement("a");
+        a.href = `/worldcup-2026/stadiums/?id=${s.id}`;
+        a.textContent = s.name;
 
-    if (matches.length === 0) {
-      container.innerHTML =
-        `<li style="color:#fca5a5;font-size:0.7rem;">No stadium data found</li>`;
-      return;
-    }
-
-    matches.forEach(s => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <a href="/worldcup-2026/stadiums/?id=${s.id}">
-          ${s.name}
-        </a>
-      `;
-      container.appendChild(li);
-    });
+        li.appendChild(a);
+        container.appendChild(li);
+      });
   }
 
-  /* ========== RESET ========== */
+  // ---------- Reset ----------
   function resetMap() {
     map.fitBounds(bounds, {
       padding: [100, 100],
       maxZoom: 4
     });
-    document.querySelectorAll(".stadium-list").forEach(l => {
-      l.innerHTML = "";
-    });
+    document.querySelectorAll(".stadium-list").forEach(l => l.innerHTML = "");
   }
 
   resetMap();
 
-  /* ========== LIST CLICK HANDLING ========== */
-  document.querySelectorAll("[data-city]").forEach(el => {
-    el.addEventListener("click", e => {
-      e.preventDefault();
-      e.stopPropagation();
-      activateCity(el.dataset.city);
+  // ✅ IMPORTANT FIX:
+  // Handle city clicks ONLY if the click is NOT on a stadium link
+  document.querySelectorAll("[data-city]").forEach(cityLi => {
+    cityLi.addEventListener("click", event => {
+      const clickedLink = event.target.closest("a");
+      if (clickedLink) return; // ✅ allow navigation
+
+      activateCity(cityLi.dataset.city);
     });
   });
 
-  document.getElementById("reset-map")
+  document
+    .getElementById("reset-map")
     ?.addEventListener("click", resetMap);
 })();
