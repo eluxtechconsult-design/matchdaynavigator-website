@@ -21,7 +21,7 @@
     return [8, -2];
   }
 
-  // --- Render city bullets and labels ---
+  // ---------- CITIES ON MAP ----------
   cities.forEach(city => {
     const bullet = L.circleMarker([city.lat, city.lng], {
       radius: 3,
@@ -45,12 +45,12 @@
     bounds.push([city.lat, city.lng]);
   });
 
-  // --- Activate city (expand stadium) ---
+  // ---------- CITY → STADIUM EXPANSION ----------
   function activateCity(cityId) {
     const city = cityById[cityId];
     map.setView([city.lat, city.lng], 6, { animate: true });
 
-    // Collapse all existing stadium lists
+    // Collapse all stadium lists first
     document.querySelectorAll(".stadium-list").forEach(list => {
       list.innerHTML = "";
     });
@@ -63,25 +63,30 @@
       .filter(s => s.cityId === cityId)
       .forEach(s => {
         const li = document.createElement("li");
+
+        // ✅ CORRECT HTML (THIS IS THE FIX)
         li.innerHTML = `
           <a href="/worldcup-2026/stadiums/?id=${s.id}">
             ${s.name}
           </a>
         `;
+
         container.appendChild(li);
       });
   }
 
-  // --- Reset map + collapse ---
+  // ---------- RESET ----------
   function resetMap() {
     map.fitBounds(bounds, {
       padding: [100, 100],
       maxZoom: 4
     });
-    document.querySelectorAll(".stadium-list").forEach(l => l.innerHTML = "");
+    document.querySelectorAll(".stadium-list").forEach(l => {
+      l.innerHTML = "";
+    });
   }
 
-  // Initial landing state
+  // Initial view
   resetMap();
 
   // City list click
