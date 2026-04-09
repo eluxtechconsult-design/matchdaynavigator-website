@@ -75,3 +75,100 @@
     .back-link {
       display: block;
       margin-top: 16px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="stadium-container">
+
+  <h1 id="stadium-name">Stadium</h1>
+  <p id="stadium-city" class="stadium-meta"></p>
+
+  <div class="stadium-section">
+    <h2>Stadium information</h2>
+    <p id="stadium-description"></p>
+  </div>
+
+  <div class="stadium-section">
+    <h2>Capacity</h2>
+    <p id="stadium-capacity"></p>
+  </div>
+
+  <div class="stadium-section">
+    <h2>Matches at this stadium</h2>
+    <p class="subtle">
+      Match schedules will appear here once officially confirmed by FIFA.
+    </p>
+  </div>
+
+  <div class="stadium-section">
+    <h2>Arrival</h2>
+    <p class="subtle">
+      Arrival guidance, transport options and recommended entry times
+      will be shared closer to matchday.
+    </p>
+  </div>
+
+  <div class="stadium-section">
+    <h2>Bags & entry rules</h2>
+    <p class="subtle">
+      Stadium‑specific bag policies and security rules will be available
+      before the tournament begins.
+    </p>
+  </div>
+
+  <div class="stadium-section whatsapp-cta">
+    <h2>Matchday assistance</h2>
+    <p>
+      Get matchday updates for this stadium.<br />
+      <a id="whatsapp-link" target="_blank" class="subtle">
+        Arrival guidance · Entry rules · Kick‑off reminders on WhatsApp →
+      </a>
+    </p>
+  </div>
+
+  <a href="/worldcup-2026/" class="back-link">
+    ← Back to Match Map
+  </a>
+
+</div>
+
+<script>
+(async function () {
+  const id = new URLSearchParams(window.location.search).get("id");
+  if (!id) return;
+
+  const [stadiums, cities] = await Promise.all([
+    fetch("/data/stadiums.json").then(r => r.json()),
+    fetch("/data/cities.json").then(r => r.json())
+  ]);
+
+  const stadium = stadiums.find(s => s.id === id);
+  if (!stadium) return;
+
+  const city = cities.find(c => c.id === stadium.cityId);
+
+  document.getElementById("stadium-name").textContent = stadium.name;
+  document.getElementById("stadium-city").textContent =
+    `${city.name} · World Cup 2026`;
+
+  document.getElementById("stadium-description").textContent =
+    stadium.description;
+
+  document.getElementById("stadium-capacity").textContent =
+    stadium.capacity;
+
+  const whatsappMessage =
+    `Get matchday updates for ${stadium.name}. Arrival guidance, entry rules and kick‑off reminders.`;
+
+  document.getElementById("whatsapp-link").href =
+    `https://wa.me/15550000000?text=${encodeURIComponent(whatsappMessage)}`;
+})();
+</script>
+
+</body>
+</html>
