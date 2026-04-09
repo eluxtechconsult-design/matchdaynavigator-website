@@ -6,7 +6,7 @@
 
   <title>World Cup 2026 Match Map</title>
 
-  <!-- Styles -->
+  <!-- ✅ CORRECT CSS LOADING -->
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="./assets/wc-map.css">
   <link
@@ -33,7 +33,7 @@
 
 <main class="wc-map-layout">
 
-  <!-- MAP -->
+  <!-- ✅ MAP WILL RENDER HERE -->
   <section class="wc-map-canvas">
     <div id="map"></div>
   </section>
@@ -41,7 +41,6 @@
   <!-- CITY SELECTOR -->
   <aside class="wc-city-panel">
 
-    <!-- ✅ classes added so CSS applies -->
     <h2 class="panel-title">Select a host city</h2>
     <p class="panel-subtitle">
       Click a city to zoom in and view its stadium.
@@ -67,3 +66,28 @@
       </div>
 
       <div>
+        <h3>Canada</h3>
+        <ul>
+          <li data-city="toronto">Toronto</li>
+          <li data-city="vancouver">Vancouver</li>
+        </ul>
+
+        <h3 class="mt">Mexico</h3>
+        <ul>
+          <li data-city="mexico-city">Mexico City</li>
+          <li data-city="guadalajara">Guadalajara</li>
+          <li data-city="monterrey">Monterrey</li>
+        </ul>
+      </div>
+
+    </div>
+  </aside>
+
+</main>
+
+<!-- ✅ CORRECT JS LOADING (ORDER MATTERS) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./assets/wc-map.js"></script>
+
+</body>
+</html>
