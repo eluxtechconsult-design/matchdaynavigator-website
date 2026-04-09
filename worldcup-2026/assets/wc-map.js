@@ -39,6 +39,7 @@
     }).addTo(map);
 
     bullet.on("click", () => activateCity(city.id));
+
     cityById[city.id] = city;
     bounds.push([city.lat, city.lng]);
   });
@@ -47,18 +48,18 @@
     const city = cityById[cityId];
     map.setView([city.lat, city.lng], 6, { animate: true });
 
-    // Collapse all
-    document.querySelectorAll(".stadium-list").forEach(el => el.innerHTML = "");
+    document.querySelectorAll(".stadium-list").forEach(list => {
+      list.innerHTML = "";
+    });
 
-    // Expand selected
-    const container = document.querySelector(`[data-city="${cityId}"] .stadium-list`);
-    if (!container) return;
+    const li = document.querySelector(`[data-city="${cityId}"]`);
+    const container = li.querySelector(".stadium-list");
 
     stadiums
       .filter(s => s.cityId === cityId)
       .forEach(s => {
         const li = document.createElement("li");
-        li.innerHTML = `/worldcup-2026/stadiums/?id=${s.id}">${s.name}</a>`;
+        li.innerHTML = `<a href="/worldcup-2026/stadiums/?id=${s.id}">${s.name}</a>`;
         container.appendChild(li);
       });
   }
@@ -68,7 +69,7 @@
       padding: [100, 100],
       maxZoom: 4
     });
-    document.querySelectorAll(".stadium-list").forEach(el => el.innerHTML = "");
+    document.querySelectorAll(".stadium-list").forEach(l => l.innerHTML = "");
   }
 
   resetMap();
@@ -77,5 +78,6 @@
     el.addEventListener("click", () => activateCity(el.dataset.city));
   });
 
-  document.getElementById("reset-map")?.addEventListener("click", resetMap);
+  document.getElementById("reset-map")
+    .addEventListener("click", resetMap);
 })();
