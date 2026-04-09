@@ -6,7 +6,7 @@
 
   <title>Stadium – World Cup 2026</title>
 
-  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
     .stadium-container {
@@ -17,18 +17,18 @@
 
     h1 {
       font-size: 2rem;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .stadium-meta {
       color: #475569;
       font-size: 0.95rem;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     h2 {
-      font-size: 1.25rem;
-      margin: 20px 0 8px;
+      font-size: 1.15rem;
+      margin: 18px 0 6px;
     }
 
     p {
@@ -37,11 +37,11 @@
     }
 
     .stadium-section {
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     .whatsapp-cta {
-      margin: 28px auto 16px;
+      margin: 24px auto 16px;
       padding: 16px;
       background: #ecfdf5;
       border: 1px solid #a7f3d0;
@@ -64,6 +64,11 @@
 
     .whatsapp-cta a:hover {
       text-decoration: underline;
+    }
+
+    .subtle {
+      color: #64748b;
+      font-size: 0.9rem;
     }
 
     .back-link {
@@ -92,15 +97,43 @@
     <p id="stadium-capacity"></p>
   </div>
 
+  <div class="stadium-section">
+    <h2>Matches at this stadium</h2>
+    <p class="subtle">
+      Match schedules will appear here once officially confirmed by FIFA.
+    </p>
+  </div>
+
+  <div class="stadium-section">
+    <h2>Arrival</h2>
+    <p class="subtle">
+      Arrival guidance, transport options and recommended entry times
+      will be shared closer to matchday.
+    </p>
+  </div>
+
+  <div class="stadium-section">
+    <h2>Bags & entry rules</h2>
+    <p class="subtle">
+      Stadium‑specific bag policies and security rules will be available
+      before the tournament begins.
+    </p>
+  </div>
+
   <div class="stadium-section whatsapp-cta">
     <h2>Matchday assistance</h2>
-    <p id="whatsapp-text"></p>
+    <p>
+      Get matchday updates for this stadium.<br />
+      <span class="subtle">Arrival guidance · Entry rules · Kick‑off reminders</span>
+    </p>
     <a id="whatsapp-link" target="_blank">
       Continue on WhatsApp →
     </a>
   </div>
 
-  <a href="/worldcup-2026/" class="back-link">← Back to Match Map</a>
+  <a href="/worldcup-2026/" class="back-link">
+    ← Back to Match Map
+  </a>
 
 </div>
 
@@ -129,11 +162,12 @@
   document.getElementById("stadium-capacity").textContent =
     stadium.capacity;
 
-  document.getElementById("whatsapp-text").textContent =
-    stadium.whatsappIntent;
+  const whatsappText =
+    "Get matchday updates for " + stadium.name +
+    ". Arrival guidance, entry rules and kick‑off reminders.";
 
   document.getElementById("whatsapp-link").href =
-    `https://wa.me/15550000000?text=${encodeURIComponent(stadium.whatsappIntent)}`;
+    `https://wa.me/15550000000?text=${encodeURIComponent(whatsappText)}`;
 })();
 </script>
 
