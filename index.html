@@ -8,57 +8,78 @@
 
   <meta
     name="description"
-    content="Explore World Cup 2026 host cities and stadiums across the USA, Canada and Mexico. Discover a calm, guided matchday experience."
+    content="Explore World Cup 2026 host cities and stadiums across the USA, Canada and Mexico. A calm, guided matchday experience."
   />
 
-  <!-- Base styles -->
-  <link rel="stylesheet" href="/assets/style.css" />
+  /assets/style.css
 
-  <!-- Light page-specific polish (intentional, minimal) -->
   <style>
+    /* ===== HERO ===== */
     .hero {
       background: linear-gradient(180deg, #f8fafc, #eef2f7);
-      padding: 80px 0;
+      padding: 90px 0 80px;
+      text-align: center;
     }
 
-    .hero img.logo {
-      width: 64px;
+    .hero-logo {
+      width: 72px;
       margin-bottom: 16px;
     }
 
     .flags {
-      margin: 16px 0 8px;
-      font-size: 1.3rem;
-      letter-spacing: 0.3rem;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 12px 0 8px;
     }
 
+    .flags img {
+      width: 28px;
+      height: auto;
+    }
+
+    .hero-subtitle {
+      max-width: 640px;
+      margin: 16px auto 0;
+      color: #475569;
+      font-size: 1.1rem;
+    }
+
+    /* ===== PRIMARY CTA ===== */
     .primary-button {
       display: inline-block;
-      margin-top: 24px;
-      padding: 14px 28px;
-      background: #2563eb;
+      margin-top: 28px;
+      padding: 14px 32px;
+      background: #16a34a; /* green */
       color: #ffffff;
-      border-radius: 8px;
+      border-radius: 10px;
       font-weight: 600;
       text-decoration: none;
+      font-size: 1rem;
     }
 
     .primary-button:hover {
-      background: #1e4ed8;
+      background: #15803d;
+    }
+
+    /* ===== WORLD CUP SECTION ===== */
+    .wc-entry {
+      background: #ffffff;
+      padding: 80px 0;
     }
 
     .wc-entry-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 24px;
-      margin-top: 32px;
+      margin-top: 40px;
     }
 
     .wc-entry-card {
       background: #ffffff;
       border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 14px;
+      padding: 28px;
     }
 
     .wc-entry-card.subtle {
@@ -67,27 +88,34 @@
 
     .wc-entry-card a {
       display: inline-block;
-      margin-top: 12px;
+      margin-top: 14px;
       font-weight: 600;
       color: #2563eb;
       text-decoration: none;
+    }
+
+    /* ===== PROVIDES SECTION ===== */
+    .section-light {
+      background: #f1f5f9;
+      padding: 80px 0;
     }
 
     .feature-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 24px;
-      margin-top: 32px;
+      margin-top: 40px;
     }
 
     .card {
       background: #ffffff;
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      text-align: center;
     }
 
-    .container.center {
+    .center {
       text-align: center;
     }
   </style>
@@ -95,23 +123,24 @@
 
 <body>
 
-<!-- =====================================================
-     HERO
-     ===================================================== -->
+<!-- ================= HERO ================= -->
 
 <header class="hero">
   <div class="container center">
 
-    <!-- ✅ LOGO FIXED -->
     <img
-      src="/assets/logo-symbol.svg"
+      src="/assets/logo.png"
       alt="MatchDay Navigator logo"
-      class="logo"
+      class="hero-logo"
     />
 
     <h1>MatchDay Navigator</h1>
 
-    <div class="flags">🇺🇸 🇨🇦 🇲🇽</div>
+    <div class="flags">
+      <img src="/assets/flags/us.png" alt="United States" />
+      <img src="/assets/flags/ca.png" alt="Canada" />
+      <img src="/assets/flags/mx.png" alt="Mexico" />
+    </div>
 
     <p class="hero-subtitle">
       The matchday experience for World Cup 2026<br />
@@ -125,16 +154,14 @@
   </div>
 </header>
 
-<!-- =====================================================
-     WORLD CUP 2026 SPLIT
-     ===================================================== -->
+<!-- ============= WORLD CUP SPLIT ============= -->
 
-<section class="section wc-entry">
-  <div class="container">
+<section class="wc-entry">
+  <div class="container center">
 
-    <h2 class="section-title">World Cup 2026</h2>
+    <h2>World Cup 2026</h2>
 
-    <p class="section-intro center">
+    <p class="section-intro">
       Discover how World Cup 2026 will be experienced across host cities,
       stadiums and matchdays.
     </p>
@@ -147,7 +174,6 @@
           Interactive map of official host cities and stadiums.
           Explore where matches take place and plan matchday journeys.
         </p>
-
         <a href="/worldcup-2026/">View Matchday Map →</a>
       </div>
 
@@ -157,7 +183,6 @@
           Explore the cities behind the tournament — travel context,
           city atmosphere and local initiatives.
         </p>
-
         <a href="/worldcup-2026/host-cities/">Explore Host Cities →</a>
       </div>
 
@@ -165,11 +190,9 @@
   </div>
 </section>
 
-<!-- =====================================================
-     WHAT MATCHDAY NAVIGATOR PROVIDES
-     ===================================================== -->
+<!-- ============= WHAT IT PROVIDES ============= -->
 
-<section class="section section-light">
+<section class="section-light">
   <div class="container center">
 
     <h2>What MatchDay Navigator provides</h2>
@@ -201,15 +224,13 @@
   </div>
 </section>
 
-<!-- =====================================================
-     FOOTER
-     ===================================================== -->
+<!-- ================= FOOTER ================= -->
 
 <footer class="footer">
-  <div class="container footer-links">
+  <div class="container footer-links center">
     <a href="/privacy.html">Privacy Policy</a>
     <a href="/terms.html">Terms of Service</a>
-    <p class="footer-note">© MatchDay Navigator</p>
+    <p>© MatchDay Navigator</p>
   </div>
 </footer>
 
