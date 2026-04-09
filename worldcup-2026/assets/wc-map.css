@@ -2,20 +2,15 @@
 
 .wc-map-header {
   background: linear-gradient(180deg, #f8fafc, #eef2f7);
-  padding: 28px 0 24px;
+  padding: 32px 0 28px;
   border-bottom: 1px solid #e5e7eb;
-}
-
-.subtitle {
-  color: #475569;
-  font-size: 1rem;
 }
 
 /* ================= LAYOUT ================= */
 
 .wc-map-layout {
   display: grid;
-  grid-template-columns: 72% 28%; /* ✅ map bigger */
+  grid-template-columns: 75% 25%; /* ✅ map dominates */
   min-height: calc(100vh - 140px);
 }
 
@@ -28,32 +23,43 @@
   height: 100%;
 }
 
+/* ================= CITY LABELS ON MAP ================= */
+
+.city-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #064e3b;
+  background: rgba(236, 253, 245, 0.9);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid #a7f3d0;
+  white-space: nowrap;
+}
+
 /* ================= CITY PANEL ================= */
 
 .wc-city-panel {
-  background: #0f3d2e; /* ✅ dark green */
+  background: #064e3b; /* ✅ darker green */
   color: #ecfdf5;
-  border-left: 1px solid #065f46;
-  padding: 16px 16px 14px; /* ✅ lifted */
+  padding: 14px 14px 12px;
 }
 
 .wc-city-panel h2 {
-  font-size: 1.05rem;
-  margin-bottom: 8px;
+  font-size: 1rem;
+  margin-bottom: 6px;
 }
 
 .panel-subtitle {
   display: block;
   font-size: 0.75rem;
-  font-weight: normal;
   opacity: 0.85;
-  margin-top: 2px;
 }
 
+/* Compact grid */
 .city-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 10px;
 }
 
 .city-columns h3 {
@@ -66,16 +72,15 @@
 
 .city-columns ul {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 .city-columns li {
-  font-size: 0.75rem; /* ✅ fits all cities */
+  font-size: 0.74rem;
   padding: 2px 0;
-  cursor: pointer;
-  color: #ecfdf5;
   line-height: 1.2;
+  cursor: pointer;
 }
 
 .city-columns li:hover {
@@ -83,23 +88,7 @@
 }
 
 .mt {
-  margin-top: 8px;
-}
-
-/* ================= FOOTER ================= */
-
-.wc-footer {
-  border-top: 1px solid #e5e7eb;
-  padding: 12px 0;
-  font-size: 0.75rem;
-  color: #64748b;
-}
-
-/* ================= MAP ATTRIBUTION ================= */
-
-.leaflet-control-attribution {
-  font-size: 0.65rem;
-  opacity: 0.6;
+  margin-top: 6px;
 }
 
 /* ================= RESPONSIVE ================= */
@@ -107,7 +96,7 @@
 @media (max-width: 960px) {
   .wc-map-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: 60vh auto;
+    grid-template-rows: 65vh auto;
   }
 
   .city-columns {

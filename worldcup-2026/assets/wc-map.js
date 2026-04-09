@@ -11,45 +11,34 @@
   const cities = await fetch("../data/cities.json").then(r => r.json());
 
   const bounds = [];
-  const markers = [];
 
-  cities.forEach(city => {
-    const marker = L.circleMarker([city.lat, city.lng], {
+  cities.forEach((city, index) => {
+    // Base marker
+    L.circleMarker([city.lat, city.lng], {
       radius: 7,
       color: "#16a34a",
       fillColor: "#16a34a",
       fillOpacity: 0.95
     }).addTo(map);
 
-    /* ✅ City name visible on hover AND click */
-    marker.bindTooltip(city.name, {
-      permanent: false,
-      direction: "top",
-      offset: [0, -6]
-    });
+    // Slight vertical offset for labels to reduce collisions
+    const yOffset = -14 - (index % 3) * 4;
 
-    markers.push(marker);
+    // ✅ Permanent city labels
+    L.marker([city.lat, city.lng], {
+      icon: L.divIcon({
+        className: "city-label",
+        html: city.name,
+        iconAnchor: [-6, yOffset]
+      })
+    }).addTo(map);
+
     bounds.push([city.lat, city.lng]);
   });
 
-  /* ✅ Anchor map clearly on load */
+  // ✅ Anchor map cleanly around all cities
   map.fitBounds(bounds, {
-    paddingTopLeft: [60, 60],
-    paddingBottomRight: [60, 60],
+    padding: [80, 80],
     maxZoom: 4
-  });
-
-  /* ✅ Selector interaction */
-  document.querySelectorAll("[data-city]").forEach(item => {
-    item.addEventListener("click", () => {
-      const id = item.dataset.city;
-      const city = cities.find(c => c.id === id);
-      if (!city) return;
-
-      map.setView([city.lat, city.lng], 6, {
-        animate: true,
-        duration: 0.5
-      });
-    });
   });
 })();
