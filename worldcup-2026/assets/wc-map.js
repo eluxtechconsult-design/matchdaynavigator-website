@@ -1,3 +1,10 @@
+/**
+ * WC 2026 Match Map – FINAL
+ * Bullet points + city labels
+ * Fully interactive
+ * Resettable
+ */
+
 (async function () {
   const map = L.map("map", {
     scrollWheelZoom: false,
@@ -10,23 +17,25 @@
 
   const cities = await fetch("../data/cities.json").then(r => r.json());
   const bounds = [];
-  const cityIndex = {};
+  const cityById = {};
 
   function labelOffset(city) {
-    if (city.lng < -120) return [14, -4];
-    if (city.lng > -80) return [-14, -4];
-    if (city.lat < 23) return [0, 12];
-    return [14, -4];
+    if (city.lng < -120) return [12, -2];
+    if (city.lng > -80) return [-12, -2];
+    if (city.lat < 23) return [0, 10];
+    return [12, -2];
   }
 
   cities.forEach(city => {
-    const dot = L.circleMarker([city.lat, city.lng], {
+    // ✅ Bullet marker
+    const bullet = L.circleMarker([city.lat, city.lng], {
       radius: 6,
       fillColor: "#15803d",
       color: "#15803d",
       fillOpacity: 1
     }).addTo(map);
 
+    // ✅ City name next to bullet
     L.marker([city.lat, city.lng], {
       icon: L.divIcon({
         className: "wc-city-label",
@@ -36,8 +45,9 @@
       interactive: false
     }).addTo(map);
 
-    dot.on("click", () => zoomTo(city));
-    cityIndex[city.id] = city;
+    bullet.on("click", () => zoomTo(city));
+
+    cityById[city.id] = city;
     bounds.push([city.lat, city.lng]);
   });
 
@@ -48,21 +58,24 @@
     });
   }
 
-  function reset() {
+  function resetMap() {
     map.fitBounds(bounds, {
       padding: [100, 100],
       maxZoom: 4
     });
   }
 
-  reset();
+  // Initial landing
+  resetMap();
 
+  // List → map
   document.querySelectorAll("[data-city]").forEach(el => {
     el.addEventListener("click", () => {
-      zoomTo(cityIndex[el.dataset.city]);
+      zoomTo(cityById[el.dataset.city]);
     });
   });
 
+  // Reset control
   document.getElementById("reset-map")
-    .addEventListener("click", reset);
+    ?.addEventListener("click", resetMap);
 })();
