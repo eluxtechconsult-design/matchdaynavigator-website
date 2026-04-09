@@ -1,5 +1,5 @@
 /* =====================================================
-   World Cup 2026 – Map & City-Stadium UI (Enhanced)
+   World Cup 2026 – Map & City-Stadium UI (Refined)
    ===================================================== */
 
 /* ================= LAYOUT ================= */
@@ -7,7 +7,7 @@
 .wc-map-layout {
   display: grid;
   grid-template-columns: 78% 22%;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 90px); /* ✅ header height reduced */
 }
 
 @media (max-width: 960px) {
@@ -35,7 +35,6 @@
 
 /* ================= FOOTBALL MARKERS ================= */
 
-/* Default football */
 .football-marker {
   font-size: 14px;
   line-height: 16px;
@@ -45,18 +44,15 @@
   transition: transform 0.2s ease;
 }
 
-/* 🟢 Hover bounce animation */
 .football-marker:hover {
   animation: football-bounce 0.6s ease-in-out;
 }
 
-/* 🔴 Active football */
 .football-marker.active {
   filter: hue-rotate(150deg) saturate(2);
   transform: scale(1.15);
 }
 
-/* Bounce keyframes */
 @keyframes football-bounce {
   0%   { transform: translateY(0); }
   30%  { transform: translateY(-6px); }
@@ -64,15 +60,97 @@
   100% { transform: translateY(-2px); }
 }
 
-/* ================= CITY PANEL ================= */
+/* ================= HEADER (HEIGHT REDUCED ✅) ================= */
+
+.wc-map-header {
+  position: relative;
+  z-index: 1000;
+  background: linear-gradient(180deg, #f8fafc, #eef2f7);
+  padding: 12px 0 10px; /* ✅ ~50% reduction */
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.wc-map-header h1 {
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: #475569;
+  margin-top: 2px; /* ✅ tighter */
+}
+
+/* Header nav */
+.wc-map-nav {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px; /* ✅ tighter */
+}
+
+/* Reset map CTA */
+.reset-map {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #dc2626;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.reset-map::after {
+  content: " ➜";
+}
+
+.reset-map:hover {
+  text-decoration: underline;
+}
+
+/* ================= CITY PANEL (TOP ALIGNED ✅) ================= */
 
 .wc-city-panel {
   background: #064e3b;
   color: #ecfdf5;
-  padding: 12px;
+  padding: 6px 12px 12px; /* ✅ top padding reduced */
 }
 
-/* City list */
+/* Main panel title */
+.panel-title {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #ecfdf5;
+  margin: 0 0 4px 0; /* ✅ pushed to top edge */
+}
+
+/* 🔴 Instruction text – HIGH CONTRAST + BOLD ✅ */
+.panel-subtitle {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fca5a5; /* ✅ light red for contrast */
+  margin-bottom: 8px;
+}
+
+/* ================= CITY LIST ================= */
+
+.city-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 960px) {
+  .city-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.city-columns h3 {
+  margin: 4px 0 2px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a7f3d0;
+}
+
 .city-columns ul {
   list-style: disc;
   margin: 0;
@@ -86,14 +164,14 @@
   cursor: pointer;
 }
 
-/* ✅ Active city highlight */
 .city-columns li.active {
   font-weight: 800;
   text-decoration: underline;
   color: #d1fae5;
 }
 
-/* Stadium list */
+/* ================= STADIUM LIST ================= */
+
 .stadium-list {
   display: block;
   margin-left: 10px;
@@ -105,7 +183,6 @@
   margin-left: 6px;
 }
 
-/* Stadium links */
 .stadium-list a {
   color: #fbbf24;
   font-weight: 700;
@@ -114,39 +191,4 @@
 
 .stadium-list a:hover {
   text-decoration: underline;
-}
-
-/* ================= HEADER ================= */
-
-.wc-map-header {
-  position: relative;
-  z-index: 1000;
-  background: linear-gradient(180deg, #f8fafc, #eef2f7);
-  padding: 24px 0 20px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.subtitle {
-  font-size: 0.9rem;
-  color: #475569;
-}
-
-/* Header nav */
-.wc-map-nav {
-  display: flex;
-  gap: 16px;
-  margin-top: 6px;
-}
-
-.reset-map {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: #dc2626;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.reset-map::after {
-  content: " ➜";
 }
