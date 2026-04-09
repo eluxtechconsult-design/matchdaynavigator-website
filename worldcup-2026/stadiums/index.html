@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Stadium – World Cup 2026</title>
 
-  <link rel="stylesheet" href="/assets/style.css">
+  /assets/style.css
 
   <style>
     .stadium-container {
@@ -14,38 +13,13 @@
       margin: 24px auto;
       padding: 0 16px;
     }
+    h1 { font-size: 1.9rem; margin-bottom: 4px; }
+    h2 { font-size: 1.1rem; margin: 16px 0 6px; }
+    p { line-height: 1.45; margin: 0; }
+    .stadium-meta { font-size: 0.95rem; color: #475569; margin-bottom: 14px; }
+    .stadium-section { margin-top: 14px; }
+    .subtle { color: #64748b; font-size: 0.9rem; }
 
-    h1 {
-      font-size: 1.9rem;
-      margin-bottom: 4px;
-    }
-
-    .stadium-meta {
-      color: #475569;
-      font-size: 0.95rem;
-      margin-bottom: 16px;
-    }
-
-    h2 {
-      font-size: 1.1rem;
-      margin: 16px 0 6px;
-    }
-
-    p {
-      line-height: 1.45;
-      margin: 0;
-    }
-
-    .stadium-section {
-      margin-top: 14px;
-    }
-
-    .subtle {
-      color: #64748b;
-      font-size: 0.9rem;
-    }
-
-    /* WhatsApp CTA */
     .whatsapp-cta {
       margin: 20px auto 14px;
       padding: 15px;
@@ -54,23 +28,14 @@
       border-radius: 12px;
       text-align: center;
     }
-
-    .whatsapp-cta h2 {
-      margin-top: 0;
-    }
-
     .whatsapp-cta a {
       display: inline-block;
       margin-top: 8px;
-      font-size: 0.95rem;
       font-weight: 800;
       color: #16a34a;
       text-decoration: none;
     }
-
-    .whatsapp-cta a:hover {
-      text-decoration: underline;
-    }
+    .whatsapp-cta a:hover { text-decoration: underline; }
 
     .back-link {
       display: block;
@@ -85,53 +50,43 @@
 
 <div class="stadium-container">
 
-  <h1 id="stadium-name">Stadium</h1>
+  <h1 id="stadium-name"></h1>
   <p id="stadium-city" class="stadium-meta"></p>
 
   <div class="stadium-section">
-    <h2>Stadium information</h2>
+    <h2 id="t-stadium-info"></h2>
     <p id="stadium-description"></p>
   </div>
 
   <div class="stadium-section">
-    <h2>Capacity</h2>
+    <h2 id="t-capacity"></h2>
     <p id="stadium-capacity"></p>
   </div>
 
   <div class="stadium-section">
-    <h2>Matches at this stadium</h2>
-    <p class="subtle">
-      Match schedules will appear here once officially confirmed by FIFA.
-    </p>
+    <h2 id="t-matches"></h2>
+    <ul id="match-list" class="subtle"></ul>
   </div>
 
   <div class="stadium-section">
-    <h2>Arrival</h2>
-    <p class="subtle">
-      Arrival guidance, transport options and recommended entry times
-      will be shared closer to matchday.
-    </p>
+    <h2 id="t-arrival"></h2>
+    <p id="arrival-text" class="subtle"></p>
   </div>
 
   <div class="stadium-section">
-    <h2>Bags & entry rules</h2>
-    <p class="subtle">
-      Stadium‑specific bag policies and security rules will be available
-      before the tournament begins.
-    </p>
+    <h2 id="t-bags"></h2>
+    <p id="bags-text" class="subtle"></p>
   </div>
 
   <div class="stadium-section whatsapp-cta">
-    <h2>Matchday assistance</h2>
+    <h2 id="t-matchday"></h2>
     <p>
-      Get matchday updates for this stadium.<br />
-      <a id="whatsapp-link" target="_blank" class="subtle">
-        Arrival guidance · Entry rules · Kick‑off reminders on WhatsApp →
-      </a>
+      <span id="whatsapp-intro"></span><br />
+      <a id="whatsapp-link" target="_blank"></a>
     </p>
   </div>
 
-  <a href="/worldcup-2026/" class="back-link">
+  /worldcup-2026/
     ← Back to Match Map
   </a>
 
@@ -139,34 +94,58 @@
 
 <script>
 (async function () {
-  const id = new URLSearchParams(window.location.search).get("id");
-  if (!id) return;
+  const id = new URLSearchParams(location.search).get("id");
+  const lang = new URLSearchParams(location.search).get("lang") || "en";
 
-  const [stadiums, cities] = await Promise.all([
+  const [stadiums, cities, strings] = await Promise.all([
     fetch("/data/stadiums.json").then(r => r.json()),
-    fetch("/data/cities.json").then(r => r.json())
+    fetch("/data/cities.json").then(r => r.json()),
+    fetch(`/locales/${lang}.json`).then(r => r.json())
   ]);
 
   const stadium = stadiums.find(s => s.id === id);
-  if (!stadium) return;
-
   const city = cities.find(c => c.id === stadium.cityId);
 
   document.getElementById("stadium-name").textContent = stadium.name;
   document.getElementById("stadium-city").textContent =
     `${city.name} · World Cup 2026`;
 
-  document.getElementById("stadium-description").textContent =
-    stadium.description;
+  document.getElementById("stadium-description").textContent = stadium.description;
+  document.getElementById("stadium-capacity").textContent = stadium.capacity;
 
-  document.getElementById("stadium-capacity").textContent =
-    stadium.capacity;
+  document.getElementById("t-stadium-info").textContent = strings.stadium_info;
+  document.getElementById("t-capacity").textContent = strings.capacity;
+  document.getElementById("t-matches").textContent = strings.matches_title;
+  document.getElementById("t-arrival").textContent = strings.arrival_title;
+  document.getElementById("t-bags").textContent = strings.bags_title;
+  document.getElementById("t-matchday").textContent = strings.matchday_assistance;
 
-  const whatsappMessage =
-    `Get matchday updates for ${stadium.name}. Arrival guidance, entry rules and kick‑off reminders.`;
+  document.getElementById("arrival-text").textContent = strings.arrival_text;
+  document.getElementById("bags-text").textContent = strings.bags_text;
+  document.getElementById("whatsapp-intro").textContent = strings.whatsapp_cta_intro;
+  document.getElementById("whatsapp-link").textContent = strings.whatsapp_cta_line;
+
+  const matchList = document.getElementById("match-list");
+  if (!stadium.matches || stadium.matches.length === 0) {
+    matchList.innerHTML = `<li>${strings.matches_placeholder}</li>`;
+  } else {
+    stadium.matches.forEach(m => {
+      const li = document.createElement("li");
+      li.textContent = `${m.date} · ${m.stage} · ${m.home} vs ${m.away} (${m.kickoff})`;
+      matchList.appendChild(li);
+    });
+  }
+
+  const whatsappMsg =
+    `Welcome to Matchday Navigator 👋
+
+You’ll get matchday updates for ${stadium.name}, including arrival guidance, entry rules and kick‑off reminders.
+
+Messages are only sent around matchdays.
+Reply STOP anytime to opt out.`;
 
   document.getElementById("whatsapp-link").href =
-    `https://wa.me/15550000000?text=${encodeURIComponent(whatsappMessage)}`;
+    `https://wa.me/15550000000?text=${encodeURIComponent(whatsappMsg)}`;
 })();
 </script>
 

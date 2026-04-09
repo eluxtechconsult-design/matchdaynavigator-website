@@ -1,0 +1,14 @@
+{
+  "stadium_info": "Stadium information",
+  "capacity": "Capacity",
+  "matches_title": "Matches at this stadium",
+  "matches_placeholder": "Match schedules will appear here once officially confirmed by FIFA.",
+  "arrival_title": "Arrival",
+  "arrival_text": "Arrival guidance, transport options and recommended entry times will be shared closer to matchday.",
+  "bags_title": "Bags & entry rules",
+  "bags_text": "Stadium‑specific bag policies and security rules will be available before the tournament begins.",
+  "matchday_assistance": "Matchday assistance",
+  "whatsapp_cta_intro": "Get matchday updates for this stadium.",
+  "whatsapp_cta_line": "Arrival guidance · Entry rules · Kick‑off reminders on WhatsApp →",
+  "back_link": "← Back to Match Map"
+}
