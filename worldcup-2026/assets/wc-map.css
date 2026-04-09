@@ -1,3 +1,7 @@
+/* =====================================================
+   World Cup 2026 – Map & City-Stadium UI
+   ===================================================== */
+
 /* ================= LAYOUT ================= */
 
 .wc-map-layout {
@@ -6,9 +10,36 @@
   min-height: calc(100vh - 120px);
 }
 
+@media (max-width: 960px) {
+  .wc-map-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 65vh auto;
+  }
+}
+
+/* ================= MAP ================= */
+
 #map {
   width: 100%;
   height: 100%;
+}
+
+/* City labels on map */
+.wc-city-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: #064e3b;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ✅ Football map markers */
+.football-marker {
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
 }
 
 /* ================= HEADER ================= */
@@ -21,11 +52,17 @@
   border-bottom: 1px solid #e5e7eb;
 }
 
+.wc-map-header h1 {
+  margin: 0;
+}
+
 .subtitle {
   font-size: 0.9rem;
   color: #475569;
+  margin-top: 4px;
 }
 
+/* Header navigation */
 .wc-map-nav {
   display: flex;
   gap: 16px;
@@ -39,6 +76,11 @@
   text-decoration: none;
 }
 
+.back-home:hover {
+  text-decoration: underline;
+}
+
+/* Reset map view CTA */
 .reset-map {
   font-size: 0.8rem;
   font-weight: 800;
@@ -52,7 +94,11 @@
   content: " ➜";
 }
 
-/* ================= CITY PANEL ================= */
+.reset-map:hover {
+  text-decoration: underline;
+}
+
+/* ================= CITY + STADIUM PANEL ================= */
 
 .wc-city-panel {
   background: #064e3b;
@@ -64,6 +110,7 @@
   font-size: 0.9rem;
   font-weight: 800;
   color: #d1fae5;
+  margin-bottom: 2px;
 }
 
 .panel-subtitle {
@@ -72,44 +119,66 @@
   margin-bottom: 8px;
 }
 
-/* ================= CITY LIST ================= */
+/* Two-column city list */
+.city-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
 
+@media (max-width: 960px) {
+  .city-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.city-columns h3 {
+  margin: 4px 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a7f3d0;
+}
+
+/* City list */
 .city-columns ul {
   list-style: disc;
-  padding-left: 14px;
+  margin: 0;
+  padding-left: 16px;
 }
 
 .city-columns li {
   font-size: 0.72rem;
+  line-height: 1.3;
+  padding: 1px 0;
   cursor: pointer;
 }
 
-/* ================= STADIUM LIST (CRITICAL FIX) ================= */
-
-/* Force stadium lists to be visible regardless of global CSS */
-.stadium-list {
-  display: block !important;
-  margin-left: 12px;
-  margin-top: 4px;
+.city-columns li:hover {
+  text-decoration: underline;
 }
 
-/* Stadium links */
+/* ================= STADIUM LIST ================= */
+
+/* Nested stadium list (expanded under city) */
+.stadium-list {
+  display: block;
+  margin-left: 10px;
+  margin-top: 3px;
+}
+
+.stadium-list li {
+  list-style: circle;
+  margin-left: 6px;
+}
+
+/* Clickable stadium links */
 .stadium-list a {
-  color: #fbbf24;           /* inviting gold */
+  color: #fbbf24; /* gold accent */
   font-weight: 700;
   text-decoration: none;
 }
 
 .stadium-list a:hover {
   text-decoration: underline;
-}
-
-/* ================= MAP LABELS ================= */
-
-.wc-city-label {
-  font-size: 9px;
-  font-weight: 600;
-  color: #064e3b;
-  white-space: nowrap;
-  pointer-events: none;
 }

@@ -9,27 +9,30 @@
   }).addTo(map);
 
   const cities = await fetch("/data/cities.json").then(r => r.json());
-  const stadiums = await fetch("/data/stadiums.json").then(r => r.json());
-
   const bounds = [];
   const cityById = {};
 
   function labelOffset(city) {
-    if (city.lng < -120) return [8, -2];
-    if (city.lng > -80) return [-8, -2];
-    if (city.lat < 23) return [0, 8];
-    return [8, -2];
+    if (city.lng < -120) return [10, -2];
+    if (city.lng > -80) return [-10, -2];
+    if (city.lat < 23) return [0, 10];
+    return [10, -2];
   }
 
-  // ---------- Cities on map ----------
   cities.forEach(city => {
-    const bullet = L.circleMarker([city.lat, city.lng], {
-      radius: 3,
-      fillColor: "#15803d",
-      color: "#15803d",
-      fillOpacity: 1
+    /* ✅ Football icon marker */
+    const footballIcon = L.divIcon({
+      className: "football-marker",
+      html: "⚽",
+      iconSize: [16, 16],      // keeps compact size
+      iconAnchor: [8, 8]       // centers accurately
+    });
+
+    const marker = L.marker([city.lat, city.lng], {
+      icon: footballIcon
     }).addTo(map);
 
+    /* City label */
     L.marker([city.lat, city.lng], {
       icon: L.divIcon({
         className: "wc-city-label",
@@ -39,20 +42,18 @@
       interactive: false
     }).addTo(map);
 
-    bullet.on("click", () => activateCity(city.id));
+    marker.on("click", () => activateCity(city.id));
 
     cityById[city.id] = city;
     bounds.push([city.lat, city.lng]);
   });
 
-  // ---------- City → Stadium expansion ----------
   function activateCity(cityId) {
     const city = cityById[cityId];
     if (!city) return;
 
     map.setView([city.lat, city.lng], 6, { animate: true });
 
-    // Collapse all stadium lists
     document.querySelectorAll(".stadium-list").forEach(list => {
       list.innerHTML = "";
     });
@@ -61,44 +62,25 @@
       document.querySelector(`[data-city="${cityId}"] .stadium-list`);
     if (!container) return;
 
-    stadiums
-      .filter(s => s.cityId === cityId)
-      .forEach(s => {
-        const li = document.createElement("li");
-
-        // ✅ VALID, CLICKABLE LINK
-        const a = document.createElement("a");
-        a.href = `/worldcup-2026/stadiums/?id=${s.id}`;
-        a.textContent = s.name;
-
-        li.appendChild(a);
-        container.appendChild(li);
+    fetch("/data/stadiums.json")
+      .then(r => r.json())
+      .then(stadiums => {
+        stadiums
+          .filter(s => s.cityId === cityId)
+          .forEach(s => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = `/worldcup-2026/stadiums/?id=${s.id}`;
+            a.textContent = s.name;
+            li.appendChild(a);
+            container.appendChild(li);
+          });
       });
   }
 
-  // ---------- Reset ----------
-  function resetMap() {
-    map.fitBounds(bounds, {
-      padding: [100, 100],
-      maxZoom: 4
-    });
-    document.querySelectorAll(".stadium-list").forEach(l => l.innerHTML = "");
-  }
-
-  resetMap();
-
-  // ✅ IMPORTANT FIX:
-  // Handle city clicks ONLY if the click is NOT on a stadium link
-  document.querySelectorAll("[data-city]").forEach(cityLi => {
-    cityLi.addEventListener("click", event => {
-      const clickedLink = event.target.closest("a");
-      if (clickedLink) return; // ✅ allow navigation
-
-      activateCity(cityLi.dataset.city);
-    });
+  map.fitBounds(bounds, {
+    padding: [90, 90],
+    maxZoom: 4
   });
 
-  document
-    .getElementById("reset-map")
-    ?.addEventListener("click", resetMap);
 })();
