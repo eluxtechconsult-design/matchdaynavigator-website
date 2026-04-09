@@ -13,6 +13,7 @@
 
   const bounds = [];
   const cityById = {};
+  const markerByCity = {};
 
   function labelOffset(city) {
     if (city.lng < -120) return [10, -2];
@@ -21,45 +22,38 @@
     return [10, -2];
   }
 
-  /* ================= MAP MARKERS ================= */
+  /* ================= RESET ACTIVE STATES ================= */
+  function clearActiveStates() {
+    document.querySelectorAll(".football-marker").forEach(el =>
+      el.classList.remove("active")
+    );
+    document.querySelectorAll("[data-city]").forEach(el =>
+      el.classList.remove("active")
+    );
+  }
 
-  cities.forEach(city => {
-    const footballIcon = L.divIcon({
-      className: "football-marker",
-      html: "⚽",
-      iconSize: [16, 16],
-      iconAnchor: [8, 8]
-    });
-
-    const marker = L.marker([city.lat, city.lng], {
-      icon: footballIcon
-    }).addTo(map);
-
-    // City name label
-    L.marker([city.lat, city.lng], {
-      icon: L.divIcon({
-        className: "wc-city-label",
-        html: city.name,
-        iconAnchor: labelOffset(city)
-      }),
-      interactive: false
-    }).addTo(map);
-
-    marker.on("click", () => activateCity(city.id));
-
-    cityById[city.id] = city;
-    bounds.push([city.lat, city.lng]);
-  });
-
-  /* ================= CITY ACTIVATION ================= */
-
+  /* ================= ACTIVATE CITY ================= */
   function activateCity(cityId) {
     const city = cityById[cityId];
     if (!city) return;
 
     map.setView([city.lat, city.lng], 6, { animate: true });
 
-    // Clear all stadium lists
+    clearActiveStates();
+
+    // Highlight active city in list
+    const cityListItem =
+      document.querySelector(`[data-city="${cityId}"]`);
+    if (cityListItem) cityListItem.classList.add("active");
+
+    // Highlight active football
+    if (markerByCity[cityId]) {
+      markerByCity[cityId]
+        .getElement()
+        .classList.add("active");
+    }
+
+    // Clear stadium lists
     document.querySelectorAll(".stadium-list").forEach(list => {
       list.innerHTML = "";
     });
@@ -72,28 +66,53 @@
       .filter(s => s.cityId === cityId)
       .forEach(s => {
         const li = document.createElement("li");
-
-        const link = document.createElement("a");
-        link.href = `/worldcup-2026/stadiums/?id=${s.id}`;
-        link.textContent = s.name;
-
-        li.appendChild(link);
+        const a = document.createElement("a");
+        a.href = `/worldcup-2026/stadiums/?id=${s.id}`;
+        a.textContent = s.name;
+        li.appendChild(a);
         container.appendChild(li);
       });
   }
 
-  /* ================= CITY LIST CLICK (RESTORED ✅) ================= */
-  document.querySelectorAll("[data-city]").forEach(cityItem => {
-    cityItem.addEventListener("click", event => {
-      // Allow stadium <a> links to work normally
-      if (event.target.tagName === "A") return;
+  /* ================= MAP MARKERS ================= */
+  cities.forEach(city => {
+    const icon = L.divIcon({
+      className: "football-marker",
+      html: "⚽",
+      iconSize: [16, 16],
+      iconAnchor: [8, 8]
+    });
 
-      activateCity(cityItem.dataset.city);
+    const marker = L.marker([city.lat, city.lng], {
+      icon
+    }).addTo(map);
+
+    marker.on("click", () => activateCity(city.id));
+
+    // Label
+    L.marker([city.lat, city.lng], {
+      icon: L.divIcon({
+        className: "wc-city-label",
+        html: city.name,
+        iconAnchor: labelOffset(city)
+      }),
+      interactive: false
+    }).addTo(map);
+
+    cityById[city.id] = city;
+    markerByCity[city.id] = marker;
+    bounds.push([city.lat, city.lng]);
+  });
+
+  /* ================= CITY LIST CLICK ================= */
+  document.querySelectorAll("[data-city]").forEach(item => {
+    item.addEventListener("click", e => {
+      if (e.target.tagName === "A") return;
+      activateCity(item.dataset.city);
     });
   });
 
   /* ================= INITIAL VIEW ================= */
-
   map.fitBounds(bounds, {
     padding: [90, 90],
     maxZoom: 4
