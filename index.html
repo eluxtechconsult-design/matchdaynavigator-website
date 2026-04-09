@@ -8,39 +8,110 @@
 
   <meta
     name="description"
-    content="Explore World Cup 2026 host cities and stadiums across the USA, Canada and Mexico. Discover the matchday experience with MatchDay Navigator."
+    content="Explore World Cup 2026 host cities and stadiums across the USA, Canada and Mexico. Discover a calm, guided matchday experience."
   />
 
   <!-- Base styles -->
   <link rel="stylesheet" href="/assets/style.css" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="MatchDay Navigator – World Cup 2026" />
-  <meta
-    property="og:description"
-    content="Explore World Cup 2026 host cities and stadiums across the USA, Canada and Mexico."
-  />
-  <meta property="og:url" content="https://www.matchdaynavigator.com/" />
-  <meta property="og:image" content="https://www.matchdaynavigator.com/assets/og-image.png" />
+  <!-- Light page-specific polish (intentional, minimal) -->
+  <style>
+    .hero {
+      background: linear-gradient(180deg, #f8fafc, #eef2f7);
+      padding: 80px 0;
+    }
+
+    .hero img.logo {
+      width: 64px;
+      margin-bottom: 16px;
+    }
+
+    .flags {
+      margin: 16px 0 8px;
+      font-size: 1.3rem;
+      letter-spacing: 0.3rem;
+    }
+
+    .primary-button {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 14px 28px;
+      background: #2563eb;
+      color: #ffffff;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .primary-button:hover {
+      background: #1e4ed8;
+    }
+
+    .wc-entry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .wc-entry-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .wc-entry-card.subtle {
+      background: #f8fafc;
+    }
+
+    .wc-entry-card a {
+      display: inline-block;
+      margin-top: 12px;
+      font-weight: 600;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .feature-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .container.center {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
 
 <!-- =====================================================
-     HERO — PLATFORM + WORLD CUP 2026
+     HERO
      ===================================================== -->
 
 <header class="hero">
   <div class="container center">
 
+    <!-- ✅ LOGO FIXED -->
     <img
       src="/assets/logo-symbol.svg"
       alt="MatchDay Navigator logo"
-      class="hero-logo"
+      class="logo"
     />
 
     <h1>MatchDay Navigator</h1>
+
+    <div class="flags">🇺🇸 🇨🇦 🇲🇽</div>
 
     <p class="hero-subtitle">
       The matchday experience for World Cup 2026<br />
@@ -55,7 +126,7 @@
 </header>
 
 <!-- =====================================================
-     WORLD CUP 2026 — TWO DISTINCT EXPERIENCES
+     WORLD CUP 2026 SPLIT
      ===================================================== -->
 
 <section class="section wc-entry">
@@ -63,37 +134,31 @@
 
     <h2 class="section-title">World Cup 2026</h2>
 
-    <p class="section-intro">
+    <p class="section-intro center">
       Discover how World Cup 2026 will be experienced across host cities,
       stadiums and matchdays.
     </p>
 
     <div class="wc-entry-grid">
 
-      <!-- MATCHDAYS & STADIUMS -->
       <div class="wc-entry-card">
-        <h3>Matchdays & Stadiums</h3>
+        <h3>⚽ Matchdays & Stadiums</h3>
         <p>
           Interactive map of official host cities and stadiums.
           Explore where matches take place and plan matchday journeys.
         </p>
 
-        <a href="/worldcup-2026/" class="text-link">
-          View Matchday Map →
-        </a>
+        <a href="/worldcup-2026/">View Matchday Map →</a>
       </div>
 
-      <!-- HOST CITIES & EXPERIENCE -->
       <div class="wc-entry-card subtle">
-        <h3>Host Cities & World Cup Experience</h3>
+        <h3>🌆 Host Cities & World Cup Experience</h3>
         <p>
-          Explore the host cities behind the tournament —
-          travel context, city atmosphere and local initiatives.
+          Explore the cities behind the tournament — travel context,
+          city atmosphere and local initiatives.
         </p>
 
-        <a href="/worldcup-2026/host-cities/" class="text-link">
-          Explore Host Cities →
-        </a>
+        <a href="/worldcup-2026/host-cities/">Explore Host Cities →</a>
       </div>
 
     </div>
@@ -112,31 +177,23 @@
     <div class="feature-cards">
 
       <div class="card">
-        <h3>Stadium & kickoff confirmation</h3>
-        <p>
-          Clear, official matchday information you can rely on.
-        </p>
+        <h3>🏟 Stadium & kickoff confirmation</h3>
+        <p>Clear, official matchday information you can rely on.</p>
       </div>
 
       <div class="card">
-        <h3>Arrival & routes</h3>
-        <p>
-          Guidance from major transport hubs to the stadium.
-        </p>
+        <h3>🚆 Arrival & routes</h3>
+        <p>Guidance from major transport hubs to the stadium.</p>
       </div>
 
       <div class="card">
-        <h3>Entry & bag rules</h3>
-        <p>
-          Understand what you can bring and how to enter.
-        </p>
+        <h3>🎒 Entry & bag rules</h3>
+        <p>Understand what you can bring and how to enter.</p>
       </div>
 
       <div class="card">
-        <h3>Timely updates</h3>
-        <p>
-          Matchday updates delivered only when they matter.
-        </p>
+        <h3>⏱ Timely updates</h3>
+        <p>Delivered only when they matter on matchday.</p>
       </div>
 
     </div>
