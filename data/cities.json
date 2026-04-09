@@ -1,65 +1,20 @@
 [
-  {
-    "id": "new-york-nj",
-    "name": "New York / New Jersey",
-    "country": "USA",
-    "region": "East",
-    "lat": 40.8135,
-    "lng": -74.0743,
-    "stadiums": ["metlife-stadium"]
-  },
-  {
-    "id": "dallas",
-    "name": "Dallas",
-    "country": "USA",
-    "region": "Central",
-    "lat": 32.7478,
-    "lng": -97.0928,
-    "stadiums": ["att-stadium"]
-  },
-  {
-    "id": "los-angeles",
-    "name": "Los Angeles",
-    "country": "USA",
-    "region": "West",
-    "lat": 33.9530,
-    "lng": -118.3390,
-    "stadiums": ["sofi-stadium"]
-  },
-  {
-    "id": "miami",
-    "name": "Miami",
-    "country": "USA",
-    "region": "East",
-    "lat": 25.9580,
-    "lng": -80.2389,
-    "stadiums": ["hard-rock-stadium"]
-  },
-  {
-    "id": "toronto",
-    "name": "Toronto",
-    "country": "Canada",
-    "region": "East",
-    "lat": 43.6333,
-    "lng": -79.4186,
-    "stadiums": ["bmo-field"]
-  },
-  {
-    "id": "vancouver",
-    "name": "Vancouver",
-    "country": "Canada",
-    "region": "West",
-    "lat": 49.2767,
-    "lng": -123.1124,
-    "stadiums": ["bc-place"]
-  },
-  {
-    "id": "mexico-city",
-    "name": "Mexico City",
-    "country": "Mexico",
-    "region": "Central",
-    "lat": 19.3031,
-    "lng": -99.1506,
-    "stadiums": ["estadio-azteca"]
-  }
+  { "id": "new-york-nj", "name": "New York / New Jersey", "country": "USA", "lat": 40.8135, "lng": -74.0743 },
+  { "id": "dallas", "name": "Dallas", "country": "USA", "lat": 32.7473, "lng": -97.0928 },
+  { "id": "los-angeles", "name": "Los Angeles", "country": "USA", "lat": 33.9530, "lng": -118.3390 },
+  { "id": "miami", "name": "Miami", "country": "USA", "lat": 25.9580, "lng": -80.2389 },
+  { "id": "atlanta", "name": "Atlanta", "country": "USA", "lat": 33.7550, "lng": -84.4010 },
+  { "id": "boston", "name": "Boston", "country": "USA", "lat": 42.0909, "lng": -71.2643 },
+  { "id": "houston", "name": "Houston", "country": "USA", "lat": 29.6847, "lng": -95.4107 },
+  { "id": "kansas-city", "name": "Kansas City", "country": "USA", "lat": 39.0489, "lng": -94.4840 },
+  { "id": "philadelphia", "name": "Philadelphia", "country": "USA", "lat": 39.9008, "lng": -75.1675 },
+  { "id": "san-francisco", "name": "San Francisco Bay Area", "country": "USA", "lat": 37.4030, "lng": -121.9700 },
+  { "id": "seattle", "name": "Seattle", "country": "USA", "lat": 47.5952, "lng": -122.3316 },
+
+  { "id": "toronto", "name": "Toronto", "country": "Canada", "lat": 43.6332, "lng": -79.4186 },
+  { "id": "vancouver", "name": "Vancouver", "country": "Canada", "lat": 49.2767, "lng": -123.1119 },
+
+  { "id": "mexico-city", "name": "Mexico City", "country": "Mexico", "lat": 19.3029, "lng": -99.1505 },
+  { "id": "guadalajara", "name": "Guadalajara", "country": "Mexico", "lat": 20.6814, "lng": -103.4620 },
+  { "id": "monterrey", "name": "Monterrey", "country": "Mexico", "lat": 25.6692, "lng": -100.2440 }
 ]

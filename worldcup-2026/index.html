@@ -8,14 +8,14 @@
 
   <meta
     name="description"
-    content="Explore official World Cup 2026 host cities and stadiums across the USA, Canada and Mexico."
+    content="Explore all official World Cup 2026 host cities and stadiums across the USA, Canada, and Mexico."
   />
 
-  <!-- ✅ BASE STYLES -->
-  <link rel="stylesheet" href="/assets/style.css" />
-  <link rel="stylesheet" href="./assets/wc-map.css" />
+  <!-- Base styles -->
+  /assets/style.css
+  ./assets/wc-map.css
 
-  <!-- ✅ LEAFLET CSS -->
+  <!-- Leaflet CSS -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -36,23 +36,34 @@
 
 <main class="wc-map-layout">
 
+  <!-- MAP -->
   <section class="wc-map-canvas">
     <div id="map"></div>
   </section>
 
+  <!-- CITY SELECTOR -->
   <aside class="wc-city-panel">
     <h2>Select a host city</h2>
 
+    <!-- USA -->
     <div class="city-group">
       <h3>🇺🇸 United States</h3>
       <ul>
         <li data-city="new-york-nj">New York / New Jersey</li>
+        <li data-city="atlanta">Atlanta</li>
+        <li data-city="boston">Boston</li>
         <li data-city="dallas">Dallas</li>
+        <li data-city="houston">Houston</li>
+        <li data-city="kansas-city">Kansas City</li>
         <li data-city="los-angeles">Los Angeles</li>
         <li data-city="miami">Miami</li>
+        <li data-city="philadelphia">Philadelphia</li>
+        <li data-city="san-francisco">San Francisco Bay Area</li>
+        <li data-city="seattle">Seattle</li>
       </ul>
     </div>
 
+    <!-- CANADA -->
     <div class="city-group">
       <h3>🇨🇦 Canada</h3>
       <ul>
@@ -61,10 +72,13 @@
       </ul>
     </div>
 
+    <!-- MEXICO -->
     <div class="city-group">
       <h3>🇲🇽 Mexico</h3>
       <ul>
         <li data-city="mexico-city">Mexico City</li>
+        <li data-city="guadalajara">Guadalajara</li>
+        <li data-city="monterrey">Monterrey</li>
       </ul>
     </div>
 
@@ -77,15 +91,15 @@
 
 <footer class="wc-footer">
   <div class="container">
-    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/privacy.html">Privacy Policy</a> ·
     <a href="/terms.html">Terms of Service</a>
   </div>
 </footer>
 
-<!-- ✅ LEAFLET JS -->
+<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- ✅ MAP LOGIC -->
+<!-- Map logic -->
 <script src="./assets/wc-map.js"></script>
 
 </body>
