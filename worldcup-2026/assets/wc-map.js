@@ -1,10 +1,3 @@
-/**
- * WC 2026 Match Map – FINAL
- * Bullet markers + city names
- * Fully interactive
- * Resettable view
- */
-
 (async function () {
   const map = L.map("map", {
     scrollWheelZoom: false,
@@ -17,26 +10,23 @@
 
   const cities = await fetch("../data/cities.json").then(r => r.json());
   const bounds = [];
-  const markers = {};
+  const cityIndex = {};
 
   function labelOffset(city) {
-    if (city.lng < -120) return [14, -4]; // West
-    if (city.lng < -95) return [14, -4];  // Central
-    if (city.lng > -80) return [-14, -4]; // East
-    if (city.lat < 23) return [0, 12];    // Mexico
+    if (city.lng < -120) return [14, -4];
+    if (city.lng > -80) return [-14, -4];
+    if (city.lat < 23) return [0, 12];
     return [14, -4];
   }
 
   cities.forEach(city => {
-    // Bullet marker
-    const marker = L.circleMarker([city.lat, city.lng], {
+    const dot = L.circleMarker([city.lat, city.lng], {
       radius: 6,
-      color: "#15803d",
       fillColor: "#15803d",
+      color: "#15803d",
       fillOpacity: 1
     }).addTo(map);
 
-    // City label next to bullet
     L.marker([city.lat, city.lng], {
       icon: L.divIcon({
         className: "wc-city-label",
@@ -46,37 +36,33 @@
       interactive: false
     }).addTo(map);
 
-    marker.on("click", () => {
-      zoomToCity(city);
-    });
-
-    markers[city.id] = marker;
+    dot.on("click", () => zoomTo(city));
+    cityIndex[city.id] = city;
     bounds.push([city.lat, city.lng]);
   });
 
-  function zoomToCity(city) {
+  function zoomTo(city) {
     map.setView([city.lat, city.lng], 6, {
       animate: true,
-      duration: 0.5
+      duration: 0.4
     });
   }
 
-  function resetMap() {
+  function reset() {
     map.fitBounds(bounds, {
       padding: [100, 100],
       maxZoom: 4
     });
   }
 
-  // Initial landing
-  resetMap();
+  reset();
 
-  // List → map interaction
-  document.querySelectorAll("[data-city]").forEach(item => {
-    item.addEventListener("click", () => {
-      const city = cities.find(c => c.id === item.dataset.city);
-      if (!city) return;
-      zoomToCity(city);
+  document.querySelectorAll("[data-city]").forEach(el => {
+    el.addEventListener("click", () => {
+      zoomTo(cityIndex[el.dataset.city]);
     });
   });
 
+  document.getElementById("reset-map")
+    .addEventListener("click", reset);
+})();

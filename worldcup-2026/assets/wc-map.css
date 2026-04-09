@@ -1,7 +1,7 @@
 .wc-map-layout {
   display: grid;
   grid-template-columns: 78% 22%;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 110px);
 }
 
 #map {
@@ -9,36 +9,62 @@
   height: 100%;
 }
 
-/* City labels on map */
+/* Header nav */
+.wc-map-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.back-home {
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.reset-map {
+  font-size: 0.75rem;
+  background: none;
+  border: none;
+  color: #047857;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Side panel */
+.wc-city-panel {
+  background: #064e3b;
+  color: #ecfdf5;
+  padding: 12px;
+}
+
+.panel-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #d1fae5;
+}
+
+.panel-subtitle {
+  font-size: 0.7rem;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+
+.city-columns h3 {
+  font-size: 0.7rem;
+  color: #a7f3d0;
+}
+
+.city-columns li {
+  font-size: 0.72rem;
+  padding: 1px 0;
+  cursor: pointer;
+}
+
+/* Map labels */
 .wc-city-label {
-  font-size: 9px;          /* ✅ 3 grades smaller */
+  font-size: 9px; /* ✅ 3 grades smaller */
   font-weight: 600;
   color: #064e3b;
   white-space: nowrap;
   pointer-events: none;
-}
-
-/* Selector panel */
-.wc-city-panel {
-  background: #064e3b;
-  color: #ecfdf5;
-  padding: 14px;
-}
-
-.city-columns li {
-  font-size: 0.75rem;
-  cursor: pointer;
-}
-
-.city-columns li:hover {
-  text-decoration: underline;
-}
-
-/* Header + navigation */
-.back-home {
-  display: inline-block;
-  margin-top: 6px;
-  font-size: 0.8rem;
-  color: #2563eb;
-  text-decoration: none;
 }

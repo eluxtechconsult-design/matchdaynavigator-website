@@ -6,39 +6,43 @@
 
   <title>World Cup 2026 Match Map</title>
 
-  <link rel="stylesheet" href="/assets/style.css" />
-  <link rel="stylesheet" href="./assets/wc-map.css" />
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <!-- ✅ CSS MUST BE LOADED LIKE THIS -->
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="./assets/wc-map.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
 
 <header class="wc-map-header">
-  <h1 id="reset-map" style="cursor:pointer">
-    World Cup 2026 Match Map
-  </h1>
-  <p>
+  <h1>World Cup 2026 Match Map</h1>
+  <p class="subtitle">
     Official host cities across the United States, Canada, and Mexico.
   </p>
-  <a href="/" class="back-home">← Back to Home</a>
+
+  <nav class="wc-map-nav">
+    <a href="/" class="back-home">← Back to Home</a>
+    <button id="reset-map" class="reset-map">
+      Reset map view
+    </button>
+  </nav>
 </header>
 
 <main class="wc-map-layout">
 
+  <!-- MAP -->
   <section class="wc-map-canvas">
     <div id="map"></div>
   </section>
 
+  <!-- CITY SELECTOR -->
   <aside class="wc-city-panel">
-    <h2 id="reset-map">
+    <h2 class="panel-title">
       Select a host city
-      <span class="panel-subtitle">
-        Click a city to zoom in. Click again here to reset the map.
-      </span>
     </h2>
+    <p class="panel-subtitle">
+      Click a city name or map dot to zoom in.
+    </p>
 
     <div class="city-columns">
 
@@ -79,6 +83,7 @@
 
 </main>
 
+<!-- ✅ JS MUST BE LOADED LIKE THIS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="./assets/wc-map.js"></script>
 
