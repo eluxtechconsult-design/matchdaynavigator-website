@@ -1,3 +1,5 @@
+/* ================= LAYOUT ================= */
+
 .wc-map-layout {
   display: grid;
   grid-template-columns: 78% 22%;
@@ -9,7 +11,7 @@
   height: 100%;
 }
 
-/* Header */
+/* ================= HEADER ================= */
 
 .wc-map-header {
   position: relative;
@@ -50,17 +52,7 @@
   content: " ➜";
 }
 
-/* City labels on map */
-
-.wc-city-label {
-  font-size: 9px;
-  font-weight: 600;
-  color: #064e3b;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-/* Side panel */
+/* ================= CITY PANEL ================= */
 
 .wc-city-panel {
   background: #064e3b;
@@ -80,15 +72,11 @@
   margin-bottom: 8px;
 }
 
-.city-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
+/* ================= CITY LIST ================= */
 
-.city-columns h3 {
-  font-size: 0.7rem;
-  color: #a7f3d0;
+.city-columns ul {
+  list-style: disc;
+  padding-left: 14px;
 }
 
 .city-columns li {
@@ -96,18 +84,32 @@
   cursor: pointer;
 }
 
-/* ✅ Stadium links */
+/* ================= STADIUM LIST (CRITICAL FIX) ================= */
 
+/* Force stadium lists to be visible regardless of global CSS */
 .stadium-list {
-  margin-left: 10px;
+  display: block !important;
+  margin-left: 12px;
+  margin-top: 4px;
 }
 
+/* Stadium links */
 .stadium-list a {
-  color: #fbbf24; /* gold accent */
+  color: #fbbf24;           /* inviting gold */
   font-weight: 700;
   text-decoration: none;
 }
 
 .stadium-list a:hover {
   text-decoration: underline;
+}
+
+/* ================= MAP LABELS ================= */
+
+.wc-city-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: #064e3b;
+  white-space: nowrap;
+  pointer-events: none;
 }
