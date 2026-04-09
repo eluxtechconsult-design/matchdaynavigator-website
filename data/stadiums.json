@@ -4,7 +4,11 @@
     "name": "MetLife Stadium",
     "cityId": "new-york-nj",
     "capacity": "82,500",
-    "description": "MetLife Stadium will host the FIFA World Cup 2026 Final and key knockout matches. It is one of the largest stadiums in the world.",
+    "description": {
+      "en": "MetLife Stadium will host the FIFA World Cup 2026 Final and key knockout matches. It is one of the largest stadiums in the world.",
+      "es": "El MetLife Stadium albergará la final de la Copa Mundial de la FIFA 2026 y partidos clave de eliminación directa. Es uno de los estadios más grandes del mundo.",
+      "fr": "Le MetLife Stadium accueillera la finale de la Coupe du Monde de la FIFA 2026 ainsi que des matchs clés à élimination directe. C’est l’un des plus grands stades du monde."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for MetLife Stadium."
   },
@@ -13,7 +17,11 @@
     "name": "Gillette Stadium",
     "cityId": "boston",
     "capacity": "65,878",
-    "description": "Gillette Stadium will host World Cup 2026 group and knockout matches in the Boston area.",
+    "description": {
+      "en": "Gillette Stadium will host World Cup 2026 group stage and knockout matches in the Boston area.",
+      "es": "Gillette Stadium será sede de partidos de la fase de grupos y eliminación directa de la Copa Mundial 2026 en el área de Boston.",
+      "fr": "Le Gillette Stadium accueillera des matchs de la phase de groupes et à élimination directe de la Coupe du Monde 2026 dans la région de Boston."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for Gillette Stadium."
   },
@@ -22,7 +30,11 @@
     "name": "Mercedes‑Benz Stadium",
     "cityId": "atlanta",
     "capacity": "75,000",
-    "description": "Mercedes‑Benz Stadium features a signature retractable roof and will host World Cup 2026 matches.",
+    "description": {
+      "en": "Mercedes‑Benz Stadium features a signature retractable roof and will host World Cup 2026 matches.",
+      "es": "El Mercedes‑Benz Stadium cuenta con un techo retráctil distintivo y será sede de partidos de la Copa Mundial 2026.",
+      "fr": "Le Mercedes‑Benz Stadium dispose d’un toit rétractable emblématique et accueillera des matchs de la Coupe du Monde 2026."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for Mercedes‑Benz Stadium."
   },
@@ -31,7 +43,11 @@
     "name": "AT&T Stadium",
     "cityId": "dallas",
     "capacity": "80,000+",
-    "description": "AT&T Stadium is one of the largest venues at World Cup 2026 and a key knockout stadium.",
+    "description": {
+      "en": "AT&T Stadium is one of the largest venues at the FIFA World Cup 2026 and a key knockout stadium.",
+      "es": "El AT&T Stadium es uno de los estadios más grandes de la Copa Mundial de la FIFA 2026 y será sede de importantes partidos de eliminación directa.",
+      "fr": "L’AT&T Stadium est l’un des plus grands sites de la Coupe du Monde de la FIFA 2026 et accueillera des matchs clés à élimination directe."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for AT&T Stadium."
   },
@@ -40,7 +56,11 @@
     "name": "NRG Stadium",
     "cityId": "houston",
     "capacity": "72,000",
-    "description": "NRG Stadium is a retractable‑roof stadium hosting World Cup 2026 matches in Houston.",
+    "description": {
+      "en": "NRG Stadium is a retractable‑roof venue hosting World Cup 2026 matches in Houston.",
+      "es": "El NRG Stadium es un estadio con techo retráctil que albergará partidos de la Copa Mundial 2026 en Houston.",
+      "fr": "Le NRG Stadium est un stade à toit rétractable qui accueillera des matchs de la Coupe du Monde 2026 à Houston."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for NRG Stadium."
   },
@@ -49,7 +69,11 @@
     "name": "GEHA Field at Arrowhead Stadium",
     "cityId": "kansas-city",
     "capacity": "76,000",
-    "description": "GEHA Field at Arrowhead Stadium is known for its renowned atmosphere and crowd energy.",
+    "description": {
+      "en": "GEHA Field at Arrowhead Stadium is famous for its atmosphere and fan energy.",
+      "es": "El GEHA Field at Arrowhead Stadium es reconocido por su ambiente y la energía de su afición.",
+      "fr": "Le GEHA Field at Arrowhead Stadium est réputé pour son atmosphère et l’énergie de ses supporters."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for GEHA Field at Arrowhead Stadium."
   },
@@ -58,7 +82,11 @@
     "name": "SoFi Stadium",
     "cityId": "los-angeles",
     "capacity": "70,240",
-    "description": "SoFi Stadium is one of the most advanced stadiums in the world and a flagship venue.",
+    "description": {
+      "en": "SoFi Stadium is one of the most technologically advanced stadiums in the world.",
+      "es": "SoFi Stadium es uno de los estadios más avanzados tecnológicamente del mundo.",
+      "fr": "Le SoFi Stadium est l’un des stades les plus avancés technologiquement au monde."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for SoFi Stadium."
   },
@@ -67,7 +95,11 @@
     "name": "Hard Rock Stadium",
     "cityId": "miami",
     "capacity": "64,767",
-    "description": "Hard Rock Stadium brings World Cup 2026 matches to Miami’s global sports scene.",
+    "description": {
+      "en": "Hard Rock Stadium brings World Cup 2026 matches to Miami’s international sports scene.",
+      "es": "El Hard Rock Stadium llevará partidos de la Copa Mundial 2026 al vibrante entorno deportivo de Miami.",
+      "fr": "Le Hard Rock Stadium accueillera des matchs de la Coupe du Monde 2026 dans le cadre sportif international de Miami."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for Hard Rock Stadium."
   },
@@ -76,7 +108,11 @@
     "name": "Lincoln Financial Field",
     "cityId": "philadelphia",
     "capacity": "69,796",
-    "description": "Lincoln Financial Field hosts World Cup 2026 matches in historic Philadelphia.",
+    "description": {
+      "en": "Lincoln Financial Field will host World Cup 2026 matches in the historic city of Philadelphia.",
+      "es": "El Lincoln Financial Field albergará partidos de la Copa Mundial 2026 en la histórica ciudad de Filadelfia.",
+      "fr": "Le Lincoln Financial Field accueillera des matchs de la Coupe du Monde 2026 dans la ville historique de Philadelphie."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for Lincoln Financial Field."
   },
@@ -85,7 +121,11 @@
     "name": "Levi’s Stadium",
     "cityId": "san-francisco",
     "capacity": "70,909",
-    "description": "Levi’s Stadium will host World Cup 2026 matches in the San Francisco Bay Area.",
+    "description": {
+      "en": "Levi’s Stadium will host World Cup 2026 matches in the San Francisco Bay Area.",
+      "es": "El Levi’s Stadium albergará partidos de la Copa Mundial 2026 en el Área de la Bahía de San Francisco.",
+      "fr": "Le Levi’s Stadium accueillera des matchs de la Coupe du Monde 2026 dans la région de la baie de San Francisco."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for Levi’s Stadium."
   },
@@ -94,7 +134,11 @@
     "name": "Lumen Field",
     "cityId": "seattle",
     "capacity": "69,000",
-    "description": "Lumen Field’s atmosphere will shine during World Cup 2026 matches in Seattle.",
+    "description": {
+      "en": "Lumen Field’s renowned atmosphere will be on display during World Cup 2026 matches.",
+      "es": "La reconocida atmósfera de Lumen Field se destacará durante los partidos de la Copa Mundial 2026.",
+      "fr": "L’atmosphère réputée du Lumen Field sera mise en valeur lors des matchs de la Coupe du Monde 2026."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for Lumen Field."
   },
@@ -103,7 +147,11 @@
     "name": "BMO Field",
     "cityId": "toronto",
     "capacity": "45,000+",
-    "description": "BMO Field will host World Cup 2026 matches in Toronto after major expansion.",
+    "description": {
+      "en": "BMO Field will host World Cup 2026 matches in Toronto following major expansions.",
+      "es": "El BMO Field albergará partidos de la Copa Mundial 2026 en Toronto tras importantes ampliaciones.",
+      "fr": "Le BMO Field accueillera des matchs de la Coupe du Monde 2026 à Toronto après d’importants agrandissements."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for BMO Field."
   },
@@ -112,7 +160,11 @@
     "name": "BC Place",
     "cityId": "vancouver",
     "capacity": "54,500",
-    "description": "BC Place is Canada’s largest World Cup 2026 stadium.",
+    "description": {
+      "en": "BC Place is Canada’s largest World Cup 2026 stadium.",
+      "es": "BC Place es el estadio más grande de Canadá para la Copa Mundial 2026.",
+      "fr": "BC Place est le plus grand stade du Canada pour la Coupe du Monde 2026."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for BC Place."
   },
@@ -121,7 +173,11 @@
     "name": "Estadio Azteca",
     "cityId": "mexico-city",
     "capacity": "87,523",
-    "description": "Estadio Azteca makes history by hosting its third FIFA World Cup.",
+    "description": {
+      "en": "Estadio Azteca will become the first stadium to host three FIFA World Cups.",
+      "es": "El Estadio Azteca será el primer estadio en albergar tres Copas Mundiales de la FIFA.",
+      "fr": "L’Estadio Azteca deviendra le premier stade à accueillir trois Coupes du Monde de la FIFA."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for Estadio Azteca."
   },
@@ -130,7 +186,11 @@
     "name": "Estadio BBVA",
     "cityId": "monterrey",
     "capacity": "53,500",
-    "description": "Estadio BBVA is one of Mexico’s most modern stadiums.",
+    "description": {
+      "en": "Estadio BBVA is one of Mexico’s most modern football stadiums.",
+      "es": "El Estadio BBVA es uno de los estadios de fútbol más modernos de México.",
+      "fr": "L’Estadio BBVA est l’un des stades de football les plus modernes du Mexique."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for Estadio BBVA."
   },
@@ -139,7 +199,11 @@
     "name": "Estadio Akron",
     "cityId": "guadalajara",
     "capacity": "46,232",
-    "description": "Estadio Akron brings World Cup 2026 matches to Guadalajara.",
+    "description": {
+      "en": "Estadio Akron will host World Cup 2026 matches in Guadalajara.",
+      "es": "El Estadio Akron albergará partidos de la Copa Mundial 2026 en Guadalajara.",
+      "fr": "L’Estadio Akron accueillera des matchs de la Coupe du Monde 2026 à Guadalajara."
+    },
     "matches": [],
     "whatsappIntent": "Get matchday updates for Estadio Akron."
   }

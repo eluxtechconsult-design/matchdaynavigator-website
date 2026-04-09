@@ -6,8 +6,8 @@
 
   <title>Stadium – World Cup 2026</title>
 
-  <!-- ✅ Global styles -->
-  <link rel="stylesheet" href="/assets/style.css">
+  <!-- ✅ Global site styles -->
+  <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
     .stadium-container {
@@ -38,8 +38,8 @@
     }
 
     ul {
-      padding-left: 18px;
       margin: 0;
+      padding-left: 18px;
     }
 
     .stadium-section {
@@ -116,12 +116,14 @@
   <div class="stadium-section whatsapp-cta">
     <h2 id="t-matchday"></h2>
     <p>
-      <span id="whatsapp-intro"></span><br>
+      <span id="whatsapp-intro"></span><br />
       <a id="whatsapp-link" target="_blank"></a>
     </p>
   </div>
 
-  <a href="/worldcup-2026/" class="back-link" id="t-back"></a>
+  <a href="/worldcup-2026/" class="back-link">
+    ← Back to Match Map
+  </a>
 
 </div>
 
@@ -144,31 +146,34 @@
 
   const city = cities.find(c => c.id === stadium.cityId);
 
-  // Core data
+  /* Core content */
   document.getElementById("stadium-name").textContent = stadium.name;
   document.getElementById("stadium-city").textContent =
     `${city.name} · World Cup 2026`;
 
-  document.getElementById("stadium-description").textContent = stadium.description;
-  document.getElementById("stadium-capacity").textContent = stadium.capacity;
+  document.getElementById("stadium-description").textContent =
+    stadium.description[lang] || stadium.description.en;
 
-  // Localised labels
+  document.getElementById("stadium-capacity").textContent =
+    stadium.capacity;
+
+  /* Localised UI labels */
   document.getElementById("t-stadium-info").textContent = strings.stadium_info;
   document.getElementById("t-capacity").textContent = strings.capacity;
   document.getElementById("t-matches").textContent = strings.matches_title;
   document.getElementById("t-arrival").textContent = strings.arrival_title;
   document.getElementById("t-bags").textContent = strings.bags_title;
   document.getElementById("t-matchday").textContent = strings.matchday_assistance;
-  document.getElementById("t-back").textContent = strings.back_link;
 
   document.getElementById("arrival-text").textContent = strings.arrival_text;
   document.getElementById("bags-text").textContent = strings.bags_text;
   document.getElementById("whatsapp-intro").textContent =
     strings.whatsapp_cta_intro;
+
   document.getElementById("whatsapp-link").textContent =
     strings.whatsapp_cta_line;
 
-  // Matches
+  /* Matches */
   const matchList = document.getElementById("match-list");
   if (!stadium.matches || stadium.matches.length === 0) {
     matchList.innerHTML =
@@ -182,7 +187,7 @@
     });
   }
 
-  // WhatsApp welcome message (first follow‑up)
+  /* WhatsApp welcome message */
   const whatsappMessage =
     `Welcome to Matchday Navigator 👋
 
