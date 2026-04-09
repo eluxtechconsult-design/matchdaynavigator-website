@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>World Cup 2026 Match Map</title>
-
-  <meta
-    name="description"
-    content="Explore all official FIFA World Cup 2026 host cities across the USA, Canada, and Mexico."
-  />
 
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="./assets/wc-map.css">
@@ -19,12 +14,8 @@
 <body>
 
 <header class="wc-map-header">
-  <div class="container center">
-    <h1>World Cup 2026 Match Map</h1>
-    <p class="subtitle">
-      Official host cities across the United States, Canada, and Mexico.
-    </p>
-  </div>
+  <h1>World Cup 2026 Match Map</h1>
+  <p>Official host cities across the United States, Canada, and Mexico.</p>
 </header>
 
 <main class="wc-map-layout">
@@ -34,45 +25,43 @@
   </section>
 
   <aside class="wc-city-panel">
-    <h2>
-      Select a host city
-      <span class="panel-subtitle">
-        to explore stadiums and matchday planning
-      </span>
-    </h2>
+    <h2>Select a host city</h2>
+    <p class="panel-subtitle">
+      Numbers on the map correspond to the city list below.
+    </p>
 
     <div class="city-columns">
 
       <div>
         <h3>United States</h3>
-        <ul>
-          <li>New York / New Jersey</li>
-          <li>Atlanta</li>
-          <li>Boston</li>
-          <li>Dallas</li>
-          <li>Houston</li>
-          <li>Kansas City</li>
-          <li>Los Angeles</li>
-          <li>Miami</li>
-          <li>Philadelphia</li>
-          <li>San Francisco Bay Area</li>
-          <li>Seattle</li>
-        </ul>
+        <ol>
+          <li data-city="new-york-nj">New York / New Jersey</li>
+          <li data-city="atlanta">Atlanta</li>
+          <li data-city="boston">Boston</li>
+          <li data-city="dallas">Dallas</li>
+          <li data-city="houston">Houston</li>
+          <li data-city="kansas-city">Kansas City</li>
+          <li data-city="los-angeles">Los Angeles</li>
+          <li data-city="miami">Miami</li>
+          <li data-city="philadelphia">Philadelphia</li>
+          <li data-city="san-francisco">San Francisco Bay Area</li>
+          <li data-city="seattle">Seattle</li>
+        </ol>
       </div>
 
       <div>
         <h3>Canada</h3>
-        <ul>
-          <li>Toronto</li>
-          <li>Vancouver</li>
-        </ul>
+        <ol start="12">
+          <li data-city="toronto">Toronto</li>
+          <li data-city="vancouver">Vancouver</li>
+        </ol>
 
         <h3>Mexico</h3>
-        <ul>
-          <li>Mexico City</li>
-          <li>Guadalajara</li>
-          <li>Monterrey</li>
-        </ul>
+        <ol start="14">
+          <li data-city="mexico-city">Mexico City</li>
+          <li data-city="guadalajara">Guadalajara</li>
+          <li data-city="monterrey">Monterrey</li>
+        </ol>
       </div>
 
     </div>

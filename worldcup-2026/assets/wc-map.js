@@ -1,8 +1,5 @@
 (async function () {
-  const map = L.map("map", {
-    scrollWheelZoom: false,
-    zoomControl: true
-  });
+  const map = L.map("map", { scrollWheelZoom: false });
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors"
@@ -10,43 +7,39 @@
 
   const cities = await fetch("../data/cities.json").then(r => r.json());
   const bounds = [];
+  const markersById = {};
 
-  function labelOffset(city) {
-    // Region-based offsets to prevent overlap
-    if (city.lng < -120) return [8, -12];         // West Coast
-    if (city.lng < -95) return [6, -10];          // Central
-    if (city.lng > -80) return [-8, -12];         // East Coast / Canada
-    if (city.lat < 23) return [0, 14];            // Mexico
-    return [6, -10];
-  }
+  cities.forEach((city, index) => {
+    const number = index + 1;
 
-  cities.forEach(city => {
-    // Marker
-    L.circleMarker([city.lat, city.lng], {
-      radius: 7,
-      color: "#16a34a",
-      fillColor: "#16a34a",
-      fillOpacity: 0.95
-    }).addTo(map);
+    const icon = L.divIcon({
+      className: "numbered-marker",
+      html: `<span>${number}</span>`,
+      iconSize: [24, 24],
+      iconAnchor: [12, 12]
+    });
 
-    const offset = labelOffset(city);
+    const marker = L.marker([city.lat, city.lng], { icon })
+      .addTo(map)
+      .bindPopup(`<strong>${number}. ${city.name}</strong>`);
 
-    // Permanent city label
-    L.marker([city.lat, city.lng], {
-      icon: L.divIcon({
-        className: "city-label",
-        html: city.name,
-        iconAnchor: offset
-      }),
-      interactive: false
-    }).addTo(map);
-
+    markersById[city.id] = marker;
     bounds.push([city.lat, city.lng]);
   });
 
-  // Bigger, more confident landing zoom
-  map.fitBounds(bounds, {
-    padding: [90, 90],
-    maxZoom: 4
+  map.fitBounds(bounds, { padding: [90, 90], maxZoom: 4 });
+
+  document.querySelectorAll("[data-city]").forEach(item => {
+    item.addEventListener("click", () => {
+      const id = item.dataset.city;
+      const marker = markersById[id];
+      if (!marker) return;
+
+      map.setView(marker.getLatLng(), 6, { animate: true });
+      marker.openPopup();
+
+      document.querySelectorAll(".active").forEach(el => el.classList.remove("active"));
+      item.classList.add("active");
+    });
   });
 })();
