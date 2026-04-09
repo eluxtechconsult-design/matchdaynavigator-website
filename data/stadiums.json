@@ -1,82 +1,18 @@
 [
-  {
-    "id": "metlife-stadium",
-    "name": "MetLife Stadium",
-    "cityId": "new-york-nj"
-  },
-  {
-    "id": "mercedes-benz-stadium",
-    "name": "Mercedes-Benz Stadium",
-    "cityId": "atlanta"
-  },
-  {
-    "id": "gillette-stadium",
-    "name": "Gillette Stadium",
-    "cityId": "boston"
-  },
-  {
-    "id": "att-stadium",
-    "name": "AT&T Stadium",
-    "cityId": "dallas"
-  },
-  {
-    "id": "nrg-stadium",
-    "name": "NRG Stadium",
-    "cityId": "houston"
-  },
-  {
-    "id": "geha-field",
-    "name": "GEHA Field at Arrowhead Stadium",
-    "cityId": "kansas-city"
-  },
-  {
-    "id": "sofi-stadium",
-    "name": "SoFi Stadium",
-    "cityId": "los-angeles"
-  },
-  {
-    "id": "hard-rock-stadium",
-    "name": "Hard Rock Stadium",
-    "cityId": "miami"
-  },
-  {
-    "id": "lincoln-financial-field",
-    "name": "Lincoln Financial Field",
-    "cityId": "philadelphia"
-  },
-  {
-    "id": "levis-stadium",
-    "name": "Levi’s Stadium",
-    "cityId": "san-francisco"
-  },
-  {
-    "id": "lumen-field",
-    "name": "Lumen Field",
-    "cityId": "seattle"
-  },
-  {
-    "id": "bmo-field",
-    "name": "BMO Field",
-    "cityId": "toronto"
-  },
-  {
-    "id": "bc-place",
-    "name": "BC Place",
-    "cityId": "vancouver"
-  },
-  {
-    "id": "estadio-azteca",
-    "name": "Estadio Azteca",
-    "cityId": "mexico-city"
-  },
-  {
-    "id": "estadio-bbva",
-    "name": "Estadio BBVA",
-    "cityId": "monterrey"
-  },
-  {
-    "id": "estadio-akron",
-    "name": "Estadio Akron",
-    "cityId": "guadalajara"
-  }
+  { "id": "metlife-stadium", "name": "MetLife Stadium", "cityId": "new-york-nj" },
+  { "id": "mercedes-benz-stadium", "name": "Mercedes-Benz Stadium", "cityId": "atlanta" },
+  { "id": "gillette-stadium", "name": "Gillette Stadium", "cityId": "boston" },
+  { "id": "att-stadium", "name": "AT&T Stadium", "cityId": "dallas" },
+  { "id": "nrg-stadium", "name": "NRG Stadium", "cityId": "houston" },
+  { "id": "geha-field", "name": "GEHA Field at Arrowhead Stadium", "cityId": "kansas-city" },
+  { "id": "sofi-stadium", "name": "SoFi Stadium", "cityId": "los-angeles" },
+  { "id": "hard-rock-stadium", "name": "Hard Rock Stadium", "cityId": "miami" },
+  { "id": "lincoln-financial-field", "name": "Lincoln Financial Field", "cityId": "philadelphia" },
+  { "id": "levis-stadium", "name": "Levi’s Stadium", "cityId": "san-francisco" },
+  { "id": "lumen-field", "name": "Lumen Field", "cityId": "seattle" },
+  { "id": "bmo-field", "name": "BMO Field", "cityId": "toronto" },
+  { "id": "bc-place", "name": "BC Place", "cityId": "vancouver" },
+  { "id": "estadio-azteca", "name": "Estadio Azteca", "cityId": "mexico-city" },
+  { "id": "estadio-bbva", "name": "Estadio BBVA", "cityId": "monterrey" },
+  { "id": "estadio-akron", "name": "Estadio Akron", "cityId": "guadalajara" }
 ]

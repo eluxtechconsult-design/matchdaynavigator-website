@@ -52,14 +52,15 @@
       list.innerHTML = "";
     });
 
-    const li = document.querySelector(`[data-city="${cityId}"]`);
-    const container = li.querySelector(".stadium-list");
+    const container =
+      document.querySelector(`[data-city="${cityId}"] .stadium-list`);
 
     stadiums
       .filter(s => s.cityId === cityId)
       .forEach(s => {
         const li = document.createElement("li");
-        li.innerHTML = `<a href="/worldcup-2026/stadiums/?id=${s.id}">${s.name}</a>`;
+        li.innerHTML =
+          `<a href="/worldcup-2026/stadiums/?id=${s.id}">${s.name}</a>`;
         container.appendChild(li);
       });
   }

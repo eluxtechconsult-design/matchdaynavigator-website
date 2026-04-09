@@ -2,85 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Stadium Information – World Cup 2026</title>
-
-  <meta
-    name="description"
-    content="World Cup 2026 stadium information including access, bag policies and matchday guidance."
-  />
-
-  <link rel="stylesheet" href="/assets/style.css" />
+  <title>Stadium</title>
+  <link rel="stylesheet" href="/assets/style.css">
 </head>
 
 <body>
 
-<header class="hero hero-light">
-  <div class="container narrow">
-    <h1 id="stadium-name">Stadium</h1>
-    <p id="stadium-city" class="hero-subtitle"></p>
-  </div>
-</header>
-
-<section class="section">
-  <div class="container narrow">
-
-    <div class="info-grid">
-      <div>
-        <h3>Capacity</h3>
-        <p id="capacity"></p>
-      </div>
-
-      <div>
-        <h3>Bag policy</h3>
-        <p id="bag-policy"></p>
-      </div>
-    </div>
-
-    <div class="cta-box">
-      <h3>Get matchday details on WhatsApp</h3>
-      <p>
-        Receive arrival guidance, entry rules and updates for this stadium.
-      </p>
-
-      <a
-        id="whatsapp-link"
-        class="primary-button"
-        target="_blank"
-      >
-        Open MatchDay Navigator on WhatsApp
-      </a>
-    </div>
-
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="container">
-    <a href="/worldcup-2026/">← Back to Match Map</a>
-  </div>
-</footer>
+<h1 id="stadium-name">Stadium</h1>
+<p id="stadium-city"></p>
 
 <script>
 (async function () {
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id");
-
-  const stadiums = await fetch("../data/stadiums.json").then(r => r.json());
-  const cities = await fetch("../data/cities.json").then(r => r.json());
+  const id = new URLSearchParams(location.search).get("id");
+  const stadiums = await fetch("../../data/stadiums.json").then(r=>r.json());
+  const cities = await fetch("../../data/cities.json").then(r=>r.json());
 
   const stadium = stadiums.find(s => s.id === id);
   const city = cities.find(c => c.id === stadium.cityId);
 
   document.getElementById("stadium-name").textContent = stadium.name;
-  document.getElementById("stadium-city").textContent = city.name;
-  document.getElementById("capacity").textContent =
-    stadium.capacity.toLocaleString();
-  document.getElementById("bag-policy").textContent = stadium.bagPolicy;
-
-  document.getElementById("whatsapp-link").href =
-    "https://wa.me/15558273850"; // example
+  document.getElementById("stadium-city").textContent =
+    city.name + " · World Cup 2026";
 })();
 </script>
 
