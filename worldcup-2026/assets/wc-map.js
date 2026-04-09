@@ -10,8 +10,8 @@
 
   const cities = await fetch("../data/cities.json").then(r => r.json());
 
-  const markers = {};
   const bounds = [];
+  const markers = [];
 
   cities.forEach(city => {
     const marker = L.circleMarker([city.lat, city.lng], {
@@ -21,24 +21,25 @@
       fillOpacity: 0.95
     }).addTo(map);
 
+    /* ✅ City name visible on hover AND click */
     marker.bindTooltip(city.name, {
       permanent: false,
       direction: "top",
       offset: [0, -6]
     });
 
-    markers[city.id] = marker;
+    markers.push(marker);
     bounds.push([city.lat, city.lng]);
   });
 
-  /* ✅ Anchor map exactly to all cities */
+  /* ✅ Anchor map clearly on load */
   map.fitBounds(bounds, {
-    paddingTopLeft: [40, 40],
-    paddingBottomRight: [40, 40],
+    paddingTopLeft: [60, 60],
+    paddingBottomRight: [60, 60],
     maxZoom: 4
   });
 
-  /* ✅ City selector interaction */
+  /* ✅ Selector interaction */
   document.querySelectorAll("[data-city]").forEach(item => {
     item.addEventListener("click", () => {
       const id = item.dataset.city;
@@ -49,8 +50,6 @@
         animate: true,
         duration: 0.5
       });
-
-      markers[id].openTooltip();
     });
   });
 })();
