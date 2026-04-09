@@ -6,41 +6,37 @@
 
   <title>World Cup 2026 Match Map</title>
 
-  <meta
-    name="description"
-    content="Explore all official FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="./assets/wc-map.css" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   />
-
-  <!-- ✅ CORRECT CSS LOADING -->
-  <link rel="stylesheet" href="/assets/style.css">
-  <link rel="stylesheet" href="./assets/wc-map.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
 
 <header class="wc-map-header">
-  <div class="container center">
-    <h1>World Cup 2026 Match Map</h1>
-    <p class="subtitle">
-      Official host cities across the United States, Canada, and Mexico.
-    </p>
-  </div>
+  <h1 id="reset-map" style="cursor:pointer">
+    World Cup 2026 Match Map
+  </h1>
+  <p>
+    Official host cities across the United States, Canada, and Mexico.
+  </p>
+  <a href="/" class="back-home">← Back to Home</a>
 </header>
 
 <main class="wc-map-layout">
 
-  <!-- ✅ MAP CONTAINER (WILL NOW HAVE HEIGHT) -->
   <section class="wc-map-canvas">
     <div id="map"></div>
   </section>
 
-  <!-- ✅ CITY SELECTOR -->
   <aside class="wc-city-panel">
-    <h2>
+    <h2 id="reset-map">
       Select a host city
       <span class="panel-subtitle">
-        Numbers on the map correspond to the city list below.
+        Click a city to zoom in. Click again here to reset the map.
       </span>
     </h2>
 
@@ -48,7 +44,7 @@
 
       <div>
         <h3>United States</h3>
-        <ol>
+        <ul>
           <li data-city="new-york-nj">New York / New Jersey</li>
           <li data-city="atlanta">Atlanta</li>
           <li data-city="boston">Boston</li>
@@ -60,22 +56,22 @@
           <li data-city="philadelphia">Philadelphia</li>
           <li data-city="san-francisco">San Francisco Bay Area</li>
           <li data-city="seattle">Seattle</li>
-        </ol>
+        </ul>
       </div>
 
       <div>
         <h3>Canada</h3>
-        <ol start="12">
+        <ul>
           <li data-city="toronto">Toronto</li>
           <li data-city="vancouver">Vancouver</li>
-        </ol>
+        </ul>
 
-        <h3>Mexico</h3>
-        <ol start="14">
+        <h3 class="mt">Mexico</h3>
+        <ul>
           <li data-city="mexico-city">Mexico City</li>
           <li data-city="guadalajara">Guadalajara</li>
           <li data-city="monterrey">Monterrey</li>
-        </ol>
+        </ul>
       </div>
 
     </div>
@@ -83,7 +79,6 @@
 
 </main>
 
-<!-- ✅ CORRECT SCRIPT LOADING (ORDER MATTERS) -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="./assets/wc-map.js"></script>
 

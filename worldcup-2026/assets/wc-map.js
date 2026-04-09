@@ -1,8 +1,8 @@
 /**
- * World Cup 2026 Match Map
- * - Big landing view
- * - Numbered markers with city name above
- * - All 16 cities visible on load
+ * WC 2026 Match Map – FINAL
+ * Bullet markers + city names
+ * Fully interactive
+ * Resettable view
  */
 
 (async function () {
@@ -16,42 +16,67 @@
   }).addTo(map);
 
   const cities = await fetch("../data/cities.json").then(r => r.json());
-
   const bounds = [];
-  const markersById = {};
+  const markers = {};
 
-  cities.forEach((city, index) => {
-    const number = index + 1;
+  function labelOffset(city) {
+    if (city.lng < -120) return [14, -4]; // West
+    if (city.lng < -95) return [14, -4];  // Central
+    if (city.lng > -80) return [-14, -4]; // East
+    if (city.lat < 23) return [0, 12];    // Mexico
+    return [14, -4];
+  }
 
-    const icon = L.divIcon({
-      className: "wc-city-marker",
-      html: `
-        <div class="city-label">${city.name}</div>
-        <div class="city-number">${number}</div>
-      `,
-      iconSize: [120, 48],
-      iconAnchor: [60, 48]
+  cities.forEach(city => {
+    // Bullet marker
+    const marker = L.circleMarker([city.lat, city.lng], {
+      radius: 6,
+      color: "#15803d",
+      fillColor: "#15803d",
+      fillOpacity: 1
+    }).addTo(map);
+
+    // City label next to bullet
+    L.marker([city.lat, city.lng], {
+      icon: L.divIcon({
+        className: "wc-city-label",
+        html: city.name,
+        iconAnchor: labelOffset(city)
+      }),
+      interactive: false
+    }).addTo(map);
+
+    marker.on("click", () => {
+      zoomToCity(city);
     });
 
-    const marker = L.marker([city.lat, city.lng], { icon }).addTo(map);
-
-    markersById[city.id] = marker;
+    markers[city.id] = marker;
     bounds.push([city.lat, city.lng]);
   });
 
-  // ✅ Map now lands big and confident
-  map.fitBounds(bounds, {
-    padding: [100, 100],
-    maxZoom: 4
-  });
+  function zoomToCity(city) {
+    map.setView([city.lat, city.lng], 6, {
+      animate: true,
+      duration: 0.5
+    });
+  }
 
-  // ✅ City list remains interactive
+  function resetMap() {
+    map.fitBounds(bounds, {
+      padding: [100, 100],
+      maxZoom: 4
+    });
+  }
+
+  // Initial landing
+  resetMap();
+
+  // List → map interaction
   document.querySelectorAll("[data-city]").forEach(item => {
     item.addEventListener("click", () => {
-      const marker = markersById[item.dataset.city];
-      if (!marker) return;
-
-      map.setView(marker.getLatLng(), 6, { animate: true });
+      const city = cities.find(c => c.id === item.dataset.city);
+      if (!city) return;
+      zoomToCity(city);
     });
   });
-})();
+
