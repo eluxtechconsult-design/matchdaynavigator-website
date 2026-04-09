@@ -8,16 +8,12 @@
 
   <meta
     name="description"
-    content="Explore all official FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
+    content="Explore all official FIFA World Cup 2026 host cities across the USA, Canada, and Mexico."
   />
 
-  <!-- ✅ CORRECT CSS LOADING -->
-  <link rel="stylesheet" href="/assets/style.css" />
-  <link rel="stylesheet" href="./assets/wc-map.css" />
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="./assets/wc-map.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
@@ -33,12 +29,10 @@
 
 <main class="wc-map-layout">
 
-  <!-- MAP -->
   <section class="wc-map-canvas">
     <div id="map"></div>
   </section>
 
-  <!-- CITY SELECTOR -->
   <aside class="wc-city-panel">
     <h2>
       Select a host city
@@ -52,32 +46,32 @@
       <div>
         <h3>United States</h3>
         <ul>
-          <li data-city="new-york-nj">New York / New Jersey</li>
-          <li data-city="atlanta">Atlanta</li>
-          <li data-city="boston">Boston</li>
-          <li data-city="dallas">Dallas</li>
-          <li data-city="houston">Houston</li>
-          <li data-city="kansas-city">Kansas City</li>
-          <li data-city="los-angeles">Los Angeles</li>
-          <li data-city="miami">Miami</li>
-          <li data-city="philadelphia">Philadelphia</li>
-          <li data-city="san-francisco">San Francisco Bay Area</li>
-          <li data-city="seattle">Seattle</li>
+          <li>New York / New Jersey</li>
+          <li>Atlanta</li>
+          <li>Boston</li>
+          <li>Dallas</li>
+          <li>Houston</li>
+          <li>Kansas City</li>
+          <li>Los Angeles</li>
+          <li>Miami</li>
+          <li>Philadelphia</li>
+          <li>San Francisco Bay Area</li>
+          <li>Seattle</li>
         </ul>
       </div>
 
       <div>
         <h3>Canada</h3>
         <ul>
-          <li data-city="toronto">Toronto</li>
-          <li data-city="vancouver">Vancouver</li>
+          <li>Toronto</li>
+          <li>Vancouver</li>
         </ul>
 
-        <h3 class="mt">Mexico</h3>
+        <h3>Mexico</h3>
         <ul>
-          <li data-city="mexico-city">Mexico City</li>
-          <li data-city="guadalajara">Guadalajara</li>
-          <li data-city="monterrey">Monterrey</li>
+          <li>Mexico City</li>
+          <li>Guadalajara</li>
+          <li>Monterrey</li>
         </ul>
       </div>
 
@@ -86,11 +80,6 @@
 
 </main>
 
-<footer class="wc-footer center">
-  <p>© MatchDay Navigator</p>
-</footer>
-
-<!-- ✅ CORRECT SCRIPT LOADING -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="./assets/wc-map.js"></script>
 

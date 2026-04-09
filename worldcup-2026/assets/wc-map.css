@@ -2,7 +2,7 @@
 
 .wc-map-header {
   background: linear-gradient(180deg, #f8fafc, #eef2f7);
-  padding: 32px 0 28px;
+  padding: 26px 0 22px;
   border-bottom: 1px solid #e5e7eb;
 }
 
@@ -10,8 +10,8 @@
 
 .wc-map-layout {
   display: grid;
-  grid-template-columns: 75% 25%; /* ✅ map dominates */
-  min-height: calc(100vh - 140px);
+  grid-template-columns: 78% 22%; /* ✅ map much bigger */
+  min-height: calc(100vh - 130px);
 }
 
 .wc-map-canvas {
@@ -23,14 +23,14 @@
   height: 100%;
 }
 
-/* ================= CITY LABELS ON MAP ================= */
+/* ================= MAP CITY LABELS ================= */
 
 .city-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: #064e3b;
-  background: rgba(236, 253, 245, 0.9);
-  padding: 2px 6px;
+  background: rgba(236, 253, 245, 0.95);
+  padding: 3px 7px;
   border-radius: 6px;
   border: 1px solid #a7f3d0;
   white-space: nowrap;
@@ -39,23 +39,23 @@
 /* ================= CITY PANEL ================= */
 
 .wc-city-panel {
-  background: #064e3b; /* ✅ darker green */
+  background: #064e3b;
   color: #ecfdf5;
-  padding: 14px 14px 12px;
+  padding: 14px 12px 10px;
 }
 
 .wc-city-panel h2 {
   font-size: 1rem;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .panel-subtitle {
   display: block;
   font-size: 0.75rem;
   opacity: 0.85;
+  margin-bottom: 10px;
 }
 
-/* Compact grid */
 .city-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -66,14 +66,14 @@
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 4px;
+  margin: 4px 0;
   color: #a7f3d0;
 }
 
 .city-columns ul {
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 .city-columns li {
@@ -87,11 +87,7 @@
   text-decoration: underline;
 }
 
-.mt {
-  margin-top: 6px;
-}
-
-/* ================= RESPONSIVE ================= */
+/* ================= MOBILE ================= */
 
 @media (max-width: 960px) {
   .wc-map-layout {

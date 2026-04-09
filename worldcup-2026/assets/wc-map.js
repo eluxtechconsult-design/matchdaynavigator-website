@@ -9,11 +9,19 @@
   }).addTo(map);
 
   const cities = await fetch("../data/cities.json").then(r => r.json());
-
   const bounds = [];
 
-  cities.forEach((city, index) => {
-    // Base marker
+  function labelOffset(city) {
+    // Region-based offsets to prevent overlap
+    if (city.lng < -120) return [8, -12];         // West Coast
+    if (city.lng < -95) return [6, -10];          // Central
+    if (city.lng > -80) return [-8, -12];         // East Coast / Canada
+    if (city.lat < 23) return [0, 14];            // Mexico
+    return [6, -10];
+  }
+
+  cities.forEach(city => {
+    // Marker
     L.circleMarker([city.lat, city.lng], {
       radius: 7,
       color: "#16a34a",
@@ -21,24 +29,24 @@
       fillOpacity: 0.95
     }).addTo(map);
 
-    // Slight vertical offset for labels to reduce collisions
-    const yOffset = -14 - (index % 3) * 4;
+    const offset = labelOffset(city);
 
-    // ✅ Permanent city labels
+    // Permanent city label
     L.marker([city.lat, city.lng], {
       icon: L.divIcon({
         className: "city-label",
         html: city.name,
-        iconAnchor: [-6, yOffset]
-      })
+        iconAnchor: offset
+      }),
+      interactive: false
     }).addTo(map);
 
     bounds.push([city.lat, city.lng]);
   });
 
-  // ✅ Anchor map cleanly around all cities
+  // Bigger, more confident landing zoom
   map.fitBounds(bounds, {
-    padding: [80, 80],
+    padding: [90, 90],
     maxZoom: 4
   });
 })();
