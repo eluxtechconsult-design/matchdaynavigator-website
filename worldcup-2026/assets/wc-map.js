@@ -21,6 +21,7 @@
     return [8, -2];
   }
 
+  // --- Render city bullets and labels ---
   cities.forEach(city => {
     const bullet = L.circleMarker([city.lat, city.lng], {
       radius: 3,
@@ -44,27 +45,34 @@
     bounds.push([city.lat, city.lng]);
   });
 
+  // --- Activate city (expand stadium) ---
   function activateCity(cityId) {
     const city = cityById[cityId];
     map.setView([city.lat, city.lng], 6, { animate: true });
 
+    // Collapse all existing stadium lists
     document.querySelectorAll(".stadium-list").forEach(list => {
       list.innerHTML = "";
     });
 
     const container =
       document.querySelector(`[data-city="${cityId}"] .stadium-list`);
+    if (!container) return;
 
     stadiums
       .filter(s => s.cityId === cityId)
       .forEach(s => {
         const li = document.createElement("li");
-        li.innerHTML =
-          `<a href="/worldcup-2026/stadiums/?id=${s.id}">${s.name}</a>`;
+        li.innerHTML = `
+          <a href="/worldcup-2026/stadiums/?id=${s.id}">
+            ${s.name}
+          </a>
+        `;
         container.appendChild(li);
       });
   }
 
+  // --- Reset map + collapse ---
   function resetMap() {
     map.fitBounds(bounds, {
       padding: [100, 100],
@@ -73,12 +81,15 @@
     document.querySelectorAll(".stadium-list").forEach(l => l.innerHTML = "");
   }
 
+  // Initial landing state
   resetMap();
 
+  // City list click
   document.querySelectorAll("[data-city]").forEach(el => {
     el.addEventListener("click", () => activateCity(el.dataset.city));
   });
 
+  // Reset button
   document.getElementById("reset-map")
-    .addEventListener("click", resetMap);
+    ?.addEventListener("click", resetMap);
 })();
