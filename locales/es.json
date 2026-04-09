@@ -1,0 +1,14 @@
+{
+  "stadium_info": "Información del estadio",
+  "capacity": "Capacidad",
+  "matches_title": "Partidos en este estadio",
+  "matches_placeholder": "Los horarios de los partidos aparecerán cuando FIFA los confirme oficialmente.",
+  "arrival_title": "Llegada",
+  "arrival_text": "Las indicaciones de llegada, opciones de transporte y horarios recomendados se compartirán más cerca del día del partido.",
+  "bags_title": "Bolsos y normas de acceso",
+  "bags_text": "Las normas de seguridad y políticas sobre bolsos del estadio estarán disponibles antes del inicio del torneo.",
+  "matchday_assistance": "Asistencia el día del partido",
+  "whatsapp_cta_intro": "Recibe actualizaciones del día del partido para este estadio.",
+  "whatsapp_cta_line": "Llegada · Normas de acceso · Recordatorios de inicio por WhatsApp →",
+  "back_link": "← Volver al mapa de partidos"
+}

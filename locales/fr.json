@@ -1,0 +1,14 @@
+{
+  "stadium_info": "Informations du stade",
+  "capacity": "Capacité",
+  "matches_title": "Matchs dans ce stade",
+  "matches_placeholder": "Le calendrier des matchs apparaîtra une fois officiellement confirmé par la FIFA.",
+  "arrival_title": "Accès",
+  "arrival_text": "Les informations d’accès, les options de transport et les horaires recommandés seront communiqués plus près du jour du match.",
+  "bags_title": "Sacs et règles d’entrée",
+  "bags_text": "Les règles de sécurité et la politique concernant les sacs seront disponibles avant le début du tournoi.",
+  "matchday_assistance": "Assistance jour de match",
+  "whatsapp_cta_intro": "Recevez les informations du jour de match pour ce stade.",
+  "whatsapp_cta_line": "Accès · Règles d’entrée · Rappels de coup d’envoi sur WhatsApp →",
+  "back_link": "← Retour à la carte des matchs"
+}
