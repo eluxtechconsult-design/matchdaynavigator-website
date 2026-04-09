@@ -1,8 +1,8 @@
 /**
- * WC 2026 Match Map – FINAL
- * Bullet points + city labels
- * Fully interactive
- * Resettable
+ * WC 2026 Match Map – FINAL (Adjusted bullet size & alignment)
+ * - Half-size bullets
+ * - City names aligned to bullets
+ * - Fully interactive
  */
 
 (async function () {
@@ -19,23 +19,27 @@
   const bounds = [];
   const cityById = {};
 
+  /**
+   * Label offsets so name visually "hits" bullet
+   * Smaller offsets now that bullets are smaller
+   */
   function labelOffset(city) {
-    if (city.lng < -120) return [12, -2];
-    if (city.lng > -80) return [-12, -2];
-    if (city.lat < 23) return [0, 10];
-    return [12, -2];
+    if (city.lng < -120) return [8, -2];   // West Coast
+    if (city.lng > -80) return [-8, -2];   // East Coast
+    if (city.lat < 23) return [0, 8];      // Mexico
+    return [8, -2];                         // Default
   }
 
   cities.forEach(city => {
-    // ✅ Bullet marker
+    // ✅ HALF-SIZE bullet
     const bullet = L.circleMarker([city.lat, city.lng], {
-      radius: 6,
+      radius: 3,                 // was 6
       fillColor: "#15803d",
       color: "#15803d",
       fillOpacity: 1
     }).addTo(map);
 
-    // ✅ City name next to bullet
+    // ✅ City name aligned tightly to bullet
     L.marker([city.lat, city.lng], {
       icon: L.divIcon({
         className: "wc-city-label",
@@ -65,10 +69,10 @@
     });
   }
 
-  // Initial landing
+  // Initial landing state
   resetMap();
 
-  // List → map
+  // List → map interaction
   document.querySelectorAll("[data-city]").forEach(el => {
     el.addEventListener("click", () => {
       zoomTo(cityById[el.dataset.city]);

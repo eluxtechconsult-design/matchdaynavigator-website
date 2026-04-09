@@ -1,8 +1,31 @@
 /* =====================================================
-   WC 2026 Match Map – FINAL CSS (Bullets + Reset)
+   WC 2026 Match Map – FINAL (Bullet & Label Alignment)
    ===================================================== */
 
-/* ================= HEADER ================= */
+.wc-map-layout {
+  display: grid;
+  grid-template-columns: 78% 22%;
+  min-height: calc(100vh - 120px);
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+/* ================= MAP LABELS ================= */
+/* Smaller font, no background, tight alignment */
+
+.wc-city-label {
+  font-size: 9px;          /* already correct */
+  font-weight: 600;
+  color: #064e3b;
+  white-space: nowrap;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* ================= HEADER / CONTROLS ================= */
 
 .wc-map-header {
   position: relative;
@@ -12,22 +35,10 @@
   border-bottom: 1px solid #e5e7eb;
 }
 
-.wc-map-header h1 {
-  margin: 0;
-}
-
-.subtitle {
-  margin-top: 4px;
-  font-size: 0.9rem;
-  color: #475569;
-}
-
-/* Header navigation */
 .wc-map-nav {
   display: flex;
   gap: 16px;
   margin-top: 6px;
-  align-items: center;
 }
 
 .back-home {
@@ -41,55 +52,22 @@
   text-decoration: underline;
 }
 
-/* ✅ Red, bold reset action */
+/* ✅ Reset emphasis */
 .reset-map {
   font-size: 0.8rem;
   font-weight: 800;
-  color: #dc2626;          /* red */
+  color: #dc2626;
   background: none;
   border: none;
   cursor: pointer;
 }
 
 .reset-map::after {
-  content: " ➜";          /* arrow */
+  content: " ➜";
 }
 
 .reset-map:hover {
   text-decoration: underline;
-}
-
-/* ================= LAYOUT ================= */
-
-.wc-map-layout {
-  display: grid;
-  grid-template-columns: 78% 22%;
-  min-height: calc(100vh - 120px);
-}
-
-/* ================= MAP ================= */
-
-.wc-map-canvas {
-  position: relative;
-}
-
-#map {
-  width: 100%;
-  height: 100%;
-}
-
-.leaflet-container {
-  z-index: 1;
-}
-
-/* ================= BULLET MARKERS & LABELS ================= */
-
-.wc-city-label {
-  font-size: 9px;          /* ✅ 3 sizes smaller */
-  font-weight: 600;
-  color: #064e3b;
-  white-space: nowrap;
-  pointer-events: none;
 }
 
 /* ================= CITY PANEL ================= */
@@ -104,7 +82,6 @@
   font-size: 0.9rem;
   font-weight: 800;
   color: #d1fae5;
-  margin-bottom: 2px;
 }
 
 .panel-subtitle {
@@ -113,7 +90,6 @@
   margin-bottom: 8px;
 }
 
-/* Compact layout */
 .city-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -121,17 +97,9 @@
 }
 
 .city-columns h3 {
-  margin: 4px 0;
   font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   color: #a7f3d0;
-}
-
-.city-columns ul {
-  margin: 0;
-  padding-left: 14px;
-  list-style: disc;
+  margin: 4px 0;
 }
 
 .city-columns li {
