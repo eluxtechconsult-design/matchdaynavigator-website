@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>You’re Unlocked – Matchday Essentials</title>
+
+  <!-- Global styles (same as rest of site) -->
+  <link rel="stylesheet" href="/assets/style.css" />
+
+  <style>
+    .unlocked-container {
+      max-width: 640px;
+      margin: 80px auto;
+      padding: 0 16px;
+      text-align: center;
+    }
+
+    .unlocked-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 6px 0;
+      line-height: 1.4;
+    }
+
+    .primary-cta {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 20px;
+      background: #16a34a;
+      color: white;
+      font-weight: 800;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .primary-cta:hover {
+      opacity: 0.9;
+    }
+
+    .subtle {
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="unlocked-container">
+
+  <div class="unlocked-icon">🎉</div>
+
+  <h1>You’re Unlocked</h1>
+
+  <p>
+    Your matchday essentials for this stadium are now active.
+  </p>
+
+  <p>
+    You’ll receive arrival guidance, entry rules, and kick‑off reminders
+    directly on WhatsApp.
+  </p>
+
+  <a
+    id="whatsapp-link"
+    class="primary-cta"
+    target="_blank"
+  >
+    Continue on WhatsApp →
+  </a>
+
+  <p class="subtle">
+    You can stop messages at any time by replying STOP.
+  </p>
+
+</div>
+
+<script>
+  // Read stadium from URL: ?stadium=lumen-field
+  const params = new URLSearchParams(window.location.search);
+  const stadiumId = params.get("stadium") || "your stadium";
+
+  // Convert "lumen-field" → "Lumen Field"
+  const stadiumName = stadiumId
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, c => c.toUpperCase());
+
+  const whatsappMessage =
+`Welcome to Matchday Navigator 👋
+
+You’re all set for matchday at ${stadiumName}.
+
+You’ll receive:
+• Arrival guidance
+• Entry rules & bag policies
+• Kick‑off reminders
+
+Messages are only sent around matchdays.
+Reply STOP anytime to opt out.`;
+
+  document.getElementById("whatsapp-link").href =
+    "https://wa.me/15550000000?text=" +
+    encodeURIComponent(whatsappMessage);
+</script>
+
+</body>
+</html>
