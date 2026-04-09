@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>World Cup 2026 Match Map</title>
 
+  <meta
+    name="description"
+    content="Explore all official FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
+  />
+
+  <!-- ✅ CORRECT CSS LOADING -->
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="./assets/wc-map.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -14,21 +20,29 @@
 <body>
 
 <header class="wc-map-header">
-  <h1>World Cup 2026 Match Map</h1>
-  <p>Official host cities across the United States, Canada, and Mexico.</p>
+  <div class="container center">
+    <h1>World Cup 2026 Match Map</h1>
+    <p class="subtitle">
+      Official host cities across the United States, Canada, and Mexico.
+    </p>
+  </div>
 </header>
 
 <main class="wc-map-layout">
 
+  <!-- ✅ MAP CONTAINER (WILL NOW HAVE HEIGHT) -->
   <section class="wc-map-canvas">
     <div id="map"></div>
   </section>
 
+  <!-- ✅ CITY SELECTOR -->
   <aside class="wc-city-panel">
-    <h2>Select a host city</h2>
-    <p class="panel-subtitle">
-      Numbers on the map correspond to the city list below.
-    </p>
+    <h2>
+      Select a host city
+      <span class="panel-subtitle">
+        Numbers on the map correspond to the city list below.
+      </span>
+    </h2>
 
     <div class="city-columns">
 
@@ -69,6 +83,7 @@
 
 </main>
 
+<!-- ✅ CORRECT SCRIPT LOADING (ORDER MATTERS) -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="./assets/wc-map.js"></script>
 
