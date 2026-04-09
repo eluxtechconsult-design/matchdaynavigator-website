@@ -6,66 +6,69 @@
 
   <title>Stadium – World Cup 2026</title>
 
-  <!-- ✅ Global site styles -->
+  <!-- Global site styles -->
   <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
     .stadium-container {
       max-width: 720px;
-      margin: 24px auto;
+      margin: 16px auto;
       padding: 0 16px;
     }
 
+    /* Headings */
     h1 {
-      font-size: 1.9rem;
-      margin-bottom: 4px;
-    }
-
-    .stadium-meta {
-      font-size: 0.95rem;
-      color: #475569;
-      margin-bottom: 14px;
+      font-size: 1.7rem;
+      margin-bottom: 2px;
     }
 
     h2 {
-      font-size: 1.1rem;
-      margin: 16px 0 6px;
+      font-size: 1rem;
+      margin: 10px 0 4px;
     }
 
     p {
-      line-height: 1.45;
+      line-height: 1.4;
       margin: 0;
     }
 
     ul {
       margin: 0;
-      padding-left: 18px;
+      padding-left: 16px;
+    }
+
+    .stadium-meta {
+      font-size: 0.85rem;
+      color: #475569;
+      margin-bottom: 10px;
     }
 
     .stadium-section {
-      margin-top: 14px;
+      margin-top: 10px;
     }
 
     .subtle {
       color: #64748b;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
+    /* WhatsApp CTA – compact but clear */
     .whatsapp-cta {
-      margin: 20px auto 14px;
-      padding: 15px;
+      margin: 12px auto 8px;
+      padding: 12px;
       background: #ecfdf5;
       border: 1px solid #a7f3d0;
-      border-radius: 12px;
+      border-radius: 10px;
       text-align: center;
     }
 
     .whatsapp-cta a {
       display: inline-block;
-      margin-top: 8px;
+      margin-top: 6px;
       font-weight: 800;
       color: #16a34a;
       text-decoration: none;
+      font-size: 0.9rem;
     }
 
     .whatsapp-cta a:hover {
@@ -74,8 +77,8 @@
 
     .back-link {
       display: block;
-      margin-top: 16px;
-      font-size: 0.9rem;
+      margin-top: 10px;
+      font-size: 0.85rem;
       text-align: center;
     }
   </style>
@@ -132,7 +135,6 @@
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
   const lang = params.get("lang") || "en";
-
   if (!id) return;
 
   const [stadiums, cities, strings] = await Promise.all([
@@ -142,11 +144,8 @@
   ]);
 
   const stadium = stadiums.find(s => s.id === id);
-  if (!stadium) return;
-
   const city = cities.find(c => c.id === stadium.cityId);
 
-  /* Core content */
   document.getElementById("stadium-name").textContent = stadium.name;
   document.getElementById("stadium-city").textContent =
     `${city.name} · World Cup 2026`;
@@ -157,7 +156,6 @@
   document.getElementById("stadium-capacity").textContent =
     stadium.capacity;
 
-  /* Localised UI labels */
   document.getElementById("t-stadium-info").textContent = strings.stadium_info;
   document.getElementById("t-capacity").textContent = strings.capacity;
   document.getElementById("t-matches").textContent = strings.matches_title;
@@ -173,21 +171,11 @@
   document.getElementById("whatsapp-link").textContent =
     strings.whatsapp_cta_line;
 
-  /* Matches */
   const matchList = document.getElementById("match-list");
   if (!stadium.matches || stadium.matches.length === 0) {
-    matchList.innerHTML =
-      `<li>${strings.matches_placeholder}</li>`;
-  } else {
-    stadium.matches.forEach(m => {
-      const li = document.createElement("li");
-      li.textContent =
-        `${m.date} · ${m.stage} · ${m.home} vs ${m.away} (${m.kickoff})`;
-      matchList.appendChild(li);
-    });
+    matchList.innerHTML = `<li>${strings.matches_placeholder}</li>`;
   }
 
-  /* WhatsApp welcome message */
   const whatsappMessage =
     `Welcome to Matchday Navigator 👋
 
