@@ -11,11 +11,11 @@
     content="Explore all official World Cup 2026 host cities and stadiums across the USA, Canada, and Mexico."
   />
 
-  <!-- Base styles -->
-  /assets/style.css
-  ./assets/wc-map.css
+  <!-- ✅ FIXED: Correct CSS loading -->
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="./assets/wc-map.css" />
 
-  <!-- Leaflet CSS -->
+  <!-- ✅ Leaflet CSS -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -45,7 +45,6 @@
   <aside class="wc-city-panel">
     <h2>Select a host city</h2>
 
-    <!-- USA -->
     <div class="city-group">
       <h3>🇺🇸 United States</h3>
       <ul>
@@ -63,7 +62,6 @@
       </ul>
     </div>
 
-    <!-- CANADA -->
     <div class="city-group">
       <h3>🇨🇦 Canada</h3>
       <ul>
@@ -72,7 +70,6 @@
       </ul>
     </div>
 
-    <!-- MEXICO -->
     <div class="city-group">
       <h3>🇲🇽 Mexico</h3>
       <ul>
@@ -96,10 +93,10 @@
   </div>
 </footer>
 
-<!-- Leaflet JS -->
+<!-- ✅ Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- Map logic -->
+<!-- ✅ Map logic -->
 <script src="./assets/wc-map.js"></script>
 
 </body>
