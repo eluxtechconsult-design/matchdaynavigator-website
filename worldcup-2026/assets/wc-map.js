@@ -8,8 +8,9 @@
     attribution: "© OpenStreetMap contributors"
   }).addTo(map);
 
-  const cities = await fetch("../data/cities.json").then(r => r.json());
-  const stadiums = await fetch("../data/stadiums.json").then(r => r.json());
+  // ✅ ABSOLUTE PATHS (FIX)
+  const cities = await fetch("/data/cities.json").then(r => r.json());
+  const stadiums = await fetch("/data/stadiums.json").then(r => r.json());
 
   const bounds = [];
   const cityById = {};
@@ -21,7 +22,7 @@
     return [8, -2];
   }
 
-  // ---------- CITIES ON MAP ----------
+  // --- Render cities on map ---
   cities.forEach(city => {
     const bullet = L.circleMarker([city.lat, city.lng], {
       radius: 3,
@@ -45,12 +46,14 @@
     bounds.push([city.lat, city.lng]);
   });
 
-  // ---------- CITY → STADIUM EXPANSION ----------
+  // --- Expand city → stadium ---
   function activateCity(cityId) {
     const city = cityById[cityId];
+    if (!city) return;
+
     map.setView([city.lat, city.lng], 6, { animate: true });
 
-    // Collapse all stadium lists first
+    // Collapse all lists first
     document.querySelectorAll(".stadium-list").forEach(list => {
       list.innerHTML = "";
     });
@@ -63,33 +66,27 @@
       .filter(s => s.cityId === cityId)
       .forEach(s => {
         const li = document.createElement("li");
-
-        // ✅ CORRECT HTML (THIS IS THE FIX)
         li.innerHTML = `
           <a href="/worldcup-2026/stadiums/?id=${s.id}">
             ${s.name}
           </a>
         `;
-
         container.appendChild(li);
       });
   }
 
-  // ---------- RESET ----------
+  // --- Reset map ---
   function resetMap() {
     map.fitBounds(bounds, {
       padding: [100, 100],
       maxZoom: 4
     });
-    document.querySelectorAll(".stadium-list").forEach(l => {
-      l.innerHTML = "";
-    });
+    document.querySelectorAll(".stadium-list").forEach(l => l.innerHTML = "");
   }
 
-  // Initial view
   resetMap();
 
-  // City list click
+  // List clicks
   document.querySelectorAll("[data-city]").forEach(el => {
     el.addEventListener("click", () => activateCity(el.dataset.city));
   });
