@@ -8,14 +8,12 @@
 
   <meta
     name="description"
-    content="Explore World Cup 2026 host cities and stadiums across the USA, Canada and Mexico. A calm, guided matchday experience."
+    content="Event-specific matchday guidance infrastructure for major sporting events. Clear arrival, access, and policy information delivered via WhatsApp."
   />
 
-  <!-- ✅ FIXED: Correct stylesheet loading -->
-  <link rel="stylesheet" href="/assets/style.css" />
+  /assets/style.css
 
   <style>
-    /* ===== HERO ===== */
     .hero {
       background: linear-gradient(180deg, #f8fafc, #eef2f7);
       padding: 100px 0 90px;
@@ -23,7 +21,7 @@
     }
 
     .hero-logo {
-      width: 180px; /* ✅ 3x bigger */
+      width: 180px;
       margin-bottom: 20px;
     }
 
@@ -35,19 +33,18 @@
     }
 
     .flags img {
-      width: 60px; /* ✅ 3x bigger */
+      width: 60px;
       height: auto;
     }
 
     .hero-subtitle {
-      max-width: 700px;
+      max-width: 760px;
       margin: 18px auto 0;
       color: #475569;
       font-size: 1.15rem;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    /* ===== CTA ===== */
     .primary-button {
       display: inline-block;
       margin-top: 30px;
@@ -64,7 +61,6 @@
       background: #15803d;
     }
 
-    /* ===== WORLD CUP SECTION ===== */
     .wc-entry {
       background: #ffffff;
       padding: 90px 0;
@@ -97,9 +93,8 @@
       font-size: 1rem;
     }
 
-    /* ===== PROVIDES SECTION ===== */
     .section-light {
-      background: #f1f5f9; /* ✅ visible background */
+      background: #f1f5f9;
       padding: 90px 0;
     }
 
@@ -118,6 +113,26 @@
       text-align: center;
     }
 
+    .infrastructure-block {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 70px 20px;
+      text-align: center;
+    }
+
+    .infra-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 36px;
+    }
+
+    @media (max-width: 768px) {
+      .infra-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .center {
       text-align: center;
     }
@@ -126,40 +141,67 @@
 
 <body>
 
-<!-- ================= HERO ================= -->
-
 <header class="hero">
   <div class="container center">
 
-    <!-- ✅ LOGO -->
-    <img
-      src="/assets/logo.png"
-      alt="MatchDay Navigator"
-      class="hero-logo"
-    />
+    /assets/logo.png
 
     <h1>MatchDay Navigator</h1>
 
-    <!-- ✅ FLAGS -->
     <div class="flags">
-      <img src="/assets/flags/us.png" alt="USA" />
-      <img src="/assets/flags/ca.png" alt="Canada" />
-      <img src="/assets/flags/mx.png" alt="Mexico" />
+      /assets/flags/us.png
+      /assets/flags/ca.png
+      /assets/flags/mx.png
     </div>
 
     <p class="hero-subtitle">
-      The matchday experience for World Cup 2026<br />
-      across the USA, Canada and Mexico
+      Event‑specific matchday guidance infrastructure for World Cup 2026<br />
+      across the USA, Canada, and Mexico.
     </p>
 
-    <a href="/worldcup-2026/" class="primary-button">
+    /worldcup-2026/
       Explore World Cup 2026 Match Map
     </a>
 
   </div>
 </header>
 
-<!-- ============= WORLD CUP SPLIT ============= -->
+<section class="infrastructure-block">
+  <h2>What MatchDay Navigator is</h2>
+
+  <p>
+    <strong>MatchDay Navigator is temporary matchday guidance infrastructure.</strong><br />
+    It provides fans with clear, event‑specific arrival, access, and policy information via WhatsApp,
+    before and during major sporting events.
+  </p>
+
+  <p>
+    The service is opt‑in, informational, and time‑limited, and is designed to
+    <strong>complement city and stadium operations — not replace them</strong>.
+  </p>
+
+  <div class="infra-columns">
+    <div>
+      <h3>What this is</h3>
+      <ul>
+        <li>Event‑bound fan guidance</li>
+        <li>Opt‑in WhatsApp delivery</li>
+        <li>Operationally neutral information</li>
+        <li>Approved rules and timings</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>What this is not</h3>
+      <ul>
+        <li>Advertising or marketing</li>
+        <li>Crowd control or security operations</li>
+        <li>Ticketing or access enforcement</li>
+        <li>Location tracking or behavioural profiling</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <section class="wc-entry">
   <div class="container center">
@@ -167,8 +209,8 @@
     <h2>World Cup 2026</h2>
 
     <p class="section-intro">
-      Discover how World Cup 2026 will be experienced across host cities,
-      stadiums and matchdays.
+      Explore how World Cup 2026 will be experienced across host cities,
+      stadiums, and matchdays.
     </p>
 
     <div class="wc-entry-grid">
@@ -177,62 +219,56 @@
         <h3>⚽ Matchdays & Stadiums</h3>
         <p>
           Interactive map of official host cities and stadiums.
-          Explore where matches take place and plan matchday journeys.
+          Plan matchday journeys with clarity.
         </p>
-        <a href="/worldcup-2026/">View Matchday Map →</a>
+        /worldcup-2026/View Matchday Map →</a>
       </div>
 
       <div class="wc-entry-card subtle">
-        <h3>🌆 Host Cities & World Cup Experience</h3>
+        <h3>🌆 Host Cities</h3>
         <p>
-          Explore the cities behind the tournament — travel context,
-          city atmosphere and local initiatives.
+          Explore host cities and their World Cup context.
         </p>
-        <a href="/worldcup-2026/host-cities/">Explore Host Cities →</a>
+        /worldcup-2026/host-cities/Explore Host Cities →</a>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ============= PROVIDES ============= -->
-
 <section class="section-light">
   <div class="container center">
-
-    <h2>What MatchDay Navigator provides</h2>
+    <h2>What fans receive on matchday</h2>
 
     <div class="feature-cards">
-
       <div class="card">
         <h3>🏟 Stadium & kickoff confirmation</h3>
-        <p>Clear, official matchday information you can rely on.</p>
+        <p>Clear, official event‑specific information.</p>
       </div>
 
       <div class="card">
-        <h3>🚆 Arrival & routes</h3>
-        <p>Guidance from major transport hubs to the stadium.</p>
+        <h3>🚆 Arrival & access routes</h3>
+        <p>Guidance aligned to matchday conditions.</p>
       </div>
 
       <div class="card">
         <h3>🎒 Entry & bag rules</h3>
-        <p>Understand what you can bring and how to enter.</p>
+        <p>Approved policies delivered clearly.</p>
       </div>
 
       <div class="card">
         <h3>⏱ Timely updates</h3>
-        <p>Delivered only when they matter on matchday.</p>
+        <p>Only when relevant during the matchday window.</p>
       </div>
-
     </div>
-
   </div>
 </section>
 
 <footer class="footer">
   <div class="container center">
-    <a href="/privacy.html">Privacy Policy</a> ·
-    <a href="/terms.html">Terms of Service</a>
+    /privacy.html ·
+    /terms.html> ·
+    /cities/For cities & venues</a>
     <p>© MatchDay Navigator</p>
   </div>
 </footer>
