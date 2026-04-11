@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
+<html lang=" charset="UTF-8" /><html lang="en">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>You’re Unlocked – Matchday Essentials</title>
 
   <!-- Global site styles -->
@@ -58,70 +55,46 @@
 </head>
 
 <body>
-
   <div class="unlocked-container">
-
     <div class="unlocked-icon">🎉</div>
-
     <h1>You’re Unlocked</h1>
 
     <p>
-      Your matchday essentials for this stadium are now active.
+      Your matchday essentials for <strong>Lumen Field</strong> are now active.
     </p>
 
     <p>
-      You’ll receive arrival guidance, entry rules, and kick‑off
-      reminders directly on WhatsApp.
+      You’ll receive arrival guidance, entry rules, and kick‑off reminders
+      directly on WhatsApp.
     </p>
-
-    <a
-      id="whatsapp-link"
-      class="primary-cta"
-      target="_blank"
-      rel="noopener"
-    >
-      Continue on WhatsApp →
-    </a>
 
     <p class="subtle">
-      You can stop messages at any time by replying STOP.
+      Redirecting you to WhatsApp…
     </p>
-
   </div>
 
   <script>
-    // Read stadium from query string: ?stadium=lumen-field
-    const params = new URLSearchParams(window.location.search);
-    const stadiumId = params.get("stadium") || "";
+    /*
+      Seattle pilot – deterministic WhatsApp handoff
+      Bird-connected number: +1 555-827-3850
+    */
 
-    const stadiumName = stadiumId
-      ? stadiumId
-          .replace(/-/g, " ")
-          .replace(/\b\w/g, char => char.toUpperCase())
-      : "your stadium";
+    const WHATSAPP_NUMBER = "15558273850";
 
-    const whatsappMessage =
-`Welcome to Matchday Navigator 👋
+    const MESSAGE =
+      "Hi – I’m here for matchday updates for Lumen Field.";
 
-You’re all set for matchday at ${stadiumName}.
-
-You’ll receive:
-• Arrival guidance
-• Entry rules & bag policies
-• Kick‑off reminders
-
-Messages are only sent around matchdays.
-Reply STOP anytime to opt out.`;
-
-    const phoneNumber = "15550000000"; // replace with real WhatsApp number
-
-    document.getElementById("whatsapp-link").href =
+    const WHATSAPP_URL =
       "https://wa.me/" +
-      phoneNumber +
+      WHATSAPP_NUMBER +
       "?text=" +
-      encodeURIComponent(whatsappMessage);
-  </script>
+      encodeURIComponent(MESSAGE);
 
+    // Short delay allows copy to render before redirect
+    setTimeout(() => {
+      window.location.href = WHATSAPP_URL;
+    }, 500);
+  </script>
 </body>
 </html>
-``
+<head>
