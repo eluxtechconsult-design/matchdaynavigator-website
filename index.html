@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>MatchDay Navigator – World Cup 2026</title>
 
   <meta
@@ -11,7 +10,7 @@
     content="Event-specific matchday guidance infrastructure for major sporting events. Clear arrival, access, and policy information delivered via WhatsApp."
   />
 
-  /assets/style.css
+  <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
     .hero {
@@ -19,24 +18,20 @@
       padding: 100px 0 90px;
       text-align: center;
     }
-
     .hero-logo {
       width: 180px;
       margin-bottom: 20px;
     }
-
     .flags {
       display: flex;
       justify-content: center;
       gap: 16px;
       margin: 20px 0 10px;
     }
-
     .flags img {
       width: 60px;
       height: auto;
     }
-
     .hero-subtitle {
       max-width: 760px;
       margin: 18px auto 0;
@@ -44,7 +39,6 @@
       font-size: 1.15rem;
       line-height: 1.6;
     }
-
     .primary-button {
       display: inline-block;
       margin-top: 30px;
@@ -56,34 +50,45 @@
       text-decoration: none;
       font-size: 1.05rem;
     }
-
     .primary-button:hover {
       background: #15803d;
     }
-
+    .infrastructure-block {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 70px 20px;
+      text-align: center;
+    }
+    .infra-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 36px;
+    }
+    @media (max-width: 768px) {
+      .infra-columns {
+        grid-template-columns: 1fr;
+      }
+    }
     .wc-entry {
       background: #ffffff;
       padding: 90px 0;
     }
-
     .wc-entry-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 28px;
       margin-top: 42px;
     }
-
     .wc-entry-card {
       background: #ffffff;
       border: 1px solid #e5e7eb;
       border-radius: 16px;
       padding: 32px;
     }
-
     .wc-entry-card.subtle {
       background: #f8fafc;
     }
-
     .wc-entry-card a {
       display: inline-block;
       margin-top: 16px;
@@ -92,19 +97,16 @@
       text-decoration: none;
       font-size: 1rem;
     }
-
     .section-light {
       background: #f1f5f9;
       padding: 90px 0;
     }
-
     .feature-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 28px;
       margin-top: 44px;
     }
-
     .card {
       background: #ffffff;
       border-radius: 16px;
@@ -112,27 +114,6 @@
       box-shadow: 0 6px 14px rgba(0,0,0,0.06);
       text-align: center;
     }
-
-    .infrastructure-block {
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 70px 20px;
-      text-align: center;
-    }
-
-    .infra-columns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      margin-top: 36px;
-    }
-
-    @media (max-width: 768px) {
-      .infra-columns {
-        grid-template-columns: 1fr;
-      }
-    }
-
     .center {
       text-align: center;
     }
@@ -143,15 +124,14 @@
 
 <header class="hero">
   <div class="container center">
-
-    /assets/logo.png
+    <img src="/assets/logo.png" alt="MatchDay Navigator" class="hero-logo" />
 
     <h1>MatchDay Navigator</h1>
 
     <div class="flags">
-      /assets/flags/us.png
-      /assets/flags/ca.png
-      /assets/flags/mx.png
+      <img src="/assets/flags/us.png" alt="USA" />
+      <img src="/assets/flags/ca.png" alt="Canada" />
+      <img src="/assets/flags/mx.png" alt="Mexico" />
     </div>
 
     <p class="hero-subtitle">
@@ -159,10 +139,9 @@
       across the USA, Canada, and Mexico.
     </p>
 
-    /worldcup-2026/
+    <a href="/worldcup-2026/" class="primary-button">
       Explore World Cup 2026 Match Map
     </a>
-
   </div>
 </header>
 
@@ -190,14 +169,13 @@
         <li>Approved rules and timings</li>
       </ul>
     </div>
-
     <div>
       <h3>What this is not</h3>
       <ul>
         <li>Advertising or marketing</li>
-        <li>Crowd control or security operations</li>
+        <li>Crowd control or security</li>
         <li>Ticketing or access enforcement</li>
-        <li>Location tracking or behavioural profiling</li>
+        <li>Location tracking or profiling</li>
       </ul>
     </div>
   </div>
@@ -205,33 +183,24 @@
 
 <section class="wc-entry">
   <div class="container center">
-
     <h2>World Cup 2026</h2>
-
     <p class="section-intro">
       Explore how World Cup 2026 will be experienced across host cities,
       stadiums, and matchdays.
     </p>
 
     <div class="wc-entry-grid">
-
       <div class="wc-entry-card">
         <h3>⚽ Matchdays & Stadiums</h3>
-        <p>
-          Interactive map of official host cities and stadiums.
-          Plan matchday journeys with clarity.
-        </p>
-        /worldcup-2026/View Matchday Map →</a>
+        <p>Interactive map of official host cities and stadiums.</p>
+        <a href="/worldcup-2026/">View Matchday Map →</a>
       </div>
 
       <div class="wc-entry-card subtle">
         <h3>🌆 Host Cities</h3>
-        <p>
-          Explore host cities and their World Cup context.
-        </p>
-        /worldcup-2026/host-cities/Explore Host Cities →</a>
+        <p>Explore host cities and their World Cup context.</p>
+        <a href="/worldcup-2026/host-cities/">Explore Host Cities →</a>
       </div>
-
     </div>
   </div>
 </section>
@@ -239,23 +208,19 @@
 <section class="section-light">
   <div class="container center">
     <h2>What fans receive on matchday</h2>
-
     <div class="feature-cards">
       <div class="card">
         <h3>🏟 Stadium & kickoff confirmation</h3>
         <p>Clear, official event‑specific information.</p>
       </div>
-
       <div class="card">
         <h3>🚆 Arrival & access routes</h3>
         <p>Guidance aligned to matchday conditions.</p>
       </div>
-
       <div class="card">
         <h3>🎒 Entry & bag rules</h3>
         <p>Approved policies delivered clearly.</p>
       </div>
-
       <div class="card">
         <h3>⏱ Timely updates</h3>
         <p>Only when relevant during the matchday window.</p>
@@ -266,9 +231,9 @@
 
 <footer class="footer">
   <div class="container center">
-    /privacy.html ·
-    /terms.html> ·
-    /cities/For cities & venues</a>
+    <a href="/privacy.html">Privacy Policy</a> ·
+    <a href="/terms.html">Terms of Service</a> ·
+    <a href="/cities/">For cities & venues</a>
     <p>© MatchDay Navigator</p>
   </div>
 </footer>
