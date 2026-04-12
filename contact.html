@@ -4,39 +4,121 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Contact – MatchDay Navigator</title>
+
   <link rel="stylesheet" href="/assets/style.css"/>
+
+  <style>
+    body { background:#f8fafc; }
+
+    .container {
+      max-width: 900px;
+      margin: 80px auto;
+      background: white;
+      border-radius: 20px;
+      padding: 56px;
+      box-shadow: 0 12px 36px rgba(0,0,0,.1);
+    }
+
+    h1 { margin-top: 0; }
+
+    .intro {
+      font-size: 1.05rem;
+      color: #334155;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    select, textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 1rem;
+    }
+
+    textarea { min-height: 160px; }
+
+    button {
+      align-self: start;
+      padding: 16px 36px;
+      border-radius: 14px;
+      border: none;
+      background: #16a34a;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover { background: #15803d; }
+
+    .back {
+      margin-top: 48px;
+      text-align: center;
+    }
+
+    .back a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
 </head>
 
 <body>
 
-<section class="mission">
+<div class="container">
   <h1>Contact MatchDay Navigator</h1>
 
-  <p>
-    Use this form to start a coordination conversation.
-    We respond with next steps relevant to your role.
+  <p class="intro">
+    This form initiates a structured coordination conversation.
+    A member of the MatchDay Navigator team will follow up with
+    next steps relevant to your role and event context.
   </p>
 
   <form action="https://formsubmit.co/admin@matchdaynavigator.com" method="POST">
-    <input type="hidden" name="_subject" value="MatchDay Navigator – New Inquiry"/>
 
-    <label>Organisation type</label>
-    <select name="Role">
-      <option>City / Authority</option>
-      <option>Stadium / Venue</option>
-      <option>Hotel / Hospitality</option>
-      <option>Other</option>
-    </select>
+    <input type="hidden" name="_subject" value="MatchDay Navigator – New Inquiry" />
 
-    <label>Your message</label>
-    <textarea name="Message" placeholder="Briefly describe your role and event involvement" required></textarea>
+    <div>
+      <label for="role">Organisation type</label>
+      <select id="role" name="Role">
+        <option>City / Authority</option>
+        <option>Stadium / Venue</option>
+        <option>Hotel / Hospitality</option>
+        <option>Other</option>
+      </select>
+    </div>
 
-    <button type="submit" class="cta-button">
-      Submit inquiry →
+    <div>
+      <label for="message">Briefly describe your role and the event(s)</label>
+      <textarea id="message"
+                name="Message"
+                placeholder="Example: City transport authority coordinating fan arrivals for 3 group-stage matches at [stadium name]"></textarea>
+    </div>
+
+    <button type="submit">
+      Submit coordination request →
     </button>
+
   </form>
 
-</section>
+  <div class="back">
+    <a href="/cities/">← Back to Cities & Venues</a>
+  </div>
+</div>
 
 </body>
 </html>
