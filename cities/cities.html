@@ -4,39 +4,167 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>City Participation – MatchDay Navigator</title>
+
   <link rel="stylesheet" href="/assets/style.css"/>
+
+  <style>
+    body {
+      background: #f8fafc;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #0f172a, #1e293b);
+      color: #ffffff;
+      padding: 70px 20px;
+      text-align: center;
+    }
+
+    .hero img {
+      max-width: 220px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      max-width: 820px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #cbd5f5;
+    }
+
+    .content {
+      max-width: 980px;
+      margin: 80px auto;
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 64px;
+      box-shadow: 0 16px 44px rgba(0,0,0,0.1);
+    }
+
+    .content h2 {
+      margin-top: 0;
+    }
+
+    .content p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #334155;
+      margin-bottom: 24px;
+    }
+
+    .cta-box {
+      margin-top: 48px;
+      padding: 40px;
+      background: #f1f5f9;
+      border-left: 6px solid #16a34a;
+      border-radius: 20px;
+    }
+
+    .cta-box h3 {
+      margin-top: 0;
+    }
+
+    .cta-box p {
+      font-size: 1.05rem;
+      color: #334155;
+      margin-bottom: 24px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 16px 40px;
+      background-color: #16a34a;
+      color: #ffffff;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 14px;
+      font-size: 1.05rem;
+    }
+
+    .cta-button:hover {
+      background-color: #15803d;
+    }
+
+    .back-link {
+      margin-top: 56px;
+      text-align: center;
+    }
+
+    .back-link a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
 </head>
 
 <body>
 
-<section class="hero" style="background:#1e293b;color:white;padding:60px;text-align:center">
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <img src="/assets/logo.png" alt="MatchDay Navigator logo"/>
+
   <h1>City Participation</h1>
+
   <p>
-    MatchDay Navigator supports host cities by delivering consistent, event‑specific guidance
-    to fans before and during matchday.
+    MatchDay Navigator supports host cities by delivering clear, event‑specific
+    matchday guidance to fans before and during matchday — helping reduce
+    arrival confusion while preserving full operational control.
   </p>
 </section>
 
-<section class="mission">
-  <h3>What this involves</h3>
+<!-- ================= CONTENT ================= -->
+<section class="content">
+
+  <h2>What this involves</h2>
+
   <p>
-    Cities approve high‑level travel guidance, policies, and timings.
-    The platform distributes this guidance via WhatsApp during the matchday window only.
+    Participating cities approve high‑level matchday guidance such as arrival
+    messaging, policies, and indicative timings. MatchDay Navigator distributes
+    this guidance via WhatsApp during the event window only.
   </p>
 
-  <h3>What is not required</h3>
   <p>
-    No IT integration, no control‑room access, no enforcement role, and no permanent staff involvement.
+    The service is designed to operate alongside existing city and stadium
+    operations, reducing repetitive questions and helping fans arrive informed
+    and prepared.
   </p>
 
-  <h3>Next step</h3>
+  <h2>What is not required</h2>
+
   <p>
-    Start a coordination conversation to align on event scope and timelines.
+    No IT integration, no control‑room access, no enforcement role, and no
+    permanent staffing involvement are required. Cities retain full authority
+    over policies, rules, and decision‑making at all times.
   </p>
 
-  <a class="cta-button" href="/contact.html?role=city">
-    Start city coordination →
-  </a>
+  <!-- ================= CTA ================= -->
+  <div class="cta-box">
+    <h3>Next step</h3>
+
+    <p>
+      Cities interested in participating are invited to submit an official
+      partnership enquiry to initiate onboarding and operational alignment.
+    </p>
+
+    <p>
+      This allows the MatchDay Navigator coordination team to review the event
+      context and respond with clear, role‑specific next steps and timelines.
+    </p>
+
+    <a href="/contact.html" class="cta-button">
+      Submit partnership enquiry →
+    </a>
+  </div>
+
+  <div class="back-link">
+    <a href="/cities/">← Back to Cities &amp; Venues</a>
+  </div>
+
 </section>
 
 </body>
