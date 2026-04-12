@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/assets/style.css"/>
 
   <style>
-    body { background: #f8fafc; }
+    body { background:#f8fafc; }
 
     .form-container {
       max-width: 980px;
@@ -21,63 +21,35 @@
 
     h1 { margin-top: 0; }
 
-    .intro {
-      max-width: 820px;
-      margin-bottom: 48px;
-      font-size: 1.1rem;
-      color: #334155;
-      line-height: 1.7;
-    }
-
     form {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 34px;
+      gap: 32px;
     }
 
     label {
       font-weight: 600;
-      margin-bottom: 8px;
       display: block;
+      margin-bottom: 8px;
     }
 
-    select, textarea {
+    input, select, textarea {
       width: 100%;
-      padding: 18px;
-      border-radius: 12px;
+      padding: 16px;
+      border-radius: 10px;
       border: 1px solid #cbd5e1;
       font-size: 1rem;
     }
 
-    textarea {
-      min-height: 260px;
-      resize: vertical;
-    }
+    textarea { min-height: 220px; }
 
     button {
-      align-self: flex-start;
       padding: 18px 46px;
       border-radius: 16px;
       border: none;
       background: #16a34a;
       color: white;
       font-weight: 700;
-      font-size: 1.05rem;
       cursor: pointer;
-    }
-
-    button:hover { background: #15803d; }
-
-    .back {
-      margin-top: 64px;
-      text-align: center;
-    }
-
-    .back a {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
     }
   </style>
 </head>
@@ -87,16 +59,10 @@
 <div class="form-container">
   <h1>Start a coordination conversation</h1>
 
-  <p class="intro">
-    Use the form below to initiate a structured coordination conversation
-    with the MatchDay Navigator team. We will follow up with clear,
-    role‑specific next steps aligned with your location and event timeline.
-  </p>
-
   <form method="POST" action="/api/contact">
     <div>
-      <label for="role">Organisation type</label>
-      <select name="role" id="role">
+      <label>Organisation type</label>
+      <select name="role">
         <option>City / Authority</option>
         <option>Stadium / Venue</option>
         <option>Hotel / Hospitality</option>
@@ -105,22 +71,19 @@
     </div>
 
     <div>
-      <label for="message">Briefly describe your role and event context</label>
-      <textarea
-        id="message"
-        name="message"
-        placeholder="Example: City transport authority coordinating arrivals for three World Cup matches at [stadium name]."
-        required></textarea>
+      <label>Work email address</label>
+      <input type="email" name="email" required/>
+    </div>
+
+    <div>
+      <label>Briefly describe your role and event context</label>
+      <textarea name="message" required></textarea>
     </div>
 
     <button type="submit">
       Submit coordination request →
     </button>
   </form>
-
-  <div class="back">
-    <a href="/cities/">← Back to Cities & Venues</a>
-  </div>
 </div>
 
 </body>
