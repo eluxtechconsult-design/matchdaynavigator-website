@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thank You – MatchDay Navigator</title>
 
   <meta
     name="description"
     content="Thank you for contacting MatchDay Navigator. Your partnership enquiry has been received and will be reviewed by our coordination team."
-  >
+  />
 
-  /assets/style.css
+  <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
     body {
@@ -19,17 +19,21 @@
 
     .thankyou-container {
       max-width: 900px;
-      margin: 90px auto;
+      margin: 100px auto;
       background: #ffffff;
       border-radius: 26px;
-      padding: 70px;
+      padding: 72px 64px;
       box-shadow: 0 16px 46px rgba(0,0,0,0.1);
       text-align: center;
     }
 
+    .logo {
+      margin-bottom: 28px;
+    }
+
     .logo img {
       width: 160px;
-      margin-bottom: 28px;
+      height: auto;
     }
 
     h1 {
@@ -38,14 +42,19 @@
 
     p {
       max-width: 700px;
-      margin: 14px auto;
+      margin: 16px auto;
       font-size: 1.05rem;
       color: #334155;
       line-height: 1.7;
     }
 
+    .next-steps {
+      margin-top: 36px;
+      font-weight: 500;
+    }
+
     .back-link {
-      margin-top: 48px;
+      margin-top: 52px;
     }
 
     .back-link a {
@@ -64,7 +73,7 @@
     }
 
     .footer-note {
-      margin-top: 48px;
+      margin-top: 52px;
       font-size: 0.85rem;
       color: #64748b;
     }
@@ -73,38 +82,41 @@
 
 <body>
 
-<div class="thankyou-container">
+  <div class="thankyou-container">
 
-  <div class="logo">
-    /assets/logo.png
+    <!-- Brand -->
+    <div class="logo">
+      <img src="/assets/logo.png" alt="MatchDay Navigator logo" />
+    </div>
+
+    <h1>Thank you</h1>
+
+    <p>
+      Your partnership enquiry has been successfully received and securely
+      delivered to the MatchDay Navigator coordination team.
+    </p>
+
+    <p class="next-steps">
+      We will review the information provided and follow up with clear,
+      role‑specific next steps aligned with your location and event context.
+    </p>
+
+    <p>
+      MatchDay Navigator supports cities, venues, and partners through calm,
+      practical, event‑specific matchday guidance — without adding operational
+      burden.
+    </p>
+
+    <!-- CTA back to main site -->
+    <div class="back-link">
+      <a href="/index.html">Return to main site</a>
+    </div>
+
+    <div class="footer-note">
+      MatchDay Navigator provides informational guidance only.
+    </div>
+
   </div>
-
-  <h1>Thank you</h1>
-
-  <p>
-    Your partnership enquiry has been successfully received and securely delivered
-    to the MatchDay Navigator coordination team.
-  </p>
-
-  <p>
-    We will review the information and follow up with clear, role‑specific next steps
-    aligned with your location and event context.
-  </p>
-
-  <p>
-    MatchDay Navigator supports cities, venues, and partners through
-    calm, practical, event‑specific matchday guidance — without adding operational burden.
-  </p>
-
-  <div class="back-link">
-    /index.htmlReturn to main site</a>
-  </div>
-
-  <div class="footer-note">
-    MatchDay Navigator provides informational guidance only.
-  </div>
-
-</div>
 
 </body>
 </html>
