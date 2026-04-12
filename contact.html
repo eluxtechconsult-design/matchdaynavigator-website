@@ -50,7 +50,7 @@
     }
 
     textarea {
-      min-height: 240px;
+      min-height: 260px;
       resize: vertical;
     }
 
@@ -66,9 +66,7 @@
       cursor: pointer;
     }
 
-    button:hover {
-      background: #15803d;
-    }
+    button:hover { background: #15803d; }
 
     .back {
       margin-top: 64px;
@@ -90,22 +88,15 @@
   <h1>Start a coordination conversation</h1>
 
   <p class="intro">
-    Use this form to initiate a structured coordination conversation with
-    the MatchDay Navigator team. We will follow up with clear, role‑specific
-    next steps aligned with your location and event timeline.
+    Use the form below to initiate a structured coordination conversation
+    with the MatchDay Navigator team. We will follow up with clear,
+    role‑specific next steps aligned with your location and event timeline.
   </p>
 
-  <!-- ✅ THIS IS THE CRITICAL FIX -->
-  <form action="https://formsubmit.co/admin@matchdaynavigator.com" method="POST">
-
-    <!-- FormSubmit configuration -->
-    <input type="hidden" name="_subject" value="MatchDay Navigator – New Coordination Request">
-    <input type="hidden" name="_next" value="https://www.matchdaynavigator.com/thank-you.html">
-    <input type="hidden" name="_captcha" value="false">
-
+  <form method="POST" action="/api/contact">
     <div>
       <label for="role">Organisation type</label>
-      <select name="Role" id="role">
+      <select name="role" id="role">
         <option>City / Authority</option>
         <option>Stadium / Venue</option>
         <option>Hotel / Hospitality</option>
@@ -115,15 +106,16 @@
 
     <div>
       <label for="message">Briefly describe your role and event context</label>
-      <textarea id="message"
-                name="Message"
-                placeholder="Example: City transport authority coordinating fan arrivals for three World Cup matches at [stadium name]."></textarea>
+      <textarea
+        id="message"
+        name="message"
+        placeholder="Example: City transport authority coordinating arrivals for three World Cup matches at [stadium name]."
+        required></textarea>
     </div>
 
     <button type="submit">
       Submit coordination request →
     </button>
-
   </form>
 
   <div class="back">
