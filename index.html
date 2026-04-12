@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Event-specific matchday guidance infrastructure for major sporting events. Clear arrival, access, and policy information delivered via WhatsApp."
+    content="Event‑specific matchday guidance infrastructure for major sporting events. Clear arrival, access, and policy information delivered via WhatsApp."
   />
 
   <link rel="stylesheet" href="/assets/style.css" />
@@ -16,80 +16,107 @@
   <style>
     .hero {
       background: linear-gradient(180deg, #f8fafc, #eef2f7);
-      padding: 100px 0 90px;
+      padding: 70px 0 60px; /* reduced spacing */
       text-align: center;
     }
 
     .hero-logo {
-      width: 180px;
-      margin-bottom: 20px;
+      width: 170px;
+      margin-bottom: 18px;
     }
 
     .flags {
       display: flex;
       justify-content: center;
-      gap: 16px;
-      margin: 20px 0 10px;
+      gap: 14px;
+      margin: 18px 0 8px;
     }
 
     .flags img {
-      width: 60px;
+      width: 52px;
       height: auto;
     }
 
     .hero-subtitle {
       max-width: 760px;
-      margin: 18px auto 0;
+      margin: 16px auto 0;
       color: #475569;
       font-size: 1.15rem;
       line-height: 1.6;
     }
 
+    .cta-row {
+      margin-top: 28px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
     .primary-button {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 16px 38px;
+      padding: 16px 36px;
       background: #16a34a;
       color: #ffffff;
       border-radius: 12px;
       font-weight: 700;
       text-decoration: none;
       font-size: 1.05rem;
+      display: inline-block;
     }
 
     .primary-button:hover {
       background: #15803d;
     }
 
+    .secondary-button {
+      padding: 13px 28px; /* slightly smaller */
+      background: #22c55e;
+      color: #ffffff;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: inline-block;
+      opacity: 0.95;
+    }
+
+    .secondary-button:hover {
+      background: #16a34a;
+    }
+
     .infrastructure-block {
       max-width: 920px;
       margin: 0 auto;
-      padding: 70px 20px;
+      padding: 50px 20px; /* reduced spacing */
       text-align: center;
     }
 
     .infra-columns {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      margin-top: 36px;
+      gap: 26px;
+      margin-top: 32px;
+      text-align: left;
     }
 
     @media (max-width: 768px) {
       .infra-columns {
         grid-template-columns: 1fr;
+        text-align: center;
       }
     }
 
-    .section-light {
-      background: #f1f5f9;
-      padding: 90px 0;
+    footer {
+      padding: 40px 0 30px;
+      text-align: center;
+      color: #475569;
+      font-size: 0.9rem;
     }
 
-    .note-link {
-      margin-top: 28px;
-      font-size: 0.95rem;
-      color: #475569;
+    footer a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
     }
   </style>
 </head>
@@ -97,7 +124,7 @@
 <body>
 
 <header class="hero">
-  <div class="container center">
+  <div class="container">
 
     <img src="/assets/logo.png" alt="MatchDay Navigator" class="hero-logo" />
 
@@ -114,14 +141,15 @@
       across the USA, Canada, and Mexico.
     </p>
 
-    <a href="/worldcup-2026/" class="primary-button">
-      Explore World Cup 2026 Match Map
-    </a>
+    <div class="cta-row">
+      <a href="/worldcup-2026/" class="primary-button">
+        Explore World Cup 2026 Match Map
+      </a>
 
-    <p class="note-link">
-      Are you a city, stadium, or event operator?
-      <a href="/cities/">Learn how MatchDay Navigator supports host venues →</a>
-    </p>
+      <a href="/cities/" class="secondary-button">
+        For cities & venues
+      </a>
+    </div>
 
   </div>
 </header>
@@ -163,13 +191,11 @@
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container center">
-    <a href="/privacy.html">Privacy Policy</a> ·
-    <a href="/terms.html">Terms of Service</a> ·
-    <a href="/cities/">For cities & venues</a>
-    <p>© MatchDay Navigator</p>
-  </div>
+<footer>
+  <a href="/privacy.html">Privacy Policy</a> ·
+  <a href="/terms.html">Terms of Service</a> ·
+  <a href="/cities/">For cities & venues</a>
+  <p>© MatchDay Navigator</p>
 </footer>
 
 </body>
