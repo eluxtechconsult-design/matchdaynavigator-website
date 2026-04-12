@@ -5,67 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Contact – MatchDay Navigator</title>
 
-  <link rel="stylesheet" href="/assets/style.css"/>
+  <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
-    body { background:#f8fafc; }
+    body { background: #f8fafc; }
 
-    .container {
-      max-width: 900px;
-      margin: 80px auto;
-      background: white;
-      border-radius: 20px;
-      padding: 56px;
-      box-shadow: 0 12px 36px rgba(0,0,0,.1);
+    .form-container {
+      max-width: 980px;
+      margin: 90px auto;
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 64px;
+      box-shadow: 0 16px 44px rgba(0,0,0,0.1);
     }
 
-    h1 { margin-top: 0; }
+    h1 {
+      margin-top: 0;
+    }
 
     .intro {
-      font-size: 1.05rem;
+      max-width: 820px;
+      margin-bottom: 48px;
+      font-size: 1.1rem;
       color: #334155;
-      margin-bottom: 36px;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     form {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 28px;
+      gap: 34px;
     }
 
     label {
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       display: block;
     }
 
-    select, textarea {
+    select,
+    textarea {
       width: 100%;
-      padding: 14px;
-      border-radius: 8px;
+      padding: 18px;
+      border-radius: 12px;
       border: 1px solid #cbd5e1;
       font-size: 1rem;
     }
 
-    textarea { min-height: 160px; }
+    textarea {
+      min-height: 240px;
+      resize: vertical;
+    }
 
     button {
-      align-self: start;
-      padding: 16px 36px;
-      border-radius: 14px;
+      align-self: flex-start;
+      padding: 18px 46px;
+      border-radius: 16px;
       border: none;
       background: #16a34a;
       color: white;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.05rem;
       cursor: pointer;
     }
 
-    button:hover { background: #15803d; }
+    button:hover {
+      background: #15803d;
+    }
 
     .back {
-      margin-top: 48px;
+      margin-top: 64px;
       text-align: center;
     }
 
@@ -73,28 +82,30 @@
       color: #2563eb;
       text-decoration: none;
       font-weight: 600;
+      font-size: 0.95rem;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
-  <h1>Contact MatchDay Navigator</h1>
+<div class="form-container">
+  <h1>Start a coordination conversation</h1>
 
   <p class="intro">
-    This form initiates a structured coordination conversation.
-    A member of the MatchDay Navigator team will follow up with
-    next steps relevant to your role and event context.
+    Use the form below to initiate a structured coordination conversation with
+    the MatchDay Navigator team. We respond with clear next steps relevant to your
+    role, location, and event timeline.
   </p>
 
   <form action="https://formsubmit.co/admin@matchdaynavigator.com" method="POST">
-
-    <input type="hidden" name="_subject" value="MatchDay Navigator – New Inquiry" />
+    <input type="hidden" name="_subject" value="MatchDay Navigator – New Coordination Request" />
+    <input type="hidden" name="_next" value="https://www.matchdaynavigator.com/thank-you.html" />
+    <input type="hidden" name="_captcha" value="false" />
 
     <div>
       <label for="role">Organisation type</label>
-      <select id="role" name="Role">
+      <select name="Role" id="role">
         <option>City / Authority</option>
         <option>Stadium / Venue</option>
         <option>Hotel / Hospitality</option>
@@ -103,20 +114,23 @@
     </div>
 
     <div>
-      <label for="message">Briefly describe your role and the event(s)</label>
-      <textarea id="message"
-                name="Message"
-                placeholder="Example: City transport authority coordinating fan arrivals for 3 group-stage matches at [stadium name]"></textarea>
+      <label for="message">Briefly describe your role and event context</label>
+      <textarea
+        id="message"
+        name="Message"
+        placeholder="Example: Stadium operations team coordinating gate access and bag policy for three group‑stage matches at [stadium name]."
+      ></textarea>
     </div>
 
     <button type="submit">
       Submit coordination request →
     </button>
-
   </form>
 
   <div class="back">
-    <a href="/cities/">← Back to Cities & Venues</a>
+    <a href="/cities/">
+      ← Back to Cities & Venues
+    </a>
   </div>
 </div>
 

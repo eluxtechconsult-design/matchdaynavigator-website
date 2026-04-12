@@ -5,43 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thank You – MatchDay Navigator</title>
 
-  <link rel="stylesheet" href="assets/style.css" />
-
   <meta
     name="description"
-    content="Thank you for contacting MatchDay Navigator. We will review your request and respond shortly."
+    content="Thank you for contacting MatchDay Navigator. Your request has been received and will be reviewed by our coordination team."
   />
+
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <style>
+    body {
+      background: #f8fafc;
+    }
+
+    .thankyou-container {
+      max-width: 900px;
+      margin: 90px auto;
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 70px;
+      box-shadow: 0 16px 46px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .logo {
+      margin-bottom: 28px;
+    }
+
+    .logo img {
+      width: 200px;
+    }
+
+    h1 {
+      margin-bottom: 22px;
+    }
+
+    p {
+      max-width: 700px;
+      margin: 14px auto;
+      font-size: 1.05rem;
+      color: #334155;
+      line-height: 1.7;
+    }
+
+    .next-steps {
+      margin-top: 36px;
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .back-link {
+      margin-top: 48px;
+    }
+
+    .back-link a {
+      display: inline-block;
+      padding: 14px 36px;
+      background: #16a34a;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .back-link a:hover {
+      background: #15803d;
+    }
+
+    .footer-note {
+      margin-top: 48px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+  </style>
 </head>
 
 <body>
 
-  <header class="hero" style="padding: 80px 20px 70px;">
-    <div class="brand">
-      <img src="assets/logo-symbol.svg" alt="MatchDay Navigator logo" />
-    </div>
+<div class="thankyou-container">
 
-    <h1>Thank you</h1>
+  <div class="logo">
+    <img src="assets/logo.png" alt="MatchDay Navigator" />
+  </div>
 
-    <p>
-      Your request has been received. We will review the information
-      and respond shortly.
-    </p>
+  <h1>Thank you</h1>
 
-    <p>
-      MatchDay Navigator is designed to support cities and venues
-      through clear, practical matchday guidance.
-    </p>
+  <p>
+    Your request has been successfully received and securely delivered to the
+    MatchDay Navigator coordination team.
+  </p>
 
-    <p class="partner-link">
-      <a href="index.html">Back to main site</a>
-    </p>
-  </header>
+  <p class="next-steps">
+    We will review the information and follow up with clear, role‑specific next steps
+    aligned with your location and event context.
+  </p>
 
-  <footer class="footer">
-    <p class="footer-small">
-      MatchDay Navigator provides informational guidance only.
-    </p>
-  </footer>
+  <p>
+    MatchDay Navigator exists to support cities, venues, and partners through
+    calm, practical, event‑specific matchday guidance — without adding operational burden.
+  </p>
+
+  <div class="back-link">
+    <a href="index.html">Return to main site</a>
+  </div>
+
+  <div class="footer-note">
+    MatchDay Navigator provides informational guidance only.
+  </div>
+
+</div>
 
 </body>
 </html>
