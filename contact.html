@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/assets/style.css"/>
 
   <style>
-    body { background:#f8fafc; }
+    body { background: #f8fafc; }
 
     .form-container {
       max-width: 980px;
@@ -19,18 +19,9 @@
       box-shadow: 0 16px 44px rgba(0,0,0,0.1);
     }
 
-    h1 { margin-top: 0; }
+    form { display: grid; gap: 32px; }
 
-    form {
-      display: grid;
-      gap: 32px;
-    }
-
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 8px;
-    }
+    label { font-weight: 600; margin-bottom: 6px; display: block; }
 
     input, select, textarea {
       width: 100%;
@@ -45,12 +36,14 @@
     button {
       padding: 18px 46px;
       border-radius: 16px;
-      border: none;
       background: #16a34a;
       color: white;
       font-weight: 700;
+      border: none;
       cursor: pointer;
     }
+
+    button:hover { background: #15803d; }
   </style>
 </head>
 
@@ -59,10 +52,13 @@
 <div class="form-container">
   <h1>Start a coordination conversation</h1>
 
-  <form method="POST" action="/api/contact">
+  <!-- ✅ THIS IS THE CRITICAL FIX -->
+  <form action="/api/contact" method="POST">
+
     <div>
-      <label>Organisation type</label>
-      <select name="role">
+      <label for="role">Organisation type</label>
+      <select name="role" id="role" required>
+        <option value="">Select one</option>
         <option>City / Authority</option>
         <option>Stadium / Venue</option>
         <option>Hotel / Hospitality</option>
@@ -71,18 +67,30 @@
     </div>
 
     <div>
-      <label>Work email address</label>
-      <input type="email" name="email" required/>
+      <label for="email">Work email address</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="name@organisation.com"
+        required
+      />
     </div>
 
     <div>
-      <label>Briefly describe your role and event context</label>
-      <textarea name="message" required></textarea>
+      <label for="message">Briefly describe your role and event context</label>
+      <textarea
+        id="message"
+        name="message"
+        placeholder="Example: City transport authority coordinating arrivals for three World Cup matches at Lumen Field."
+        required
+      ></textarea>
     </div>
 
     <button type="submit">
       Submit coordination request →
     </button>
+
   </form>
 </div>
 
