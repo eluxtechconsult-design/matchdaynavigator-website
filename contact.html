@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Contact – MatchDay Navigator</title>
 
-  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/assets/style.css"/>
 
   <style>
     body { background: #f8fafc; }
@@ -19,9 +19,7 @@
       box-shadow: 0 16px 44px rgba(0,0,0,0.1);
     }
 
-    h1 {
-      margin-top: 0;
-    }
+    h1 { margin-top: 0; }
 
     .intro {
       max-width: 820px;
@@ -43,8 +41,7 @@
       display: block;
     }
 
-    select,
-    textarea {
+    select, textarea {
       width: 100%;
       padding: 18px;
       border-radius: 12px;
@@ -93,15 +90,18 @@
   <h1>Start a coordination conversation</h1>
 
   <p class="intro">
-    Use the form below to initiate a structured coordination conversation with
-    the MatchDay Navigator team. We respond with clear next steps relevant to your
-    role, location, and event timeline.
+    Use this form to initiate a structured coordination conversation with
+    the MatchDay Navigator team. We will follow up with clear, role‑specific
+    next steps aligned with your location and event timeline.
   </p>
 
+  <!-- ✅ THIS IS THE CRITICAL FIX -->
   <form action="https://formsubmit.co/admin@matchdaynavigator.com" method="POST">
-    <input type="hidden" name="_subject" value="MatchDay Navigator – New Coordination Request" />
-    <input type="hidden" name="_next" value="https://www.matchdaynavigator.com/thank-you.html" />
-    <input type="hidden" name="_captcha" value="false" />
+
+    <!-- FormSubmit configuration -->
+    <input type="hidden" name="_subject" value="MatchDay Navigator – New Coordination Request">
+    <input type="hidden" name="_next" value="https://www.matchdaynavigator.com/thank-you.html">
+    <input type="hidden" name="_captcha" value="false">
 
     <div>
       <label for="role">Organisation type</label>
@@ -115,22 +115,19 @@
 
     <div>
       <label for="message">Briefly describe your role and event context</label>
-      <textarea
-        id="message"
-        name="Message"
-        placeholder="Example: Stadium operations team coordinating gate access and bag policy for three group‑stage matches at [stadium name]."
-      ></textarea>
+      <textarea id="message"
+                name="Message"
+                placeholder="Example: City transport authority coordinating fan arrivals for three World Cup matches at [stadium name]."></textarea>
     </div>
 
     <button type="submit">
       Submit coordination request →
     </button>
+
   </form>
 
   <div class="back">
-    <a href="/cities/">
-      ← Back to Cities & Venues
-    </a>
+    <a href="/cities/">← Back to Cities & Venues</a>
   </div>
 </div>
 
