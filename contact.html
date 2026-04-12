@@ -19,61 +19,47 @@
       box-shadow: 0 16px 44px rgba(0,0,0,0.1);
     }
 
-    .brand {
-      text-align: center;
-      margin-bottom: 32px;
-    }
+    .brand { text-align:center; margin-bottom:32px; }
+    .brand img { max-width:160px; }
 
-    .brand img { max-width: 180px; }
-
-    h1 { text-align: center; margin-top: 0; }
+    h1 { text-align:center; margin-top:0; }
 
     .intro {
-      max-width: 760px;
-      margin: 0 auto 48px;
-      text-align: center;
-      color: #475569;
-      font-size: 1.05rem;
-      line-height: 1.6;
+      max-width:760px;
+      margin:0 auto 48px;
+      text-align:center;
+      color:#475569;
+      font-size:1.05rem;
+      line-height:1.6;
     }
 
-    form { display: grid; gap: 32px; }
-
-    label { font-weight: 600; margin-bottom: 8px; display:block; }
+    form { display:grid; gap:32px; }
+    label { font-weight:600; display:block; margin-bottom:8px; }
 
     input, select, textarea {
-      width: 100%;
-      padding: 16px;
-      border-radius: 10px;
-      border: 1px solid #cbd5e1;
-      font-size: 1rem;
+      width:100%;
+      padding:16px;
+      border-radius:10px;
+      border:1px solid #cbd5e1;
+      font-size:1rem;
     }
 
-    textarea { min-height: 220px; }
+    textarea { min-height:220px; }
 
     button {
-      padding: 18px 46px;
-      border-radius: 16px;
-      background: #16a34a;
-      color: #fff;
-      font-weight: 700;
-      border: none;
-      font-size: 1.05rem;
-      cursor: pointer;
+      padding:18px 46px;
+      border-radius:16px;
+      background:#16a34a;
+      color:#fff;
+      font-weight:700;
+      border:none;
+      font-size:1.05rem;
+      cursor:pointer;
     }
-
     button:hover { background:#15803d; }
 
-    .back {
-      margin-top: 56px;
-      text-align: center;
-    }
-
-    .back a {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: 600;
-    }
+    .back { margin-top:56px; text-align:center; }
+    .back a { color:#2563eb; font-weight:600; text-decoration:none; }
   </style>
 </head>
 
@@ -90,17 +76,13 @@
   <p class="intro">
     MatchDay Navigator partners with host cities, venues, and operational stakeholders
     to deliver clear, event‑specific matchday guidance at scale.
-    <br><br>
-    Please use the form below to submit an official partnership enquiry.
-    Our coordination team will review your request and respond with
-    role‑specific next steps and timelines.
   </p>
 
   <form method="POST" action="https://mdn-bird-backend.onrender.com/api/contact">
 
     <div>
-      <label for="role">Organisation type</label>
-      <select name="role" id="role" required>
+      <label>Organisation type</label>
+      <select name="role" required>
         <option value="">Select one</option>
         <option>City / Authority</option>
         <option>Stadium / Venue</option>
@@ -110,13 +92,13 @@
     </div>
 
     <div>
-      <label for="email">Work email address</label>
-      <input type="email" id="email" name="email" required>
+      <label>Work email address</label>
+      <input type="email" name="email" required>
     </div>
 
     <div>
-      <label for="message">Partnership context</label>
-      <textarea id="message" name="message" required></textarea>
+      <label>Partnership context</label>
+      <textarea name="message" required></textarea>
     </div>
 
     <button type="submit">Submit partnership enquiry →</button>

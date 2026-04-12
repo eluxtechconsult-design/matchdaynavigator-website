@@ -1,33 +1,149 @@
-<section class="hero">
-  <img src="/assets/logo.png" alt="MatchDay Navigator" style="max-width:140px;">
-  <h1>City Participation</h1>
-  <p>
-    MatchDay Navigator supports host cities by delivering clear,
-    event‑specific matchday guidance to fans before and during matchday.
-  </p>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>City Participation – MatchDay Navigator</title>
 
-<section class="content">
+  <link rel="stylesheet" href="/assets/style.css" />
 
-  <h2>What this involves</h2>
-  <p>
-    Cities approve high‑level arrival guidance, policies, and timings.
-    Guidance is distributed during the matchday window only.
-  </p>
+  <style>
+    /* Local safeguards so this page cannot regress */
+    .hero {
+      padding: 64px 24px;
+      text-align: center;
+      background: #0f172a;
+      color: #ffffff;
+    }
 
-  <div class="cta-box">
-    <h3>Next step</h3>
+    .hero img {
+      max-width: 160px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: #cbd5f5;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .content {
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 0 24px;
+    }
+
+    .content h2 {
+      margin-top: 0;
+    }
+
+    .content p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #334155;
+      margin-bottom: 24px;
+    }
+
+    .cta-box {
+      margin-top: 48px;
+      padding: 36px;
+      background: #f1f5f9;
+      border-left: 6px solid #16a34a;
+      border-radius: 18px;
+    }
+
+    .cta-box h3 {
+      margin-top: 0;
+    }
+
+    .cta-box p {
+      margin-bottom: 20px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 16px 40px;
+      background-color: #16a34a;
+      color: #ffffff;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 14px;
+      font-size: 1.05rem;
+    }
+
+    .cta-button:hover {
+      background-color: #15803d;
+    }
+
+    .back-link {
+      margin-top: 56px;
+      text-align: center;
+    }
+
+    .back-link a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <img src="/assets/logo.png" alt="MatchDay Navigator" />
+
+    <h1>City Participation</h1>
+
     <p>
-      Cities interested in participating are invited to submit an official
-      partnership enquiry to initiate onboarding and operational alignment.
+      MatchDay Navigator supports host cities by delivering clear,
+      event‑specific matchday guidance to fans before and during matchday.
     </p>
-    <a href="/contact.html" class="primary-cta-button">
-      Submit partnership enquiry →
-    </a>
-  </div>
+  </section>
 
-  <p class="back-link">
-    <a href="/cities/">← Back to Cities & Venues</a>
-  </p>
+  <!-- ================= CONTENT ================= -->
+  <section class="content">
 
-</section>
+    <h2>What this involves</h2>
+
+    <p>
+      Participating cities approve high‑level arrival guidance, policies,
+      and indicative timings. This information is delivered to fans during
+      the matchday window only.
+    </p>
+
+    <p>
+      The service operates alongside existing city and venue operations,
+      helping reduce confusion and repetitive enquiries while preserving
+      full operational control.
+    </p>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <h3>Next step</h3>
+
+      <p>
+        Cities interested in participating are invited to submit an official
+        partnership enquiry to initiate onboarding and operational alignment.
+      </p>
+
+      <a class="cta-button" href="/contact.html">
+        Submit partnership enquiry →
+      </a>
+    </div>
+
+    <div class="back-link">
+      <a href="/cities/">← Back to Cities &amp; Venues</a>
+    </div>
+
+  </section>
+
+</body>
+</html>
