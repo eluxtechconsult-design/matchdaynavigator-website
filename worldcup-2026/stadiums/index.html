@@ -3,191 +3,198 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Stadium – World Cup 2026</title>
-
-  <!-- Global site styles -->
+  <title>World Cup 2026 Stadiums – MatchDay Navigator</title>
+  <meta
+    name="description"
+    content="Browse FIFA World Cup 2026 stadiums by host city and access official matchday guidance."
+  />
   <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
-    .stadium-container {
-      max-width: 720px;
-      margin: 16px auto;
-      padding: 0 16px;
+    body { background:#f8fafc; }
+
+    .hero {
+      background: linear-gradient(180deg,#0f172a,#1e293b);
+      color: white;
+      text-align: center;
+      padding: 70px 20px;
     }
 
-    /* Headings */
-    h1 {
-      font-size: 1.7rem;
-      margin-bottom: 2px;
+    .hero p {
+      max-width: 780px;
+      margin: 0 auto;
+      color: #cbd5f5;
+      font-size: 1.05rem;
+      line-height: 1.6;
     }
 
-    h2 {
-      font-size: 1rem;
-      margin: 10px 0 4px;
+    .content {
+      max-width: 1100px;
+      margin: 70px auto;
+      padding: 0 20px;
     }
 
-    p {
-      line-height: 1.4;
-      margin: 0;
+    .city-block {
+      margin-bottom: 48px;
     }
 
-    ul {
-      margin: 0;
-      padding-left: 16px;
+    .city-block h2 {
+      margin-bottom: 16px;
+      color: #0f172a;
     }
 
-    .stadium-meta {
-      font-size: 0.85rem;
-      color: #475569;
+    .stadium-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .stadium-card {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 22px rgba(0,0,0,.08);
+    }
+
+    .stadium-card h3 {
+      margin-top: 0;
       margin-bottom: 10px;
     }
 
-    .stadium-section {
-      margin-top: 10px;
-    }
-
-    .subtle {
-      color: #64748b;
-      font-size: 0.85rem;
-    }
-
-    /* WhatsApp CTA – compact but clear */
-    .whatsapp-cta {
-      margin: 12px auto 8px;
-      padding: 12px;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      border-radius: 10px;
-      text-align: center;
-    }
-
-    .whatsapp-cta a {
+    .stadium-card a {
       display: inline-block;
-      margin-top: 6px;
-      font-weight: 800;
-      color: #16a34a;
+      margin-top: 12px;
+      color: #2563eb;
+      font-weight: 600;
       text-decoration: none;
-      font-size: 0.9rem;
     }
 
-    .whatsapp-cta a:hover {
-      text-decoration: underline;
-    }
-
-    .back-link {
-      display: block;
-      margin-top: 10px;
-      font-size: 0.85rem;
+    footer {
       text-align: center;
+      padding: 40px;
+    }
+
+    footer a {
+      color: #2563eb;
+      font-weight: 600;
+      text-decoration: none;
     }
   </style>
 </head>
 
 <body>
 
-<div class="stadium-container">
+<section class="hero">
+  <h1>World Cup 2026 Stadiums</h1>
+  <p>
+    Select a stadium to view official, event‑specific matchday guidance
+    for the FIFA World Cup 2026.
+  </p>
+</section>
 
-  <h1 id="stadium-name"></h1>
-  <p id="stadium-city" class="stadium-meta"></p>
+<section class="content">
 
-  <div class="stadium-section">
-    <h2 id="t-stadium-info"></h2>
-    <p id="stadium-description"></p>
+  <!-- USA -->
+  <div class="city-block">
+    <h2>United States</h2>
+    <div class="stadium-list">
+
+      <div class="stadium-card">
+        <h3>MetLife Stadium</h3>
+        <p>New York / New Jersey</p>
+        /worldcup-2026/stadiums/?id=metlife-stadiumView stadium →</a>
+      </div>
+
+      <div class="stadium-card">
+        <h3>SoFi Stadium</h3>
+        <p>Los Angeles</p>
+        /worldcup-2026/stadiums/?id=sofi-stadiumView stadium →</a>
+      </div>
+
+      <div class="stadium-card">
+        <h3>AT&T Stadium</h3>
+        <p>Dallas</p>
+        /worldcup-2026/stadiums/?id=att-stadiumView stadium →</a>
+      </div>
+
+      <div class="stadium-card">
+        <h3>NRG Stadium</h3>
+        <p>Houston</p>
+        /worldcup-2026/stadiums/?id=nrg-stadiumView stadium →</a>
+      </div>
+
+      <div class="stadium-card">
+        <h3>Mercedes‑Benz Stadium</h3>
+        <p>Atlanta</p>
+        /worldcup-2026/stadiums/?id=mercedes-benz-stadiumView stadium →</a>
+      </div>
+
+      <div class="stadium-card">
+        <h3>Lumen Field</h3>
+        <p>Seattle</p>
+        /worldcup-2026/stadiums/?id=lumen-fieldView stadium →</a>
+      </div>
+
+      <div class="stadium-card">
+        <h3>Lincoln Financial Field</h3>
+        <p>Philadelphia</p>
+        
+      </div>
+
+      <div class="stadium-card">
+        <h3>Gillette Stadium</h3>
+        <p>Boston</p>
+        /worldcup-2026/stadiums/?id=gillette-stadiumView stadium →</a>
+      </div>
+
+      <div class="stadium-card">
+        <h3>Levi’s Stadium</h3>
+        <p>San Francisco Bay Area</p>
+        /worldcup-2026/stadiums/?id=levis-stadiumView stadium →</a>
+      </div>
+
+    </div>
   </div>
 
-  <div class="stadium-section">
-    <h2 id="t-capacity"></h2>
-    <p id="stadium-capacity"></p>
+  <!-- Canada -->
+  <div class="city-block">
+    <h2>Canada</h2>
+    <div class="stadium-list">
+
+      <div class="stadium-card">
+        <h3>BC Place</h3>
+        <p>Vancouver</p>
+        /worldcup-2026/stadiums/?id=bc-placeView stadium →</a>
+      </div>
+
+      <div class="stadium-card">
+        <h3>BMO Field</h3>
+        <p>Toronto</p>
+        /worldcup-2026/stadiums/?id=bmo-fieldView stadium →</a>
+      </div>
+
+    </div>
   </div>
 
-  <div class="stadium-section">
-    <h2 id="t-matches"></h2>
-    <ul id="match-list" class="subtle"></ul>
+  <!-- Mexico -->
+  <div class="city-block">
+    <h2>Mexico</h2>
+    <div class="stadium-list">
+
+      <div class="stadium-card">
+        <h3>Estadio Azteca</h3>
+        <p>Mexico City</p>
+        /worldcup-2026/stadiums/?id=estadio-aztecaView stadium →</a>
+      </div>
+
+    </div>
   </div>
 
-  <div class="stadium-section">
-    <h2 id="t-arrival"></h2>
-    <p id="arrival-text" class="subtle"></p>
-  </div>
+</section>
 
-  <div class="stadium-section">
-    <h2 id="t-bags"></h2>
-    <p id="bags-text" class="subtle"></p>
-  </div>
-
-  <div class="stadium-section whatsapp-cta">
-    <h2 id="t-matchday"></h2>
-    <p>
-      <span id="whatsapp-intro"></span><br />
-      <a id="whatsapp-link" target="_blank"></a>
-    </p>
-  </div>
-
-  <a href="/worldcup-2026/" class="back-link">
-    ← Back to Match Map
-  </a>
-
-</div>
-
-<script>
-(async function () {
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id");
-  const lang = params.get("lang") || "en";
-  if (!id) return;
-
-  const [stadiums, cities, strings] = await Promise.all([
-    fetch("/data/stadiums.json").then(r => r.json()),
-    fetch("/data/cities.json").then(r => r.json()),
-    fetch(`/locales/${lang}.json`).then(r => r.json())
-  ]);
-
-  const stadium = stadiums.find(s => s.id === id);
-  const city = cities.find(c => c.id === stadium.cityId);
-
-  document.getElementById("stadium-name").textContent = stadium.name;
-  document.getElementById("stadium-city").textContent =
-    `${city.name} · World Cup 2026`;
-
-  document.getElementById("stadium-description").textContent =
-    stadium.description[lang] || stadium.description.en;
-
-  document.getElementById("stadium-capacity").textContent =
-    stadium.capacity;
-
-  document.getElementById("t-stadium-info").textContent = strings.stadium_info;
-  document.getElementById("t-capacity").textContent = strings.capacity;
-  document.getElementById("t-matches").textContent = strings.matches_title;
-  document.getElementById("t-arrival").textContent = strings.arrival_title;
-  document.getElementById("t-bags").textContent = strings.bags_title;
-  document.getElementById("t-matchday").textContent = strings.matchday_assistance;
-
-  document.getElementById("arrival-text").textContent = strings.arrival_text;
-  document.getElementById("bags-text").textContent = strings.bags_text;
-  document.getElementById("whatsapp-intro").textContent =
-    strings.whatsapp_cta_intro;
-
-  document.getElementById("whatsapp-link").textContent =
-    strings.whatsapp_cta_line;
-
-  const matchList = document.getElementById("match-list");
-  if (!stadium.matches || stadium.matches.length === 0) {
-    matchList.innerHTML = `<li>${strings.matches_placeholder}</li>`;
-  }
-
-  const whatsappMessage =
-    `Welcome to Matchday Navigator 👋
-
-You’ll get matchday updates for ${stadium.name}, including arrival guidance, entry rules and kick‑off reminders.
-
-Messages are only sent around matchdays.
-Reply STOP anytime to opt out.`;
-
-  document.getElementById("whatsapp-link").href =
-    `https://wa.me/15550000000?text=${encodeURIComponent(whatsappMessage)}`;
-})();
-</script>
+<footer>
+  /worldcup-2026/cities← Browse host cities</a>
+</footer>
 
 </body>
 </html>
