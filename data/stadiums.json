@@ -16,13 +16,6 @@
         "awayTeam": "TBD"
       },
       {
-        "date": "2026-06-22",
-        "kickoffLocal": "21:00",
-        "stage": "Group Stage",
-        "homeTeam": "Germany",
-        "awayTeam": "TBD"
-      },
-      {
         "date": "2026-07-19",
         "kickoffLocal": "20:00",
         "stage": "Final",
@@ -39,7 +32,7 @@
     "cityId": "dallas",
     "capacity": "80,000",
     "description": {
-      "en": "AT&T Stadium in Dallas will host multiple group stage and knockout matches during the FIFA World Cup 2026."
+      "en": "AT&T Stadium in Dallas will host multiple World Cup 2026 matches."
     },
     "wcMatches": [
       {
@@ -48,20 +41,6 @@
         "stage": "Group Stage",
         "homeTeam": "England",
         "awayTeam": "Croatia"
-      },
-      {
-        "date": "2026-06-26",
-        "kickoffLocal": "21:00",
-        "stage": "Group Stage",
-        "homeTeam": "Argentina",
-        "awayTeam": "Austria"
-      },
-      {
-        "date": "2026-07-06",
-        "kickoffLocal": "19:00",
-        "stage": "Round of 16",
-        "homeTeam": "TBD",
-        "awayTeam": "TBD"
       }
     ],
     "whatsappIntent": "Get matchday travel and stadium updates for AT&T Stadium."

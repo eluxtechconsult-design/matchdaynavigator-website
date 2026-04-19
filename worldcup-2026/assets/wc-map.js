@@ -15,7 +15,7 @@
   const cities   = await fetch("/data/cities.json").then(r => r.json());
   const stadiums = await fetch("/data/stadiums.json").then(r => r.json());
 
-  const cityById    = {};
+  const cityById = {};
   const stadiumById = {};
   const markerByCity = {};
   const initialBounds = [];
@@ -24,31 +24,38 @@
   stadiums.forEach(s => stadiumById[s.id] = s);
 
   const panel = document.querySelector(".wc-city-panel");
+  const resetBtn = document.querySelector(".reset-map");
 
   /* =============================
-     RESET MAP VIEW ✅
+     RENDER BASE CITY LIST ✅
      ============================= */
-  function resetMapView() {
-    map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
+  function renderCityList() {
+    panel.innerHTML = `
+      <h2 class="panel-title">Select a host city</h2>
+      <div class="panel-subtitle">
+        Click a city name or map icon to view its stadium.
+      </div>
+    `;
 
     document.querySelectorAll("[data-city]").forEach(el => {
       el.classList.remove("active");
       const ul = el.querySelector(".stadium-list");
       if (ul) ul.innerHTML = "";
     });
-
-    panel.innerHTML = `
-      <h2 class="panel-title">Select a host city</h2>
-      <div class="panel-subtitle">
-        Click a city name or map icon to view stadium details.
-      </div>
-    `;
   }
 
-  document.querySelector(".reset-map").addEventListener("click", resetMapView);
+  /* =============================
+     RESET MAP VIEW ✅ (FIXED)
+     ============================= */
+  function resetMapView() {
+    map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
+    renderCityList();
+  }
+
+  resetBtn.addEventListener("click", resetMapView);
 
   /* =============================
-     STADIUM DETAIL VIEW ✅
+     WHATSAPP CTA ✅
      ============================= */
   function renderWhatsAppCTA(stadium) {
     if (!stadium.whatsappIntent) return "";
@@ -62,6 +69,9 @@
     `;
   }
 
+  /* =============================
+     STADIUM DETAIL VIEW ✅
+     ============================= */
   function showStadium(stadiumId) {
     const stadium = stadiumById[stadiumId];
     if (!stadium) return;
@@ -82,7 +92,9 @@
             <ul>
               ${stadium.wcMatches.map(m => `
                 <li>
-                  ${new Date(m.date).toDateString()} · ${m.stage} · ${m.kickoffLocal}<br>
+                  ${new Date(m.date).toDateString()}
+                  · ${m.stage}
+                  · ${m.kickoffLocal}<br>
                   ${m.homeTeam} vs ${m.awayTeam}
                 </li>
               `).join("")}
@@ -183,8 +195,8 @@
   const params = new URLSearchParams(location.search);
   if (params.get("stadium")) {
     showStadium(params.get("stadium"));
-  } else if (params.get("city")) {
-    activateCity(params.get("city"));
+  } else {
+    renderCityList();
   }
 
 })();
