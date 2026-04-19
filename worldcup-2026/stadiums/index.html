@@ -6,72 +6,107 @@
   <title>World Cup 2026 Stadiums – MatchDay Navigator</title>
   <meta
     name="description"
-    content="Browse FIFA World Cup 2026 stadiums by host city and access official matchday guidance."
+    content="Browse FIFA World Cup 2026 stadiums by host city and access official, event‑specific matchday guidance."
   />
   <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
-    body { background:#f8fafc; }
-
-    .hero {
-      background: linear-gradient(180deg,#0f172a,#1e293b);
-      color: white;
-      text-align: center;
-      padding: 70px 20px;
+    body {
+      margin: 0;
+      background: #f8fafc;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #0f172a;
     }
 
-    .hero p {
-      max-width: 780px;
+    /* ===== Header ===== */
+    .header {
+      background: linear-gradient(180deg, #0f172a, #1e293b);
+      text-align: center;
+      padding: 42px 20px 56px;
+      color: #ffffff;
+    }
+
+    .header img {
+      width: 150px;
+      margin-bottom: 18px;
+    }
+
+    .header h1 {
+      margin: 0 0 12px;
+      font-size: 2.1rem;
+    }
+
+    .header p {
+      max-width: 820px;
       margin: 0 auto;
       color: #cbd5f5;
       font-size: 1.05rem;
       line-height: 1.6;
     }
 
+    /* ===== Content ===== */
     .content {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 70px auto;
-      padding: 0 20px;
+      padding: 0 24px;
     }
 
-    .city-block {
-      margin-bottom: 48px;
+    .country-block {
+      margin-bottom: 64px;
     }
 
-    .city-block h2 {
-      margin-bottom: 16px;
-      color: #0f172a;
+    .country-block h2 {
+      margin-bottom: 24px;
+      font-size: 1.6rem;
     }
 
-    .stadium-list {
+    .stadium-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 26px;
     }
 
     .stadium-card {
-      background: white;
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 8px 22px rgba(0,0,0,.08);
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px 26px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .stadium-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.12);
     }
 
     .stadium-card h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+    }
+
+    .stadium-card p {
+      margin: 0 0 18px;
+      color: #475569;
+      font-size: 0.95rem;
     }
 
     .stadium-card a {
       display: inline-block;
-      margin-top: 12px;
       color: #2563eb;
       font-weight: 600;
       text-decoration: none;
     }
 
+    .stadium-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== Footer ===== */
     footer {
       text-align: center;
-      padding: 40px;
+      padding: 50px 20px 40px;
+      color: #475569;
+      font-size: 0.9rem;
     }
 
     footer a {
@@ -84,7 +119,9 @@
 
 <body>
 
-<section class="hero">
+<!-- ===== Branded Header ===== -->
+<section class="header">
+  <img src="/assets/logo.png" alt="MatchDay Navigator" />
   <h1>World Cup 2026 Stadiums</h1>
   <p>
     Select a stadium to view official, event‑specific matchday guidance
@@ -92,99 +129,94 @@
   </p>
 </section>
 
+<!-- ===== Stadium List ===== -->
 <section class="content">
 
-  <!-- USA -->
-  <div class="city-block">
+  <!-- United States -->
+  <div class="country-block">
     <h2>United States</h2>
-    <div class="stadium-list">
+    <div class="stadium-grid">
 
       <div class="stadium-card">
         <h3>MetLife Stadium</h3>
         <p>New York / New Jersey</p>
-        /worldcup-2026/stadiums/?id=metlife-stadiumView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=metlife-stadium">View stadium →</a>
       </div>
 
       <div class="stadium-card">
         <h3>SoFi Stadium</h3>
         <p>Los Angeles</p>
-        /worldcup-2026/stadiums/?id=sofi-stadiumView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=sofi-stadium">View stadium →</a>
       </div>
 
       <div class="stadium-card">
-        <h3>AT&T Stadium</h3>
+        <h3>AT&amp;T Stadium</h3>
         <p>Dallas</p>
-        /worldcup-2026/stadiums/?id=att-stadiumView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=att-stadium">View stadium →</a>
       </div>
 
       <div class="stadium-card">
         <h3>NRG Stadium</h3>
         <p>Houston</p>
-        /worldcup-2026/stadiums/?id=nrg-stadiumView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=nrg-stadium">View stadium →</a>
       </div>
 
       <div class="stadium-card">
         <h3>Mercedes‑Benz Stadium</h3>
         <p>Atlanta</p>
-        /worldcup-2026/stadiums/?id=mercedes-benz-stadiumView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=mercedes-benz-stadium">View stadium →</a>
       </div>
 
       <div class="stadium-card">
         <h3>Lumen Field</h3>
         <p>Seattle</p>
-        /worldcup-2026/stadiums/?id=lumen-fieldView stadium →</a>
-      </div>
-
-      <div class="stadium-card">
-        <h3>Lincoln Financial Field</h3>
-        <p>Philadelphia</p>
-        
+        <a href="/worldcup-2026/stadiums/?id=lumen-field">View stadium →</a>
       </div>
 
       <div class="stadium-card">
         <h3>Gillette Stadium</h3>
         <p>Boston</p>
-        /worldcup-2026/stadiums/?id=gillette-stadiumView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=gillette-stadium">View stadium →</a>
       </div>
 
       <div class="stadium-card">
         <h3>Levi’s Stadium</h3>
         <p>San Francisco Bay Area</p>
-        /worldcup-2026/stadiums/?id=levis-stadiumView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=levis-stadium">View stadium →</a>
       </div>
 
     </div>
   </div>
 
   <!-- Canada -->
-  <div class="city-block">
+  <div class="country-block">
     <h2>Canada</h2>
-    <div class="stadium-list">
+    <div class="stadium-grid">
 
       <div class="stadium-card">
         <h3>BC Place</h3>
         <p>Vancouver</p>
-        /worldcup-2026/stadiums/?id=bc-placeView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=bc-place">View stadium →</a>
       </div>
 
       <div class="stadium-card">
         <h3>BMO Field</h3>
         <p>Toronto</p>
-        /worldcup-2026/stadiums/?id=bmo-fieldView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=bmo-field">View stadium →</a>
       </div>
 
     </div>
   </div>
 
   <!-- Mexico -->
-  <div class="city-block">
+  <div class="country-block">
     <h2>Mexico</h2>
-    <div class="stadium-list">
+    <div class="stadium-grid">
 
       <div class="stadium-card">
         <h3>Estadio Azteca</h3>
         <p>Mexico City</p>
-        /worldcup-2026/stadiums/?id=estadio-aztecaView stadium →</a>
+        <a href="/worldcup-2026/stadiums/?id=estadio-azteca">View stadium →</a>
       </div>
 
     </div>
@@ -193,7 +225,7 @@
 </section>
 
 <footer>
-  /worldcup-2026/cities← Browse host cities</a>
+  <a href="/worldcup-2026/cities">← Browse host cities</a>
 </footer>
 
 </body>
