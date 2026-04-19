@@ -1,90 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title id="seo-title">World Cup 2026 Host City</title>
-  <meta id="seo-description" name="description" content="" />
+  <title>World Cup 2026 Host Cities – MatchDay Navigator</title>
 
-  ../../assets/style.css
-  ../assets/wc-map.css
+  <meta
+    name="description"
+    content="Overview of official host cities for the FIFA World Cup 2026 across the United States, Canada, and Mexico."
+  />
 
-  <meta name="robots" content="index,follow" />
-
-  <!-- Structured Data -->
-  <script type="application/ld+json" id="city-schema"></script>
+  <link rel="stylesheet" href="/assets/style.css">
 </head>
 
 <body>
 
-<header class="wc-header">
-  <div class="container">
-    <h1 id="city-name">City</h1>
-    <p id="city-meta"></p>
-  </div>
+<header style="padding:40px 20px">
+  <h1>World Cup 2026 Host Cities</h1>
+  <p>
+    Official host cities across the United States, Canada, and Mexico.
+  </p>
+
+  <p style="margin-top:16px">
+    <a href="/worldcup-2026/">
+      ← View interactive match map
+    </a>
+  </p>
 </header>
 
-<main class="container wc-detail">
-  <h2>Stadiums</h2>
-  <ul id="stadium-list"></ul>
+<main style="padding:0 20px 40px">
 
-  <p class="cta">
-    📲 Matchday details are delivered via WhatsApp once you have a booking.
-  </p>
+  <h2>United States</h2>
+  <ul>
+    <li>New York / New Jersey</li>
+    <li>Atlanta</li>
+    <li>Boston</li>
+    <li>Dallas</li>
+    <li>Houston</li>
+    <li>Kansas City</li>
+    <li>Los Angeles</li>
+    <li>Miami</li>
+    <li>Philadelphia</li>
+    <li>San Francisco Bay Area</li>
+    <li>Seattle</li>
+  </ul>
+
+  <h2>Canada</h2>
+  <ul>
+    <li>Toronto</li>
+    <li>Vancouver</li>
+  </ul>
+
+  <h2>Mexico</h2>
+  <ul>
+    <li>Mexico City</li>
+    <li>Guadalajara</li>
+    <li>Monterrey</li>
+  </ul>
+
 </main>
-
-<footer class="footer">
-  <div class="container footer-links">
-    ../index.htmlBack to map</a>
-  </div>
-</footer>
-
-<script>
-(async function () {
-  const params = new URLSearchParams(location.search);
-  const cityId = params.get("id");
-
-  const cities = await fetch("../../data/cities.json").then(r => r.json());
-  const stadiums = await fetch("../../data/stadiums.json").then(r => r.json());
-
-  const city = cities.find(c => c.id === cityId);
-  if (!city) return;
-
-  document.getElementById("city-name").textContent = city.name;
-  document.getElementById("city-meta").textContent =
-    `${city.country} · ${city.region}`;
-
-  // SEO
-  document.getElementById("seo-title").textContent = city.seo.title;
-  document.getElementById("seo-description").content = city.seo.description;
-
-  // JSON-LD
-  document.getElementById("city-schema").textContent =
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "TouristDestination",
-      "name": city.name,
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": city.country
-      }
-    });
-
-  // Stadium list
-  const list = document.getElementById("stadium-list");
-  stadiums.filter(s => s.cityId === city.id).forEach(s => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${s.name}</strong><br/>
-      Capacity: ${s.capacity.toLocaleString()}<br/>
-      ../stadiums/index.html?id=${s.id}">View stadium</a>
-    `;
-    list.appendChild(li);
-  });
-
-})();
-</script>
 
 </body>
 </html>
