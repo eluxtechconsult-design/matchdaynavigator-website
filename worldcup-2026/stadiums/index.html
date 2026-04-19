@@ -1,100 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>World Cup 2026 Stadiums – MatchDay Navigator</title>
+  <title>Stadium Test</title>
+</head>
+<body>
 
-  <meta name="description"
-        content="Browse FIFA World Cup 2026 stadiums and view official, event‑specific matchday guidance.">
+<h1>Stadiums test</h1>
 
-  <link rel="stylesheet" href<body>
-
-<header style="background:linear-gradient(180deg,#0f172a,#1e293b);padding:56px 20px;text-align:center;color:#fff;">
-  <img src="/assets/logo.png" alt="MatchDay Navigator" style="width:160px;margin-bottom:20px0px;margin:0 auto">
-    Select a stadium to view official, event‑specific matchday guidance.
-  </p>
-</header>
-
-<section id="stadium-list" style="max-width:1200px;margin:70px auto;padding:0 24px;"></section>
-<section id="stadium-detail" style="max-width:900px;margin:70px auto;padding:0 24px;display:none;"></section>
-
-<footer style="text-align:center;padding:48px">
-  <a href="/worldcup-2026/citieshost cities</a>
-</footer>
+<div id="out">JS not running</div>
 
 <script>
-(async function () {
-  console.log("Stadiums page JS loaded ✅");
-
-  const params = new URLSearchParams(window.location.search);
-  const stadiumId = params.get("id");
-
-  const listView = document.getElementById("stadium-list");
-  const detailView = document.getElementById("stadium-detail");
-
-  let cities = [];
-  let stadiums = [];
-
-  try {
-    cities = await fetch("/data/cities.json").then(r => r.json());
-    stadiums = await fetch("/data/stadiums.json").then(r => r.json());
-    console.log("Loaded cities:", cities.length);
-    console.log("Loaded stadiums:", stadiums.length);
-  } catch (e) {
-    listView.innerHTML =
-      "<p style='color:#b91c1c;font-weight:700'>Failed to load stadium data.</p>";
-    console.error(e);
-    return;
-  }
-
-  const cityById = {};
-  cities.forEach(c => cityById[c.id] = c);
-
-  /* ===== DETAIL MODE ===== */
-  if (stadiumId) {
-    const stadium = stadiums.find(s => s.id === stadiumId);
-
-    if (!stadium) {
-      detailView.innerHTML = "<p>Stadium not found.</p>";
-      detailView.style.display = "block";
-      return;
-    }
-
-    const city = cityById[stadium.cityId];
-
-    detailView.innerHTML = `
-      <h2>${stadium.name}</h2>
-      <p><strong>Host city:</strong> ${city ? city.name : ""}</p>
-      <p><strong>Capacity:</strong> ${stadium.capacity || "—"}</p>
-      <p>${stadium.description?.en || ""}</p>
-      <p style="margin-top:32px">
-        <a href="/worldcup-2026/← Back to stadium list</a>
-      </p>
-    `;
-
-    listView.style.display = "none";
-    detailView.style.display = "block";
-    return;
-  }
-
-  /* ===== LIST MODE ===== */
-  let html = "<div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;'>";
-
-  stadiums.forEach(s => {
-    const city = cityById[s.cityId];
-    html += `
-      <div style="background:#fff;border-radius:18px;padding:26px;box-shadow:0 10px 26px rgba(0,0,0,.08)">
-        <h3>${s.name}</h3>
-        <p>${city ? city.name : ""}</p>
-        <a href="/worldcup-2026/stadiums/?}View stadium →</a>
-      </div>
-    `;
-  });
-
-  html += "</div>";
-  listView.innerHTML = html;
-})();
+  document.getElementById("out").textContent =
+    "✅ JavaScript is running";
 </script>
 
 </body>
