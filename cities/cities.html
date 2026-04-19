@@ -3,28 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>City Participation – MatchDay Navigator</title>
-
+  <title>Partners – MatchDay Navigator</title>
   <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
-    /* Local safeguards so this page cannot regress */
     .hero {
       padding: 64px 24px;
       text-align: center;
       background: #0f172a;
       color: #ffffff;
     }
-
     .hero img {
       max-width: 160px;
       margin-bottom: 24px;
     }
-
-    .hero h1 {
-      margin: 0 0 12px;
-    }
-
     .hero p {
       max-width: 760px;
       margin: 0 auto;
@@ -32,64 +24,62 @@
       font-size: 1.05rem;
       line-height: 1.6;
     }
-
     .content {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 80px auto;
       padding: 0 24px;
-    }
-
-    .content h2 {
-      margin-top: 0;
-    }
-
-    .content p {
+      color: #334155;
       font-size: 1.05rem;
       line-height: 1.7;
-      color: #334155;
-      margin-bottom: 24px;
     }
 
-    .cta-box {
+    .partner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
       margin-top: 48px;
+    }
+
+    .partner-card {
+      background: #f8fafc;
       padding: 36px;
-      background: #f1f5f9;
-      border-left: 6px solid #16a34a;
       border-radius: 18px;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.08);
     }
 
-    .cta-box h3 {
+    .partner-card h3 {
       margin-top: 0;
+      margin-bottom: 12px;
     }
 
-    .cta-box p {
+    .partner-card p {
       margin-bottom: 20px;
     }
 
-    .cta-button {
+    .partner-card a {
       display: inline-block;
-      padding: 16px 40px;
-      background-color: #16a34a;
+      padding: 14px 32px;
+      background-color: #2563eb;
       color: #ffffff;
       font-weight: 700;
       text-decoration: none;
-      border-radius: 14px;
-      font-size: 1.05rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
     }
 
-    .cta-button:hover {
-      background-color: #15803d;
+    .partner-card a:hover {
+      opacity: 0.92;
     }
 
     .back-link {
-      margin-top: 56px;
+      margin-top: 72px;
       text-align: center;
     }
 
     .back-link a {
       color: #2563eb;
-      text-decoration: none;
       font-weight: 600;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -99,50 +89,65 @@
   <!-- ================= HERO ================= -->
   <section class="hero">
     <img src="/assets/logo.png" alt="MatchDay Navigator" />
-
-    <h1>City Participation</h1>
-
+    <h1>Partners</h1>
     <p>
-      MatchDay Navigator supports host cities by delivering clear,
-      event‑specific matchday guidance to fans before and during matchday.
+      MatchDay Navigator works with cities, venues, and hospitality partners
+      to deliver clear, neutral, event‑specific matchday guidance during major
+      football events.
     </p>
   </section>
 
   <!-- ================= CONTENT ================= -->
   <section class="content">
-
-    <h2>What this involves</h2>
-
     <p>
-      Participating cities approve high‑level arrival guidance, policies,
-      and indicative timings. This information is delivered to fans during
-      the matchday window only.
+      Select the relevant partner category below to learn how participation
+      works and how to initiate onboarding.
     </p>
 
-    <p>
-      The service operates alongside existing city and venue operations,
-      helping reduce confusion and repetitive enquiries while preserving
-      full operational control.
-    </p>
+    <!-- ✅ PARTNERS TRIO -->
+    <div class="partner-grid">
 
-    <!-- CTA -->
-    <div class="cta-box">
-      <h3>Next step</h3>
+      <!-- Cities -->
+      <div class="partner-card">
+        <h3>Host Cities</h3>
+        <p>
+          For city authorities and public agencies responsible for transport,
+          access, and matchday coordination.
+        </p>
+        <a href="/cities/cities.html">
+          City participation →
+        </a>
+      </div>
 
-      <p>
-        Cities interested in participating are invited to submit an official
-        partnership enquiry to initiate onboarding and operational alignment.
-      </p>
+      <!-- Venues -->
+      <div class="partner-card">
+        <h3>Venues & Stadiums</h3>
+        <p>
+          For venue operators and stadium teams supporting entry, security,
+          and matchday operations.
+        </p>
+        <a href="/venues.html">
+          Venue participation →
+        </a>
+      </div>
 
-      <a class="cta-button" href="/contact.html">
-        Submit partnership enquiry →
-      </a>
+      <!-- Hospitality -->
+      <div class="partner-card">
+        <h3>Hospitality & Commercial</h3>
+        <p>
+          For hotels, ticket packages, and commercial partners supporting
+          visiting fans.
+        </p>
+        <a href="/hospitality.html">
+          Hospitality participation →
+        </a>
+      </div>
+
     </div>
 
     <div class="back-link">
-      <a href="/cities/">← Back to Cities &amp; Venues</a>
+      <a href="/">← Back to homepage</a>
     </div>
-
   </section>
 
 </body>
