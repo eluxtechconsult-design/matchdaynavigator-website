@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>MatchDay Navigator – World Cup 2026</title>
+  <title>Matchday Information | Matchday Navigator</title>
 
   <meta
     name="description"
-    content="Event‑specific matchday guidance infrastructure for major sporting events. Clear arrival, access, and policy information delivered via WhatsApp."
+    content="Neutral, event-specific matchday information for major sporting events. Arrival, entry, and venue guidance available if needed on matchday."
   />
 
   <link rel="stylesheet" href="/assets/style.css" />
@@ -25,18 +25,6 @@
       margin-bottom: 20px;
     }
 
-    .flags {
-      display: flex;
-      justify-content: center;
-      gap: 28px;
-      margin: 24px 0 16px;
-    }
-
-    .flags img {
-      width: 150px;
-      height: auto;
-    }
-
     .hero-subtitle {
       max-width: 840px;
       margin: 20px auto 0;
@@ -45,27 +33,20 @@
       line-height: 1.6;
     }
 
-    .cta-row {
+    .recall-block {
       margin-top: 36px;
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-      flex-wrap: wrap;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
 
-    .cta-button {
-      padding: 18px 40px;
-      background: #16a34a;
-      color: #ffffff;
-      border-radius: 14px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 1.05rem;
-      display: inline-block;
-    }
-
-    .cta-button:hover {
-      background: #15803d;
+    .recall-block h3 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
     }
 
     .boxed-section {
@@ -88,27 +69,11 @@
       box-shadow: 0 10px 22px rgba(0,0,0,0.08);
     }
 
-    .boxed-card h3 {
-      margin-bottom: 16px;
-    }
-
-    .boxed-card p {
-      line-height: 1.6;
-      color: #334155;
-      font-size: 1rem;
-    }
-
     footer {
       padding: 40px 0 30px;
       text-align: center;
       color: #475569;
       font-size: 0.9rem;
-    }
-
-    footer a {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: 500;
     }
   </style>
 </head>
@@ -117,31 +82,22 @@
 
 <header class="hero">
   <div class="container">
-
-    <img src="/assets/logo.png" alt="MatchDay Navigator" class="hero-logo" />
-
-    <h1>MatchDay Navigator</h1>
-
-    <div class="flags">
-      <img src="/assets/flags/us.png" alt="USA" />
-      <img src="/assets/flags/ca.png" alt="Canada" />
-      <img src="/assets/flags/mx.png" alt="Mexico" />
-    </div>
+    <img src="/assets/logo.png" alt="Matchday Navigator" class="hero-logo" />
+    <h1>Matchday Navigator</h1>
 
     <p class="hero-subtitle">
-      Event‑specific matchday guidance infrastructure for World Cup 2026<br />
-      across the USA, Canada, and Mexico.
+      Neutral, event-specific matchday information for major football events,
+      including the FIFA World Cup 2026.
     </p>
 
-    <div class="cta-row">
-      <a href="/worldcup-2026/" class="cta-button">
-        Explore World Cup 2026 Match Map
-      </a>
-      <a href="/cities/" class="cta-button">
-        For Cities & Venues
-      </a>
+    <!-- ✅ PILOT 3 MEMORY SEED -->
+    <div class="recall-block">
+      <h3>Matchday Information (if needed)</h3>
+      <p>
+        Arrival, entry, and getting‑there guidance is available here
+        if you need it on matchday.
+      </p>
     </div>
-
   </div>
 </header>
 
@@ -149,36 +105,18 @@
   <div class="boxed-grid">
 
     <div class="boxed-card">
-      <h3>What MatchDay Navigator is</h3>
+      <h3>What this is</h3>
       <p>
-        <strong>MatchDay Navigator is temporary, event‑specific matchday guidance infrastructure</strong>
-        used to support host cities, stadiums, and partners during major football events —
-        including the FIFA World Cup 2026.
-      </p>
-      <p>
-        It delivers clear, approved information to fans before and during matchday, focused on
-        arrival timing, access routes, and venue policies. The service is opt‑in, time‑limited,
-        and designed to operate at scale without introducing friction.
-      </p>
-      <p>
-        MatchDay Navigator complements existing city and stadium operations and helps ensure
-        that fans arrive informed, prepared, and on time.
+        Matchday Navigator is temporary, event‑specific guidance infrastructure
+        designed to support calm arrival and entry during major sporting events.
       </p>
     </div>
 
     <div class="boxed-card">
-      <h3>What MatchDay Navigator is not</h3>
+      <h3>What this is not</h3>
       <p>
-        MatchDay Navigator is <strong>not a marketing channel, advertising platform, or fan engagement app</strong>.
-        It does not sell tickets, promote sponsors, or influence purchasing behaviour.
-      </p>
-      <p>
-        It does not direct crowd movement, enforce access, or replace venue staff, security teams,
-        or official communications.
-      </p>
-      <p>
-        The service does not track location, profile users, or reuse data outside the scope of
-        delivering matchday guidance tied to a specific event.
+        It is not a marketing channel, ticketing service, or fan engagement app.
+        It does not sell, promote, or persuade.
       </p>
     </div>
 
@@ -186,10 +124,9 @@
 </section>
 
 <footer>
-  <a href="/privacy.html">Privacy Policy</a> ·
-  <a href="/terms.html">Terms of Service</a> ·
-  <a href="/cities/">For cities & venues</a>
-  <p>© MatchDay Navigator</p>
+  <a href="/privacy.html">Privacy</a> ·
+  <a href="/terms.html">Terms</a>
+  <p>© Matchday Navigator</p>
 </footer>
 
 </body>
