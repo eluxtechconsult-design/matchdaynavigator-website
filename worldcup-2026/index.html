@@ -1,93 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Cup 2026 Match Map – MatchDay Navigator</title>
 
-  <title>World Cup 2026 Match Map</title>
+  <meta name="description"
+        content="Official host cities across the United States, Canada, and Mexico for the FIFA World Cup 2026." />
 
-  <!-- ✅ CSS (must be link tags) -->
-  <link rel="stylesheet" href="/assets/style.css">
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/worldcup-2026/wc-map.css" />
 
-  <!-- ✅ Leaflet CSS -->
+  <!-- Leaflet -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  >
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    defer
+  ></script>
 </head>
 
 <body>
 
+<!-- ================= HEADER ================= -->
 <header class="wc-map-header">
   <h1>World Cup 2026 Match Map</h1>
-  <p class="subtitle">
+  <div class="subtitle">
     Official host cities across the United States, Canada, and Mexico.
-  </p>
+  </div>
 
-  <nav class="wc-map-nav">
-    <a href="/" class="back-home">← Back to Home</a>
-    <button id="reset-map" class="reset-map">Reset map view</button>
-  </nav>
+  <div class="wc-map-nav">
+    <a href="/">← Back to Home</a>
+    <button class="reset-map">Reset map view →</button>
+  </div>
 </header>
 
-<main class="wc-map-layout">
+<!-- ================= LAYOUT ================= -->
+<div class="wc-map-layout">
 
-  <!-- MAP -->
-  <section class="wc-map-canvas">
-    <div id="map"></div>
-  </section>
+  <!-- ================= MAP ================= -->
+  <div id="map"></div>
 
-  <!-- CITY PANEL -->
+  <!-- ================= RIGHT PANEL ================= -->
   <aside class="wc-city-panel">
 
     <h2 class="panel-title">Select a host city</h2>
-    <p class="panel-subtitle">
-      Click a city name or map dot to zoom in and view its stadium.
-    </p>
+
+    <div class="panel-subtitle">
+      Click a city name or map icon to view stadium details.
+    </div>
 
     <div class="city-columns">
 
+      <!-- ===== UNITED STATES ===== -->
       <div>
-        <h3>United States</h3>
+        <h3>UNITED STATES</h3>
         <ul>
-          <li data-city="new-york-nj">New York / New Jersey<ul class="stadium-list"></ul></li>
-          <li data-city="atlanta">Atlanta<ul class="stadium-list"></ul></li>
-          <li data-city="boston">Boston<ul class="stadium-list"></ul></li>
-          <li data-city="dallas">Dallas<ul class="stadium-list"></ul></li>
-          <li data-city="houston">Houston<ul class="stadium-list"></ul></li>
-          <li data-city="kansas-city">Kansas City<ul class="stadium-list"></ul></li>
-          <li data-city="los-angeles">Los Angeles<ul class="stadium-list"></ul></li>
-          <li data-city="miami">Miami<ul class="stadium-list"></ul></li>
-          <li data-city="philadelphia">Philadelphia<ul class="stadium-list"></ul></li>
-          <li data-city="san-francisco">San Francisco Bay Area<ul class="stadium-list"></ul></li>
-          <li data-city="seattle">Seattle<ul class="stadium-list"></ul></li>
+          <li data-city="new-york-nj">
+            New York / New Jersey
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="atlanta">
+            Atlanta
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="boston">
+            Boston
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="dallas">
+            Dallas
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="houston">
+            Houston
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="kansas-city">
+            Kansas City
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="los-angeles">
+            Los Angeles
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="miami">
+            Miami
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="philadelphia">
+            Philadelphia
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="san-francisco-bay-area">
+            San Francisco Bay Area
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="seattle">
+            Seattle
+            <ul class="stadium-list"></ul>
+          </li>
         </ul>
       </div>
 
+      <!-- ===== CANADA & MEXICO ===== -->
       <div>
-        <h3>Canada</h3>
+        <h3>CANADA</h3>
         <ul>
-          <li data-city="toronto">Toronto<ul class="stadium-list"></ul></li>
-          <li data-city="vancouver">Vancouver<ul class="stadium-list"></ul></li>
+          <li data-city="toronto">
+            Toronto
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="vancouver">
+            Vancouver
+            <ul class="stadium-list"></ul>
+          </li>
         </ul>
 
-        <h3 class="mt">Mexico</h3>
+        <h3>MEXICO</h3>
         <ul>
-          <li data-city="mexico-city">Mexico City<ul class="stadium-list"></ul></li>
-          <li data-city="guadalajara">Guadalajara<ul class="stadium-list"></ul></li>
-          <li data-city="monterrey">Monterrey<ul class="stadium-list"></ul></li>
+          <li data-city="mexico-city">
+            Mexico City
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="guadalajara">
+            Guadalajara
+            <ul class="stadium-list"></ul>
+          </li>
+          <li data-city="monterrey">
+            Monterrey
+            <ul class="stadium-list"></ul>
+          </li>
         </ul>
       </div>
 
     </div>
   </aside>
 
-</main>
+</div>
 
-<!-- ✅ JS (must be script tags, order matters) -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/worldcup-2026/assets/wc-map.js"></script>
+<!-- ================= SCRIPT ================= -->
+<script src="/worldcup-2026/wc-map.js"></script>
 
 </body>
 </html>

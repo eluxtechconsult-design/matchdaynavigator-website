@@ -1,8 +1,5 @@
 (async function () {
 
-  /* =============================
-     MAP INITIALISATION
-     ============================= */
   const map = L.map("map", {
     scrollWheelZoom: false,
     zoomControl: true
@@ -16,151 +13,82 @@
   const stadiums = await fetch("/data/stadiums.json").then(r => r.json());
 
   const cityById = {};
-  const stadiumById = {};
   const markerByCity = {};
   const initialBounds = [];
 
   cities.forEach(c => cityById[c.id] = c);
-  stadiums.forEach(s => stadiumById[s.id] = s);
 
-  const panel = document.querySelector(".wc-city-panel");
-  const resetBtn = document.querySelector(".reset-map");
+  const panelTitle = document.querySelector(".panel-title");
 
-  /* =============================
-     RENDER BASE CITY LIST ✅
-     ============================= */
-  function renderCityList() {
-    panel.innerHTML = `
-      <h2 class="panel-title">Select a host city</h2>
-      <div class="panel-subtitle">
-        Click a city name or map icon to view its stadium.
-      </div>
-    `;
+  /* ✅ RESET MAP + LIST */
+  function resetMapView() {
+    map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
 
     document.querySelectorAll("[data-city]").forEach(el => {
       el.classList.remove("active");
-      const ul = el.querySelector(".stadium-list");
-      if (ul) ul.innerHTML = "";
+      el.querySelector(".stadium-list").innerHTML = "";
     });
+
+    panelTitle.textContent = "Select a host city";
   }
 
-  /* =============================
-     RESET MAP VIEW ✅ (FIXED)
-     ============================= */
-  function resetMapView() {
-    map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
-    renderCityList();
-  }
+  document.querySelector(".reset-map").addEventListener("click", resetMapView);
 
-  resetBtn.addEventListener("click", resetMapView);
-
-  /* =============================
-     WHATSAPP CTA ✅
-     ============================= */
-  function renderWhatsAppCTA(stadium) {
-    if (!stadium.whatsappIntent) return "";
-    const msg = encodeURIComponent(stadium.whatsappIntent);
+  /* ✅ WHATSAPP CTA */
+  function whatsappLink(text) {
     return `
-      <p style="margin-top:16px">
-        <a href="https://wa.me/?text=${msg}" target="_blank">
+      <li>
+        https://wa.me/?text=${encodeURIComponent(text)}
           📲 Get matchday updates on WhatsApp
         </a>
-      </p>
+      </li>
     `;
   }
 
-  /* =============================
-     STADIUM DETAIL VIEW ✅
-     ============================= */
-  function showStadium(stadiumId) {
-    const stadium = stadiumById[stadiumId];
-    if (!stadium) return;
-
-    const city = cityById[stadium.cityId];
-
-    panel.innerHTML = `
-      <h2 class="panel-title">${stadium.name}</h2>
-      <div class="panel-subtitle">${city?.name || ""}</div>
-
-      <p><strong>Capacity:</strong> ${stadium.capacity}</p>
-      <p>${stadium.description?.en || ""}</p>
-
-      ${
-        stadium.wcMatches?.length
-          ? `
-            <h3>World Cup 2026 matches</h3>
-            <ul>
-              ${stadium.wcMatches.map(m => `
-                <li>
-                  ${new Date(m.date).toDateString()}
-                  · ${m.stage}
-                  · ${m.kickoffLocal}<br>
-                  ${m.homeTeam} vs ${m.awayTeam}
-                </li>
-              `).join("")}
-            </ul>
-          `
-          : "<p><em>Match schedule to be confirmed.</em></p>"
-      }
-
-      ${renderWhatsAppCTA(stadium)}
-
-      <p style="margin-top:16px">
-        <a href="/worldcup-2026/">← Back to match map</a>
-      </p>
-    `;
-
-    if (city) map.setView([city.lat, city.lng], 6);
-  }
-
-  /* =============================
-     CITY ACTIVATION ✅
-     ============================= */
+  /* ✅ CITY ACTIVATION */
   function activateCity(cityId) {
     const city = cityById[cityId];
     if (!city) return;
 
     map.setView([city.lat, city.lng], 6);
+    panelTitle.textContent = city.name;
 
     document.querySelectorAll("[data-city]").forEach(el => {
       el.classList.remove("active");
-      const ul = el.querySelector(".stadium-list");
-      if (ul) ul.innerHTML = "";
+      el.querySelector(".stadium-list").innerHTML = "";
     });
 
-    const el = document.querySelector(`[data-city="${cityId}"]`);
-    el.classList.add("active");
+    const cityEl = document.querySelector(`[data-city="${cityId}"]`);
+    cityEl.classList.add("active");
+    const list = cityEl.querySelector(".stadium-list");
 
-    const list = el.querySelector(".stadium-list");
     stadiums
       .filter(s => s.cityId === cityId)
       .forEach(s => {
         const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = `/worldcup-2026/?stadium=${s.id}`;
-        a.textContent = s.name;
-        li.appendChild(a);
+        li.innerHTML = `
+          <strong>${s.name}</strong><br>
+          Capacity: ${s.capacity}<br>
+          ${s.description?.en || ""}
+        `;
         list.appendChild(li);
-      });
 
-    panel.innerHTML = `
-      <h2 class="panel-title">${city.name}</h2>
-      <div class="panel-subtitle">Select a stadium</div>
-    `;
+        if (s.whatsappIntent) {
+          list.insertAdjacentHTML("beforeend", whatsappLink(s.whatsappIntent));
+        }
+      });
   }
 
-  /* =============================
-     MAP MARKERS ✅
-     ============================= */
+  /* ✅ MAP MARKERS */
   cities.forEach(city => {
-    const footballIcon = L.divIcon({
+    const icon = L.divIcon({
       className: "football-marker",
       html: "⚽",
       iconSize: [16, 16],
       iconAnchor: [8, 8]
     });
 
-    const marker = L.marker([city.lat, city.lng], { icon: footballIcon })
+    const marker = L.marker([city.lat, city.lng], { icon })
       .addTo(map)
       .on("click", () => activateCity(city.id));
 
@@ -179,24 +107,9 @@
 
   map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
 
-  /* =============================
-     CITY LIST CLICK ✅
-     ============================= */
+  /* ✅ CITY LIST CLICK */
   document.querySelectorAll("[data-city]").forEach(el => {
-    el.addEventListener("click", e => {
-      if (e.target.tagName === "A") return;
-      activateCity(el.dataset.city);
-    });
+    el.addEventListener("click", () => activateCity(el.dataset.city));
   });
-
-  /* =============================
-     URL MODE HANDLING ✅
-     ============================= */
-  const params = new URLSearchParams(location.search);
-  if (params.get("stadium")) {
-    showStadium(params.get("stadium"));
-  } else {
-    renderCityList();
-  }
 
 })();
