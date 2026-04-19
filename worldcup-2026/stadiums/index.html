@@ -1,17 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Stadium Test</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>World Cup 2026 Stadiums – MatchDay Navigator</title>
+
+  <link rel="stylesheet" href="/assets/style.css">
 </head>
+
 <body>
 
-<h1>Stadiums test</h1>
+<header style="background:#0f172a;color:#fff;padding:40px;text-align:center">
+  <img src="/assets/logo.png" style="width:160px"><br>
+  <h1>World Cup 2026 Stadiums</h1>
+  <p>Select a stadium to view official matchday guidance.</p>
+</header>
 
-<div id="out">JS not running</div>
+<div id="stadium-list" style="padding:40px"></div>
+<div id="stadium-detail" style="padding:40px;display:none"></div>
+
+<footer style="text-align:center;padding:20px">
+  <a href="/worldcup-2026/cities">← Browse host cities</a>
+</footer>
 
 <script>
-  document.getElementById("out").textContent =
-    "✅ JavaScript is running";
+(async function () {
+  const list = document.getElementById("stadium-list");
+  const detail = document.getElementById("stadium-detail");
+  const params = new URLSearchParams(location.search);
+  const stadiumId = params.get("id");
+
+  const cities = await fetch("/data/cities.json").then(r => r.json());
+  const stadiums = await fetch("/data/stadiums.json").then(r => r.json());
+
+  const cityMap = {};
+  cities.forEach(c => cityMap[c.id] = c);
+
+  if (stadiumId) {
+    const s = stadiums.find(x => x.id === stadiumId);
+    if (!s) {
+      detail.innerHTML = "Stadium not found";
+    } else {
+      detail.innerHTML = `
+        <h2>${s.name}</h2>
+        <p>${cityMap[s.cityId]?.name || ""}</p>
+        <p>Capacity: ${s.capacity}</p>
+        <p>${s.description?.en || ""}</p>
+        <a href="/worldcup-2026/stadiumslist.style.display = "none";
+    return;
+  }
+
+  let html = "";
+  stadiums.forEach(s => {
+    html += `
+      <div style="margin-bottom:20px">
+        <b>${s.name}</b> – ${cityMap[s.cityId]?.name || ""}
+        <br>
+        <a href="?id=${s.iddium →</a>
+      </div>
+    `;
+  });
+  list.innerHTML = html;
+})();
 </script>
 
 </body>
