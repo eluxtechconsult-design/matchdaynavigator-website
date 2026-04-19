@@ -1,19 +1,22 @@
 (async function () {
 
   /* =============================
-     DATA LOADING
+     LOAD DATA (HOST CITIES ONLY)
      ============================= */
-  const hostCities = await fetch("/worldcup-2026/data/host-cities.json").then(r => r.json());
-  const stadiums   = await fetch("/worldcup-2026/data/stadiums.json").then(r => r.json());
+  const hostCities = await fetch("/worldcup-2026/data/host-cities.json")
+    .then(r => r.json());
 
-  const stadiumsByCity = {};
+  const stadiums = await fetch("/worldcup-2026/data/stadiums.json")
+    .then(r => r.json());
+
+  const stadiumsByHostCity = {};
   stadiums.forEach(s => {
-    stadiumsByCity[s.hostCityId] ??= [];
-    stadiumsByCity[s.hostCityId].push(s);
+    stadiumsByHostCity[s.hostCityId] ??= [];
+    stadiumsByHostCity[s.hostCityId].push(s);
   });
 
   /* =============================
-     MAP INITIALISATION
+     INIT MAP
      ============================= */
   const map = L.map("map", {
     scrollWheelZoom: false,
@@ -30,14 +33,15 @@
      UI REFERENCES
      ============================= */
   const panelTitle = document.querySelector(".panel-title");
-  const panel      = document.getElementById("host-city-list");
+  const listRoot   = document.getElementById("host-city-list");
   const resetBtn   = document.querySelector(".reset-map");
 
   /* =============================
-     RENDER HOST CITY LIST ✅
+     RENDER HOST CITY LIST
      ============================= */
-  function renderHostCityList() {
-    panel.innerHTML = "";
+  function renderHostCities() {
+    listRoot.innerHTML = "";
+    panelTitle.textContent = "Select a host city";
 
     const byCountry = {};
     hostCities.forEach(c => {
@@ -48,70 +52,61 @@
     Object.entries(byCountry).forEach(([country, cities]) => {
       const h3 = document.createElement("h3");
       h3.textContent = country.toUpperCase();
-      panel.appendChild(h3);
+      listRoot.appendChild(h3);
 
       const ul = document.createElement("ul");
 
       cities.forEach(city => {
         const li = document.createElement("li");
         li.textContent = city.name;
-        li.dataset.hostCity = city.id;
-
-        const stadiumList = document.createElement("ul");
-        stadiumList.className = "stadium-list";
-        li.appendChild(stadiumList);
-
-        li.addEventListener("click", () => activateHostCity(city.id));
+        li.onclick = () => activateHostCity(city);
         ul.appendChild(li);
       });
 
-      panel.appendChild(ul);
+      listRoot.appendChild(ul);
     });
-
-    panelTitle.textContent = "Select a host city";
   }
 
   /* =============================
-     ACTIVATE HOST CITY ✅
+     ACTIVATE HOST CITY
      ============================= */
-  function activateHostCity(cityId) {
-    const city = hostCities.find(c => c.id === cityId);
-    if (!city) return;
-
+  function activateHostCity(city) {
     panelTitle.textContent = city.name;
     map.setView([city.lat, city.lng], 6);
 
-    document.querySelectorAll(".stadium-list").forEach(l => l.innerHTML = "");
+    listRoot.innerHTML = "";
+    const ul = document.createElement("ul");
 
-    const li = document.querySelector(`[data-host-city="${cityId}"]`);
-    const list = li.querySelector(".stadium-list");
-
-    (stadiumsByCity[cityId] || []).forEach(stadium => {
-      const sLi = document.createElement("li");
-      sLi.innerHTML = `
-        <strong>${stadium.name}</strong><br>
-        Capacity: ${stadium.capacity}<br>
-        ${stadium.whatsappIntent
-          ? `<a target="_blank"
-                href="https://wa.me/?text=${encodeURIComponent(stadium.whatsappIntent)}">
-              📲 Get matchday updates on WhatsApp
-            </a>` : ""}
+    (stadiumsByHostCity[city.id] || []).forEach(s => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${s.name}</strong><br>
+        Capacity: ${s.capacity}<br>
+        ${
+          s.whatsappIntent
+            ? `<a href="https://wa.me/?text=${encodeURIComponent(s.whatsappIntent)}"
+                 target="_blank">
+                 📲 Get matchday updates on WhatsApp
+               </a>`
+            : ""
+        }
       `;
-      list.appendChild(sLi);
+      ul.appendChild(li);
     });
+
+    listRoot.appendChild(ul);
   }
 
   /* =============================
-     RESET MAP + LIST ✅
+     RESET MAP
      ============================= */
-  function resetMap() {
+  resetBtn.onclick = () => {
     map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
-    renderHostCityList();
-  }
-  resetBtn.addEventListener("click", resetMap);
+    renderHostCities();
+  };
 
   /* =============================
-     MAP MARKERS ✅
+     MAP MARKERS
      ============================= */
   hostCities.forEach(city => {
     const icon = L.divIcon({
@@ -123,22 +118,12 @@
 
     L.marker([city.lat, city.lng], { icon })
       .addTo(map)
-      .on("click", () => activateHostCity(city.id));
-
-    L.marker([city.lat, city.lng], {
-      icon: L.divIcon({
-        className: "wc-city-label",
-        html: city.name,
-        iconAnchor: [0, -10]
-      }),
-      interactive: false
-    }).addTo(map);
+      .on("click", () => activateHostCity(city));
 
     initialBounds.push([city.lat, city.lng]);
   });
 
   map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
-
-  renderHostCityList();
+  renderHostCities();
 
 })();

@@ -3,63 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>World Cup 2026 Match Map – MatchDay Navigator</title>
 
+  <title>World Cup 2026 Match Map – MatchDay Navigator</title>
   <meta
     name="description"
-    content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
-  />
+    content="Interactive match map for FIFA World Cup 2026 host cities."
+  >
 
   <!-- Global styles -->
-  <link rel="stylesheet" href="/assets/style.css">
-
-  <!-- World Cup map styles -->
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
-
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        crossorigin="">
-</head>
-
-<body>
-
-<header class="wc-map-header">
+  <link rel="stylesheet" href="/assetsic styles -->
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.cssink
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/class="wc-map-header">
   <h1>World Cup 2026 Match Map</h1>
   <div class="subtitle">
     Official host cities across the United States, Canada, and Mexico.
   </div>
 
   <div class="wc-map-nav">
-    <a href="/">← Back to Home</a>
+    <← Back to Home</a>
     <button type="button" class="reset-map">Reset map view →</button>
   </div>
 </header>
 
 <div class="wc-map-layout">
 
-  <!-- MAP -->
+  <!-- ✅ MAP CONTAINER -->
   <div id="map"></div>
 
-  <!-- RIGHT PANEL -->
+  <!-- ✅ RIGHT PANEL -->
   <aside class="wc-city-panel">
     <h2 class="panel-title">Select a host city</h2>
     <div class="panel-subtitle">
       Click a city name or map icon to view stadium details.
     </div>
 
-    <div class="city-columns">
-      <div id="host-city-list"></div>
-    </div>
+    <!-- Host cities injected here -->
+    <div id="host-city-list"></div>
   </aside>
 
 </div>
 
 <!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        crossorigin=""></script>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/distcript>
 
-<!-- World Cup map logic -->
+<!-- Map logic -->
 <script src="/worldcup-2026/assets/wc-map.js"></script>
 
 </body>
