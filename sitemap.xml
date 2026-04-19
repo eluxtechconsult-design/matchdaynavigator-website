@@ -7,7 +7,8 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Core Navigation -->
+  <!-- ================= FAN-FACING (WORLD CUP 2026) ================= -->
+
   <url>
     <loc>https://www.matchdaynavigator.com/worldcup-2026/</loc>
     <priority>0.9</priority>
@@ -23,55 +24,39 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- World Cup 2026 – City Pages -->
+  <!-- ================= PARTNERS (INSTITUTIONAL HUB) ================= -->
+
   <url>
-    <loc>https://www.matchdaynavigator.com/worldcup-2026/cities/index.html?id=new-york-nj</loc>
+    <loc>https://www.matchdaynavigator.com/cities/</loc>
     <priority>0.8</priority>
   </url>
 
-  <url>
-    <loc>https://www.matchdaynavigator.com/worldcup-2026/cities/index.html?id=dallas</loc>
-    <priority>0.8</priority>
-  </url>
+  <!-- ================= PARTNER LEAF PAGES ================= -->
 
   <url>
-    <loc>https://www.matchdaynavigator.com/worldcup-2026/cities/index.html?id=los-angeles</loc>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.matchdaynavigator.com/worldcup-2026/cities/index.html?id=miami</loc>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.matchdaynavigator.com/worldcup-2026/cities/index.html?id=toronto</loc>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.matchdaynavigator.com/worldcup-2026/cities/index.html?id=vancouver</loc>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.matchdaynavigator.com/worldcup-2026/cities/index.html?id=mexico-city</loc>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Example Stadium Pages (pattern-based, scalable) -->
-  <url>
-    <loc>https://www.matchdaynavigator.com/worldcup-2026/stadiums/?id=nrg-stadium</loc>
+    <loc>https://www.matchdaynavigator.com/cities/city-participation.html</loc>
     <priority>0.7</priority>
   </url>
 
-  <!-- Partners -->
   <url>
-    <loc>https://www.matchdaynavigator.com/partners/</loc>
+    <loc>https://www.matchdaynavigator.com/cities/venues.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.matchdaynavigator.com/cities/hospitality.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ================= EXPLANATORY / SUPPORT ================= -->
+
+  <url>
+    <loc>https://www.matchdaynavigator.com/how-it-works.html</loc>
     <priority>0.6</priority>
   </url>
 
-  <!-- Legal -->
+  <!-- ================= LEGAL ================= -->
+
   <url>
     <loc>https://www.matchdaynavigator.com/privacy.html</loc>
     <priority>0.4</priority>
