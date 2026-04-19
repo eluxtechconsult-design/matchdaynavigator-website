@@ -7,21 +7,19 @@
 
   <meta
     name="description"
-    content="Official host cities across the United States, Canada, and Mexico for the FIFA World Cup 2026."
+    content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
   />
 
   <!-- Global styles -->
   <link rel="stylesheet" href="/assets/style.css">
 
-  <!-- ✅ WC MAP STYLES (CORRECT PATH) -->
+  <!-- World Cup map styles -->
   <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
 
   <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    crossorigin=""
-  />
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        crossorigin="">
 </head>
 
 <body>
@@ -40,63 +38,28 @@
 
 <div class="wc-map-layout">
 
-  <!-- ✅ MAP CONTAINER -->
+  <!-- MAP -->
   <div id="map"></div>
 
-  <!-- ✅ RIGHT-HAND HOST CITY PANEL -->
+  <!-- RIGHT PANEL -->
   <aside class="wc-city-panel">
-
     <h2 class="panel-title">Select a host city</h2>
     <div class="panel-subtitle">
       Click a city name or map icon to view stadium details.
     </div>
 
     <div class="city-columns">
-
-      <div>
-        <h3>UNITED STATES</h3>
-        <ul>
-          <li data-city="new-york-nj">New York / New Jersey<ul class="stadium-list"></ul></li>
-          <li data-city="atlanta">Atlanta<ul class="stadium-list"></ul></li>
-          <li data-city="boston">Boston<ul class="stadium-list"></ul></li>
-          <li data-city="dallas">Dallas<ul class="stadium-list"></ul></li>
-          <li data-city="houston">Houston<ul class="stadium-list"></ul></li>
-          <li data-city="kansas-city">Kansas City<ul class="stadium-list"></ul></li>
-          <li data-city="los-angeles">Los Angeles<ul class="stadium-list"></ul></li>
-          <li data-city="miami">Miami<ul class="stadium-list"></ul></li>
-          <li data-city="philadelphia">Philadelphia<ul class="stadium-list"></ul></li>
-          <li data-city="san-francisco-bay-area">San Francisco Bay Area<ul class="stadium-list"></ul></li>
-          <li data-city="seattle">Seattle<ul class="stadium-list"></ul></li>
-        </ul>
-      </div>
-
-      <div>
-        <h3>CANADA</h3>
-        <ul>
-          <li data-city="toronto">Toronto<ul class="stadium-list"></ul></li>
-          <li data-city="vancouver">Vancouver<ul class="stadium-list"></ul></li>
-        </ul>
-
-        <h3>MEXICO</h3>
-        <ul>
-          <li data-city="mexico-city">Mexico City<ul class="stadium-list"></ul></li>
-          <li data-city="guadalajara">Guadalajara<ul class="stadium-list"></ul></li>
-          <li data-city="monterrey">Monterrey<ul class="stadium-list"></ul></li>
-        </ul>
-      </div>
-
+      <div id="host-city-list"></div>
     </div>
   </aside>
 
 </div>
 
 <!-- Leaflet JS -->
-<script
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  crossorigin=""
-></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        crossorigin=""></script>
 
-<!-- ✅ WC MAP LOGIC (CORRECT PATH) -->
+<!-- World Cup map logic -->
 <script src="/worldcup-2026/assets/wc-map.js"></script>
 
 </body>

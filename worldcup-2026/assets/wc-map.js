@@ -1,5 +1,20 @@
 (async function () {
 
+  /* =============================
+     DATA LOADING
+     ============================= */
+  const hostCities = await fetch("/worldcup-2026/data/host-cities.json").then(r => r.json());
+  const stadiums   = await fetch("/worldcup-2026/data/stadiums.json").then(r => r.json());
+
+  const stadiumsByCity = {};
+  stadiums.forEach(s => {
+    stadiumsByCity[s.hostCityId] ??= [];
+    stadiumsByCity[s.hostCityId].push(s);
+  });
+
+  /* =============================
+     MAP INITIALISATION
+     ============================= */
   const map = L.map("map", {
     scrollWheelZoom: false,
     zoomControl: true
@@ -9,78 +24,96 @@
     attribution: "© OpenStreetMap contributors"
   }).addTo(map);
 
-  const cities   = await fetch("/data/cities.json").then(r => r.json());
-  const stadiums = await fetch("/data/stadiums.json").then(r => r.json());
-
-  const cityById = {};
-  const markerByCity = {};
   const initialBounds = [];
 
-  cities.forEach(c => cityById[c.id] = c);
-
+  /* =============================
+     UI REFERENCES
+     ============================= */
   const panelTitle = document.querySelector(".panel-title");
+  const panel      = document.getElementById("host-city-list");
+  const resetBtn   = document.querySelector(".reset-map");
 
-  /* ✅ RESET MAP + LIST */
-  function resetMapView() {
-    map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
+  /* =============================
+     RENDER HOST CITY LIST ✅
+     ============================= */
+  function renderHostCityList() {
+    panel.innerHTML = "";
 
-    document.querySelectorAll("[data-city]").forEach(el => {
-      el.classList.remove("active");
-      el.querySelector(".stadium-list").innerHTML = "";
+    const byCountry = {};
+    hostCities.forEach(c => {
+      byCountry[c.country] ??= [];
+      byCountry[c.country].push(c);
+    });
+
+    Object.entries(byCountry).forEach(([country, cities]) => {
+      const h3 = document.createElement("h3");
+      h3.textContent = country.toUpperCase();
+      panel.appendChild(h3);
+
+      const ul = document.createElement("ul");
+
+      cities.forEach(city => {
+        const li = document.createElement("li");
+        li.textContent = city.name;
+        li.dataset.hostCity = city.id;
+
+        const stadiumList = document.createElement("ul");
+        stadiumList.className = "stadium-list";
+        li.appendChild(stadiumList);
+
+        li.addEventListener("click", () => activateHostCity(city.id));
+        ul.appendChild(li);
+      });
+
+      panel.appendChild(ul);
     });
 
     panelTitle.textContent = "Select a host city";
   }
 
-  document.querySelector(".reset-map").addEventListener("click", resetMapView);
-
-  /* ✅ WHATSAPP CTA */
-  function whatsappLink(text) {
-    return `
-      <li>
-        https://wa.me/?text=${encodeURIComponent(text)}
-          📲 Get matchday updates on WhatsApp
-        </a>
-      </li>
-    `;
-  }
-
-  /* ✅ CITY ACTIVATION */
-  function activateCity(cityId) {
-    const city = cityById[cityId];
+  /* =============================
+     ACTIVATE HOST CITY ✅
+     ============================= */
+  function activateHostCity(cityId) {
+    const city = hostCities.find(c => c.id === cityId);
     if (!city) return;
 
-    map.setView([city.lat, city.lng], 6);
     panelTitle.textContent = city.name;
+    map.setView([city.lat, city.lng], 6);
 
-    document.querySelectorAll("[data-city]").forEach(el => {
-      el.classList.remove("active");
-      el.querySelector(".stadium-list").innerHTML = "";
+    document.querySelectorAll(".stadium-list").forEach(l => l.innerHTML = "");
+
+    const li = document.querySelector(`[data-host-city="${cityId}"]`);
+    const list = li.querySelector(".stadium-list");
+
+    (stadiumsByCity[cityId] || []).forEach(stadium => {
+      const sLi = document.createElement("li");
+      sLi.innerHTML = `
+        <strong>${stadium.name}</strong><br>
+        Capacity: ${stadium.capacity}<br>
+        ${stadium.whatsappIntent
+          ? `<a target="_blank"
+                href="https://wa.me/?text=${encodeURIComponent(stadium.whatsappIntent)}">
+              📲 Get matchday updates on WhatsApp
+            </a>` : ""}
+      `;
+      list.appendChild(sLi);
     });
-
-    const cityEl = document.querySelector(`[data-city="${cityId}"]`);
-    cityEl.classList.add("active");
-    const list = cityEl.querySelector(".stadium-list");
-
-    stadiums
-      .filter(s => s.cityId === cityId)
-      .forEach(s => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <strong>${s.name}</strong><br>
-          Capacity: ${s.capacity}<br>
-          ${s.description?.en || ""}
-        `;
-        list.appendChild(li);
-
-        if (s.whatsappIntent) {
-          list.insertAdjacentHTML("beforeend", whatsappLink(s.whatsappIntent));
-        }
-      });
   }
 
-  /* ✅ MAP MARKERS */
-  cities.forEach(city => {
+  /* =============================
+     RESET MAP + LIST ✅
+     ============================= */
+  function resetMap() {
+    map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
+    renderHostCityList();
+  }
+  resetBtn.addEventListener("click", resetMap);
+
+  /* =============================
+     MAP MARKERS ✅
+     ============================= */
+  hostCities.forEach(city => {
     const icon = L.divIcon({
       className: "football-marker",
       html: "⚽",
@@ -88,9 +121,9 @@
       iconAnchor: [8, 8]
     });
 
-    const marker = L.marker([city.lat, city.lng], { icon })
+    L.marker([city.lat, city.lng], { icon })
       .addTo(map)
-      .on("click", () => activateCity(city.id));
+      .on("click", () => activateHostCity(city.id));
 
     L.marker([city.lat, city.lng], {
       icon: L.divIcon({
@@ -101,15 +134,11 @@
       interactive: false
     }).addTo(map);
 
-    markerByCity[city.id] = marker;
     initialBounds.push([city.lat, city.lng]);
   });
 
   map.fitBounds(initialBounds, { padding: [90, 90], maxZoom: 4 });
 
-  /* ✅ CITY LIST CLICK */
-  document.querySelectorAll("[data-city]").forEach(el => {
-    el.addEventListener("click", () => activateCity(el.dataset.city));
-  });
+  renderHostCityList();
 
 })();
