@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Matchday Information | Matchday Navigator</title>
-
+  <title>MatchDay Navigator – World Cup 2026</title>
   <meta
     name="description"
-    content="Neutral, event-specific matchday information for major sporting events. Arrival, entry, and venue guidance available if needed on matchday."
+    content="Neutral, event‑specific matchday information for major football events, including the FIFA World Cup 2026."
   />
-
   <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
@@ -25,6 +22,18 @@
       margin-bottom: 20px;
     }
 
+    .flags {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin: 24px 0 16px;
+    }
+
+    .flags img {
+      width: 150px;
+      height: auto;
+    }
+
     .hero-subtitle {
       max-width: 840px;
       margin: 20px auto 0;
@@ -33,40 +42,46 @@
       line-height: 1.6;
     }
 
-    .recall-block {
+    .info-card {
+      max-width: 820px;
+      margin: 36px auto 0;
+      background: #ffffff;
+      padding: 32px 36px;
+      border-radius: 18px;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+      font-size: 1.05rem;
+      color: #334155;
+    }
+
+    .cta-row {
       margin-top: 36px;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 28px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
-    .recall-block h3 {
-      margin-bottom: 10px;
-      font-size: 1.1rem;
+    .cta-button {
+      padding: 16px 34px;
+      background: #16a34a;
+      color: #ffffff;
+      border-radius: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+      display: inline-block;
     }
 
-    .boxed-section {
-      background: #ffffff;
-      padding: 70px 20px;
+    .cta-button.secondary {
+      background: #2563eb;
     }
 
-    .boxed-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 32px;
+    .cta-button.tertiary {
+      background: #475569;
     }
 
-    .boxed-card {
-      background: #f8fafc;
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+    .cta-button:hover {
+      opacity: 0.92;
     }
 
     footer {
@@ -75,59 +90,59 @@
       color: #475569;
       font-size: 0.9rem;
     }
+
+    footer a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+    }
   </style>
 </head>
 
 <body>
+  <header class="hero">
+    <img src="/assets/logo.png" alt="MatchDay Navigator" class="hero-logo" />
+    <h1>MatchDay Navigator</h1>
 
-<header class="hero">
-  <div class="container">
-    <img src="/assets/logo.png" alt="Matchday Navigator" class="hero-logo" />
-    <h1>Matchday Navigator</h1>
+    <div class="flags">
+      <img src="/assets/flags/us.png" alt="USA" />
+      <img src="/assets/flags/ca.png" alt="Canada" />
+      <img src="/assets/flags/mx.png" alt="Mexico" />
+    </div>
 
     <p class="hero-subtitle">
-      Neutral, event-specific matchday information for major football events,
+      Neutral, event‑specific matchday information for major football events,
       including the FIFA World Cup 2026.
     </p>
 
-    <!-- ✅ PILOT 3 MEMORY SEED -->
-    <div class="recall-block">
-      <h3>Matchday Information (if needed)</h3>
-      <p>
-        Arrival, entry, and getting‑there guidance is available here
-        if you need it on matchday.
-      </p>
-    </div>
-  </div>
-</header>
-
-<section class="boxed-section">
-  <div class="boxed-grid">
-
-    <div class="boxed-card">
-      <h3>What this is</h3>
-      <p>
-        Matchday Navigator is temporary, event‑specific guidance infrastructure
-        designed to support calm arrival and entry during major sporting events.
-      </p>
+    <div class="info-card">
+      <strong>Matchday information (if needed)</strong><br />
+      Arrival, entry, and getting‑there guidance is available here when you need
+      it on matchday.
     </div>
 
-    <div class="boxed-card">
-      <h3>What this is not</h3>
-      <p>
-        It is not a marketing channel, ticketing service, or fan engagement app.
-        It does not sell, promote, or persuade.
-      </p>
+    <!-- ✅ Restored CTA Group -->
+    <div class="cta-row">
+      <a href="/cities/" class="cta-button">
+        Explore Host Cities
+      </a>
+      <a href="/stadiums/" class="cta-button secondary">
+        View Stadiums
+      </a>
+      <a href="/partners/" class="cta-button tertiary">
+        Partners
+      </a>
+      <a href="/cities/" class="cta-button secondary">
+        Know more →
+      </a>
     </div>
+  </header>
 
-  </div>
-</section>
-
-<footer>
-  <a href="/privacy.html">Privacy</a> ·
-  <a href="/terms.html">Terms</a>
-  <p>© Matchday Navigator</p>
-</footer>
-
+  <footer>
+    <a href="/privacy.html">Privacy Policy</a> ·
+    <a href="/terms.html">Terms of Service</a> ·
+    <a href="/cities/">For cities & venues</a>
+    <p>© MatchDay Navigator</p>
+  </footer>
 </body>
 </html>
