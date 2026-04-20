@@ -6,20 +6,15 @@
 
   <title>World Cup 2026 Match Map – MatchDay Navigator</title>
 
-  <meta name="description"
-        content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico.">
+  <meta
+    name="description"
+    content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
+  >
 
-  <!-- ✅ CSS LOADING VIA @import (SANITIZER-SAFE) -->
-  <style>
-    @import url("/assets/style.css");
-    @import url("/worldcup-2026/assets/wc-map.css");
-    @import url("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
-  </style>
-</head>
-
-<body>
-
-<header class="wc-map-header">
+  <!-- ✅ Global site styles -->
+  <link rel="stylesheet" href="/assetstyles -->
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css<link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leafletwc-map-header">
   <h1>World Cup 2026 Match Map</h1>
 
   <div class="subtitle">
@@ -27,14 +22,17 @@
   </div>
 
   <div class="wc-map-nav">
-    <← Back to Home</a>
+    <a href to Home</a>
     <button type="button" class="reset-map">Reset map view →</button>
   </div>
 </header>
 
 <div class="wc-map-layout">
+
+  <!-- MAP CONTAINER -->
   <div id="map"></div>
 
+  <!-- RIGHT PANEL -->
   <aside class="wc-city-panel">
     <h2 class="panel-title">Select a host city</h2>
     <div class="panel-subtitle">
@@ -42,8 +40,14 @@
     </div>
     <div id="host-city-list"></div>
   </aside>
+
 </div>
 
-<!-- ✅ JS LOADING (MINIMAL, SANITIZER-SAFE) -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"/worldcup-2026/assets/wc-map.jsbody>
+<!-- ✅ Leaflet JS (REQUIRED) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/cript>
+
+<!-- ✅ MAP LOGIC — THIS WAS MISSING -->
+<script src="/worldcup-2026/assets/wc-map.js"></script>
+
+</body>
 </html>
