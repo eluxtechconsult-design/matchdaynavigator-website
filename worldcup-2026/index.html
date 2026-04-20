@@ -14,7 +14,7 @@
   <!-- ✅ Global styles -->
   <link rel="stylesheet" href="/assets/style.css" />
 
-  <!-- ✅ World Cup map layout styles -->
+  <!-- ✅ Map layout styles -->
   <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css" />
 
   <!-- ✅ Leaflet CSS -->
@@ -58,7 +58,7 @@
 <!-- ✅ Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- ✅ Inline map logic -->
+<!-- ✅ FINAL inline map logic -->
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const listEl = document.getElementById("host-city-list");
@@ -67,11 +67,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   let hostCities;
 
   try {
-    // ✅ FINAL, CORRECT DATA PATH
-    const res = await fetch("/worldcup-2026/data/host-cities.json");
-    if (!res.ok) {
-      throw new Error("host-cities.json not found at /worldcup-2026/data/");
-    }
+    // ✅ FINAL FIX: RELATIVE PATH (robust)
+    const res = await fetch("data/host-cities.json");
+    if (!res.ok) throw new Error("host-cities.json not found");
     hostCities = await res.json();
   } catch (err) {
     console.error(err);
@@ -99,14 +97,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const bounds = [];
 
   hostCities.forEach(city => {
-    // Marker
     L.marker([city.lat, city.lng], { icon: footballIcon })
       .addTo(map)
       .on("click", () => focusCity(city));
 
     bounds.push([city.lat, city.lng]);
 
-    // Sidebar list
     const li = document.createElement("li");
     li.textContent = city.name;
     li.onclick = () => focusCity(city);
