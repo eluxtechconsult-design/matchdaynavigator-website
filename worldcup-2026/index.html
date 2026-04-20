@@ -12,11 +12,21 @@
   />
 
   <!-- Global styles -->
-  <link rel="stylesheet" href="/assets/style.css -->
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.cssink
+  <link rel="stylesheet" href="/assets/style.css" />
+
+  <!-- World Cup map styles -->
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css" />
+
+  <!-- Leaflet CSS -->
+  <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
- header">
+  />
+</head>
+
+<body>
+
+<header class="wc-map-header">
   <h1>World Cup 2026 Match Map</h1>
 
   <div class="subtitle">
@@ -24,7 +34,7 @@
   </div>
 
   <div class="wc-map-nav">
-    /← Back to Home</a>
+    <a href="/">← Back to Home</a>
     <button type="button" class="reset-map">Reset map view →</button>
   </div>
 </header>
@@ -46,8 +56,10 @@
 </div>
 
 <!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leafletAP LOGIC (THIS MUST EXIST EXACTLY LIKE THIS) -->
-<script src="/worldcup-c-map.js</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- ✅ YOUR MAP LOGIC -->
+<script src="/worldcup-2026/assets/wc-map.js"></script>
 
 </body>
 </html>
