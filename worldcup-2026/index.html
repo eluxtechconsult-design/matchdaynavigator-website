@@ -11,140 +11,102 @@
     content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
   />
 
-  <!-- ✅ Global styles -->
-  <link rel="stylesheet" href="/assets/style.css-->
-  <link rel="stylesheet" href="/worldcup-202 Leaflet CSS -->
+  <!-- Global styles -->
+  <link rel="stylesheet" href="/assets/style.css"
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-->
   <link
     rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
- tyle>
-    .wc-map-layout {
-      display: grid;
-      grid-template-columns: 78% 22%;
-      min-height: calc(100vh - 120px);
-    }
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.cssap-header">
+  <h1>World Cup 2026 Match Map</h1>
 
-    #map {
-      width: 100%;
-      height: 100%;
-      min-height: 600px;
-    }
-
-    .football-marker {
-      font-size: 20px;
-      line-height: 20px;
-    }
-
-    #host-city-list {
-      list-style: none;
-      padding-left: 0;
-      margin-top: 12px;
-    }
-
-    #host-city-list li {
-      cursor: pointer;
-      padding: 6px 0;
-    }
-
-    #host-city-list li:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-
-<body>
-
-  <header class="wc-map-header">
-    <h1>World Cup 2026 Match Map</h1>
-
-    <div class="subtitle">
-      Official host cities across the United States, Canada, and Mexico.
-    </div>
-
-    <div class="wc-map-nav">
-      <a Back to Home</a>
-      <button type="button" class="reset-map">Reset map view →</button>
-    </div>
-  </header>
-
-  <div class="wc-map-layout">
-
-    <div id="map"></div>
-
-    <aside class="wc-city-panel">
-      <h2 class="panel-title">Select a host city</h2>
-      <div class="panel-subtitle">
-        Click a city name or ⚽ icon to view location.
-      </div>
-      <ul id="host-city-list"></ul>
-    </aside>
-
+  <div class="subtitle">
+    Official host cities across the United States, Canada, and Mexico.
   </div>
 
-  <!-- ✅ Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4.js
+  <div class="wc-map-nav">
+    <a Back to Home</a>
+    <button type="button" class="reset-map">Reset map view →</button>
+  </div>
+</header>
 
-  <!-- ✅ Inline map logic -->
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const listEl = document.getElementById("host-city-list");
-      const resetBtn = document.querySelector(".reset-map");
+<div class="wc-map-layout">
 
-      let hostCities;
+  <!-- MAP -->
+  <div id="map"></div>
 
-      try {
-        const res = await fetch("/data/host-cities.json");
-        if (!res.ok) throw new Error("host-cities.json not found");
-        hostCities = await res.json();
-      } catch (err) {
-        console.error(err);
-        listEl.innerHTML =
-          "<li style='color:#ffb3b3'>Failed to load host cities</li>";
-        return;
-      }
+  <!-- SIDEBAR -->
+  <aside class="wc-city-panel">
+    <h2 class="panel-title">Select a host city</h2>
+    <div class="panel-subtitle">
+      Click a city name or ⚽ icon to view location.
+    </div>
+    <ul id="host-city-list"></ul>
+  </aside>
 
-      const map = L.map("map", {
-        scrollWheelZoom: false,
-        zoomControl: true
-      });
+</div>
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap contributors"
-      }).addTo(map);
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leafInline map logic (Netlify-safe) -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const listEl = document.getElementById("host-city-list");
+  const resetBtn = document.querySelector(".reset-map");
 
-      const footballIcon = L.divIcon({
-        className: "football-marker",
-        html: "⚽",
-        iconSize: [20, 20],
-        iconAnchor: [10, 10]
-      });
+  let hostCities;
 
-      const bounds = [];
+  try {
+    const res = await fetch("/data/host-cities.json");
+    if (!res.ok) throw new Error("host-cities.json not found");
+    hostCities = await res.json();
+  } catch (err) {
+    console.error(err);
+    listEl.innerHTML =
+      "<li style='color:#ffb3b3'>Failed to load host cities</li>";
+    return;
+  }
 
-      hostCities.forEach(city => {
-        L.marker([city.lat, city.lng], { icon: footballIcon })
-          .addTo(map)
-          .on("click", () => focusCity(city));
+  const map = L.map("map", {
+    scrollWheelZoom: false,
+    zoomControl: true
+  });
 
-        bounds.push([city.lat, city.lng]);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors"
+  }).addTo(map);
 
-        const li = document.createElement("li");
-        li.textContent = city.name;
-        li.onclick = () => focusCity(city);
-        listEl.appendChild(li);
-      });
+  const footballIcon = L.divIcon({
+    className: "football-marker",
+    html: "⚽",
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  });
 
-      map.fitBounds(bounds, { padding: [80, 80], maxZoom: 4 });
+  const bounds = [];
 
-      resetBtn.onclick = () => {
-        map.fitBounds(bounds, { padding: [80, 80], maxZoom: 4 });
-      };
+  hostCities.forEach(city => {
+    L.marker([city.lat, city.lng], { icon: footballIcon })
+      .addTo(map)
+      .on("click", () => focusCity(city));
 
-      function focusCity(city) {
-        map.setView([city.lat, city.lng], 6);
-      }
-    });
-  </script>
+    bounds.push([city.lat, city.lng]);
+
+    const li = document.createElement("li");
+    li.textContent = city.name;
+    li.onclick = () => focusCity(city);
+    listEl.appendChild(li);
+  });
+
+  map.fitBounds(bounds, { padding: [80, 80], maxZoom: 4 });
+
+  resetBtn.onclick = () => {
+    map.fitBounds(bounds, { padding: [80, 80], maxZoom: 4 });
+  };
+
+  function focusCity(city) {
+    map.setView([city.lat, city.lng], 6);
+  }
+});
+</script>
 
 </body>
 </html>
