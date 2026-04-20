@@ -1,38 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>World Cup 2026 Match Map – MatchDay Navigator</title>
 
-  <meta
-    name="description"
-    content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
-  />
+  <meta name="description"
+        content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico.">
 
   <!-- Global styles -->
-  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/assets/style.css">
 
-  <!-- World Cup map styles -->
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css" />
+  <!-- WC map styles -->
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
 
   <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
 
 <header class="wc-map-header">
   <h1>World Cup 2026 Match Map</h1>
-
   <div class="subtitle">
     Official host cities across the United States, Canada, and Mexico.
   </div>
-
   <div class="wc-map-nav">
     <a href="/">← Back to Home</a>
     <button type="button" class="reset-map">Reset map view →</button>
@@ -40,26 +34,38 @@
 </header>
 
 <div class="wc-map-layout">
-
-  <!-- MAP -->
   <div id="map"></div>
 
-  <!-- RIGHT PANEL -->
   <aside class="wc-city-panel">
     <h2 class="panel-title">Select a host city</h2>
     <div class="panel-subtitle">
-      Click a city name or map icon to view stadium details.
+      Inline test map – this must render.
     </div>
     <div id="host-city-list"></div>
   </aside>
-
 </div>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- ✅ YOUR MAP LOGIC -->
-<script src="/worldcup-2026/assets/wc-map.js"></script>
+<!-- ✅ INLINE MAP INITIALISATION -->
+<script>
+  console.log("Leaflet loaded:", typeof L !== "undefined");
+
+  const map = L.map("map").setView([39.5, -98.35], 4);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors"
+  }).addTo(map);
+
+  L.marker([39.5, -98.35])
+    .addTo(map)
+    .bindPopup("✅ Map is working");
+
+  document.querySelector(".reset-map").onclick = () => {
+    map.setView([39.5, -98.35], 4);
+  };
+</script>
 
 </body>
 </html>
