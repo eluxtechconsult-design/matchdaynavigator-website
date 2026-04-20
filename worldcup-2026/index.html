@@ -13,19 +13,21 @@
 <body>
 
 <header class="wc-topbar">
-  <div class="brand">
-    <img src="/assets/logo-wc2026.svg" alt="World Cup 2026 Logo">
-    <div>
-      <h1>World Cup 2026</h1>
-      <strong class="brand-subtitle">Host Cities Map</strong>
+  <div class="topbar-grid">
+    <div class="brand">
+      <img src="/assets/logo.png" alt="MatchDay Navigator Logo">
+    </div>
+
+    <div class="topbar-title">
+      <h1>World Cup 2026 – Host Cities Map</h1>
+    </div>
+
+    <div class="topbar-nav">
+      <a href="/worldcup-2026/stadiums/">
+        → Click to go to Stadiums
+      </a>
     </div>
   </div>
-
-  <nav class="top-nav">
-    <a href="/worldcup-2026/stadiums/" class="nav-link">
-      → Click to go to Stadiums
-    </a>
-  </nav>
 </header>
 
 <main class="wc-map-layout">
@@ -64,7 +66,7 @@
   const map = L.map('map', {
     zoomControl: false,
     scrollWheelZoom: false
-  }).setView([36.5, -97], 4.1); // matches screenshot framing
+  }).setView([36.5, -97], 4.1);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
@@ -99,9 +101,9 @@
   });
 
   document.querySelectorAll('.city-list li').forEach(li => {
-    li.onclick = () => {
+    li.addEventListener('click', () => {
       window.location.href = `/worldcup-2026/stadiums/#${li.dataset.stadium}`;
-    };
+    });
   });
 </script>
 
