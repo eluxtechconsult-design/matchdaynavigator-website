@@ -11,48 +11,34 @@
     content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
   >
 
-  <!-- Global styles -->
-  <link rel="stylesheet" href="/assets/style.css">
+  /assets/style.css
+  /worldcup-2026/assets/wc-map.css
+  https://unpkg.com/leaflet@1.9.4/dist/leaflet.css
 
-  <!-- World Cup map styles -->
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
-
-  <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-
-  <!-- ✅ Critical: map must have height -->
   <style>
     .wc-map-layout {
       display: grid;
       grid-template-columns: 78% 22%;
       min-height: calc(100vh - 120px);
     }
-
     #map {
       width: 100%;
       height: 100%;
       min-height: 600px;
     }
-
     .football-marker {
       font-size: 20px;
       line-height: 20px;
     }
-
     #host-city-list {
       list-style: none;
       padding-left: 0;
       margin-top: 12px;
     }
-
     #host-city-list li {
       cursor: pointer;
       padding: 6px 0;
     }
-
     #host-city-list li:hover {
       text-decoration: underline;
     }
@@ -63,23 +49,18 @@
 
 <header class="wc-map-header">
   <h1>World Cup 2026 Match Map</h1>
-
   <div class="subtitle">
     Official host cities across the United States, Canada, and Mexico.
   </div>
-
   <div class="wc-map-nav">
-    <a href="/">← Back to Home</a>
+    /← Back to Home</a>
     <button type="button" class="reset-map">Reset map view →</button>
   </div>
 </header>
 
 <div class="wc-map-layout">
-
-  <!-- MAP -->
   <div id="map"></div>
 
-  <!-- RIGHT PANEL -->
   <aside class="wc-city-panel">
     <h2 class="panel-title">Select a host city</h2>
     <div class="panel-subtitle">
@@ -87,13 +68,10 @@
     </div>
     <ul id="host-city-list"></ul>
   </aside>
-
 </div>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+https://unpkg.com/leaflet@1.9.4/dist/leaflet.jsscript>
 
-<!-- ✅ INLINE, DATA-DRIVEN MAP LOGIC -->
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const listEl = document.getElementById("host-city-list");
@@ -108,7 +86,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   let cities;
 
   try {
-    const res = await fetch("/worldcup-2026/data/cities.json");
+    // ✅ FIX: use correct Netlify path
+    const res = await fetch("/data/cities.json");
     if (!res.ok) throw new Error("cities.json not found");
     cities = await res.json();
   } catch (err) {
@@ -134,14 +113,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const bounds = [];
 
   cities.forEach(city => {
-    // Marker
     L.marker([city.lat, city.lng], { icon: footballIcon })
       .addTo(map)
       .on("click", () => focusCity(city));
 
     bounds.push([city.lat, city.lng]);
 
-    // Sidebar list
     const li = document.createElement("li");
     li.textContent = city.name;
     li.onclick = () => focusCity(city);
