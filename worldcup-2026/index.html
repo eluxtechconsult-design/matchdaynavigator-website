@@ -3,153 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>World Cup 2026 Match Map – MatchDay Navigator</title>
 
-  <meta
-    name="description"
-    content="Explore official host cities of the FIFA World Cup 2026 across the United States, Canada, and Mexico."
-  />
-
-  <!-- Global branding -->
-  <link rel="stylesheet" href="/assets/style.css" />
-
-  <!-- WC Map styles -->
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css" />
-
-  <!-- Leaflet -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
 
 <header class="wc-map-header">
   <h1>World Cup 2026 Match Map</h1>
-
-  <div class="subtitle">
+  <p class="subtitle">
     Official host cities across the United States, Canada, and Mexico.
-  </div>
+  </p>
 
   <div class="wc-map-nav">
     <a href="/">← Back to Home</a>
-    <a class="button-secondary" href="/worldcup-2026/stadiums/">
-      View stadiums →
-    </a>
-    <button type="button" class="reset-map">Reset map view →</button>
+    <a href="/worldcup-2026/stadiums/">View all stadiums →</a>
   </div>
 </header>
 
+<!-- MAP FIRST -->
+<section id="map"></section>
+
 <div class="wc-map-layout">
 
-  <!-- MAP -->
-  <div id="map"></div>
-
-  <!-- CITY SELECTOR (PREMIUM DARK PANEL) -->
+  <!-- PREMIUM CITY PANEL -->
   <aside class="wc-city-panel">
     <h2>Select a host city</h2>
     <p class="panel-subtitle">
-      Choose a city to begin exploring the World Cup 2026.
+      Choose a city to explore its World Cup stadium.
     </p>
 
-    <h3>United States</h3>
     <ul class="city-list">
-      <li data-city="new-york-nj">New York / New Jersey</li>
-      <li data-city="los-angeles">Los Angeles</li>
-      <li data-city="dallas">Dallas</li>
-      <li data-city="atlanta">Atlanta</li>
-      <li data-city="miami">Miami</li>
-      <li data-city="houston">Houston</li>
-      <li data-city="kansas-city">Kansas City</li>
-      <li data-city="philadelphia">Philadelphia</li>
-      <li data-city="seattle">Seattle</li>
-      <li data-city="san-francisco">San Francisco Bay Area</li>
-    </ul>
-
-    <h3>Canada</h3>
-    <ul class="city-list">
-      <li data-city="toronto">Toronto</li>
-      <li data-city="vancouver">Vancouver</li>
-    </ul>
-
-    <h3>Mexico</h3>
-    <ul class="city-list">
-      <li data-city="mexico-city">Mexico City</li>
-      <li data-city="guadalajara">Guadalajara</li>
-      <li data-city="monterrey">Monterrey</li>
+      <li data-stadium="metlife">New York / New Jersey<br><span>MetLife Stadium</span></li>
+      <li data-stadium="sofi">Los Angeles<br><span>SoFi Stadium</span></li>
+      <li data-stadium="att">Dallas<br><span>AT&T Stadium</span></li>
+      <li data-stadium="mercedes">Atlanta<br><span>Mercedes‑Benz Stadium</span></li>
+      <li data-stadium="lincoln">Philadelphia<br><span>Lincoln Financial Field</span></li>
+      <li data-stadium="nrg">Houston<br><span>NRG Stadium</span></li>
+      <li data-stadium="arrowhead">Kansas City<br><span>Arrowhead Stadium</span></li>
+      <li data-stadium="lumen">Seattle<br><span>Lumen Field</span></li>
+      <li data-stadium="levis">San Francisco Bay Area<br><span>Levi’s Stadium</span></li>
+      <li data-stadium="hardrock">Miami<br><span>Hard Rock Stadium</span></li>
+      <li data-stadium="gillette">Boston<br><span>Gillette Stadium</span></li>
+      <li data-stadium="bmo">Toronto<br><span>BMO Field</span></li>
+      <li data-stadium="bcplace">Vancouver<br><span>BC Place</span></li>
+      <li data-stadium="azteca">Mexico City<br><span>Estadio Azteca</span></li>
+      <li data-stadium="bbva">Monterrey<br><span>Estadio BBVA</span></li>
+      <li data-stadium="akron">Guadalajara<br><span>Estadio Akron</span></li>
     </ul>
 
     <div class="panel-footer">
-      Select a city to explore its stadiums and matchday information.
-    </div>
-
-    <div class="panel-whatsapp">
-      <a
-        href="https://wa.me/?text=Tell%20me%20about%20World%20Cup%202026%20cities"
-        target="_blank"
-      >
-        Get matchday updates on WhatsApp →
-      </a>
+      Click a city to view its World Cup stadium.
     </div>
   </aside>
 
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
-/* =====================================================
-   MAP LOGIC — UX CONTRACT COMPLIANT
-   ===================================================== */
+  const map = L.map("map").setView([39, -95], 3);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{ attribution:"© OpenStreetMap" }).addTo(map);
 
-const CITIES = {
-  "new-york-nj": { name: "New York / New Jersey", lat: 40.8135, lng: -74.0743 },
-  "los-angeles": { name: "Los Angeles", lat: 34.0430, lng: -118.2673 },
-  "dallas": { name: "Dallas", lat: 32.7473, lng: -97.0945 },
-  "atlanta": { name: "Atlanta", lat: 33.7554, lng: -84.4010 },
-  "miami": { name: "Miami", lat: 25.9580, lng: -80.2389 },
-  "houston": { name: "Houston", lat: 29.6847, lng: -95.4107 },
-  "kansas-city": { name: "Kansas City", lat: 39.1238, lng: -94.8326 },
-  "philadelphia": { name: "Philadelphia", lat: 39.9008, lng: -75.1675 },
-  "seattle": { name: "Seattle", lat: 47.5952, lng: -122.3316 },
-  "san-francisco": { name: "San Francisco Bay Area", lat: 37.4030, lng: -121.9700 },
-  "toronto": { name: "Toronto", lat: 43.6332, lng: -79.4186 },
-  "vancouver": { name: "Vancouver", lat: 49.2767, lng: -123.1119 },
-  "mexico-city": { name: "Mexico City", lat: 19.3029, lng: -99.1505 },
-  "guadalajara": { name: "Guadalajara", lat: 20.6827, lng: -103.3511 },
-  "monterrey": { name: "Monterrey", lat: 25.6759, lng: -100.3161 }
-};
-
-const map = L.map("map").setView([40, -95], 3);
-
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "© OpenStreetMap contributors"
-}).addTo(map);
-
-const markers = {};
-
-Object.entries(CITIES).forEach(([id, city]) => {
-  const icon = L.divIcon({
-    className: "city-pin",
-    html: `⚽ <span>${city.name}</span>`,
-    iconAnchor: [12, 12]
-  });
-
-  markers[id] = L.marker([city.lat, city.lng], { icon }).addTo(map);
-});
-
-document.querySelectorAll(".city-list li").forEach(item => {
-  item.onclick = () => {
-    const id = item.dataset.city;
-    map.setView([CITIES[id].lat, CITIES[id].lng], 6);
+  const cities = {
+    "New York / New Jersey": [40.8135, -74.0743],
+    "Los Angeles": [34.043, -118.2673],
+    "Dallas": [32.7473, -97.0945],
+    "Atlanta": [33.755, -84.401],
+    "Miami": [25.958, -80.239],
+    "Houston":[29.6847,-95.4107]
   };
-});
 
-document.querySelector(".reset-map").onclick = () => {
-  map.setView([40, -95], 3);
-};
+  Object.keys(cities).forEach(c=>{
+    L.marker(cities[c],{
+      icon:L.divIcon({className:"city-pin",html:`⚽ ${c}`})
+    }).addTo(map);
+  });
 </script>
 
 </body>
