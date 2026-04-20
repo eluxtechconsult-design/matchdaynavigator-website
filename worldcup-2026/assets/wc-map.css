@@ -1,10 +1,6 @@
-/* ==========================
-   Layout
-   ========================== */
-
 .wc-map-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 30%);
+  grid-template-columns: minmax(0, 1fr) 360px;
   min-height: calc(100vh - 120px);
 }
 
@@ -12,38 +8,31 @@
   min-height: 600px;
 }
 
-/* ==========================
-   Selector Panel
-   ========================== */
-
 .wc-city-panel {
-  background: #ffffff;
-  border-left: 1px solid #e5e7eb;
+  background: #0f3d2e;
+  color: #ffffff;
   padding: 24px;
 }
 
-.panel-title {
-  font-size: 1.4rem;
+.wc-city-panel h2 {
   margin-bottom: 8px;
 }
 
 .panel-subtitle {
-  color: #475569;
   margin-bottom: 16px;
+  color: #d1fae5;
 }
 
-.city-group {
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.wc-city-panel h3 {
   margin-top: 18px;
-  margin-bottom: 6px;
-  color: #64748b;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .city-list {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
   margin: 0;
 }
 
@@ -59,5 +48,24 @@
 .panel-footer {
   margin-top: 20px;
   font-size: 0.9rem;
-  color: #475569;
+  color: #d1fae5;
+}
+
+.panel-whatsapp {
+  margin-top: 16px;
+}
+
+.panel-whatsapp a {
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.city-pin {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.city-pin span {
+  margin-left: 4px;
+  font-weight: 500;
 }

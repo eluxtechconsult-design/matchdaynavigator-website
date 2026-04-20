@@ -11,7 +11,7 @@
     content="Explore official host cities of the FIFA World Cup 2026 across the United States, Canada, and Mexico."
   />
 
-  <!-- Global styles -->
+  <!-- Global branding -->
   <link rel="stylesheet" href="/assets/style.css" />
 
   <!-- WC Map styles -->
@@ -35,6 +35,9 @@
 
   <div class="wc-map-nav">
     <a href="/">← Back to Home</a>
+    <a class="button-secondary" href="/worldcup-2026/stadiums/">
+      View stadiums →
+    </a>
     <button type="button" class="reset-map">Reset map view →</button>
   </div>
 </header>
@@ -44,16 +47,15 @@
   <!-- MAP -->
   <div id="map"></div>
 
-  <!-- CITY SELECTOR PANEL (ALWAYS VISIBLE) -->
+  <!-- CITY SELECTOR (PREMIUM DARK PANEL) -->
   <aside class="wc-city-panel">
-    <h2 class="panel-title">Select a host city</h2>
+    <h2>Select a host city</h2>
     <p class="panel-subtitle">
       Choose a city to begin exploring the World Cup 2026.
     </p>
 
-    <!-- United States -->
-    <h3 class="city-group">United States</h3>
-    <ul class="city-list" data-country="USA">
+    <h3>United States</h3>
+    <ul class="city-list">
       <li data-city="new-york-nj">New York / New Jersey</li>
       <li data-city="los-angeles">Los Angeles</li>
       <li data-city="dallas">Dallas</li>
@@ -66,24 +68,31 @@
       <li data-city="san-francisco">San Francisco Bay Area</li>
     </ul>
 
-    <!-- Canada -->
-    <h3 class="city-group">Canada</h3>
-    <ul class="city-list" data-country="Canada">
+    <h3>Canada</h3>
+    <ul class="city-list">
       <li data-city="toronto">Toronto</li>
       <li data-city="vancouver">Vancouver</li>
     </ul>
 
-    <!-- Mexico -->
-    <h3 class="city-group">Mexico</h3>
-    <ul class="city-list" data-country="Mexico">
+    <h3>Mexico</h3>
+    <ul class="city-list">
       <li data-city="mexico-city">Mexico City</li>
       <li data-city="guadalajara">Guadalajara</li>
       <li data-city="monterrey">Monterrey</li>
     </ul>
 
-    <p class="panel-footer">
+    <div class="panel-footer">
       Select a city to explore its stadiums and matchday information.
-    </p>
+    </div>
+
+    <div class="panel-whatsapp">
+      <a
+        href="https://wa.me/?text=Tell%20me%20about%20World%20Cup%202026%20cities"
+        target="_blank"
+      >
+        Get matchday updates on WhatsApp →
+      </a>
+    </div>
   </aside>
 
 </div>
@@ -91,76 +100,56 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-/*
-  ====================================================================
-  World Cup 2026 Map Logic
-  UX CONTRACT:
-  - City list must render immediately
-  - Backend data enhances, never gates
-  ====================================================================
-*/
+/* =====================================================
+   MAP LOGIC — UX CONTRACT COMPLIANT
+   ===================================================== */
 
-const FALLBACK_CITIES = {
-  "new-york-nj": [40.8135, -74.0743],
-  "los-angeles": [34.0430, -118.2673],
-  "dallas": [32.7473, -97.0945],
-  "atlanta": [33.7554, -84.4010],
-  "miami": [25.9580, -80.2389],
-  "houston": [29.6847, -95.4107],
-  "kansas-city": [39.1238, -94.8326],
-  "philadelphia": [39.9008, -75.1675],
-  "seattle": [47.5952, -122.3316],
-  "san-francisco": [37.4030, -121.9700],
-  "toronto": [43.6332, -79.4186],
-  "vancouver": [49.2767, -123.1119],
-  "mexico-city": [19.3029, -99.1505],
-  "guadalajara": [20.6827, -103.3511],
-  "monterrey": [25.6759, -100.3161]
+const CITIES = {
+  "new-york-nj": { name: "New York / New Jersey", lat: 40.8135, lng: -74.0743 },
+  "los-angeles": { name: "Los Angeles", lat: 34.0430, lng: -118.2673 },
+  "dallas": { name: "Dallas", lat: 32.7473, lng: -97.0945 },
+  "atlanta": { name: "Atlanta", lat: 33.7554, lng: -84.4010 },
+  "miami": { name: "Miami", lat: 25.9580, lng: -80.2389 },
+  "houston": { name: "Houston", lat: 29.6847, lng: -95.4107 },
+  "kansas-city": { name: "Kansas City", lat: 39.1238, lng: -94.8326 },
+  "philadelphia": { name: "Philadelphia", lat: 39.9008, lng: -75.1675 },
+  "seattle": { name: "Seattle", lat: 47.5952, lng: -122.3316 },
+  "san-francisco": { name: "San Francisco Bay Area", lat: 37.4030, lng: -121.9700 },
+  "toronto": { name: "Toronto", lat: 43.6332, lng: -79.4186 },
+  "vancouver": { name: "Vancouver", lat: 49.2767, lng: -123.1119 },
+  "mexico-city": { name: "Mexico City", lat: 19.3029, lng: -99.1505 },
+  "guadalajara": { name: "Guadalajara", lat: 20.6827, lng: -103.3511 },
+  "monterrey": { name: "Monterrey", lat: 25.6759, lng: -100.3161 }
 };
 
-const map = L.map("map", {
-  scrollWheelZoom: false,
-  zoomControl: true
-});
+const map = L.map("map").setView([40, -95], 3);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap contributors"
 }).addTo(map);
 
-// Render fallback pins immediately
 const markers = {};
-Object.entries(FALLBACK_CITIES).forEach(([id, coords]) => {
-  markers[id] = L.marker(coords).addTo(map);
+
+Object.entries(CITIES).forEach(([id, city]) => {
+  const icon = L.divIcon({
+    className: "city-pin",
+    html: `⚽ <span>${city.name}</span>`,
+    iconAnchor: [12, 12]
+  });
+
+  markers[id] = L.marker([city.lat, city.lng], { icon }).addTo(map);
 });
 
-// Fit to all cities initially
-map.fitBounds(Object.values(FALLBACK_CITIES), { padding: [80, 80], maxZoom: 4 });
-
-// City list click behavior
 document.querySelectorAll(".city-list li").forEach(item => {
-  item.addEventListener("click", () => {
+  item.onclick = () => {
     const id = item.dataset.city;
-    if (markers[id]) {
-      map.setView(markers[id].getLatLng(), 6);
-    }
-  });
+    map.setView([CITIES[id].lat, CITIES[id].lng], 6);
+  };
 });
 
-// Reset button
 document.querySelector(".reset-map").onclick = () => {
-  map.fitBounds(Object.values(FALLBACK_CITIES), { padding: [80, 80], maxZoom: 4 });
+  map.setView([40, -95], 3);
 };
-
-// Optional backend enhancement (non-blocking)
-fetch("/api/host-cities").then(r => r.json()).then(data => {
-  data.forEach(city => {
-    if (markers[city.id]) {
-      markers[city.id].setLatLng([city.lat, city.lng]);
-    }
-  });
-}).catch(() => {
-  // Silent — UX contract forbids failure states here
-});
 </script>
 
 </body>

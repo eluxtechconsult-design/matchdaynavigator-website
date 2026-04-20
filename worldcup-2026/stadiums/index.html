@@ -1,68 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>World Cup 2026 Stadiums – MatchDay Navigator</title>
 
-  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/style.css" />
 </head>
 
 <body>
 
-<header style="background:#0f172a;color:#fff;padding:40px;text-align:center">
-  <img src="/assets/logo.png" style="width:160px"><br>
+<header class="wc-map-header">
   <h1>World Cup 2026 Stadiums</h1>
-  <p>Select a stadium to view official matchday guidance.</p>
+  <div class="subtitle">
+    Official stadiums hosting matches during the FIFA World Cup 2026.
+  </div>
 </header>
 
-<div id="stadium-list" style="padding:40px"></div>
-<div id="stadium-detail" style="padding:40px;display:none"></div>
+<main class="stadium-listing">
 
-<footer style="text-align:center;padding:20px">
-  <a href="/worldcup-2026/cities">← Browse host cities</a>
-</footer>
+  <section>
+    <h2>New York / New Jersey</h2>
+    <div class="stadium-card">
+      <h3>MetLife Stadium</h3>
+      <p>Capacity: 82,500</p>
+      <p>Matches: Group stage, knockout, final</p>
+      <a href="https://wa.me/?text=MetLife%20Stadium%20World%20Cup%202026">
+        Get matchday updates on WhatsApp →
+      </a>
+    </div>
+  </section>
 
-<script>
-(async function () {
-  const list = document.getElementById("stadium-list");
-  const detail = document.getElementById("stadium-detail");
-  const params = new URLSearchParams(location.search);
-  const stadiumId = params.get("id");
+  <section>
+    <h2>Los Angeles</h2>
+    <div class="stadium-card">
+      <h3>SoFi Stadium</h3>
+      <p>Capacity: 70,240</p>
+      <p>Matches: Group stage, knockout</p>
+      <a href="https://wa.me/?text=SoFi%20Stadium%20World%20Cup%202026">
+        Get matchday updates on WhatsApp →
+      </a>
+    </div>
+  </section>
 
-  const cities = await fetch("/data/cities.json").then(r => r.json());
-  const stadiums = await fetch("/data/stadiums.json").then(r => r.json());
-
-  const cityMap = {};
-  cities.forEach(c => cityMap[c.id] = c);
-
-  if (stadiumId) {
-    const s = stadiums.find(x => x.id === stadiumId);
-    if (!s) {
-      detail.innerHTML = "Stadium not found";
-    } else {
-      detail.innerHTML = `
-        <h2>${s.name}</h2>
-        <p>${cityMap[s.cityId]?.name || ""}</p>
-        <p>Capacity: ${s.capacity}</p>
-        <p>${s.description?.en || ""}</p>
-        <a href="/worldcup-2026/stadiumslist.style.display = "none";
-    return;
-  }
-
-  let html = "";
-  stadiums.forEach(s => {
-    html += `
-      <div style="margin-bottom:20px">
-        <b>${s.name}</b> – ${cityMap[s.cityId]?.name || ""}
-        <br>
-        <a href="?id=${s.iddium →</a>
-      </div>
-    `;
-  });
-  list.innerHTML = html;
-})();
-</script>
+</main>
 
 </body>
 </html>
