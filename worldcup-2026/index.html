@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>World Cup 2026 – Host Cities</title>
+  <title>World Cup 2026 – Host Cities Map</title>
 
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
@@ -12,19 +12,22 @@
 </head>
 <body>
 
-<!-- TOP BAR -->
 <header class="wc-topbar">
   <div class="brand">
-    <img src="/assets/logo-wc2026.svg" alt="World Cup 2026">
-    <span>World Cup 2026</span>
+    <img src="/assets/logo-wc2026.svg" alt="World Cup 2026 Logo">
+    <div>
+      <h1>World Cup 2026</h1>
+      <strong class="brand-subtitle">Host Cities Map</strong>
+    </div>
   </div>
-  <nav class="top-arrows">
-    <a href="/" aria-label="Back to home">⬅</a>
-    <a href="/worldcup-2026/stadiums/" aria-label="Go to stadiums">➡</a>
+
+  <nav class="top-nav">
+    <a href="/worldcup-2026/stadiums/" class="nav-link">
+      → Click to go to Stadiums
+    </a>
   </nav>
 </header>
 
-<!-- MAIN LAYOUT -->
 <main class="wc-map-layout">
 
   <!-- MAP -->
@@ -33,7 +36,7 @@
   <!-- CITY LIST -->
   <aside class="wc-city-panel">
     <h2>Host Cities</h2>
-    <p class="panel-subtitle">All official World Cup 2026 locations</p>
+    <p class="panel-subtitle">All official FIFA World Cup 2026 locations</p>
 
     <ul class="city-list">
       <li data-stadium="bcplace">Vancouver</li>
@@ -58,11 +61,10 @@
 </main>
 
 <script>
-  // Map framing matches provided screenshot (North America fit)
   const map = L.map('map', {
     zoomControl: false,
     scrollWheelZoom: false
-  }).setView([36.5, -97], 4.1);
+  }).setView([36.5, -97], 4.1); // matches screenshot framing
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
@@ -91,17 +93,15 @@
         className: 'city-pin',
         html: `⚽ <span>${c[0]}</span>`
       })
-    })
-    .addTo(map)
-    .on('click', () => {
+    }).addTo(map).on('click', () => {
       window.location.href = `/worldcup-2026/stadiums/#${c[3]}`;
     });
   });
 
   document.querySelectorAll('.city-list li').forEach(li => {
-    li.addEventListener('click', () => {
+    li.onclick = () => {
       window.location.href = `/worldcup-2026/stadiums/#${li.dataset.stadium}`;
-    });
+    };
   });
 </script>
 
