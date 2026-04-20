@@ -12,11 +12,21 @@
   />
 
   <!-- Global styles -->
-  <link rel="stylesheet" href="/assets/style.css"
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-->
+  <link rel="stylesheet" href="/assets/style.css" />
+
+  <!-- Map layout styles -->
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css" />
+
+  <!-- Leaflet CSS -->
   <link
     rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.cssap-header">
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+</head>
+
+<body>
+
+<header class="wc-map-header">
   <h1>World Cup 2026 Match Map</h1>
 
   <div class="subtitle">
@@ -24,17 +34,17 @@
   </div>
 
   <div class="wc-map-nav">
-    <a Back to Home</a>
+    <a href="/">← Back to Home</a>
     <button type="button" class="reset-map">Reset map view →</button>
   </div>
 </header>
 
 <div class="wc-map-layout">
 
-  <!-- MAP -->
+  <!-- Map -->
   <div id="map"></div>
 
-  <!-- SIDEBAR -->
+  <!-- Sidebar -->
   <aside class="wc-city-panel">
     <h2 class="panel-title">Select a host city</h2>
     <div class="panel-subtitle">
@@ -46,7 +56,9 @@
 </div>
 
 <!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leafInline map logic (Netlify-safe) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Inline map logic -->
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const listEl = document.getElementById("host-city-list");
@@ -61,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (err) {
     console.error(err);
     listEl.innerHTML =
-      "<li style='color:#ffb3b3'>Failed to load host cities</li>";
+      "<li style='color:#fecaca'>Failed to load host cities</li>";
     return;
   }
 
