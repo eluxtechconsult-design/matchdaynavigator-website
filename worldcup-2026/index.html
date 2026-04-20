@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>World Cup 2026 Match Map – MatchDay Navigator</title>
 
   <meta
     name="description"
     content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
-  >
+  />
 
-  <!-- ✅ Global site styles -->
-  <link rel="stylesheet" href="/assetstyles -->
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css<link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leafletwc-map-header">
+  <!-- Global site styles -->
+  <link rel="stylesheet" href="/assets/style.css"-->
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.cssink
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.cssap-header">
   <h1>World Cup 2026 Match Map</h1>
 
   <div class="subtitle">
@@ -22,31 +23,33 @@
   </div>
 
   <div class="wc-map-nav">
-    <a href to Home</a>
+    /← Back to Home</a>
     <button type="button" class="reset-map">Reset map view →</button>
   </div>
 </header>
 
 <div class="wc-map-layout">
 
-  <!-- MAP CONTAINER -->
+  <!-- MAP -->
   <div id="map"></div>
 
   <!-- RIGHT PANEL -->
   <aside class="wc-city-panel">
     <h2 class="panel-title">Select a host city</h2>
+
     <div class="panel-subtitle">
       Click a city name or map icon to view stadium details.
     </div>
+
     <div id="host-city-list"></div>
   </aside>
 
 </div>
 
-<!-- ✅ Leaflet JS (REQUIRED) -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/cript>
+<!-- ✅ Leaflet JS (must load before wc-map.js) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaft>
 
-<!-- ✅ MAP LOGIC — THIS WAS MISSING -->
+<!-- ✅ YOUR MAP LOGIC (THIS WAS MISSING BEFORE) -->
 <script src="/worldcup-2026/assets/wc-map.js"></script>
 
 </body>
