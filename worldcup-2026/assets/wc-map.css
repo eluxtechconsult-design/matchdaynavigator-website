@@ -1,82 +1,63 @@
-/* ================================
-   World Cup 2026 Match Map Layout
-   ================================ */
+/* ==========================
+   Layout
+   ========================== */
 
 .wc-map-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 22%);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 30%);
   min-height: calc(100vh - 120px);
 }
 
-/* ================================
-   Map container
-   ================================ */
-
 #map {
-  width: 100%;
-  height: 100%;
   min-height: 600px;
 }
 
-/* ================================
-   Sidebar panel
-   ================================ */
+/* ==========================
+   Selector Panel
+   ========================== */
 
 .wc-city-panel {
-  background-color: #064e3b;
-  color: #ffffff;
-  padding: 20px;
+  background: #ffffff;
+  border-left: 1px solid #e5e7eb;
+  padding: 24px;
 }
 
 .panel-title {
-  margin-bottom: 10px;
+  font-size: 1.4rem;
+  margin-bottom: 8px;
 }
 
 .panel-subtitle {
-  font-size: 0.95rem;
-  margin-bottom: 14px;
-  color: #d1fae5;
+  color: #475569;
+  margin-bottom: 16px;
 }
 
-/* ================================
-   Host city list
-   ================================ */
+.city-group {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  color: #64748b;
+}
 
-#host-city-list {
+.city-list {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
 
-#host-city-list li {
-  cursor: pointer;
+.city-list li {
   padding: 6px 0;
+  cursor: pointer;
 }
 
-#host-city-list li:hover {
+.city-list li:hover {
   text-decoration: underline;
 }
 
-/* ================================
-   Football marker
-   ================================ */
-
-.football-marker {
-  font-size: 20px;
-  line-height: 20px;
-}
-
-/* ================================
-   Mobile layout
-   ================================ */
-
-@media (max-width: 768px) {
-  .wc-map-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-  }
-
-  #map {
-    min-height: 60vh;
-  }
+.panel-footer {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #475569;
 }

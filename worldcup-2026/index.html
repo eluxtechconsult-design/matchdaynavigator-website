@@ -4,23 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- ✅ CRITICAL: define base path explicitly -->
-  <base href="/worldcup-2026/" />
-
   <title>World Cup 2026 Match Map – MatchDay Navigator</title>
 
   <meta
     name="description"
-    content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
+    content="Explore official host cities of the FIFA World Cup 2026 across the United States, Canada, and Mexico."
   />
 
-  <!-- Global styles (absolute) -->
+  <!-- Global styles -->
   <link rel="stylesheet" href="/assets/style.css" />
 
-  <!-- Map layout styles (now relative to base) -->
-  <link rel="stylesheet" href="assets/wc-map.css" />
+  <!-- WC Map styles -->
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css" />
 
-  <!-- Leaflet CSS -->
+  <!-- Leaflet -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -47,80 +44,122 @@
   <!-- MAP -->
   <div id="map"></div>
 
-  <!-- SIDEBAR -->
+  <!-- CITY SELECTOR PANEL (ALWAYS VISIBLE) -->
   <aside class="wc-city-panel">
     <h2 class="panel-title">Select a host city</h2>
-    <div class="panel-subtitle">
-      Click a city name or ⚽ icon to view location.
-    </div>
-    <ul id="host-city-list"></ul>
+    <p class="panel-subtitle">
+      Choose a city to begin exploring the World Cup 2026.
+    </p>
+
+    <!-- United States -->
+    <h3 class="city-group">United States</h3>
+    <ul class="city-list" data-country="USA">
+      <li data-city="new-york-nj">New York / New Jersey</li>
+      <li data-city="los-angeles">Los Angeles</li>
+      <li data-city="dallas">Dallas</li>
+      <li data-city="atlanta">Atlanta</li>
+      <li data-city="miami">Miami</li>
+      <li data-city="houston">Houston</li>
+      <li data-city="kansas-city">Kansas City</li>
+      <li data-city="philadelphia">Philadelphia</li>
+      <li data-city="seattle">Seattle</li>
+      <li data-city="san-francisco">San Francisco Bay Area</li>
+    </ul>
+
+    <!-- Canada -->
+    <h3 class="city-group">Canada</h3>
+    <ul class="city-list" data-country="Canada">
+      <li data-city="toronto">Toronto</li>
+      <li data-city="vancouver">Vancouver</li>
+    </ul>
+
+    <!-- Mexico -->
+    <h3 class="city-group">Mexico</h3>
+    <ul class="city-list" data-country="Mexico">
+      <li data-city="mexico-city">Mexico City</li>
+      <li data-city="guadalajara">Guadalajara</li>
+      <li data-city="monterrey">Monterrey</li>
+    </ul>
+
+    <p class="panel-footer">
+      Select a city to explore its stadiums and matchday information.
+    </p>
   </aside>
 
 </div>
 
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- ✅ FINAL, STABLE MAP LOGIC -->
 <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const listEl = document.getElementById("host-city-list");
-  const resetBtn = document.querySelector(".reset-map");
+/*
+  ====================================================================
+  World Cup 2026 Map Logic
+  UX CONTRACT:
+  - City list must render immediately
+  - Backend data enhances, never gates
+  ====================================================================
+*/
 
-  let hostCities;
+const FALLBACK_CITIES = {
+  "new-york-nj": [40.8135, -74.0743],
+  "los-angeles": [34.0430, -118.2673],
+  "dallas": [32.7473, -97.0945],
+  "atlanta": [33.7554, -84.4010],
+  "miami": [25.9580, -80.2389],
+  "houston": [29.6847, -95.4107],
+  "kansas-city": [39.1238, -94.8326],
+  "philadelphia": [39.9008, -75.1675],
+  "seattle": [47.5952, -122.3316],
+  "san-francisco": [37.4030, -121.9700],
+  "toronto": [43.6332, -79.4186],
+  "vancouver": [49.2767, -123.1119],
+  "mexico-city": [19.3029, -99.1505],
+  "guadalajara": [20.6827, -103.3511],
+  "monterrey": [25.6759, -100.3161]
+};
 
-  try {
-    // ✅ Now resolves to /worldcup-2026/data/host-cities.json
-    const res = await fetch("data/host-cities.json");
-    if (!res.ok) throw new Error("host-cities.json not found");
-    hostCities = await res.json();
-  } catch (err) {
-    console.error(err);
-    listEl.innerHTML =
-      "<li style='color:#fecaca'>Failed to load host cities</li>";
-    return;
-  }
+const map = L.map("map", {
+  scrollWheelZoom: false,
+  zoomControl: true
+});
 
-  const map = L.map("map", {
-    scrollWheelZoom: false,
-    zoomControl: true
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "© OpenStreetMap contributors"
+}).addTo(map);
+
+// Render fallback pins immediately
+const markers = {};
+Object.entries(FALLBACK_CITIES).forEach(([id, coords]) => {
+  markers[id] = L.marker(coords).addTo(map);
+});
+
+// Fit to all cities initially
+map.fitBounds(Object.values(FALLBACK_CITIES), { padding: [80, 80], maxZoom: 4 });
+
+// City list click behavior
+document.querySelectorAll(".city-list li").forEach(item => {
+  item.addEventListener("click", () => {
+    const id = item.dataset.city;
+    if (markers[id]) {
+      map.setView(markers[id].getLatLng(), 6);
+    }
   });
+});
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap contributors"
-  }).addTo(map);
+// Reset button
+document.querySelector(".reset-map").onclick = () => {
+  map.fitBounds(Object.values(FALLBACK_CITIES), { padding: [80, 80], maxZoom: 4 });
+};
 
-  const footballIcon = L.divIcon({
-    className: "football-marker",
-    html: "⚽",
-    iconSize: [20, 20],
-    iconAnchor: [10, 10]
+// Optional backend enhancement (non-blocking)
+fetch("/api/host-cities").then(r => r.json()).then(data => {
+  data.forEach(city => {
+    if (markers[city.id]) {
+      markers[city.id].setLatLng([city.lat, city.lng]);
+    }
   });
-
-  const bounds = [];
-
-  hostCities.forEach(city => {
-    L.marker([city.lat, city.lng], { icon: footballIcon })
-      .addTo(map)
-      .on("click", () => focusCity(city));
-
-    bounds.push([city.lat, city.lng]);
-
-    const li = document.createElement("li");
-    li.textContent = city.name;
-    li.onclick = () => focusCity(city);
-    listEl.appendChild(li);
-  });
-
-  map.fitBounds(bounds, { padding: [80, 80], maxZoom: 4 });
-
-  resetBtn.onclick = () => {
-    map.fitBounds(bounds, { padding: [80, 80], maxZoom: 4 });
-  };
-
-  function focusCity(city) {
-    map.setView([city.lat, city.lng], 6);
-  }
+}).catch(() => {
+  // Silent — UX contract forbids failure states here
 });
 </script>
 
