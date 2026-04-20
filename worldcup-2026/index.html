@@ -1,85 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>World Cup 2026 Match Map – MatchDay Navigator</title>
+  <meta charset="UTF-8">
+  <title>World Cup 2026 Host Cities & Stadiums</title>
 
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-</head>
 
+  <!-- Leaflet (example map lib – swap if needed) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
 <body>
 
 <header class="wc-map-header">
-  <h1>World Cup 2026 Match Map</h1>
+  <h1>FIFA World Cup 2026</h1>
   <p class="subtitle">
-    Official host cities across the United States, Canada, and Mexico.
+    Explore all official host cities and stadiums for the 2026 World Cup
   </p>
-
-  <div class="wc-map-nav">
-    <a href="/">← Back to Home</a>
-    <a href="/worldcup-2026/stadiums/">View all stadiums →</a>
-  </div>
 </header>
 
-<!-- MAP FIRST -->
-<section id="map"></section>
+<main class="wc-map-layout">
 
-<div class="wc-map-layout">
+  <!-- MAP -->
+  <div id="map"></div>
 
-  <!-- PREMIUM CITY PANEL -->
+  <!-- CITY / STADIUM PANEL -->
   <aside class="wc-city-panel">
-    <h2>Select a host city</h2>
-    <p class="panel-subtitle">
-      Choose a city to explore its World Cup stadium.
-    </p>
+    <h2>Host Cities</h2>
+    <p class="panel-subtitle">Click a city to reveal its stadium</p>
 
+    <h3>United States</h3>
     <ul class="city-list">
-      <li data-stadium="metlife">New York / New Jersey<br><span>MetLife Stadium</span></li>
-      <li data-stadium="sofi">Los Angeles<br><span>SoFi Stadium</span></li>
-      <li data-stadium="att">Dallas<br><span>AT&T Stadium</span></li>
-      <li data-stadium="mercedes">Atlanta<br><span>Mercedes‑Benz Stadium</span></li>
-      <li data-stadium="lincoln">Philadelphia<br><span>Lincoln Financial Field</span></li>
-      <li data-stadium="nrg">Houston<br><span>NRG Stadium</span></li>
-      <li data-stadium="arrowhead">Kansas City<br><span>Arrowhead Stadium</span></li>
-      <li data-stadium="lumen">Seattle<br><span>Lumen Field</span></li>
-      <li data-stadium="levis">San Francisco Bay Area<br><span>Levi’s Stadium</span></li>
-      <li data-stadium="hardrock">Miami<br><span>Hard Rock Stadium</span></li>
-      <li data-stadium="gillette">Boston<br><span>Gillette Stadium</span></li>
-      <li data-stadium="bmo">Toronto<br><span>BMO Field</span></li>
-      <li data-stadium="bcplace">Vancouver<br><span>BC Place</span></li>
-      <li data-stadium="azteca">Mexico City<br><span>Estadio Azteca</span></li>
-      <li data-stadium="bbva">Monterrey<br><span>Estadio BBVA</span></li>
-      <li data-stadium="akron">Guadalajara<br><span>Estadio Akron</span></li>
+      <li data-stadium="metlife">New York / New Jersey</li>
+      <li data-stadium="att">Dallas</li>
+      <li data-stadium="sofi">Los Angeles</li>
+      <li data-stadium="mbs">Atlanta</li>
+      <li data-stadium="lincoln">Philadelphia</li>
+      <li data-stadium="nrg">Houston</li>
+      <li data-stadium="arrowhead">Kansas City</li>
+      <li data-stadium="lumen">Seattle</li>
+      <li data-stadium="levis">San Francisco Bay Area</li>
+      <li data-stadium="hardrock">Miami</li>
+      <li data-stadium="gillette">Boston</li>
+    </ul>
+
+    <h3>Canada</h3>
+    <ul class="city-list">
+      <li data-stadium="bmo">Toronto</li>
+      <li data-stadium="bcplace">Vancouver</li>
+    </ul>
+
+    <h3>Mexico</h3>
+    <ul class="city-list">
+      <li data-stadium="azteca">Mexico City</li>
+      <li data-stadium="bbva">Monterrey</li>
+      <li data-stadium="akron">Guadalajara</li>
     </ul>
 
     <div class="panel-footer">
-      Click a city to view its World Cup stadium.
+      Selecting a stadium opens its full profile
     </div>
   </aside>
 
-</div>
+</main>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-  const map = L.map("map").setView([39, -95], 3);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{ attribution:"© OpenStreetMap" }).addTo(map);
+  const map = L.map('map').setView([37.8, -96], 4);
 
-  const cities = {
-    "New York / New Jersey": [40.8135, -74.0743],
-    "Los Angeles": [34.043, -118.2673],
-    "Dallas": [32.7473, -97.0945],
-    "Atlanta": [33.755, -84.401],
-    "Miami": [25.958, -80.239],
-    "Houston":[29.6847,-95.4107]
-  };
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-  Object.keys(cities).forEach(c=>{
-    L.marker(cities[c],{
-      icon:L.divIcon({className:"city-pin",html:`⚽ ${c}`})
-    }).addTo(map);
+  const cities = [
+    { id:'metlife', name:'New York / New Jersey', coords:[40.8135,-74.0743] },
+    { id:'att', name:'Dallas', coords:[32.7473,-97.0945] },
+    { id:'sofi', name:'Los Angeles', coords:[33.9535,-118.3392] },
+    { id:'mbs', name:'Atlanta', coords:[33.7553,-84.4008] },
+    { id:'lincoln', name:'Philadelphia', coords:[39.9012,-75.1675] },
+    { id:'nrg', name:'Houston', coords:[29.6847,-95.4107] },
+    { id:'arrowhead', name:'Kansas City', coords:[39.0489,-94.4839] },
+    { id:'lumen', name:'Seattle', coords:[47.5952,-122.3316] },
+    { id:'levis', name:'San Francisco Bay Area', coords:[37.4030,-121.9699] },
+    { id:'hardrock', name:'Miami', coords:[25.9580,-80.2389] },
+    { id:'gillette', name:'Boston', coords:[42.0909,-71.2643] },
+    { id:'bmo', name:'Toronto', coords:[43.6332,-79.4186] },
+    { id:'bcplace', name:'Vancouver', coords:[49.2767,-123.1119] },
+    { id:'azteca', name:'Mexico City', coords:[19.3029,-99.1505] },
+    { id:'bbva', name:'Monterrey', coords:[25.6691,-100.2448] },
+    { id:'akron', name:'Guadalajara', coords:[20.6829,-103.4629] }
+  ];
+
+  cities.forEach(city => {
+    L.marker(city.coords, {
+      icon: L.divIcon({
+        className: 'city-pin',
+        html: `⚽ <span>${city.name}</span>`
+      })
+    })
+    .addTo(map)
+    .on('click', () => {
+      window.location.href = `/worldcup-2026/stadiums/#${city.id}`;
+    });
+  });
+
+  document.querySelectorAll('.city-list li').forEach(li => {
+    li.addEventListener('click', () => {
+      const id = li.dataset.stadium;
+      window.location.href = `/worldcup-2026/stadiums/#${id}`;
+    });
   });
 </script>
 

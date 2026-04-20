@@ -1,93 +1,89 @@
+/* Layout */
 .wc-map-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0,1fr) 360px;
   min-height: calc(100vh - 120px);
 }
 
+/* Map */
 #map {
+  height: 65vh;
   min-height: 600px;
 }
 
+/* Side panel */
 .wc-city-panel {
-  background: #0f3d2e;
-  color: #ffffff;
-  padding: 24px;
+  background:#0f3d2e;
+  color:#ffffff;
+  padding:24px;
 }
 
 .wc-city-panel h2 {
-  margin-bottom: 8px;
+  margin-bottom:8px;
 }
 
 .panel-subtitle {
-  margin-bottom: 16px;
-  color: #d1fae5;
+  margin-bottom:16px;
+  color:#d1fae5;
 }
 
 .wc-city-panel h3 {
-  margin-top: 18px;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  margin-top:18px;
+  font-size:0.85rem;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
 }
 
 .city-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style:none;
+  padding:0;
+  margin:0;
 }
 
 .city-list li {
-  padding: 6px 0;
-  cursor: pointer;
+  padding:6px 0;
+  cursor:pointer;
 }
 
 .city-list li:hover {
-  text-decoration: underline;
+  text-decoration:underline;
 }
 
 .panel-footer {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #d1fae5;
+  margin-top:20px;
+  font-size:0.9rem;
+  color:#d1fae5;
 }
 
-.panel-whatsapp {
-  margin-top: 16px;
-}
-
-.panel-whatsapp a {
-  color: #93c5fd;
-  text-decoration: none;
-}
-
+/* Map pins */
 .city-pin {
-  font-size: 14px;
-  white-space: nowrap;
+  font-size:14px;
+  white-space:nowrap;
 }
 
 .city-pin span {
-  margin-left: 4px;
-  font-weight: 500;
+  margin-left:4px;
+  font-weight:500;
 }
-#map { height: 65vh; }
 
+/* Stadium registry */
 .stadium-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
-  gap: 20px;
-  padding: 24px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:20px;
+  padding:24px;
 }
 
 .stadium-box {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 20px;
+  background:#ffffff;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:20px;
 }
 
 .wa-btn {
   display:inline-block;
   margin-top:10px;
-  color:#2563EB;
+  color:#2563eb;
   text-decoration:none;
 }
