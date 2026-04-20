@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- ✅ CRITICAL: define base path explicitly -->
+  <base href="/worldcup-2026/" />
+
   <title>World Cup 2026 Match Map – MatchDay Navigator</title>
 
   <meta
@@ -11,13 +14,13 @@
     content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
   />
 
-  <!-- ✅ Global styles -->
+  <!-- Global styles (absolute) -->
   <link rel="stylesheet" href="/assets/style.css" />
 
-  <!-- ✅ Map layout styles -->
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css" />
+  <!-- Map layout styles (now relative to base) -->
+  <link rel="stylesheet" href="assets/wc-map.css" />
 
-  <!-- ✅ Leaflet CSS -->
+  <!-- Leaflet CSS -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -55,10 +58,10 @@
 
 </div>
 
-<!-- ✅ Leaflet JS -->
+<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- ✅ FINAL inline map logic -->
+<!-- ✅ FINAL, STABLE MAP LOGIC -->
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const listEl = document.getElementById("host-city-list");
@@ -67,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let hostCities;
 
   try {
-    // ✅ FINAL FIX: RELATIVE PATH (robust)
+    // ✅ Now resolves to /worldcup-2026/data/host-cities.json
     const res = await fetch("data/host-cities.json");
     if (!res.ok) throw new Error("host-cities.json not found");
     hostCities = await res.json();
