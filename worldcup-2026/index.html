@@ -11,13 +11,13 @@
     content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
   />
 
-  <!-- Global styles -->
+  <!-- ✅ Global styles -->
   <link rel="stylesheet" href="/assets/style.css" />
 
-  <!-- Map layout styles -->
+  <!-- ✅ Map-specific styles -->
   <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css" />
 
-  <!-- Leaflet CSS -->
+  <!-- ✅ Leaflet CSS -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -41,10 +41,10 @@
 
 <div class="wc-map-layout">
 
-  <!-- Map -->
+  <!-- MAP -->
   <div id="map"></div>
 
-  <!-- Sidebar -->
+  <!-- SIDEBAR -->
   <aside class="wc-city-panel">
     <h2 class="panel-title">Select a host city</h2>
     <div class="panel-subtitle">
@@ -55,10 +55,10 @@
 
 </div>
 
-<!-- Leaflet JS -->
+<!-- ✅ Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- Inline map logic -->
+<!-- ✅ Inline map logic (Netlify-safe) -->
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const listEl = document.getElementById("host-city-list");
@@ -67,7 +67,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   let hostCities;
 
   try {
-    const res = await fetch("/data/host-cities.json");
+    // ✅ FINAL, CORRECT PATH
+    const res = await fetch("/worldcup-2026/data/host-cities.json");
     if (!res.ok) throw new Error("host-cities.json not found");
     hostCities = await res.json();
   } catch (err) {
@@ -96,12 +97,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   const bounds = [];
 
   hostCities.forEach(city => {
+    // Marker
     L.marker([city.lat, city.lng], { icon: footballIcon })
       .addTo(map)
       .on("click", () => focusCity(city));
 
     bounds.push([city.lat, city.lng]);
 
+    // Sidebar list
     const li = document.createElement("li");
     li.textContent = city.name;
     li.onclick = () => focusCity(city);
