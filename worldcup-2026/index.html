@@ -11,11 +11,11 @@
     content="Interactive match map for FIFA World Cup 2026 host cities across the United States, Canada, and Mexico."
   />
 
-  <!-- Global site styles -->
-  <link rel="stylesheet" href="/assets/style.css"-->
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.cssink
+  <!-- Global styles -->
+  <link rel="stylesheet" href="/assets/style.css<link rel="stylesheet" href="/worldcup-2026/assets/wc-map.cssink
     rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.cssap-header">
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+-header">
   <h1>World Cup 2026 Match Map</h1>
 
   <div class="subtitle">
@@ -23,7 +23,7 @@
   </div>
 
   <div class="wc-map-nav">
-    /← Back to Home</a>
+    <a href to Home</a>
     <button type="button" class="reset-map">Reset map view →</button>
   </div>
 </header>
@@ -46,11 +46,16 @@
 
 </div>
 
-<!-- ✅ Leaflet JS (must load before wc-map.js) -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaft>
-
-<!-- ✅ YOUR MAP LOGIC (THIS WAS MISSING BEFORE) -->
-<script src="/worldcup-2026/assets/wc-map.js"></script>
+<!-- Leaflet JS (external CDN – already working) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js-- ✅ SAFE BOOTSTRAP: dynamically load wc-map.js -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.src = "/worldcup-2026/assets/wc-map.js";
+    script.defer = true;
+    document.body.appendChild(script);
+  })();
+</script>
 
 </body>
 </html>
