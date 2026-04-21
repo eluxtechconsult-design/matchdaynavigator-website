@@ -1,89 +1,50 @@
-/* Layout */
-.wc-map-layout {
-  display: grid;
-  grid-template-columns: minmax(0,1fr) 360px;
-  min-height: calc(100vh - 120px);
+/* Logo */
+.logo-small {
+  height: 28px;
+  width: auto;
 }
 
-/* Map */
-#map {
-  height: 65vh;
-  min-height: 600px;
+/* Header title */
+.topbar-title h1 {
+  text-align: center;
+  margin: 0;
 }
 
-/* Side panel */
-.wc-city-panel {
-  background:#0f3d2e;
-  color:#ffffff;
-  padding:24px;
+/* Navigation */
+.topbar-nav a {
+  margin-left: 12px;
+  text-decoration: none;
+  font-weight: 500;
 }
 
-.wc-city-panel h2 {
-  margin-bottom:8px;
-}
-
-.panel-subtitle {
-  margin-bottom:16px;
-  color:#d1fae5;
-}
-
-.wc-city-panel h3 {
-  margin-top:18px;
-  font-size:0.85rem;
-  text-transform:uppercase;
-  letter-spacing:0.05em;
-}
-
-.city-list {
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-
-.city-list li {
-  padding:6px 0;
-  cursor:pointer;
-}
-
-.city-list li:hover {
-  text-decoration:underline;
-}
-
-.panel-footer {
-  margin-top:20px;
-  font-size:0.9rem;
-  color:#d1fae5;
-}
-
-/* Map pins */
-.city-pin {
-  font-size:14px;
-  white-space:nowrap;
-}
-
-.city-pin span {
-  margin-left:4px;
-  font-weight:500;
-}
-
-/* Stadium registry */
+/* Stadium grid */
 .stadium-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-  gap:20px;
-  padding:24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 32px;
 }
 
+/* Stadium cards */
 .stadium-box {
-  background:#ffffff;
-  border:1px solid #e5e7eb;
-  border-radius:10px;
-  padding:20px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 22px;
 }
 
+/* WhatsApp CTA – OFFICIAL GREEN */
 .wa-btn {
-  display:inline-block;
-  margin-top:10px;
-  color:#2563eb;
-  text-decoration:none;
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 16px;
+  background: #25D366;
+  color: #ffffff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.wa-btn:hover {
+  opacity: 0.92;
 }
