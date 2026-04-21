@@ -16,9 +16,9 @@
   <meta name="robots" content="index, follow" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Global styles -->
-     /assets/style.css
-     /worldcup-2026/assets/wc-map.css
+  <!-- ✅ CORRECT STYLESHEET LOADING -->
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
 </head>
 
 <body>
@@ -27,7 +27,7 @@
 
     <!-- ✅ BACK NAVIGATION -->
     <nav style="margin-bottom:24px;">
-      /worldcup-2026/
+      <a href="/worldcup-2026/" style="text-decoration:none;color:#2563eb;font-size:0.9rem;">
         ← Back to World Cup 2026 Map
       </a>
     </nav>
@@ -58,7 +58,9 @@
 
     <!-- PRIMARY CTA -->
     <section class="matchday-cta" style="margin-bottom:32px;">
-      https://wa.me/XXXXXXXXXX?text=Matchday%20guidance%20for%20Seattle%20Sounders%20vs%20FC%20Dallas%20at%20Lumen%20Field
+      <a
+        href="https://wa.me/XXXXXXXXXX?text=Matchday%20guidance%20for%20Seattle%20Sounders%20vs%20FC%20Dallas%20at%20Lumen%20Field"
+        class="wa-btn">
         Open Matchday Guidance in WhatsApp
       </a>
     </section>
@@ -71,7 +73,6 @@
         stadium operations.
       </p>
 
-      <!-- ✅ OFFICIAL CONTEXT LINE -->
       <p style="margin-top:12px;">
         Matchday Navigator provides neutral guidance based on local conditions
         and public information.
