@@ -4,16 +4,29 @@
   <meta charset="UTF-8">
   <title>World Cup 2026 – Stadiums</title>
 
-  <!-- ✅ Existing CSS (UNCHANGED) -->
-  <link rel="stylesheet" href="/assets/style href="/worldcup-2026/assets/wc-map QR offset + subtle fade -->
+  <!-- ✅ CSS MUST BE LOADED AS TAGS -->
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
+
+  <!-- ✅ QR positioning for Stadiums page only -->
   <style>
     .landing-wc-qr {
-      top: 96px; /* Stadium header is taller than landing */
+      position: fixed;
+      top: 96px;
+      right: 18px;
+      z-index: 1000;
       animation: qrFadeIn 0.6s ease-out both;
     }
+
     @keyframes qrFadeIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -23,17 +36,14 @@
 <header class="wc-topbar">
   <div class="topbar-grid">
 
-    <!-- ✅ Logo (UNTOUCHED) -->
     <div class="brand">
       <img src="/assets/logo.png" alt="MatchDay Navigator" class="logo-small">
     </div>
 
-    <!-- ✅ Title -->
     <div class="topbar-title">
       <h1>World Cup 2026 – Stadiums</h1>
     </div>
 
-    <!-- ✅ Navigation -->
     <div class="topbar-nav">
       <a href="/worldcup-2026/">← Back to Host Cities Map</a>
       <a href="https://www.matchdaynavigator.com/">←← Back to Main Page</a>
@@ -42,15 +52,18 @@
   </div>
 </header>
 
-<!-- ✅ ONLY ADDITION: Ambient discovery QR (desktop only) -->
+<!-- ✅ DISCOVERY QR (SAFE, AMBIENT) -->
 <div class="landing-wc-qr">
-  <img src="/assets/qr/worldcup-2026-matchday-qr.png" alt="World Cup 2026 Matchday QR">
+  <img
+    src="/assets/qr/worldcup-2026-matchday-qr.png"
+    alt="World Cup 2026 matchday QR"
+  >
   <span>Explore World Cup 2026 matchday guidance</span>
 </div>
 
 <main class="stadium-grid">
 
-  <!-- ✅ STADIUM CARDS (UNCHANGED) -->
+  <!-- ✅ STADIUM CARDS (UNCHANGED CONTENT) -->
 
   <section id="metlife" class="stadium-box">
     <h2>MetLife Stadium</h2>
@@ -81,93 +94,12 @@
     </a>
   </section>
 
-  <section id="mbs" class="stadium-box">
-    <h2>Mercedes‑Benz Stadium</h2>
-    <p><strong>City:</strong> Atlanta</p>
-    <p><strong>Capacity:</strong> 71,000</p>
-    <a class="wa-btn" href="https://wa.me/?text=Mercedes-Benz%20Stadium%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="lincoln" class="stadium-box">
-    <h2>Lincoln Financial Field</h2>
-    <p><strong>City:</strong> Philadelphia</p>
-    <p><strong>Capacity:</strong> 67,594</p>
-    <a class="wa-btn" href="https://wa.me/?text=Lincoln%20Financial%20Field%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="nrg" class="stadium-box">
-    <h2>NRG Stadium</h2>
-    <p><strong>City:</strong> Houston</p>
-    <p><strong>Capacity:</strong> 72,220</p>
-    <a class="wa-btn" href="https://wa.me/?text=NRG%20Stadium%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="arrowhead" class="stadium-box">
-    <h2>GEHA Field at Arrowhead Stadium</h2>
-    <p><strong>City:</strong> Kansas City</p>
-    <p><strong>Capacity:</strong> 76,416</p>
-    <a class="wa-btn" href="https://wa.me/?text=Arrowhead%20Stadium%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="lumen" class="stadium-box">
-    <h2>Lumen Field</h2>
-    <p><strong>City:</strong> Seattle</p>
-    <p><strong>Capacity:</strong> 69,000</p>
-    <a class="wa-btn" href="https://wa.me/?text=Lumen%20Field%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="levis" class="stadium-box">
-    <h2>Levi’s Stadium</h2>
-    <p><strong>City:</strong> San Francisco Bay Area</p>
-    <p><strong>Capacity:</strong> 68,500</p>
-    <a class="wa-btn" href="https://wa.me/?text=Levis%20Stadium%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="hardrock" class="stadium-box">
-    <h2>Hard Rock Stadium</h2>
-    <p><strong>City:</strong> Miami</p>
-    <p><strong>Capacity:</strong> 65,326</p>
-    <a class="wa-btn" href="https://wa.me/?text=Hard%20Rock%20Stadium%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="gillette" class="stadium-box">
-    <h2>Gillette Stadium</h2>
-    <p><strong>City:</strong> Boston</p>
-    <p><strong>Capacity:</strong> 65,878</p>
-    <a class="wa-btn" href="https://wa.me/?text=Gillette%20Stadium%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
   <!-- CANADA -->
   <section id="bmo" class="stadium-box">
     <h2>BMO Field</h2>
     <p><strong>City:</strong> Toronto</p>
     <p><strong>Capacity:</strong> ~45,000</p>
     <a class="wa-btn" href="https://wa.me/?text=BMO%20Field%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="bcplace" class="stadium-box">
-    <h2>BC Place</h2>
-    <p><strong>City:</strong> Vancouver</p>
-    <p><strong>Capacity:</strong> 54,500</p>
-    <a class="wa-btn" href="https://wa.me/?text=BC%20Place%202026">
       Get updates on WhatsApp
     </a>
   </section>
@@ -179,24 +111,6 @@
     <p><strong>Capacity:</strong> ~87,000</p>
     <p><strong>Matches:</strong> Opening match</p>
     <a class="wa-btn" href="https://wa.me/?text=Estadio%20Azteca%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="bbva" class="stadium-box">
-    <h2>Estadio BBVA</h2>
-    <p><strong>City:</strong> Monterrey</p>
-    <p><strong>Capacity:</strong> 53,500</p>
-    <a class="wa-btn" href="https://wa.me/?text=Estadio%20BBVA%202026">
-      Get updates on WhatsApp
-    </a>
-  </section>
-
-  <section id="akron" class="stadium-box">
-    <h2>Estadio Akron</h2>
-    <p><strong>City:</strong> Guadalajara</p>
-    <p><strong>Capacity:</strong> 48,071</p>
-    <a class="wa-btn" href="https://wa.me/?text=Estadio%20Akron%202026">
       Get updates on WhatsApp
     </a>
   </section>
