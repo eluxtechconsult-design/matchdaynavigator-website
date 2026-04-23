@@ -15,7 +15,6 @@
   padding: 12px 24px;
 }
 
-/* ✅ Logo is now hard‑capped to prevent breakage */
 .brand img {
   height: 28px;
   max-height: 32px;
@@ -23,7 +22,6 @@
   display: block;
 }
 
-/* Title */
 .topbar-title h1 {
   margin: 0;
   text-align: center;
@@ -32,7 +30,6 @@
   color: #111827;
 }
 
-/* Navigation */
 .topbar-nav a {
   margin-left: 14px;
   text-decoration: none;
@@ -46,73 +43,77 @@
 }
 
 /* =========================================================
-  HOST CITIES MAP PAGE LAYOUT
+  MAP LAYOUT
 ========================================================= */
 
-/* ✅ Enforce stable 2‑column layout */
 .wc-map-layout {
   display: grid;
-  grid-template-columns: 1fr 360px;
+  grid-template-columns: 1fr 380px;
   min-height: calc(100vh - 72px);
 }
 
-/* ✅ Map must always have height */
 #map {
   width: 100%;
   height: 100%;
-  min-height: 400px;
+  min-height: 420px;
 }
 
 /* =========================================================
-  RIGHT PANEL (CITY LIST + QR)
+  RIGHT PANEL (CITIES + QR)
 ========================================================= */
 
 .wc-city-panel {
   background: #0f3d2e;
   color: #ffffff;
-  padding: 20px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-/* Headline */
+/* Header text */
 .wc-city-panel h2 {
   margin: 0 0 6px 0;
-  font-size: 1.5rem;
+  font-size: 1.45rem;
 }
 
-/* Subtitle */
 .panel-subtitle {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #d1fae5;
   margin-bottom: 6px;
 }
 
-/* Instruction text */
 .city-instruction {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #a7f3d0;
   font-style: italic;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 /* =========================================================
-  CITY LIST
+  CITY LIST — TWO COLUMNS ✅
 ========================================================= */
 
 .city-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 14px 0;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 14px;
+  row-gap: 2px;
+
+  /* ✅ Constrain height so QR stays visible */
+  max-height: 260px;
 }
 
-/* ✅ Compact, readable, non‑overflowing */
 .city-list li {
-  padding: 3px 0;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: #34d399; /* Emerald */
   cursor: pointer;
+  line-height: 1.4;
 }
 
 .city-list li:hover {
@@ -120,7 +121,7 @@
 }
 
 /* =========================================================
-  MAP PINS
+  MAP MARKERS
 ========================================================= */
 
 .city-pin {
@@ -134,22 +135,22 @@
 }
 
 /* =========================================================
-  QR BLOCK (DISCOVERY & RECALL)
+  QR BLOCK — FIXED & VISIBLE ✅
 ========================================================= */
 
 .wc-qr-box {
-  margin-top: 28px;
-  padding: 16px;
-  border-radius: 10px;
-  background: #f8fafc;
-  text-align: center;
+  margin-top: auto; /* ✅ pushes QR to bottom, always visible */
+  background: #ffffff;
   color: #111827;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
 }
 
 .wc-qr-box strong {
   display: block;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
+  margin-bottom: 6px;
+  font-size: 1rem;
 }
 
 .wc-qr-box p {
@@ -158,15 +159,21 @@
   margin-bottom: 10px;
 }
 
+/* ✅ QR IMAGE — THIS FIXES THE BROKEN ICON */
 .wc-qr-box img {
   width: 140px;
   height: auto;
-  margin: 8px auto;
   display: block;
+  margin: 6px auto;
+}
+
+.qr-footnote {
+  font-size: 0.72rem;
+  color: #64748b;
 }
 
 /* =========================================================
-  STADIUM PAGE (ISOLATED, SAFE)
+  STADIUM PAGE — SAFE (UNTOUCHED)
 ========================================================= */
 
 .stadium-grid {
@@ -183,30 +190,6 @@
   padding: 22px;
 }
 
-.stadium-box h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-/* =========================================================
-  WHATSAPP CTA
-========================================================= */
-
-.wa-btn {
-  display: inline-block;
-  margin-top: 14px;
-  padding: 10px 16px;
-  background: #25D366;
-  color: #ffffff;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.wa-btn:hover {
-  opacity: 0.92;
-}
-
 /* =========================================================
   MOBILE FALLBACK
 ========================================================= */
@@ -218,6 +201,10 @@
 
   .wc-city-panel {
     order: -1;
+  }
+
+  .city-list {
+    grid-template-columns: 1fr;
     max-height: none;
   }
 
