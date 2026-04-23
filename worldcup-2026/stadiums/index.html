@@ -4,23 +4,16 @@
   <meta charset="UTF-8">
   <title>World Cup 2026 – Stadiums</title>
 
-  <!-- ✅ Existing styles (UNCHANGED) -->
-  <link rel="stylesheet" href="/assets/style.cssf="/worldcup-2026/assets/wcION: QR positioning + fade (safe, isolated) -->
+  <!-- ✅ Existing CSS (UNCHANGED) -->
+  <link rel="stylesheet" href="/assets/style href="/worldcup-2026/assets/wc-map QR offset + subtle fade -->
   <style>
     .landing-wc-qr {
-      top: 96px;
+      top: 96px; /* Stadium header is taller than landing */
       animation: qrFadeIn 0.6s ease-out both;
     }
-
     @keyframes qrFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -30,15 +23,17 @@
 <header class="wc-topbar">
   <div class="topbar-grid">
 
-    <!-- ✅ ORIGINAL LOGO (UNCHANGED) -->
+    <!-- ✅ Logo (UNTOUCHED) -->
     <div class="brand">
       <img src="/assets/logo.png" alt="MatchDay Navigator" class="logo-small">
     </div>
 
+    <!-- ✅ Title -->
     <div class="topbar-title">
       <h1>World Cup 2026 – Stadiums</h1>
     </div>
 
+    <!-- ✅ Navigation -->
     <div class="topbar-nav">
       <a href="/worldcup-2026/">← Back to Host Cities Map</a>
       <a href="https://www.matchdaynavigator.com/">←← Back to Main Page</a>
@@ -49,16 +44,13 @@
 
 <!-- ✅ ONLY ADDITION: Ambient discovery QR (desktop only) -->
 <div class="landing-wc-qr">
-  <img
-    src="/assets/qr/worldcup-2026-matchday-qr.png"
-    alt="Explore World Cup 2026 matchday guidance"
-  />
+  <img src="/assets/qr/worldcup-2026-matchday-qr.png" alt="World Cup 2026 Matchday QR">
   <span>Explore World Cup 2026 matchday guidance</span>
 </div>
 
 <main class="stadium-grid">
 
-  <!-- ✅ STADIUM CARDS (100% ORIGINAL, UNCHANGED) -->
+  <!-- ✅ STADIUM CARDS (UNCHANGED) -->
 
   <section id="metlife" class="stadium-box">
     <h2>MetLife Stadium</h2>
