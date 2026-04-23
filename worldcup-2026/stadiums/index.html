@@ -4,9 +4,26 @@
   <meta charset="UTF-8">
   <title>World Cup 2026 – Stadiums</title>
 
-  <!-- ✅ Correct stylesheet loading (no longer rendered as text) -->
-  <link rel="stylesheet" href="/assets/style.css">
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
+  <!-- ✅ Existing styles (unchanged) -->
+  <link rel="stylesheet" href="/assets/style.cssf="/worldcup-2026/assets/wic adjustment for Stadiums page ONLY -->
+  <style>
+    /* Adjust QR position due to taller Stadiums header */
+    .landing-wc-qr {
+      top: 96px; /* slightly lower than landing page */
+      animation: qrFadeIn 0.6s ease-out both;
+    }
+
+    @keyframes qrFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -32,9 +49,18 @@
   </div>
 </header>
 
+<!-- ✅ Ambient World Cup 2026 discovery QR (desktop only) -->
+<div class="landing-wc-qr">
+  <img
+    src="/assets/qr/worldcup-2026-matchday-qr.png"
+    alt="Explore World Cup 2026 matchday guidance"
+  >
+  <span>Explore World Cup 2026 matchday guidance</span>
+</div>
+
 <main class="stadium-grid">
 
-  <!-- ✅ STADIUM CARDS -->
+  <!-- ✅ STADIUM CARDS (UNCHANGED) -->
 
   <section id="metlife" class="stadium-box">
     <h2>MetLife Stadium</h2>
