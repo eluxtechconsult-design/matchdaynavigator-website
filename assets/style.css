@@ -49,7 +49,7 @@ button {
 }
 
 /* =========================================================
-  ✅ LANDING PAGE – WORLD CUP 2026 DISCOVERY QR
+ ✅ LANDING PAGE – WORLD CUP 2026 DISCOVERY QR
 ========================================================= */
 
 .landing-wc-qr {
@@ -78,7 +78,7 @@ button {
 
 .landing-wc-qr span {
   font-size: 0.72rem;
-  color: var(--mdn-color-neutral-mid);
+  color: #6B7280;
   text-align: center;
   max-width: 120px;
   line-height: 1.2;
@@ -88,5 +88,46 @@ button {
 @media (max-width: 1024px) {
   .landing-wc-qr {
     display: none;
+  }
+}
+
+/* =========================================================
+ ✅ LANDING PAGE – ONE VIEWPORT FIT (DESKTOP ONLY)
+========================================================= */
+
+@media (min-width: 1024px) {
+
+  .hero {
+    padding: 56px 0 54px;  /* reduced from 80px / 70px */
+  }
+
+  .hero-logo {
+    width: 150px;          /* reduced from 180px */
+    margin-bottom: 14px;
+  }
+
+  .flags {
+    margin: 16px 0 10px;   /* reduced spacing */
+    gap: 22px;
+  }
+
+  .flags img {
+    width: 120px;          /* reduced from 150px */
+  }
+
+  .hero-subtitle {
+    margin-top: 14px;
+    font-size: 1.1rem;
+  }
+
+  .info-card {
+    margin-top: 24px;      /* reduced from 36px */
+    padding: 26px 30px;    /* reduced from 32px 36px */
+    font-size: 1rem;
+  }
+
+  .cta-row {
+    margin-top: 26px;      /* reduced from 36px */
+    gap: 16px;             /* reduced from 20px */
   }
 }
