@@ -4,12 +4,26 @@
   <meta charset="UTF-8">
   <title>World Cup 2026 – Host Cities Map</title>
 
-  <!-- Global + WC styles -->
-  <link rel="stylesheet" href="/assets/style href="/worldcup-2026/assets/wc-map.css    rel="stylesheet"
+  <!-- ✅ Global + WC styles (FIXED) -->
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css?v=pilot3">
+
+  <!-- ✅ Leaflet (FIXED) -->
+  <link
+    rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-eaflet@1.9.4/dist/leaflet.js"
+  >
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     defer
- ader class="wc-topbar">
+  ></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+<header class="wc-topbar">
   <div class="topbar-grid">
 
     <div class="brand">
@@ -21,12 +35,8 @@ eaflet@1.9.4/dist/leaflet.js"
     </div>
 
     <div class="topbar-nav">
-      <a href="https://www.matchdaynavigator.com/">
-        ← Back to Main Page
-      </a>
-      <a href="/worldcup-2026/stadiums/">
-        Go to Stadiums →
-      </a>
+      <a href="https://www.matchdaynavigator.com/">← Back to Main Page</a>
+      <a href="/worldcup-2026/stadiums/">Go to Stadiums →</a>
     </div>
 
   </div>
@@ -34,11 +44,12 @@ eaflet@1.9.4/dist/leaflet.js"
 
 <main class="wc-map-layout">
 
-  <!-- MAP -->
+  <!-- ✅ Map column -->
   <div id="map"></div>
 
-  <!-- CITY LIST + QR -->
+  <!-- ✅ Right panel -->
   <aside class="wc-city-panel">
+
     <h2>Host Cities</h2>
     <p class="panel-subtitle">
       All official FIFA World Cup 2026 locations
@@ -67,32 +78,20 @@ eaflet@1.9.4/dist/leaflet.js"
       <li data-stadium="azteca">Mexico City</li>
     </ul>
 
-    <!-- ✅ WEBSITE‑LEVEL QR (VISIBLE NOW) -->
-    <div
-      class="wc-qr-box"
-      style="
-        margin-top:28px;
-        padding:16px;
-        border-radius:10px;
-        background:#f8fafc;
-        text-align:center;
-      "
-    >
-      <strong style="display:block;margin-bottom:8px;">
-        Attending a World Cup 2026 match?
-      </strong>
+    <!-- ✅ WEBSITE‑LEVEL QR (NOW RENDERS) -->
+    <div class="wc-qr-box">
+      <strong>Attending a World Cup 2026 match?</strong>
 
-      <p style="font-size:0.85rem;color:#475569;margin-bottom:12px;">
+      <p>
         Scan to explore host cities and access official matchday guidance.
       </p>
 
       <img
         src="/assets/qr/pilot3-universal.png"
         alt="World Cup 2026 Matchday QR"
-        style="width:180px;height:auto;"
       >
 
-      <p style="margin-top:10px;font-size:0.75rem;color:#64748b;">
+      <p class="qr-footnote">
         No sign‑up · Neutral guidance · WhatsApp available on matchdays
       </p>
     </div>
@@ -139,7 +138,8 @@ eaflet@1.9.4/dist/leaflet.js"
       })
       .addTo(map)
       .on('click', () => {
-        window.location.href = `/worldcup-2026/stadiums/#${c[3]}`;
+        window.location.href =
+          `/worldcup-2026/stadiums/#${c[3]}`;
       });
     });
 
