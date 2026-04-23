@@ -1,11 +1,11 @@
 /* ================================
-   Global typography & layout
-   ================================ */
+ Global typography & layout 
+ ================================ */
 
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
+  Roboto, Helvetica, Arial, sans-serif;
   color: #0f172a;
   background-color: #ffffff;
 }
@@ -25,9 +25,9 @@ button {
   cursor: pointer;
 }
 
-/* ================================
-   Matchday Navigator header
-   ================================ */
+/* ================================ 
+ Matchday Navigator header 
+ ================================ */
 
 .wc-map-header {
   padding: 20px 24px;
@@ -46,4 +46,47 @@ button {
 
 .reset-map {
   font-weight: 500;
+}
+
+/* =========================================================
+  ✅ LANDING PAGE – WORLD CUP 2026 DISCOVERY QR
+========================================================= */
+
+.landing-wc-qr {
+  position: fixed;
+  top: 88px;
+  right: 18px;
+  z-index: 1000;
+
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+}
+
+.landing-wc-qr img {
+  width: 92px;
+  height: auto;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.landing-wc-qr span {
+  font-size: 0.72rem;
+  color: var(--mdn-color-neutral-mid);
+  text-align: center;
+  max-width: 120px;
+  line-height: 1.2;
+}
+
+/* ✅ Hide QR on mobile */
+@media (max-width: 1024px) {
+  .landing-wc-qr {
+    display: none;
+  }
 }
