@@ -1,9 +1,10 @@
 /* =========================================================
-   GLOBAL HEADER
+  GLOBAL HEADER
 ========================================================= */
 
 .wc-topbar {
   border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
 }
 
 .topbar-grid {
@@ -14,19 +15,24 @@
   padding: 12px 24px;
 }
 
+/* ✅ Logo is now hard‑capped to prevent breakage */
 .brand img {
   height: 28px;
+  max-height: 32px;
   width: auto;
   display: block;
 }
 
+/* Title */
 .topbar-title h1 {
   margin: 0;
   text-align: center;
-  font-size: 1.75rem;
+  font-size: 1.6rem;
   font-weight: 600;
+  color: #111827;
 }
 
+/* Navigation */
 .topbar-nav a {
   margin-left: 14px;
   text-decoration: none;
@@ -40,37 +46,46 @@
 }
 
 /* =========================================================
-   HOST CITIES MAP PAGE
+  HOST CITIES MAP PAGE LAYOUT
 ========================================================= */
 
+/* ✅ Enforce stable 2‑column layout */
 .wc-map-layout {
   display: grid;
   grid-template-columns: 1fr 360px;
-  height: calc(100vh - 72px);
+  min-height: calc(100vh - 72px);
 }
 
+/* ✅ Map must always have height */
 #map {
   width: 100%;
   height: 100%;
+  min-height: 400px;
 }
+
+/* =========================================================
+  RIGHT PANEL (CITY LIST + QR)
+========================================================= */
 
 .wc-city-panel {
   background: #0f3d2e;
   color: #ffffff;
   padding: 20px;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
+/* Headline */
 .wc-city-panel h2 {
   margin: 0 0 6px 0;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 /* Subtitle */
 .panel-subtitle {
   font-size: 0.9rem;
   color: #d1fae5;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 /* Instruction text */
@@ -81,14 +96,17 @@
   margin-bottom: 14px;
 }
 
-/* City list */
+/* =========================================================
+  CITY LIST
+========================================================= */
+
 .city-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* ✅ Reduced size + bold brilliant accent */
+/* ✅ Compact, readable, non‑overflowing */
 .city-list li {
   padding: 3px 0;
   font-size: 0.85rem;
@@ -101,7 +119,10 @@
   text-decoration: underline;
 }
 
-/* Map pins */
+/* =========================================================
+  MAP PINS
+========================================================= */
+
 .city-pin {
   font-size: 13px;
   white-space: nowrap;
@@ -113,7 +134,39 @@
 }
 
 /* =========================================================
-   STADIUM PAGE (ISOLATED)
+  QR BLOCK (DISCOVERY & RECALL)
+========================================================= */
+
+.wc-qr-box {
+  margin-top: 28px;
+  padding: 16px;
+  border-radius: 10px;
+  background: #f8fafc;
+  text-align: center;
+  color: #111827;
+}
+
+.wc-qr-box strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.wc-qr-box p {
+  font-size: 0.8rem;
+  color: #475569;
+  margin-bottom: 10px;
+}
+
+.wc-qr-box img {
+  width: 140px;
+  height: auto;
+  margin: 8px auto;
+  display: block;
+}
+
+/* =========================================================
+  STADIUM PAGE (ISOLATED, SAFE)
 ========================================================= */
 
 .stadium-grid {
@@ -136,7 +189,7 @@
 }
 
 /* =========================================================
-   WHATSAPP CTA
+  WHATSAPP CTA
 ========================================================= */
 
 .wa-btn {
@@ -152,4 +205,23 @@
 
 .wa-btn:hover {
   opacity: 0.92;
+}
+
+/* =========================================================
+  MOBILE FALLBACK
+========================================================= */
+
+@media (max-width: 900px) {
+  .wc-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .wc-city-panel {
+    order: -1;
+    max-height: none;
+  }
+
+  #map {
+    min-height: 360px;
+  }
 }
