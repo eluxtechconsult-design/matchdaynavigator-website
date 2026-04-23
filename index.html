@@ -11,10 +11,10 @@
   <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
-    /* ===== Hero section (spacing corrected) ===== */
+    /* ===== Hero section (spacing fixed, no blank top) ===== */
     .hero {
       background: linear-gradient(180deg, #f8fafc, #eef2f7);
-      padding: 36px 0 44px; /* FIXED: removed blank space */
+      padding: 40px 0 48px;
       text-align: center;
     }
 
@@ -43,12 +43,12 @@
       line-height: 1.6;
     }
 
-    /* ===== Info card (gap reduced) ===== */
+    /* ===== Info card tightened ===== */
     .info-card {
       max-width: 820px;
-      margin: 18px auto 0; /* FIXED */
+      margin: 18px auto 0;
       background: #ffffff;
-      padding: 24px 30px;  /* FIXED */
+      padding: 24px 30px;
       border-radius: 18px;
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
       font-size: 1.05rem;
@@ -56,7 +56,7 @@
     }
 
     .cta-row {
-      margin-top: 22px; /* FIXED */
+      margin-top: 22px;
       display: flex;
       gap: 18px;
       justify-content: center;
@@ -103,7 +103,7 @@
 
 <body>
 
-  <!-- ✅ Ambient QR (desktop only) -->
+  <!-- ✅ Discovery QR (desktop only, ambient) -->
   <div class="landing-wc-qr">
     <img
       src="/assets/qr/worldcup-2026-matchday-qr.png"
@@ -113,7 +113,12 @@
   </div>
 
   <header class="hero">
-    <img src="/assets/logo.png" alt="MatchDay Navigator" class="hero-logo" />
+    <img
+      src="/assets/logo.png"
+      alt="MatchDay Navigator"
+      class="hero-logo"
+    />
+
     <h1>MatchDay Navigator</h1>
 
     <div class="flags">
@@ -134,10 +139,21 @@
     </div>
 
     <div class="cta-row">
-      <a href="/worldcup-2026/" class="cta-button">Explore Host Cities</a>
-      <a href="/worldcup-2026/stadiums/" class="cta-button secondary">View Stadiums</a>
-      <a href="/cities/" class="cta-button tertiary">Partners</a>
-      <a href="/how-it-works.html" class="cta-button tertiary">Know more →</a>
+      <a href="/worldcup-2026/" class="cta-button">
+        Explore Host Cities
+      </a>
+
+      <a href="/worldcup-2026/stadiums/" class="cta-button secondary">
+        View Stadiums
+      </a>
+
+      <a href="/cities/" class="cta-button tertiary">
+        Partners
+      </a>
+
+      <a href="/how-it-works.html" class="cta-button tertiary">
+        Know more →
+      </a>
     </div>
   </header>
 
