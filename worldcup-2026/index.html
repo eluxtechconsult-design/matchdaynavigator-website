@@ -5,20 +5,21 @@
   <title>World Cup 2026 – Host Cities Map</title>
 
   <!-- Global + WC styles -->
-  <link rel="stylesheet" href="/assets/style.css">
-  <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
+  /assets/style.css
+  /worldcup-2026/assets/wc-map.css
 
   <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  https://unpkg.com/leaflet@1.9.4/dist/leaflet.css
+  https://unpkg.com/leaflet@1.9.4/dist/leaflet.js>
 </head>
+
 <body>
 
 <header class="wc-topbar">
   <div class="topbar-grid">
 
     <div class="brand">
-      <img src="/assets/logo.png" alt="MatchDay Navigator">
+      /assets/logo.png
     </div>
 
     <div class="topbar-title">
@@ -26,8 +27,8 @@
     </div>
 
     <div class="topbar-nav">
-      <a href="https://www.matchdaynavigator.com/">← Back to Main Page</a>
-      <a href="/worldcup-2026/stadiums/">Go to Stadiums →</a>
+      https://www.matchdaynavigator.com/← Back to Main Page</a>
+      /worldcup-2026/stadiums/Go to Stadiums →</a>
     </div>
 
   </div>
@@ -41,7 +42,9 @@
   <!-- CITY LIST + QR -->
   <aside class="wc-city-panel">
     <h2>Host Cities</h2>
-    <p class="panel-subtitle">All official FIFA World Cup 2026 locations</p>
+    <p class="panel-subtitle">
+      All official FIFA World Cup 2026 locations
+    </p>
 
     <p class="city-instruction">
       Click on a city name or ⚽ ball icon to view its stadium
@@ -69,7 +72,13 @@
     <!-- ✅ WEBSITE‑LEVEL QR (Discovery & Recall) -->
     <div
       class="wc-qr-box"
-      style="margin-top:28px;padding:16px;border-radius:10px;background:#f8fafc;text-align:center;"
+      style="
+        margin-top:28px;
+        padding:16px;
+        border-radius:10px;
+        background:#f8fafc;
+        text-align:center;
+      "
     >
       <strong style="display:block;margin-bottom:8px;">
         Attending a World Cup 2026 match?
@@ -79,11 +88,7 @@
         Scan to explore host cities and access official matchday guidance.
       </p>
 
-      <img
-        src="/assets/qr/pilot3-universal.png"
-        alt="World Cup 2026 Matchday Guidance QR"
-        style="width:140px;height:auto;"
-      >
+      /assets/qr/pilot3-universal.png
 
       <p style="margin-top:10px;font-size:0.75rem;color:#64748b;">
         No sign‑up · Neutral guidance · WhatsApp available on matchdays
@@ -128,7 +133,9 @@
         className: 'city-pin',
         html: `⚽ <span>${c[0]}</span>`
       })
-    }).addTo(map).on('click', () => {
+    })
+    .addTo(map)
+    .on('click', () => {
       window.location.href = `/worldcup-2026/stadiums/#${c[3]}`;
     });
   });
