@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang=" charset="UTF-8" /><html lang="en">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>You’re Unlocked – Matchday Essentials</title>
 
-  <!-- Global site styles -->
+  <!-- Global styles -->
   <link rel="stylesheet" href="/assets/style.css" />
 
   <style>
@@ -55,12 +57,13 @@
 </head>
 
 <body>
+
   <div class="unlocked-container">
     <div class="unlocked-icon">🎉</div>
     <h1>You’re Unlocked</h1>
 
-    <p>
-      Your matchday essentials for <strong>Lumen Field</strong> are now active.
+    <p id="stadium-copy">
+      Your matchday essentials are now active.
     </p>
 
     <p>
@@ -74,27 +77,58 @@
   </div>
 
   <script>
-    /*
-      Seattle pilot – deterministic WhatsApp handoff
-      Bird-connected number: +1 555-827-3850
-    */
+    /* ===============================
+       Pilot 3 – Dynamic unlock logic
+       Bird-connected WhatsApp number
+       =============================== */
 
     const WHATSAPP_NUMBER = "15558273850";
 
+    // Stadium display names
+    const STADIUM_NAMES = {
+      "lumen-field": "Lumen Field",
+      "metlife": "MetLife Stadium",
+      "att": "AT&T Stadium",
+      "sofi": "SoFi Stadium",
+      "nrg": "NRG Stadium",
+      "arrowhead": "GEHA Field at Arrowhead Stadium",
+      "mercedes-benz": "Mercedes‑Benz Stadium",
+      "levis": "Levi’s Stadium",
+      "hard-rock": "Hard Rock Stadium",
+      "gillette": "Gillette Stadium",
+      "lincoln": "Lincoln Financial Field",
+      "bmo": "BMO Field",
+      "bcplace": "BC Place",
+      "azteca": "Estadio Azteca",
+      "bbva": "Estadio BBVA",
+      "akron": "Estadio Akron"
+    };
+
+    // Read URL params
+    const params = new URLSearchParams(window.location.search);
+    const stadiumId = params.get("stadium");
+
+    const stadiumName =
+      STADIUM_NAMES[stadiumId] || "your stadium";
+
+    // Update on-page copy
+    document.getElementById("stadium-copy").innerHTML =
+      `Your matchday essentials for <strong>${stadiumName}</strong> are now active.`;
+
+    // Build WhatsApp message
     const MESSAGE =
-      "Hi – I’m here for matchday updates for Lumen Field.";
+      `Hi – I’m here for matchday updates for ${stadiumName}.`;
 
     const WHATSAPP_URL =
-      "https://wa.me/" +
-      WHATSAPP_NUMBER +
-      "?text=" +
-      encodeURIComponent(MESSAGE);
+      "https://api.whatsapp.com/send" +
+      "?phone=" + WHATSAPP_NUMBER +
+      "&text=" + encodeURIComponent(MESSAGE);
 
-    // Short delay allows copy to render before redirect
+    // Short delay so copy renders before redirect
     setTimeout(() => {
       window.location.href = WHATSAPP_URL;
     }, 500);
   </script>
+
 </body>
 </html>
-<head>
