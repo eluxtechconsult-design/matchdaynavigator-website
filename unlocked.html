@@ -39,9 +39,6 @@
       border-radius: 8px;
       text-decoration: none;
     }
-    .primary-cta:hover {
-      opacity: 0.9;
-    }
     .subtle {
       margin-top: 14px;
       font-size: 0.85rem;
@@ -51,73 +48,52 @@
 </head>
 
 <body>
-  <div class="unlocked-container">
-    <div class="unlocked-icon">🎉</div>
-    <h1>You’re Unlocked</h1>
 
-    <p id="stadium-copy">
-      Your matchday essentials are now active.
-    </p>
+<div class="unlocked-container">
+  <div class="unlocked-icon">🎉</div>
+  <h1>You’re Unlocked</h1>
 
-    <p>
-      You’ll receive arrival guidance, entry rules, and kick‑off reminders
-      directly on WhatsApp.
-    </p>
+  <p id="stadium-copy">
+    Your matchday essentials are now active.
+  </p>
 
-    <p class="subtle">
-      Redirecting you to WhatsApp…
-    </p>
-  </div>
+  <p>
+    You’ll receive arrival guidance, entry rules, and kick‑off reminders
+    directly on WhatsApp.
+  </p>
 
-  <script>
-    /* ===============================
-       Pilot 4 – Canonical unlock logic
-       Uses stadiums.json as source of truth
-       =============================== */
+  <p class="subtle">
+    Redirecting you to WhatsApp…
+  </p>
+</div>
 
-    const WHATSAPP_NUMBER = "15558273850";
-    const params = new URLSearchParams(window.location.search);
-    const stadiumId = params.get("stadium");
+<script>
+  const WHATSAPP_NUMBER = "15558273850";
+  const params = new URLSearchParams(window.location.search);
+  const stadiumId = params.get("stadium");
 
-    fetch("/data/stadiums.json")
-      .then(response => response.json())
-      .then(stadiums => {
-        const stadium = stadiums.find(s => s.id === stadiumId);
+  fetch("/data/stadiums.json")
+    .then(response => response.json())
+    .then(stadiums => {
+      const stadium = stadiums.find(s => s.id === stadiumId);
+      const stadiumName = stadium ? stadium.name : "your stadium";
 
-        const stadiumName = stadium
-          ? stadium.name
-          : "your stadium";
+      document.getElementById("stadium-copy").innerHTML =
+        `Your matchday essentials for <strong>${stadiumName}</strong> are now active.`;
 
-        // Update copy
-        document.getElementById("stadium-copy").innerHTML =
-          `Your matchday essentials for <strong>${stadiumName}</strong> are now active.`;
+      // ✅ CRITICAL FIX: send CTA token, not descriptive text
+      const MESSAGE = `START_${stadiumId.toUpperCase()}`;
 
-        // Build WhatsApp message
-        const MESSAGE =
-          `Hi – I’m here for matchday updates for ${stadiumName}.`;
+      const WHATSAPP_URL =
+        "https://api.whatsapp.com/send" +
+        "?phone=" + WHATSAPP_NUMBER +
+        "&text=" + encodeURIComponent(MESSAGE);
 
-        const WHATSAPP_URL =
-          "https://api.whatsapp.com/send" +
-          "?phone=" + WHATSAPP_NUMBER +
-          "&text=" + encodeURIComponent(MESSAGE);
+      setTimeout(() => {
+        window.location.href = WHATSAPP_URL;
+      }, 500);
+    });
+</script>
 
-        // Delay ensures copy is rendered before redirect
-        setTimeout(() => {
-          window.location.href = WHATSAPP_URL;
-        }, 500);
-      })
-      .catch(() => {
-        // Graceful fallback if stadiums.json fails
-        const MESSAGE = "Hi – I’m here for matchday updates.";
-        const WHATSAPP_URL =
-          "https://api.whatsapp.com/send" +
-          "?phone=" + WHATSAPP_NUMBER +
-          "&text=" + encodeURIComponent(MESSAGE);
-
-        setTimeout(() => {
-          window.location.href = WHATSAPP_URL;
-        }, 500);
-      });
-  </script>
 </body>
 </html>

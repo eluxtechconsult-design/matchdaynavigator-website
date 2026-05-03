@@ -4,88 +4,11 @@
   <meta charset="UTF-8">
   <title>World Cup 2026 – Stadiums</title>
 
-  <!-- Core styles -->
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css">
-
-  <!-- Page-specific styles -->
-  <style>
-    /* Ensure logo never blows up */
-    .brand img {
-      max-height: 32px;
-      width: auto;
-      display: block;
-    }
-
-    /* Stadium grid */
-    .stadium-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      padding: 32px;
-    }
-
-    /* Stadium cards */
-    .stadium-box {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 22px;
-    }
-
-    /* CTA button (WhatsApp look, unlock behavior) */
-    .cta-btn {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 10px 16px;
-      background: #25D366; /* WhatsApp green */
-      color: #ffffff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .cta-btn:hover {
-      opacity: 0.92;
-    }
-
-    /* Discovery QR */
-    .landing-wc-qr {
-      position: fixed;
-      top: 96px;
-      right: 18px;
-      z-index: 1000;
-      background: #ffffff;
-      padding: 12px;
-      border-radius: 14px;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.18);
-      text-align: center;
-    }
-
-    .landing-wc-qr img {
-      width: 96px;
-      height: auto;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .landing-wc-qr span {
-      font-size: 0.72rem;
-      color: #475569;
-      max-width: 120px;
-      display: block;
-    }
-
-    @media (max-width: 1024px) {
-      .landing-wc-qr {
-        display: none;
-      }
-    }
-  </style>
 </head>
 
 <body>
-
 <header class="wc-topbar">
   <div class="topbar-grid">
     <div class="brand">
@@ -101,165 +24,63 @@
   </div>
 </header>
 
-<!-- Discovery QR -->
-<div class="landing-wc-qr">
-  <img src="/assets/qr/worldcup-2026-matchday-qr.png" alt="World Cup 2026 Matchday QR">
-  <span>Explore World Cup 2026 matchday guidance</span>
-</div>
-
 <main class="stadium-grid">
 
-  <!-- USA -->
-  <section id="metlife" class="stadium-box">
+  <section class="stadium-box">
     <h2>MetLife Stadium</h2>
     <p><strong>City:</strong> New York / New Jersey</p>
     <p><strong>Capacity:</strong> 82,500</p>
-    <p><strong>Matches:</strong> Final, knockout rounds</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=metlife">
+    <a class="cta-btn"
+       href="https://wa.me/15558273850?text=START_METLIFE">
       Get matchday guidance on WhatsApp
     </a>
   </section>
 
-  <section id="att" class="stadium-box">
-    <h2>AT&amp;T Stadium</h2>
+  <section class="stadium-box">
+    <h2>AT&T Stadium</h2>
     <p><strong>City:</strong> Dallas</p>
-    <p><strong>Capacity:</strong> 80,000</p>
-    <p><strong>Matches:</strong> Semi-finals</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=att">
+    <a class="cta-btn"
+       href="https://wa.me/15558273850?text=START_ATT">
       Get matchday guidance on WhatsApp
     </a>
   </section>
 
-  <section id="sofi" class="stadium-box">
+  <section class="stadium-box">
     <h2>SoFi Stadium</h2>
     <p><strong>City:</strong> Los Angeles</p>
-    <p><strong>Capacity:</strong> 70,240</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=sofi">
+    <a class="cta-btn"
+       href="https://wa.me/15558273850?text=START_SOFI">
       Get matchday guidance on WhatsApp
     </a>
   </section>
 
-  <section id="nrg" class="stadium-box">
-    <h2>NRG Stadium</h2>
-    <p><strong>City:</strong> Houston</p>
-    <p><strong>Capacity:</strong> 72,220</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=nrg">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <section id="arrowhead" class="stadium-box">
-    <h2>GEHA Field at Arrowhead Stadium</h2>
-    <p><strong>City:</strong> Kansas City</p>
-    <p><strong>Capacity:</strong> 76,416</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=arrowhead">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <section id="mbs" class="stadium-box">
-    <h2>Mercedes‑Benz Stadium</h2>
-    <p><strong>City:</strong> Atlanta</p>
-    <p><strong>Capacity:</strong> 71,000</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=mercedes-benz">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <section id="lumen" class="stadium-box">
+  <section class="stadium-box">
     <h2>Lumen Field</h2>
     <p><strong>City:</strong> Seattle</p>
-    <p><strong>Capacity:</strong> 69,000</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=lumen-field">
+    <a class="cta-btn"
+       href="https://wa.me/15558273850?text=START_LUMEN">
       Get matchday guidance on WhatsApp
     </a>
   </section>
 
-  <section id="levis" class="stadium-box">
-    <h2>Levi’s Stadium</h2>
-    <p><strong>City:</strong> San Francisco Bay Area</p>
-    <p><strong>Capacity:</strong> 68,500</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=levis">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <section id="hardrock" class="stadium-box">
+  <section class="stadium-box">
     <h2>Hard Rock Stadium</h2>
     <p><strong>City:</strong> Miami</p>
-    <p><strong>Capacity:</strong> 65,326</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=hard-rock">
+    <a class="cta-btn"
+       href="https://wa.me/15558273850?text=START_HARDROCK">
       Get matchday guidance on WhatsApp
     </a>
   </section>
 
-  <section id="gillette" class="stadium-box">
-    <h2>Gillette Stadium</h2>
-    <p><strong>City:</strong> Boston</p>
-    <p><strong>Capacity:</strong> 65,878</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=gillette">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <section id="lincoln" class="stadium-box">
-    <h2>Lincoln Financial Field</h2>
-    <p><strong>City:</strong> Philadelphia</p>
-    <p><strong>Capacity:</strong> 67,594</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=lincoln">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <!-- CANADA -->
-  <section id="bmo" class="stadium-box">
-    <h2>BMO Field</h2>
-    <p><strong>City:</strong> Toronto</p>
-    <p><strong>Capacity:</strong> ~45,000</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=bmo">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <section id="bcplace" class="stadium-box">
-    <h2>BC Place</h2>
-    <p><strong>City:</strong> Vancouver</p>
-    <p><strong>Capacity:</strong> 54,500</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=bcplace">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <!-- MEXICO -->
-  <section id="azteca" class="stadium-box">
+  <section class="stadium-box">
     <h2>Estadio Azteca</h2>
     <p><strong>City:</strong> Mexico City</p>
-    <p><strong>Capacity:</strong> ~87,000</p>
-    <p><strong>Matches:</strong> Opening match</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=azteca">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <section id="bbva" class="stadium-box">
-    <h2>Estadio BBVA</h2>
-    <p><strong>City:</strong> Monterrey</p>
-    <p><strong>Capacity:</strong> 53,500</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=bbva">
-      Get matchday guidance on WhatsApp
-    </a>
-  </section>
-
-  <section id="akron" class="stadium-box">
-    <h2>Estadio Akron</h2>
-    <p><strong>City:</strong> Guadalajara</p>
-    <p><strong>Capacity:</strong> 48,071</p>
-    <a class="cta-btn" href="https://www.matchdaynavigator.com/unlocked.html?stadium=akron">
+    <a class="cta-btn"
+       href="https://wa.me/15558273850?text=START_AZTECA">
       Get matchday guidance on WhatsApp
     </a>
   </section>
 
 </main>
-
 </body>
 </html>
