@@ -15,10 +15,24 @@
       padding: 0 16px;
       text-align: center;
     }
-    .unlocked-icon { font-size: 3rem; margin-bottom: 12px; }
-    h1 { font-size: 1.9rem; margin-bottom: 8px; }
-    p { margin: 6px 0; line-height: 1.5; font-size: 1rem; }
-    .subtle { margin-top: 14px; font-size: 0.85rem; color: #64748b; }
+    .unlocked-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 1.9rem;
+      margin-bottom: 8px;
+    }
+    p {
+      margin: 6px 0;
+      line-height: 1.5;
+      font-size: 1rem;
+    }
+    .subtle {
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
   </style>
 </head>
 
@@ -27,9 +41,19 @@
 <div class="unlocked-container">
   <div class="unlocked-icon">🎉</div>
   <h1>You’re Unlocked</h1>
-  <p id="stadium-copy">Your matchday essentials are now active.</p>
-  <p>You’ll receive arrival guidance, entry rules, and kick‑off reminders directly on WhatsApp.</p>
-  <p class="subtle">Redirecting you to WhatsApp…</p>
+
+  <p id="stadium-copy">
+    Your matchday essentials are now active.
+  </p>
+
+  <p>
+    You’ll receive arrival guidance, entry rules, and kick‑off reminders
+    directly on WhatsApp.
+  </p>
+
+  <p class="subtle">
+    Redirecting you to WhatsApp…
+  </p>
 </div>
 
 <script>
@@ -37,18 +61,23 @@
   const stadiumId = new URLSearchParams(window.location.search).get("stadium");
 
   fetch("/data/stadiums.json")
-    .then(r => r.json())
+    .then(response => response.json())
     .then(stadiums => {
       const stadium = stadiums.find(s => s.id === stadiumId);
-      const message = `START_${stadiumId.toUpperCase()}`;
+      const stadiumName = stadium ? stadium.name : "your stadium";
 
       document.getElementById("stadium-copy").innerHTML =
-        `Your matchday essentials for <strong>${stadium ? stadium.name : "your stadium"}</strong> are now active.`;
+        `Your matchday essentials for <strong>${stadiumName}</strong> are now active.`;
 
-      window.location.href =
+      const MESSAGE =
+        `Hi, I would like premium matchday access for ${stadiumName}.`;
+
+      const WHATSAPP_URL =
         "https://api.whatsapp.com/send" +
         "?phone=" + WHATSAPP_NUMBER +
-        "&text=" + encodeURIComponent(message);
+        "&text=" + encodeURIComponent(MESSAGE);
+
+      window.location.href = WHATSAPP_URL;
     });
 </script>
 
