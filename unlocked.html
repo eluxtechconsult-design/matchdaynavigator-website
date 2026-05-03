@@ -15,35 +15,10 @@
       padding: 0 16px;
       text-align: center;
     }
-    .unlocked-icon {
-      font-size: 3rem;
-      margin-bottom: 12px;
-    }
-    h1 {
-      font-size: 1.9rem;
-      margin-bottom: 8px;
-    }
-    p {
-      margin: 6px 0;
-      line-height: 1.5;
-      font-size: 1rem;
-    }
-    .primary-cta {
-      display: inline-block;
-      margin-top: 24px;
-      padding: 12px 22px;
-      background: #16a34a;
-      color: #ffffff;
-      font-weight: 800;
-      font-size: 1rem;
-      border-radius: 8px;
-      text-decoration: none;
-    }
-    .subtle {
-      margin-top: 14px;
-      font-size: 0.85rem;
-      color: #64748b;
-    }
+    .unlocked-icon { font-size: 3rem; margin-bottom: 12px; }
+    h1 { font-size: 1.9rem; margin-bottom: 8px; }
+    p { margin: 6px 0; line-height: 1.5; font-size: 1rem; }
+    .subtle { margin-top: 14px; font-size: 0.85rem; color: #64748b; }
   </style>
 </head>
 
@@ -52,46 +27,28 @@
 <div class="unlocked-container">
   <div class="unlocked-icon">🎉</div>
   <h1>You’re Unlocked</h1>
-
-  <p id="stadium-copy">
-    Your matchday essentials are now active.
-  </p>
-
-  <p>
-    You’ll receive arrival guidance, entry rules, and kick‑off reminders
-    directly on WhatsApp.
-  </p>
-
-  <p class="subtle">
-    Redirecting you to WhatsApp…
-  </p>
+  <p id="stadium-copy">Your matchday essentials are now active.</p>
+  <p>You’ll receive arrival guidance, entry rules, and kick‑off reminders directly on WhatsApp.</p>
+  <p class="subtle">Redirecting you to WhatsApp…</p>
 </div>
 
 <script>
   const WHATSAPP_NUMBER = "15558273850";
-  const params = new URLSearchParams(window.location.search);
-  const stadiumId = params.get("stadium");
+  const stadiumId = new URLSearchParams(window.location.search).get("stadium");
 
   fetch("/data/stadiums.json")
-    .then(response => response.json())
+    .then(r => r.json())
     .then(stadiums => {
       const stadium = stadiums.find(s => s.id === stadiumId);
-      const stadiumName = stadium ? stadium.name : "your stadium";
+      const message = `START_${stadiumId.toUpperCase()}`;
 
       document.getElementById("stadium-copy").innerHTML =
-        `Your matchday essentials for <strong>${stadiumName}</strong> are now active.`;
+        `Your matchday essentials for <strong>${stadium ? stadium.name : "your stadium"}</strong> are now active.`;
 
-      // ✅ CRITICAL FIX: send CTA token, not descriptive text
-      const MESSAGE = `START_${stadiumId.toUpperCase()}`;
-
-      const WHATSAPP_URL =
+      window.location.href =
         "https://api.whatsapp.com/send" +
         "?phone=" + WHATSAPP_NUMBER +
-        "&text=" + encodeURIComponent(MESSAGE);
-
-      setTimeout(() => {
-        window.location.href = WHATSAPP_URL;
-      }, 500);
+        "&text=" + encodeURIComponent(message);
     });
 </script>
 
