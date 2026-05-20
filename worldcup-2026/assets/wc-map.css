@@ -212,3 +212,10 @@
     min-height: 360px;
   }
 }
+/* =========================================================
+   DEEP LINK HIGHLIGHT (Stadium anchors)
+========================================================= */
+.stadium-box.highlight {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
