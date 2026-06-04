@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
+<html lang="meta charset="UTF-8"><html lang="en">
   <title>World Cup 2026 – Host Cities Map</title>
 
   <!-- Global + WC styles -->
@@ -78,7 +76,7 @@
       <li data-stadium="azteca">Mexico City</li>
     </ul>
 
-    <!-- ✅ WEBSITE‑LEVEL QR (CORRECT PNG REFERENCE) -->
+    <!-- QR -->
     <div class="wc-qr-box">
       <strong>Attending a World Cup 2026 match?</strong>
 
@@ -86,14 +84,13 @@
         Scan to explore host cities and access official matchday guidance.
       </p>
 
-      <!-- ✅ EXACT SNIPPET YOU REQUESTED -->
       <img
         src="/assets/qr/worldcup-2026-matchday-qr.png"
         alt="World Cup 2026 Matchday QR"
       />
 
       <p class="qr-footnote">
-        No sign‑up · Neutral guidance · WhatsApp available on matchdays
+        No sign-up · Neutral guidance · WhatsApp available on matchdays
       </p>
     </div>
 
@@ -112,22 +109,22 @@
       .addTo(map);
 
     const cities = [
-      ["Vancouver",49.2767,-123.1119,"bcplace"],
-      ["Seattle",47.5952,-122.3316,"lumen"],
-      ["San Francisco Bay Area",37.4030,-121.9699,"levis"],
-      ["Los Angeles",33.9535,-118.3392,"sofi"],
-      ["Dallas",32.7473,-97.0945,"att"],
-      ["Kansas City",39.0489,-94.4839,"arrowhead"],
-      ["Houston",29.6847,-95.4107,"nrg"],
-      ["Atlanta",33.7553,-84.4008,"mbs"],
-      ["Miami",25.9580,-80.2389,"hardrock"],
-      ["Toronto",43.6332,-79.4186,"bmo"],
-      ["Boston",42.0909,-71.2643,"gillette"],
-      ["New York / New Jersey",40.8135,-74.0743,"metlife"],
-      ["Philadelphia",39.9012,-75.1675,"lincoln"],
-      ["Monterrey",25.6691,-100.2448,"bbva"],
-      ["Guadalajara",20.6829,-103.4629,"akron"],
-      ["Mexico City",19.3029,-99.1505,"azteca"]
+      ["Vancouver", 49.2767, -123.1119, "bcplace"],
+      ["Seattle", 47.5952, -122.3316, "lumen"],
+      ["San Francisco Bay Area", 37.4030, -121.9699, "levis"],
+      ["Los Angeles", 33.9535, -118.3392, "sofi"],
+      ["Dallas", 32.7473, -97.0945, "att"],
+      ["Kansas City", 39.0489, -94.4839, "arrowhead"],
+      ["Houston", 29.6847, -95.4107, "nrg"],
+      ["Atlanta", 33.7553, -84.4008, "mbs"],
+      ["Miami", 25.9580, -80.2389, "hardrock"],
+      ["Toronto", 43.6332, -79.4186, "bmo"],
+      ["Boston", 42.0909, -71.2643, "gillette"],
+      ["New York / New Jersey", 40.8135, -74.0743, "metlife"],
+      ["Philadelphia", 39.9012, -75.1675, "lincoln"],
+      ["Monterrey", 25.6691, -100.2448, "bbva"],
+      ["Guadalajara", 20.6829, -103.4629, "akron"],
+      ["Mexico City", 19.3029, -99.1505, "azteca"]
     ];
 
     cities.forEach(c => {
@@ -139,15 +136,21 @@
       })
       .addTo(map)
       .on('click', () => {
-        window.location.href =
-          `/worldcup-2026/stadiums/#${c[3]}`;
+        if (c[3] === "lumen") {
+          window.location.href = "/worldcup-2026/seattle/";
+        } else {
+          window.location.href = `/worldcup-2026/stadiums/#${c[3]}`;
+        }
       });
     });
 
     document.querySelectorAll('.city-list li').forEach(li => {
       li.onclick = () => {
-        window.location.href =
-          `/worldcup-2026/stadiums/#${li.dataset.stadium}`;
+        if (li.dataset.stadium === "lumen") {
+          window.location.href = "/worldcup-2026/seattle/";
+        } else {
+          window.location.href = `/worldcup-2026/stadiums/#${li.dataset.stadium}`;
+        }
       };
     });
   });
@@ -155,3 +158,4 @@
 
 </body>
 </html>
+<head>
