@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><!DOCTYPEen">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Cup 2026 – Host Cities Map</title>
 
   <!-- Global + WC styles -->
@@ -17,8 +17,6 @@
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     defer
   ></script>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
 <body>
@@ -56,7 +54,7 @@
       </p>
 
       <p class="city-instruction">
-        Click on a city name or ⚽ ball icon to view its stadium
+        Click on a city name or ⚽ ball icon to view its city guide
       </p>
 
       <ul class="city-list">
@@ -129,12 +127,22 @@
       ];
 
       function cityDestination(stadiumKey) {
-        if (stadiumKey === "lumen") return "/worldcup-2026/seattle/";
         if (stadiumKey === "bcplace") return "/worldcup-2026/vancouver/";
-        if (stadiumKey === "metlife") return "/worldcup-2026/new-york-new-jersey/";
+        if (stadiumKey === "lumen") return "/worldcup-2026/seattle/";
+        if (stadiumKey === "levis") return "/worldcup-2026/san-francisco-bay-area/";
         if (stadiumKey === "sofi") return "/worldcup-2026/los-angeles/";
         if (stadiumKey === "att") return "/worldcup-2026/dallas/";
+        if (stadiumKey === "arrowhead") return "/worldcup-2026/kansas-city/";
+        if (stadiumKey === "nrg") return "/worldcup-2026/houston/";
+        if (stadiumKey === "mbs") return "/worldcup-2026/atlanta/";
+        if (stadiumKey === "hardrock") return "/worldcup-2026/miami/";
         if (stadiumKey === "bmo") return "/worldcup-2026/toronto/";
+        if (stadiumKey === "gillette") return "/worldcup-2026/boston/";
+        if (stadiumKey === "metlife") return "/worldcup-2026/new-york-new-jersey/";
+        if (stadiumKey === "lincoln") return "/worldcup-2026/philadelphia/";
+        if (stadiumKey === "bbva") return "/worldcup-2026/monterrey/";
+        if (stadiumKey === "akron") return "/worldcup-2026/guadalajara/";
+        if (stadiumKey === "azteca") return "/worldcup-2026/mexico-city/";
         return `/worldcup-2026/stadiums/#${stadiumKey}`;
       }
 
