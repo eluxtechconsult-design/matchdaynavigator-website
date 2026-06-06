@@ -1,6 +1,6 @@
 /* ================================
- Global typography & layout
- ================================ */
+   Global typography & layout
+   ================================ */
 
 html, body {
   margin: 0;
@@ -9,7 +9,7 @@ html, body {
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-  Roboto, Helvetica, Arial, sans-serif;
+    Roboto, Helvetica, Arial, sans-serif;
   color: #0f172a;
   background-color: #ffffff;
 }
@@ -39,8 +39,8 @@ button {
 }
 
 /* ================================
- Matchday Navigator header
- ================================ */
+   Matchday Navigator header
+   ================================ */
 
 .wc-map-header {
   padding: 20px 24px;
@@ -62,8 +62,8 @@ button {
 }
 
 /* =========================================================
- LANDING PAGE – WORLD CUP 2026 HOMEPAGE V2
- ========================================================= */
+   LANDING PAGE – WORLD CUP 2026 HOMEPAGE V2
+   ========================================================= */
 
 .hero {
   background: linear-gradient(180deg, #f8fafc, #eef2f7);
@@ -173,7 +173,7 @@ button {
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 12px 14px;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
 }
 
 .landing-qr-inline img {
@@ -220,7 +220,7 @@ button {
   border-radius: 16px;
   padding: 22px;
   text-align: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
   color: #334155;
   line-height: 1.6;
 }
@@ -246,7 +246,7 @@ button {
   text-decoration: none;
   color: #0f172a;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .city-preview-grid a:hover {
@@ -266,7 +266,7 @@ button {
   border: 1px solid #e5e7eb;
   border-radius: 16px;
   padding: 22px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
 }
 
 .support-card strong {
@@ -294,8 +294,8 @@ footer a {
 }
 
 /* =========================================================
- Responsive adjustments
- ========================================================= */
+   Responsive adjustments
+   ========================================================= */
 
 @media (max-width: 1024px) {
   .steps-grid,
