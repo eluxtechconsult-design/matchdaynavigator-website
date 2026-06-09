@@ -86,7 +86,7 @@ button { padding: 6px 10px; font-size: 0.95rem; cursor: pointer; }
   line-height: 1.65;
 }
 
-.language-ribbon-v2 {
+.language-ribbon-v3 {
   margin: 26px auto 0;
   max-width: 980px;
   padding: 22px 22px 20px;
@@ -110,7 +110,7 @@ button { padding: 6px 10px; font-size: 0.95rem; cursor: pointer; }
   font-weight: 800;
 }
 
-.language-ribbon-v2 h2 {
+.language-ribbon-v3 h2 {
   margin-bottom: 8px;
   font-size: clamp(1.35rem, 2vw, 2rem);
   line-height: 1.18;
@@ -137,6 +137,7 @@ button { padding: 6px 10px; font-size: 0.95rem; cursor: pointer; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   padding: 10px 14px;
   border-radius: 999px;
   background: rgba(99,102,241,0.06);
@@ -147,10 +148,21 @@ button { padding: 6px 10px; font-size: 0.95rem; cursor: pointer; }
   transition: all 0.18s ease;
 }
 
-.language-service-chip:hover {
+.language-service-chip-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.language-service-chip-link:hover {
   transform: translateY(-1px);
   background: rgba(99,102,241,0.10);
   box-shadow: 0 8px 18px rgba(99,102,241,0.08);
+  color: #0f172a;
+}
+
+.language-service-chip-link:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
 }
 
 .info-card {
@@ -346,7 +358,7 @@ footer a { color: #2563eb; text-decoration: none; font-weight: 500; }
     box-sizing: border-box;
   }
   .hero-cta-support-text { font-size: 0.94rem; }
-  .language-ribbon-v2 {
+  .language-ribbon-v3 {
     padding: 18px 16px 16px;
     border-radius: 18px;
   }
