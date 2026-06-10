@@ -1,53 +1,36 @@
-<!DOCTYPE html><!DOCTYPEen">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Cup 2026 – Host Cities Map</title>
 
-  <!-- Global + WC styles -->
   <link rel="stylesheet" href="/assets/style.css" />
   <link rel="stylesheet" href="/worldcup-2026/assets/wc-map.css?v=pilot3" />
 
-  <!-- Leaflet -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    defer
-  ></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 </head>
-
 <body>
-
   <header class="wc-topbar">
     <div class="topbar-grid">
-
       <div class="brand">
         <img src="/assets/logo.png" alt="MatchDay Navigator" />
       </div>
-
       <div class="topbar-title">
         <h1>World Cup 2026 – Host Cities Map</h1>
       </div>
-
       <div class="topbar-nav">
         <a href="https://www.matchdaynavigator.com/">← Back to Main Page</a>
         <a href="/worldcup-2026/stadiums/">Go to Stadiums →</a>
       </div>
-
     </div>
   </header>
 
   <main class="wc-map-layout">
-
-    <!-- MAP -->
     <div id="map"></div>
 
-    <!-- CITY LIST + QR -->
     <aside class="wc-city-panel">
-
       <h2>Host Cities</h2>
       <p class="panel-subtitle">
         All official FIFA World Cup 2026 locations
@@ -80,21 +63,16 @@
         <strong>Attending a World Cup 2026 match?</strong>
 
         <p>
-          Scan to explore host cities and access official matchday guidance.
+          Scan to explore host cities and access real-time matchday guidance.
         </p>
 
-        <img
-          src="/assets/qr/worldcup-2026-matchday-qr.png"
-          alt="World Cup 2026 Matchday QR"
-        />
+        <img src="/assets/qr/worldcup-2026-matchday-qr.png" alt="World Cup 2026 Matchday QR" />
 
         <p class="qr-footnote">
           No sign-up · Neutral guidance · WhatsApp available on matchdays
         </p>
       </div>
-
     </aside>
-
   </main>
 
   <script>
@@ -104,8 +82,7 @@
         scrollWheelZoom: false
       }).setView([36.5, -97], 4.1);
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
-        .addTo(map);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
       const cities = [
         ["Vancouver", 49.2767, -123.1119, "bcplace"],
@@ -166,6 +143,5 @@
       });
     });
   </script>
-
 </body>
 </html>
