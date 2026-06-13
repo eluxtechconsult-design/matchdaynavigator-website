@@ -37,7 +37,7 @@
       </p>
 
       <p class="city-instruction">
-        Click on a city name or ⚽ ball icon to view its city guide
+        Click on a city name or ⚽ ball icon to open WhatsApp with the correct matchday prefill.
       </p>
 
       <ul class="city-list">
@@ -85,42 +85,27 @@
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
       const cities = [
-        ["Vancouver", 49.2767, -123.1119, "bcplace"],
-        ["Seattle", 47.5952, -122.3316, "lumen"],
-        ["San Francisco Bay Area", 37.4030, -121.9699, "levis"],
-        ["Los Angeles", 33.9535, -118.3392, "sofi"],
-        ["Dallas", 32.7473, -97.0945, "att"],
-        ["Kansas City", 39.0489, -94.4839, "arrowhead"],
-        ["Houston", 29.6847, -95.4107, "nrg"],
-        ["Atlanta", 33.7553, -84.4008, "mbs"],
-        ["Miami", 25.9580, -80.2389, "hardrock"],
-        ["Toronto", 43.6332, -79.4186, "bmo"],
-        ["Boston", 42.0909, -71.2643, "gillette"],
-        ["New York / New Jersey", 40.8135, -74.0743, "metlife"],
-        ["Philadelphia", 39.9012, -75.1675, "lincoln"],
-        ["Monterrey", 25.6691, -100.2448, "bbva"],
-        ["Guadalajara", 20.6829, -103.4629, "akron"],
-        ["Mexico City", 19.3029, -99.1505, "azteca"]
+        ["Vancouver", 49.2767, -123.1119, "bcplace", "BC Place"],
+        ["Seattle", 47.5952, -122.3316, "lumen", "Lumen Field"],
+        ["San Francisco Bay Area", 37.4030, -121.9699, "levis", "Levi’s Stadium"],
+        ["Los Angeles", 33.9535, -118.3392, "sofi", "SoFi Stadium"],
+        ["Dallas", 32.7473, -97.0945, "att", "AT&T Stadium"],
+        ["Kansas City", 39.0489, -94.4839, "arrowhead", "Arrowhead Stadium"],
+        ["Houston", 29.6847, -95.4107, "nrg", "NRG Stadium"],
+        ["Atlanta", 33.7553, -84.4008, "mbs", "Mercedes-Benz Stadium"],
+        ["Miami", 25.9580, -80.2389, "hardrock", "Hard Rock Stadium"],
+        ["Toronto", 43.6332, -79.4186, "bmo", "BMO Field"],
+        ["Boston", 42.0909, -71.2643, "gillette", "Gillette Stadium"],
+        ["New York / New Jersey", 40.8135, -74.0743, "metlife", "MetLife Stadium"],
+        ["Philadelphia", 39.9012, -75.1675, "lincoln", "Lincoln Financial Field"],
+        ["Monterrey", 25.6691, -100.2448, "bbva", "Estadio BBVA"],
+        ["Guadalajara", 20.6829, -103.4629, "akron", "Estadio Akron"],
+        ["Mexico City", 19.3029, -99.1505, "azteca", "Estadio Azteca"]
       ];
 
-      function cityDestination(stadiumKey) {
-        if (stadiumKey === "bcplace") return "/worldcup-2026/vancouver/";
-        if (stadiumKey === "lumen") return "/worldcup-2026/seattle/";
-        if (stadiumKey === "levis") return "/worldcup-2026/san-francisco-bay-area/";
-        if (stadiumKey === "sofi") return "/worldcup-2026/los-angeles/";
-        if (stadiumKey === "att") return "/worldcup-2026/dallas/";
-        if (stadiumKey === "arrowhead") return "/worldcup-2026/kansas-city/";
-        if (stadiumKey === "nrg") return "/worldcup-2026/houston/";
-        if (stadiumKey === "mbs") return "/worldcup-2026/atlanta/";
-        if (stadiumKey === "hardrock") return "/worldcup-2026/miami/";
-        if (stadiumKey === "bmo") return "/worldcup-2026/toronto/";
-        if (stadiumKey === "gillette") return "/worldcup-2026/boston/";
-        if (stadiumKey === "metlife") return "/worldcup-2026/new-york-new-jersey/";
-        if (stadiumKey === "lincoln") return "/worldcup-2026/philadelphia/";
-        if (stadiumKey === "bbva") return "/worldcup-2026/monterrey/";
-        if (stadiumKey === "akron") return "/worldcup-2026/guadalajara/";
-        if (stadiumKey === "azteca") return "/worldcup-2026/mexico-city/";
-        return `/worldcup-2026/stadiums/#${stadiumKey}`;
+      function whatsappDestination(cityName, stadiumName) {
+        const prefill = `START ${cityName} ${stadiumName}`;
+        return `https://wa.me/15558273850?text=${encodeURIComponent(prefill)}`;
       }
 
       cities.forEach((c) => {
@@ -132,13 +117,15 @@
         })
           .addTo(map)
           .on("click", () => {
-            window.location.href = cityDestination(c[3]);
+            window.location.href = whatsappDestination(c[0], c[4]);
           });
       });
 
       document.querySelectorAll(".city-list li").forEach((li) => {
         li.onclick = () => {
-          window.location.href = cityDestination(li.dataset.stadium);
+          const cityRecord = cities.find((item) => item[3] === li.dataset.stadium);
+          if (!cityRecord) return;
+          window.location.href = whatsappDestination(cityRecord[0], cityRecord[4]);
         };
       });
     });
