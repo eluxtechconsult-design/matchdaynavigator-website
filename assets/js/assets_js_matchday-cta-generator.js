@@ -1,0 +1,1 @@
+console.log('CTA generator active');
