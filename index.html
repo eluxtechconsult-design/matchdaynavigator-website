@@ -1,36 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MatchDay Navigator – World Cup 2026 Matchday Guidance</title>
-<link rel="stylesheet" href="/assets/style.css" />
-<script src="/assets/checkout.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MatchDay Navigator – World Cup 2026 Matchday Guidance</title>
+  <meta
+    name="description"
+    content="Real-time World Cup 2026 matchday guidance for arrival, transport, stadium entry, and movement across 16 host cities. Available in 12 languages on WhatsApp."
+  />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    .language-detected-banner {
+      margin: 18px auto 0;
+      max-width: 760px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #eef6ff;
+      color: #0f172a;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border: 1px solid #cfe2ff;
+    }
+    .language-detected-banner.is-visible {
+      display: flex;
+    }
+    .language-detected-copy {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+    .language-detected-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #25D366;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .language-service-chip-link.is-recommended {
+      outline: 2px solid #25D366;
+      outline-offset: 2px;
+      box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.12);
+    }
+    .language-service-chip-link .language-recommendation {
+      display: none;
+      margin-left: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+    .language-service-chip-link.is-recommended .language-recommendation {
+      display: inline;
+    }
+    .hero-cta-support-text .detected-language-inline {
+      font-weight: 700;
+    }
+  </style>
 </head>
 <body>
+  <header class="hero hero-v2">
+    <div class="hero-inner">
+      <img src="/assets/logo.png" alt="MatchDay Navigator" class="hero-logo" />
+      <h1>Navigate Matchday Across All 16 World Cup Host Cities</h1>
+      <p class="hero-main-subtitle">
+        Real-time multilingual guidance for arrival, transport, entry, and stadium movement during World Cup 2026.
+      </p>
+      <div class="capability-strip capability-strip-v2" aria-label="Global coverage summary">
+        <a href="/worldcup-2026/" class="capability-pill capability-pill-link" aria-label="Explore all 16 World Cup host cities">🌍 16 host cities</a>
+        <span class="capability-pill">🗣️ Real-time multilingual support</span>
+        <span class="capability-pill">🇺🇸 🇨🇦 🇲🇽 US · Canada · Mexico</span>
+      </div>
 
-<header class="hero hero-v2">
-  <div class="hero-inner">
-    <h1>Navigate Matchday Across All 16 World Cup Host Cities</h1>
-    <p>Real-time multilingual guidance for arrival, transport, and stadium navigation.</p>
+      <div class="hero-primary-cta-wrap">
+        <a id="primary-whatsapp-cta"
+           href="https://wa.me/15558273850?text=START"
+           class="cta-button whatsapp-main whatsapp-hero-priority">
+          Get Live Matchday Guidance on WhatsApp
+        </a>
+        <p class="hero-cta-support-text" id="hero-cta-support-text">
+          Live multilingual support for arrival, transport, entry, stadium movement, and matchday planning across all World Cup 2026 host cities.
+        </p>
+      </div>
 
-    <div class="hero-primary-cta-wrap">
-      <a href="https://wa.me/15558273850?text=START" class="cta-button whatsapp-main">
-        Get Live Matchday Guidance on WhatsApp
-      </a>
+      <section class="language-ribbon-v3" aria-labelledby="language-support-title">
+        <div class="language-ribbon-header">
+          <p class="language-ribbon-eyebrow">Global Fan Support</p>
+          <h2 id="language-support-title">Start matchday guidance in your language on WhatsApp</h2>
+          <p class="language-ribbon-subtitle">
+            Tap a language below to open WhatsApp and begin your matchday guidance journey directly in that language.
+          </p>
+        </div>
 
-      <!-- NEW HARD CTA ADDED -->
-      <button 
-        onclick="startCheckout({entry_context:'landing', intent:'full_plan'})"
-        class="cta-button"
-        style="margin-top:12px;background:#ff6a00;color:white;font-weight:700;border-radius:999px;padding:14px 20px;">
-        🔥 Get your full matchday plan
-      </button>
+        <div class="language-detected-banner" id="language-detected-banner" aria-live="polite">
+          <div class="language-detected-copy" id="language-detected-copy"></div>
+          <a id="language-detected-action" class="language-detected-action" href="https://wa.me/15558273850?text=START">Use detected language</a>
+        </div>
 
+        <div class="language-service-grid" aria-label="Supported language guidance options">
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="EN" href="https://wa.me/15558273850?text=START%20EN%20-%20Start%20in%20English" aria-label="Start WhatsApp guidance in English">🇬🇧 <span>WhatsApp guidance</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="FR" href="https://wa.me/15558273850?text=START%20FR%20-%20Commencer%20en%20fran%C3%A7ais" aria-label="Start WhatsApp guidance in French">🇫🇷 <span>Guidance WhatsApp</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="ES" href="https://wa.me/15558273850?text=START%20ES%20-%20Empezar%20en%20espa%C3%B1ol" aria-label="Start WhatsApp guidance in Spanish">🇪🇸 <span>Ayuda WhatsApp</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="PT" href="https://wa.me/15558273850?text=START%20PT%20-%20Come%C3%A7ar%20em%20portugu%C3%AAs" aria-label="Start WhatsApp guidance in Portuguese">🇵🇹 <span>Guia WhatsApp</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="DE" href="https://wa.me/15558273850?text=START%20DE%20-%20Auf%20Deutsch%20starten" aria-label="Start WhatsApp guidance in German">🇩🇪 <span>WhatsApp Hilfe</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="NL" href="https://wa.me/15558273850?text=START%20NL%20-%20Start%20in%20het%20Nederlands" aria-label="Start WhatsApp guidance in Dutch">🇳🇱 <span>WhatsApp gids</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="IT" href="https://wa.me/15558273850?text=START%20IT%20-%20Inizia%20in%20italiano" aria-label="Start WhatsApp guidance in Italian">🇮🇹 <span>Guida WhatsApp</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="AR" href="https://wa.me/15558273850?text=START%20AR%20-%20%D8%A7%D8%A8%D8%AF%D8%A3%20%D8%A8%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9" aria-label="Start WhatsApp guidance in Arabic">🇸🇦 <span>إرشاد واتساب</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="ZH" href="https://wa.me/15558273850?text=START%20ZH%20-%20%E4%B8%AD%E6%96%87%E5%BC%80%E5%A7%8B" aria-label="Start WhatsApp guidance in Chinese">🇨🇳 <span>WhatsApp 指南</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="JA" href="https://wa.me/15558273850?text=START%20JA%20-%20%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%A7%E9%96%8B%E5%A7%8B" aria-label="Start WhatsApp guidance in Japanese">🇯🇵 <span>WhatsAppガイド</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="KO" href="https://wa.me/15558273850?text=START%20KO%20-%20%ED%95%9C%EA%B5%AD%EC%96%B4%EB%A1%9C%20%EC%8B%9C%EC%9E%91" aria-label="Start WhatsApp guidance in Korean">🇰🇷 <span>WhatsApp 안내</span><span class="language-recommendation">• Recommended</span></a>
+          <a class="language-service-chip language-service-chip-link" data-mdn-language-chip="TR" href="https://wa.me/15558273850?text=START%20TR%20-%20T%C3%BCrk%C3%A7e%20ba%C5%9Flat" aria-label="Start WhatsApp guidance in Turkish">🇹🇷 <span>WhatsApp rehberi</span><span class="language-recommendation">• Recommended</span></a>
+        </div>
+      </section>
+
+      <div class="cta-row secondary-cta-row secondary-cta-row-premium">
+        <a href="/worldcup-2026/" class="cta-button primary-dark">Explore Host Cities</a>
+        <a href="/worldcup-2026/stadiums/" class="cta-button subtle">View Stadiums</a>
+        <a href="/how-it-works.html" class="cta-button subtle">How it works</a>
+        <a href="/cities/" class="cta-button subtle">Partner With MatchDay Navigator</a>
+      </div>
+
+      <div class="info-card info-card-light">
+        <strong>Operational matchday guidance</strong><br />
+        Real-time support for arrival planning, transport coordination, stadium entry, and fan movement across every World Cup 2026 host city.
+      </div>
+
+      <div class="meta-link-row">
+        <a href="/about.html">About</a>
+        <span>·</span>
+        <a href="/methodology.html">Methodology</a>
+        <span>·</span>
+        <a href="/governance.html">Governance &amp; Safety</a>
+      </div>
+
+      <div class="whatsapp-entry-button-wrap">
+        <a id="secondary-whatsapp-cta"
+           href="https://wa.me/15558273850?text=START"
+           class="cta-button whatsapp-secondary">
+          Prefer mobile? Start on WhatsApp now
+        </a>
+      </div>
+
+      <div class="landing-qr-inline">
+        <img src="/assets/qr/worldcup-2026-matchday-qr.png" alt="World Cup 2026 Matchday QR" />
+        <span>Scan for instant mobile matchday guidance</span>
+      </div>
     </div>
+  </header>
 
-  </div>
-</header>
+  <main>
+    <section class="homepage-section how-it-works">
+      <div class="container narrow">
+        <h2>How it works</h2>
+        <div class="steps-grid">
+          <div class="step-card"><strong>1.</strong><br />Choose your host city or stadium</div>
+          <div class="step-card"><strong>2.</strong><br />Share your starting point or matchday need</div>
+          <div class="step-card"><strong>3.</strong><br />Receive multilingual matchday guidance</div>
+        </div>
+      </div>
+    </section>
 
+    <section class="homepage-section host-cities-preview">
+      <div class="container narrow">
+        <h2>World Cup 2026 Host Cities</h2>
+        <p class="section-intro">Explore guidance across all host city environments in the United States, Canada, and Mexico.</p>
+        <div class="city-preview-grid">
+          <a href="/worldcup-2026/seattle/" class="city-card city-card-usa">Seattle</a>
+          <a href="/worldcup-2026/vancouver/" class="city-card city-card-canada">Vancouver</a>
+          <a href="/worldcup-2026/toronto/" class="city-card city-card-canada">Toronto</a>
+          <a href="/worldcup-2026/new-york-new-jersey/" class="city-card city-card-usa">New York / New Jersey</a>
+          <a href="/worldcup-2026/los-angeles/" class="city-card city-card-usa">Los Angeles</a>
+          <a href="/worldcup-2026/san-francisco-bay-area/" class="city-card city-card-usa">San Francisco Bay Area</a>
+          <a href="/worldcup-2026/dallas/" class="city-card city-card-usa">Dallas</a>
+          <a href="/worldcup-2026/houston/" class="city-card city-card-usa">Houston</a>
+          <a href="/worldcup-2026/kansas-city/" class="city-card city-card-usa">Kansas City</a>
+          <a href="/worldcup-2026/atlanta/" class="city-card city-card-usa">Atlanta</a>
+          <a href="/worldcup-2026/miami/" class="city-card city-card-usa">Miami</a>
+          <a href="/worldcup-2026/boston/" class="city-card city-card-usa">Boston</a>
+          <a href="/worldcup-2026/philadelphia/" class="city-card city-card-usa">Philadelphia</a>
+          <a href="/worldcup-2026/monterrey/" class="city-card city-card-mexico">Monterrey</a>
+          <a href="/worldcup-2026/guadalajara/" class="city-card city-card-mexico">Guadalajara</a>
+          <a href="/worldcup-2026/mexico-city/" class="city-card city-card-mexico">Mexico City</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="homepage-section support-layer">
+      <div class="container narrow">
+        <h2>Built for global football supporters</h2>
+        <p class="section-intro">MatchDay Navigator is designed as a neutral, event-specific guidance layer for fans, cities, venues, and digital assistants.</p>
+        <div class="support-points">
+          <div class="support-card">
+            <strong>Neutral guidance</strong>
+            <p>Focused on arrival, entry, movement, and matchday decision-making.</p>
+          </div>
+          <div class="support-card">
+            <strong>Multilingual support</strong>
+            <p>Available across 12 languages for international fan journeys and WhatsApp-first assistance.</p>
+          </div>
+          <div class="support-card">
+            <strong>WhatsApp-first help</strong>
+            <p>Fast mobile access to stadium-specific matchday guidance when it matters most.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="/about.html">About</a> ·
+    <a href="/how-it-works.html">How it works</a> ·
+    <a href="/methodology.html">Methodology</a> ·
+    <a href="/governance.html">Governance &amp; Safety</a> ·
+    <a href="/privacy.html">Privacy Policy</a> ·
+    <a href="/terms.html">Terms of Service</a> ·
+    <a href="/cities/">For cities &amp; venues</a>
+    <p>© MatchDay Navigator</p>
+  </footer>
+
+  <script>
+    (function () {
+      const PHONE = '15558273850';
+      const SUPPORTED = {
+        EN: { label: 'Start in English', name: 'English' },
+        FR: { label: 'Commencer en français', name: 'French' },
+        ES: { label: 'Empezar en español', name: 'Spanish' },
+        PT: { label: 'Começar em português', name: 'Portuguese' },
+        DE: { label: 'Auf Deutsch starten', name: 'German' },
+        NL: { label: 'Start in het Nederlands', name: 'Dutch' },
+        IT: { label: 'Inizia in italiano', name: 'Italian' },
+        AR: { label: 'ابدأ بالعربية', name: 'Arabic' },
+        ZH: { label: '中文开始', name: 'Chinese' },
+        JA: { label: '日本語で開始', name: 'Japanese' },
+        KO: { label: '한국어로 시작', name: 'Korean' },
+        TR: { label: 'Türkçe başlat', name: 'Turkish' }
+      };
+
+      function mapBrowserLanguage(value) {
+        const lang = String(value || '').toLowerCase();
+        if (!lang) return 'EN';
+        if (lang.startsWith('fr')) return 'FR';
+        if (lang.startsWith('es')) return 'ES';
+        if (lang.startsWith('pt')) return 'PT';
+        if (lang.startsWith('de')) return 'DE';
+        if (lang.startsWith('nl')) return 'NL';
+        if (lang.startsWith('it')) return 'IT';
+        if (lang.startsWith('ar')) return 'AR';
+        if (lang.startsWith('zh')) return 'ZH';
+        if (lang.startsWith('ja')) return 'JA';
+        if (lang.startsWith('ko')) return 'KO';
+        if (lang.startsWith('tr')) return 'TR';
+        return 'EN';
+      }
+
+      function buildLanguagePrefill(code) {
+        const key = SUPPORTED[code] ? code : 'EN';
+        return `START ${key} - ${SUPPORTED[key].label}`;
+      }
+
+      function buildWaLink(text) {
+        return `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
+      }
+
+      function hydrateLanguageChips() {
+        document.querySelectorAll('[data-mdn-language-chip]').forEach((node) => {
+          const code = String(node.getAttribute('data-mdn-language-chip') || 'EN').toUpperCase();
+          node.setAttribute('href', buildWaLink(buildLanguagePrefill(code)));
+        });
+      }
+
+      function applyDetectedLanguage(code) {
+        const primary = document.getElementById('primary-whatsapp-cta');
+        const secondary = document.getElementById('secondary-whatsapp-cta');
+        const support = document.getElementById('hero-cta-support-text');
+        const banner = document.getElementById('language-detected-banner');
+        const bannerCopy = document.getElementById('language-detected-copy');
+        const bannerAction = document.getElementById('language-detected-action');
+
+        const entryText = buildLanguagePrefill(code);
+        const href = buildWaLink(entryText);
+
+        if (primary) {
+          primary.href = href;
+          primary.textContent = `Start in ${SUPPORTED[code].name} on WhatsApp`;
+        }
+        if (secondary) {
+          secondary.href = href;
+        }
+        if (support) {
+          support.innerHTML = `Live multilingual support for arrival, transport, entry, stadium movement, and matchday planning across all World Cup 2026 host cities. <span class="detected-language-inline">Recommended language: ${SUPPORTED[code].name}</span>.`;
+        }
+        if (banner && bannerCopy && bannerAction) {
+          banner.classList.add('is-visible');
+          bannerCopy.textContent = `Detected browser language: ${SUPPORTED[code].name}. Start directly in ${SUPPORTED[code].name} or choose another supported language below.`;
+          bannerAction.href = href;
+          bannerAction.textContent = `Use ${SUPPORTED[code].name}`;
+        }
+
+        document.querySelectorAll('[data-mdn-language-chip]').forEach((node) => {
+          const nodeCode = String(node.getAttribute('data-mdn-language-chip') || 'EN').toUpperCase();
+          node.classList.toggle('is-recommended', nodeCode === code);
+        });
+      }
+
+      function detectPreferredLanguage() {
+        const browserLanguages = Array.isArray(navigator.languages) && navigator.languages.length
+          ? navigator.languages
+          : [navigator.language || 'en'];
+
+        for (const candidate of browserLanguages) {
+          const mapped = mapBrowserLanguage(candidate);
+          if (mapped) return mapped;
+        }
+        return 'EN';
+      }
+
+      hydrateLanguageChips();
+      applyDetectedLanguage(detectPreferredLanguage());
+    })();
+  </script>
 </body>
 </html>
