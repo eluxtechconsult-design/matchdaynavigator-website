@@ -1,1 +1,5 @@
-function startCheckout(meta){const u="https://mdn-bird-backend.onrender.com/create-checkout-session";const q=new URLSearchParams(meta);window.location.href=`${u}?${q.toString()}`;}
+function startCheckout(meta){
+  const url = "https://mdn-bird-backend.onrender.com/create-checkout-session";
+  const params = new URLSearchParams(meta);
+  window.location.href = url + "?" + params.toString();
+}

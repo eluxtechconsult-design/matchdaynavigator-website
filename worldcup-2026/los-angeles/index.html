@@ -1,34 +1,59 @@
-<html><head><style>
-body{margin:0;font-family:Arial;background:#081824;color:#fff}
-.wrap{max-width:1100px;margin:auto;padding:22px}
-h1{font-size:2.4rem;margin:0}
-.hero{padding:20px 24px;border-radius:20px;background:#0e2a44}
-.pill{display:inline-block;margin:6px 6px 0 0;padding:8px 14px;border-radius:20px;background:#173d5c}
-.cta-main{padding:12px 16px;border-radius:10px;border:none;cursor:pointer}
-.cta-hard{background:#ff6a00;color:white;font-weight:700}
-.match-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:12px;background:#102f4a;margin-top:8px}
-.match-row span{font-weight:600}
-.match-list{margin-top:12px}
-.match-header{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
-</style><script src='/assets/checkout.js'></script></head>
-<body><div class='wrap'>
+
+<html>
+<head>
+<style>
+body{margin:0;font-family:Arial;background:#061826;color:#fff}
+.wrap{max-width:1200px;margin:auto;padding:24px}
+.hero{padding:24px;border-radius:20px;background:linear-gradient(135deg,#0b2a47,#0f3d63)}
+h1{margin:0;font-size:2.8rem}
+.summary{margin-top:10px;color:#cfe6ff}
+.pill{display:inline-block;margin-top:10px;background:#173d5c;padding:8px 14px;border-radius:20px}
+.whatsapp{background:#25D366;color:white;padding:14px 18px;border-radius:12px;display:inline-block;margin-top:14px;font-weight:700}
+.match-strip{margin-top:18px;padding:14px;border-radius:16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08)}
+.match-inline{display:flex;gap:10px;overflow-x:auto;margin-top:10px}
+.match-chip{background:#0f2f4a;padding:8px 12px;border-radius:18px;white-space:nowrap;font-weight:700}
+.cta-hard{background:#ff6a00;color:white;border:none;padding:8px 12px;border-radius:8px;font-weight:700}
+.section{margin-top:30px}
+.card{background:#0f2f4a;padding:20px;border-radius:16px;margin-top:12px}
+</style>
+<script src='/assets/checkout.js'></script>
+</head>
+<body>
+<div class='wrap'>
+
 <div class='hero'>
 <h1>Los Angeles</h1>
-<div class='pill'>SoFi Stadium</div>
-<div style='margin-top:10px;'>
-<a href='https://wa.me/15558273850?text=START%20Los Angeles' class='cta-main'>💬 WhatsApp</a>
+<p class='summary'>Use this page as your matchday hub — pick your match, plan transport, and navigate matchday smoothly.</p>
+
+<div class='pill'>Primary Stadium: SoFi Stadium</div>
+
+<a class='whatsapp' href='https://wa.me/15558273850?text=START%20Los Angeles'>💬 Start your matchday plan on WhatsApp</a>
+
+<div class='match-strip'>
+<div style='display:flex;justify-content:space-between;align-items:center'>
+<h3 style='margin:0;'>🗓 Upcoming Matches</h3>
+<button class='cta-hard' onclick="startCheckout({city:'los_angeles',stadium:'SoFi Stadium',entry_context:'match_strip'})">🔥 Full plan</button>
 </div>
 
-<div class='match-header'>
-<h2>🗓 Matches</h2>
-<button class='cta-main cta-hard' onclick="startCheckout({city:'los_angeles',stadium:'SoFi Stadium'})">🔥 Full Plan</button>
+<div class='match-inline'>
+<div class='match-chip'>🇺🇸 USA vs 🇵🇾 Paraguay</div><div class='match-chip'>🇮🇷 Iran vs 🇳🇿 New Zealand</div><div class='match-chip'>🇨🇭 Switzerland vs 🇧🇦 Bosnia</div><div class='match-chip'>🇧🇪 Belgium vs 🇮🇷 Iran</div><div class='match-chip'>🇺🇸 USA vs 🇹🇷 Türkiye</div>
+</div>
 </div>
 
-<div class='match-list'><div class='match-row'><span>🇺🇸 USA vs 🇵🇾 Paraguay</span><span>June 12</span></div>
-<div class='match-row'><span>🇮🇷 Iran vs 🇳🇿 New Zealand</span><span>June 15</span></div>
-<div class='match-row'><span>🇨🇭 Switzerland vs 🇧🇦 Bosnia & Herzegovina</span><span>June 18</span></div>
-<div class='match-row'><span>🇧🇪 Belgium vs 🇮🇷 Iran</span><span>June 21</span></div>
-<div class='match-row'><span>🇺🇸 USA vs 🇹🇷 Türkiye</span><span>June 25</span></div></div>
+</div>
+
+<div class='section'>
+<h2>All Matches</h2>
+<div class='card'>🇺🇸 USA vs 🇵🇾 Paraguay<br><small>Group stage</small></div><div class='card'>🇮🇷 Iran vs 🇳🇿 New Zealand<br><small>Group stage</small></div><div class='card'>🇨🇭 Switzerland vs 🇧🇦 Bosnia<br><small>Group stage</small></div><div class='card'>🇧🇪 Belgium vs 🇮🇷 Iran<br><small>Group stage</small></div><div class='card'>🇺🇸 USA vs 🇹🇷 Türkiye<br><small>Group stage</small></div>
+</div>
+
+<div class='section'>
+<h2>Matchday Guidance</h2>
+<div class='card'>🚇 Transport planning</div>
+<div class='card'>🍽️ Before & after match</div>
+<div class='card'>🎒 Stadium rules</div>
+</div>
 
 </div>
-</div></body></html>
+</body>
+</html>
