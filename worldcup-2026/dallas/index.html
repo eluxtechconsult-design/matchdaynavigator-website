@@ -2,17 +2,16 @@
 <html>
 <head>
 <style>
-body{margin:0;font-family:Arial;background:#061826;color:#fff}
+body{margin:0;font-family:Arial;background:#071c2c;color:#fff}
 .wrap{max-width:1200px;margin:auto;padding:24px}
-.hero{padding:24px;border-radius:20px;background:linear-gradient(135deg,#0b2a47,#0f3d63)}
-h1{margin:0;font-size:2.8rem}
+.hero{background:#153a5b;padding:28px;border-radius:20px}
+h1{margin:0;font-size:3rem}
 .summary{margin-top:10px;color:#cfe6ff}
-.pill{display:inline-block;margin-top:10px;background:#173d5c;padding:8px 14px;border-radius:20px}
-.whatsapp{background:#25D366;color:white;padding:14px 18px;border-radius:12px;display:inline-block;margin-top:14px;font-weight:700}
-.match-strip{margin-top:18px;padding:14px;border-radius:16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08)}
-.match-inline{display:flex;gap:10px;overflow-x:auto;margin-top:10px}
-.match-chip{background:#0f2f4a;padding:8px 12px;border-radius:18px;white-space:nowrap;font-weight:700}
-.cta-hard{background:#ff6a00;color:white;border:none;padding:8px 12px;border-radius:8px;font-weight:700}
+.cta-wa{background:#25D366;color:#fff;padding:14px 20px;border-radius:12px;font-weight:700;border:none}
+.match-strip{margin-top:20px;padding:16px;border-radius:16px;background:rgba(255,255,255,0.06)}
+.match-row{display:flex;gap:10px;overflow-x:auto;margin-top:10px}
+.match-chip{background:#0f2f4a;padding:10px 14px;border-radius:20px;white-space:nowrap}
+.cta-plan{background:#ff6a00;color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:700}
 .section{margin-top:30px}
 .card{background:#0f2f4a;padding:20px;border-radius:16px;margin-top:12px}
 </style>
@@ -25,17 +24,20 @@ h1{margin:0;font-size:2.8rem}
 <h1>Dallas</h1>
 <p class='summary'>Use this page as your matchday hub — pick your match, plan transport, and navigate matchday smoothly.</p>
 
-<div class='pill'>Primary Stadium: AT&T Stadium</div>
+<div style='margin-top:12px;'>
+<span style='background:#1d4b6f;padding:8px 14px;border-radius:18px;'>Primary Stadium: AT&T Stadium</span>
+</div>
 
-<a class='whatsapp' href='https://wa.me/15558273850?text=START%20Dallas'>💬 Start your matchday plan on WhatsApp</a>
+<div style='margin-top:16px;'>
+<button class='cta-wa'>💬 Start your matchday plan on WhatsApp</button>
+</div>
 
 <div class='match-strip'>
 <div style='display:flex;justify-content:space-between;align-items:center'>
 <h3 style='margin:0;'>🗓 Upcoming Matches</h3>
-<button class='cta-hard' onclick="startCheckout({city:'dallas',stadium:'AT&T Stadium',entry_context:'match_strip'})">🔥 Full plan</button>
+<button class='cta-plan' onclick="startCheckout({city:'dallas',stadium:'AT&T Stadium'})">🔥 Full plan</button>
 </div>
-
-<div class='match-inline'>
+<div class='match-row'>
 <div class='match-chip'>🇳🇱 Netherlands vs 🇯🇵 Japan</div><div class='match-chip'>🏴 England vs 🇭🇷 Croatia</div><div class='match-chip'>🇦🇷 Argentina vs 🇦🇹 Austria</div><div class='match-chip'>🇯🇵 Japan vs 🇸🇪 Sweden</div><div class='match-chip'>🇦🇷 Argentina vs 🇯🇴 Jordan</div>
 </div>
 </div>
@@ -44,7 +46,7 @@ h1{margin:0;font-size:2.8rem}
 
 <div class='section'>
 <h2>All Matches</h2>
-<div class='card'>🇳🇱 Netherlands vs 🇯🇵 Japan<br><small>Group stage</small></div><div class='card'>🏴 England vs 🇭🇷 Croatia<br><small>Group stage</small></div><div class='card'>🇦🇷 Argentina vs 🇦🇹 Austria<br><small>Group stage</small></div><div class='card'>🇯🇵 Japan vs 🇸🇪 Sweden<br><small>Group stage</small></div><div class='card'>🇦🇷 Argentina vs 🇯🇴 Jordan<br><small>Group stage</small></div>
+<div class='card'>🇳🇱 Netherlands vs 🇯🇵 Japan</div><div class='card'>🏴 England vs 🇭🇷 Croatia</div><div class='card'>🇦🇷 Argentina vs 🇦🇹 Austria</div><div class='card'>🇯🇵 Japan vs 🇸🇪 Sweden</div><div class='card'>🇦🇷 Argentina vs 🇯🇴 Jordan</div>
 </div>
 
 <div class='section'>
