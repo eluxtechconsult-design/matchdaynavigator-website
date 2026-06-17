@@ -1,15 +1,1 @@
-function startCheckout(meta) {
-  const baseUrl = "https://mdn-bird-backend.onrender.com/create-checkout-session";
-
-  const query = new URLSearchParams({
-    product_type: "planning_pass",
-    stadium: meta.stadium || '',
-    city: meta.city || '',
-    match: meta.match || '',
-    kickoff: meta.kickoff || '',
-    entry_context: meta.entry_context || '',
-    intent: meta.intent || 'full_plan'
-  });
-
-  window.location.href = `${baseUrl}?${query.toString()}`;
-}
+function startCheckout(meta){const u="https://mdn-bird-backend.onrender.com/create-checkout-session";const q=new URLSearchParams(meta);window.location.href=`${u}?${q.toString()}`;}
