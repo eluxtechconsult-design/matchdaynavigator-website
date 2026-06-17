@@ -6,6 +6,7 @@ function startCheckout(meta) {
     stadium: meta.stadium || '',
     city: meta.city || '',
     match: meta.match || '',
+    kickoff: meta.kickoff || '',
     entry_context: meta.entry_context || '',
     intent: meta.intent || 'full_plan'
   });

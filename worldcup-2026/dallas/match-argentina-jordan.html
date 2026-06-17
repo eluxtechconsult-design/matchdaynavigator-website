@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dallas | MatchDay Navigator | World Cup 2026 Host City</title>
-  <meta name="description" content="Dallas World Cup 2026 host city gateway page. Start your matchday plan on WhatsApp or choose a real group-stage fixture at Dallas Stadium / AT&T Stadium.">
+  <title>Argentina vs Jordan | Dallas Stadium / AT&T Stadium | MatchDay Navigator</title>
+  <meta name="description" content="Fixture-specific World Cup 2026 matchday planning for Argentina vs Jordan at Dallas Stadium / AT&T Stadium.">
   <script src="/assets/checkout.js"></script>
   <style>
     :root { --bg-1:#031123; --bg-2:#07203a; --panel:#0d2a4a; --panel-2:#123457; --text:#f5fbff; --muted:#bed0e1; --accent:#2fe0b8; --accent-2:#69c5ff; --gold:#f7c948; --wc-red:#ff4d4d; --wc-orange:#ff7a18; --border:rgba(255,255,255,.10); --shadow:rgba(0,0,0,.30); }
@@ -49,97 +49,36 @@
     footer { margin-top:26px; color:var(--muted); font-size:.93rem; }
     @media (max-width:1120px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } h1 { font-size:3.25rem; } }
     @media (max-width:720px) { .wrap { padding:18px 16px 34px; } .hero { padding:30px 22px; } h1 { font-size:2.7rem; } .grid { grid-template-columns:1fr; } .cta-main { min-width:0; width:100%; } .nav-links { width:100%; justify-content:flex-start; } .match-card { grid-template-columns:1fr; } .match-layer-header { align-items:flex-start; } }
-
-  </style>
+</style>
 </head>
 <body>
   <div class="wrap">
     <div class="topbar">
       <div class="brand">MatchDay Navigator</div>
-      <div class="nav-links">
-        <a class="nav-pill" href="/worldcup-2026/">← All Host Cities</a>
-        <a class="nav-pill" href="/worldcup-2026/stadiums/">All Stadiums →</a>
-      </div>
+      <div class="nav-links"><a class="nav-pill" href="/worldcup-2026/dallas/">← Back to Dallas</a></div>
     </div>
 
     <section class="hero">
-      <div class="eyebrow">World Cup 2026 Host City</div>
-      <h1>Dallas</h1>
-      <p class="summary">Use this page as the gateway into your Dallas matchday journey. Start your WhatsApp plan directly, choose your real group-stage match, or continue into transport, pre-match / post-match planning, bag policy, and stadium navigation.</p>
+      <div class="eyebrow">World Cup 2026 Matchday</div>
+      <h1><span class="flag">🇦🇷</span> Argentina <span class="versus">vs</span> <span class="flag">🇯🇴</span> Jordan</h1>
+      <p class="summary">Fixture-specific guidance for arrival timing, transport, stadium entry, movement around the venue, and before / after match decisions.</p>
       <div class="meta">
-        <span class="pill">Country: United States</span>
-        <span class="pill">Region: Texas</span>
-        <span class="pill">Primary Stadium: Dallas Stadium / AT&T Stadium</span>
+        <span class="pill">Venue: Dallas Stadium / AT&T Stadium</span>
+        <span class="pill">Date: June 27</span>
+        <span class="pill">Kickoff: 21:00 CT</span>
+        <span class="pill">City: Dallas</span>
       </div>
       <div class="cta-zone">
-        <a class="cta-main" href="https://wa.me/15558273850?text=START%20Dallas%20AT%26T%20Stadium">💬 Start your matchday plan on WhatsApp</a>
+        <a class="cta-main" href="https://wa.me/15558273850?text=START%20Dallas%20Dallas%20Stadium%20/%20AT%26T%20Stadium%20Argentina%20vs%20Jordan">🎯 Get this match plan on WhatsApp</a>
+        <button class="cta-main cta-hard" onclick="startCheckout({stadium:'att',city:'dallas',match:'argentina_jordan',kickoff:'June 27 21:00 CT',entry_context:'match_page',intent:'full_plan'})">🔥 Get full matchday plan</button>
       </div>
-      <div class="cta-subtext">Choose your match below for a fixture-specific World Cup 2026 planning flow.</div>
+      <div class="cta-subtext">This checkout passes city, stadium, match, kickoff, and match-page context for analytics and post-payment handling.</div>
     </section>
 
-    <section class="match-layer" aria-labelledby="matches-title">
-      <div class="match-layer-header">
-        <h2 id="matches-title">🗓 Upcoming Matches – Dallas Stadium / AT&T Stadium</h2>
-        <button class="cta-main cta-hard" onclick="startCheckout({stadium:'att',city:'dallas',entry_context:'city_page',intent:'full_plan'})">🔥 Get full matchday plan</button>
-      </div>
-      <p class="match-layer-intro">Verified group-stage fixtures for this host city. Select a match to open the dedicated matchday planning page.</p>
-      <ul class="match-list">
-        <li>
-          <a class="match-card" href="match-netherlands-japan.html">
-            <div>
-              <div class="match-teams"><span class="flag">🇳🇱</span><span>Netherlands</span><span class="versus">vs</span><span class="flag">🇯🇵</span><span>Japan</span></div>
-              <div class="match-meta">June 14 · 15:00 CT · Group stage</div>
-            </div>
-            <span class="match-badge">Plan this match</span>
-          </a>
-        </li>
-        <li>
-          <a class="match-card" href="match-england-croatia.html">
-            <div>
-              <div class="match-teams"><span class="flag">🏴</span><span>England</span><span class="versus">vs</span><span class="flag">🇭🇷</span><span>Croatia</span></div>
-              <div class="match-meta">June 17 · 15:00 CT · Group stage</div>
-            </div>
-            <span class="match-badge">Plan this match</span>
-          </a>
-        </li>
-        <li>
-          <a class="match-card" href="match-argentina-austria.html">
-            <div>
-              <div class="match-teams"><span class="flag">🇦🇷</span><span>Argentina</span><span class="versus">vs</span><span class="flag">🇦🇹</span><span>Austria</span></div>
-              <div class="match-meta">June 22 · 12:00 CT · Group stage</div>
-            </div>
-            <span class="match-badge">Plan this match</span>
-          </a>
-        </li>
-        <li>
-          <a class="match-card" href="match-japan-sweden.html">
-            <div>
-              <div class="match-teams"><span class="flag">🇯🇵</span><span>Japan</span><span class="versus">vs</span><span class="flag">🇸🇪</span><span>Sweden</span></div>
-              <div class="match-meta">June 25 · 18:00 CT · Group stage</div>
-            </div>
-            <span class="match-badge">Plan this match</span>
-          </a>
-        </li>
-        <li>
-          <a class="match-card" href="match-argentina-jordan.html">
-            <div>
-              <div class="match-teams"><span class="flag">🇦🇷</span><span>Argentina</span><span class="versus">vs</span><span class="flag">🇯🇴</span><span>Jordan</span></div>
-              <div class="match-meta">June 27 · 21:00 CT · Group stage</div>
-            </div>
-            <span class="match-badge">Plan this match</span>
-          </a>
-        </li>
-      </ul>
+    <section class="match-layer">
+      <div class="match-layer-header"><h2>🏆 Matchday focus</h2><span class="match-badge">Group stage</span></div>
+      <p class="match-layer-intro">Recommended planning focus: arrival window, transport choice, stadium entry timing, bag policy, food / fan zones, and post-match exit route.</p>
     </section>
-
-    <section class="grid">
-      <article class="card transport"><div><h2>🚇 How to get there</h2><p>Transport options, arrival planning, and route guidance for approaching the stadium on matchday.</p></div><a class="btn" href="how-to-get-there.html">Explore transport</a></article>
-      <article class="card experience"><div><h2>🍽️ Before &amp; After Match</h2><p>Food, cafés, fan atmosphere, and places to spend time before kickoff and after the match.</p></div><a class="btn" href="before-after-match.html">Explore experiences</a></article>
-      <article class="card rules"><div><h2>🎒 Stadium Rules</h2><p>Bag rules, entry guidance, and practical stadium information for a smoother arrival and access flow.</p></div><a class="btn" href="bag-policy.html">View rules</a></article>
-      <article class="card stadiums"><div><h2>🏟️ Stadium Navigation</h2><p>Jump to the shared stadium index to reach stadium-specific pages and deeper matchday layers.</p></div><a class="btn" href="/worldcup-2026/stadiums/">View all stadiums</a></article>
-    </section>
-
-    <footer>City gateway page • WhatsApp-first support • verified group-stage match layer • transport, experience, rules, and stadium navigation</footer>
   </div>
 </body>
 </html>

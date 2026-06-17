@@ -4,42 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Los Angeles | MatchDay Navigator | World Cup 2026 Host City</title>
-  <meta name="description" content="Los Angeles World Cup 2026 host city gateway page. Start your matchday plan on WhatsApp or continue into transport, before and after match, bag policy, and stadium navigation.">
+  <meta name="description" content="Los Angeles World Cup 2026 host city gateway page. Start your matchday plan on WhatsApp or choose a real group-stage fixture at Los Angeles Stadium / SoFi Stadium.">
   <script src="/assets/checkout.js"></script>
   <style>
-    :root { --bg-1:#031123; --bg-2:#07203a; --panel:#0d2a4a; --panel-2:#123457; --text:#f5fbff; --muted:#bed0e1; --accent:#2fe0b8; --accent-2:#69c5ff; --border:rgba(255,255,255,.10); --shadow:rgba(0,0,0,.30); }
+    :root { --bg-1:#031123; --bg-2:#07203a; --panel:#0d2a4a; --panel-2:#123457; --text:#f5fbff; --muted:#bed0e1; --accent:#2fe0b8; --accent-2:#69c5ff; --gold:#f7c948; --wc-red:#ff4d4d; --wc-orange:#ff7a18; --border:rgba(255,255,255,.10); --shadow:rgba(0,0,0,.30); }
     * { box-sizing:border-box; }
-    body { margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--text); background:radial-gradient(circle at top left, rgba(47,224,184,.14), transparent 32%), linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%); min-height:100vh; line-height:1.55; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--text); background:radial-gradient(circle at top left, rgba(47,224,184,.14), transparent 32%), radial-gradient(circle at 80% 0%, rgba(247,201,72,.10), transparent 28%), linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%); min-height:100vh; line-height:1.55; }
     a { color:inherit; text-decoration:none; }
     .wrap { max-width:1240px; margin:0 auto; padding:28px 24px 40px; }
     .topbar { display:flex; justify-content:space-between; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:28px; }
-    .brand { font-size:1.05rem; font-weight:800; letter-spacing:.01em; }
+    .brand { font-size:1.05rem; font-weight:900; letter-spacing:.01em; display:flex; align-items:center; gap:10px; }
+    .brand::before { content:"🏆"; }
     .nav-links { display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
     .nav-pill { border:1px solid var(--border); border-radius:999px; padding:14px 22px; background:rgba(255,255,255,.03); color:var(--accent-2); font-weight:800; }
-    .hero { border:1px solid var(--border); border-radius:26px; padding:40px 42px; background:linear-gradient(135deg, rgba(47,224,184,.08), rgba(105,197,255,.07)); box-shadow:0 20px 52px var(--shadow); margin-bottom:28px; overflow:hidden; }
-    .eyebrow { color:var(--accent); font-weight:800; letter-spacing:.06em; text-transform:uppercase; font-size:.96rem; margin-bottom:14px; }
+    .hero { border:1px solid var(--border); border-radius:26px; padding:40px 42px; background:linear-gradient(135deg, rgba(47,224,184,.08), rgba(105,197,255,.07)); box-shadow:0 20px 52px var(--shadow); margin-bottom:28px; overflow:hidden; position:relative; }
+    .hero::after { content:""; position:absolute; right:-80px; top:-80px; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle, rgba(247,201,72,.18), transparent 68%); }
+    .eyebrow { color:var(--accent); font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size:.96rem; margin-bottom:14px; }
     h1 { margin:0; font-size:4rem; line-height:1.02; font-weight:900; letter-spacing:-.03em; }
     .summary { margin-top:22px; max-width:920px; color:var(--muted); font-size:1.05rem; }
     .meta { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
     .pill { border:1px solid var(--border); padding:12px 18px; border-radius:999px; background:rgba(255,255,255,.05); color:var(--text); font-size:1rem; }
     .cta-zone { display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap; margin-top:30px; margin-bottom:8px; }
     .cta-main { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-width:280px; max-width:100%; text-align:center; padding:18px 28px; border-radius:16px; border:1px solid rgba(47,224,184,.4); background:linear-gradient(180deg, rgba(47,224,184,.22), rgba(47,224,184,.14)); color:var(--text); font-size:1.08rem; font-weight:900; box-shadow:0 18px 40px rgba(47,224,184,.12); cursor:pointer; }
-    .cta-hard { background:linear-gradient(180deg,#ff7a18,#ff4d00); border-color:rgba(255,120,0,.65); }
+    .cta-hard { min-width:240px; background:linear-gradient(180deg,var(--wc-orange),#ff4d00); border:1px solid rgba(255,120,0,.65); color:#fff; box-shadow:0 18px 40px rgba(255,106,0,.18); }
+    .cta-hard:hover, .match-card:hover { transform:translateY(-1px); transition:.15s ease; }
     .cta-subtext { text-align:center; color:var(--muted); margin-top:12px; font-size:.98rem; }
-    .notice { margin-top:24px; border-left:5px solid var(--accent); background:rgba(47,224,184,.08); border-radius:14px; padding:18px 18px 18px 22px; color:var(--text); overflow-wrap:anywhere; }
     .grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:26px; }
     .card { border:1px solid var(--border); border-radius:24px; background:var(--panel); padding:28px 28px 26px; box-shadow:0 18px 40px var(--shadow); min-height:290px; display:flex; flex-direction:column; justify-content:space-between; }
     .card h2 { margin:0 0 18px; font-size:1.22rem; line-height:1.25; }
     .card p { color:var(--muted); font-size:1rem; margin:0 0 24px; flex-grow:1; }
     .btn { display:inline-flex; align-self:flex-start; padding:14px 20px; border-radius:18px; background:var(--panel-2); border:1px solid rgba(255,255,255,.10); color:var(--text); font-weight:800; }
     .card.transport { background:#0e3156; } .card.experience { background:#0f345b; } .card.rules { background:#0e3054; } .card.stadiums { background:#112f53; }
-    .match-layer { margin-top:32px; border:1px solid var(--border); border-radius:24px; background:rgba(255,255,255,.04); padding:28px; box-shadow:0 18px 40px var(--shadow); }
-    .match-layer h2 { margin:0 0 16px; }
-    .match-list { list-style:none; padding:0; margin:0; display:grid; gap:12px; }
-    .match-list a { display:block; border:1px solid var(--border); border-radius:16px; padding:16px 18px; background:rgba(255,255,255,.05); color:var(--text); font-weight:800; }
+    .match-layer { margin:26px 0 30px; border:1px solid rgba(247,201,72,.22); border-radius:26px; background:linear-gradient(135deg, rgba(255,255,255,.06), rgba(47,224,184,.06)); padding:28px; box-shadow:0 18px 42px var(--shadow); }
+    .match-layer-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:18px; }
+    .match-layer h2 { margin:0; font-size:1.45rem; }
+    .match-layer-intro { margin:0 0 18px; color:var(--muted); }
+    .match-list { list-style:none; padding:0; margin:0; display:grid; gap:14px; }
+    .match-card { display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; border:1px solid var(--border); border-radius:18px; padding:18px 20px; background:rgba(255,255,255,.055); color:var(--text); box-shadow:0 12px 24px rgba(0,0,0,.16); }
+    .match-teams { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-weight:900; font-size:1.08rem; }
+    .flag { font-size:1.35rem; line-height:1; }
+    .versus { color:var(--gold); font-weight:900; }
+    .match-meta { color:var(--muted); font-size:.95rem; margin-top:6px; }
+    .match-badge { border:1px solid rgba(247,201,72,.35); background:rgba(247,201,72,.10); color:#fff; border-radius:999px; padding:8px 12px; font-weight:900; white-space:nowrap; }
     footer { margin-top:26px; color:var(--muted); font-size:.93rem; }
     @media (max-width:1120px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } h1 { font-size:3.25rem; } }
-    @media (max-width:720px) { .wrap { padding:18px 16px 34px; } .hero { padding:30px 22px; } h1 { font-size:2.7rem; } .grid { grid-template-columns:1fr; } .cta-main { min-width:0; width:100%; } .nav-links { width:100%; justify-content:flex-start; } }
+    @media (max-width:720px) { .wrap { padding:18px 16px 34px; } .hero { padding:30px 22px; } h1 { font-size:2.7rem; } .grid { grid-template-columns:1fr; } .cta-main { min-width:0; width:100%; } .nav-links { width:100%; justify-content:flex-start; } .match-card { grid-template-columns:1fr; } .match-layer-header { align-items:flex-start; } }
 
   </style>
 </head>
@@ -52,37 +61,85 @@
         <a class="nav-pill" href="/worldcup-2026/stadiums/">All Stadiums →</a>
       </div>
     </div>
+
     <section class="hero">
       <div class="eyebrow">World Cup 2026 Host City</div>
       <h1>Los Angeles</h1>
-      <p class="summary">Use this page as the gateway into your Los Angeles matchday journey. You can launch your WhatsApp plan directly, or continue into transport, pre-match / post-match planning, bag policy, and shared stadium navigation.</p>
+      <p class="summary">Use this page as the gateway into your Los Angeles matchday journey. Start your WhatsApp plan directly, choose your real group-stage match, or continue into transport, pre-match / post-match planning, bag policy, and stadium navigation.</p>
       <div class="meta">
         <span class="pill">Country: United States</span>
         <span class="pill">Region: California</span>
-        <span class="pill">Primary Stadium: SoFi Stadium</span>
+        <span class="pill">Primary Stadium: Los Angeles Stadium / SoFi Stadium</span>
       </div>
       <div class="cta-zone">
         <a class="cta-main" href="https://wa.me/15558273850?text=START%20Los%20Angeles%20SoFi%20Stadium">💬 Start your matchday plan on WhatsApp</a>
+      </div>
+      <div class="cta-subtext">Choose your match below for a fixture-specific World Cup 2026 planning flow.</div>
+    </section>
+
+    <section class="match-layer" aria-labelledby="matches-title">
+      <div class="match-layer-header">
+        <h2 id="matches-title">🗓 Upcoming Matches – Los Angeles Stadium / SoFi Stadium</h2>
         <button class="cta-main cta-hard" onclick="startCheckout({stadium:'sofi',city:'los_angeles',entry_context:'city_page',intent:'full_plan'})">🔥 Get full matchday plan</button>
       </div>
-      <div class="cta-subtext">Choose WhatsApp for guided support, or unlock a full personalized matchday plan directly.</div>
-      <div class="notice">Corrected links: the 3 content cards point to the actual page filenames — <strong>how-to-get-there.html</strong>, <strong>before-after-match.html</strong>, and <strong>bag-policy.html</strong>.</div>
+      <p class="match-layer-intro">Verified group-stage fixtures for this host city. Select a match to open the dedicated matchday planning page.</p>
+      <ul class="match-list">
+        <li>
+          <a class="match-card" href="match-usa-paraguay.html">
+            <div>
+              <div class="match-teams"><span class="flag">🇺🇸</span><span>USA</span><span class="versus">vs</span><span class="flag">🇵🇾</span><span>Paraguay</span></div>
+              <div class="match-meta">June 12 · 18:00 PT · Group stage</div>
+            </div>
+            <span class="match-badge">Plan this match</span>
+          </a>
+        </li>
+        <li>
+          <a class="match-card" href="match-iran-new-zealand.html">
+            <div>
+              <div class="match-teams"><span class="flag">🇮🇷</span><span>Iran</span><span class="versus">vs</span><span class="flag">🇳🇿</span><span>New Zealand</span></div>
+              <div class="match-meta">June 15 · 18:00 PT · Group stage</div>
+            </div>
+            <span class="match-badge">Plan this match</span>
+          </a>
+        </li>
+        <li>
+          <a class="match-card" href="match-switzerland-bosnia-herzegovina.html">
+            <div>
+              <div class="match-teams"><span class="flag">🇨🇭</span><span>Switzerland</span><span class="versus">vs</span><span class="flag">🇧🇦</span><span>Bosnia & Herzegovina</span></div>
+              <div class="match-meta">June 18 · 12:00 PT · Group stage</div>
+            </div>
+            <span class="match-badge">Plan this match</span>
+          </a>
+        </li>
+        <li>
+          <a class="match-card" href="match-belgium-iran.html">
+            <div>
+              <div class="match-teams"><span class="flag">🇧🇪</span><span>Belgium</span><span class="versus">vs</span><span class="flag">🇮🇷</span><span>Iran</span></div>
+              <div class="match-meta">June 21 · 12:00 PT · Group stage</div>
+            </div>
+            <span class="match-badge">Plan this match</span>
+          </a>
+        </li>
+        <li>
+          <a class="match-card" href="match-usa-turkiye.html">
+            <div>
+              <div class="match-teams"><span class="flag">🇺🇸</span><span>USA</span><span class="versus">vs</span><span class="flag">🇹🇷</span><span>Türkiye</span></div>
+              <div class="match-meta">June 25 · 19:00 PT · Group stage</div>
+            </div>
+            <span class="match-badge">Plan this match</span>
+          </a>
+        </li>
+      </ul>
     </section>
+
     <section class="grid">
       <article class="card transport"><div><h2>🚇 How to get there</h2><p>Transport options, arrival planning, and route guidance for approaching the stadium on matchday.</p></div><a class="btn" href="how-to-get-there.html">Explore transport</a></article>
       <article class="card experience"><div><h2>🍽️ Before &amp; After Match</h2><p>Food, cafés, fan atmosphere, and places to spend time before kickoff and after the match.</p></div><a class="btn" href="before-after-match.html">Explore experiences</a></article>
       <article class="card rules"><div><h2>🎒 Stadium Rules</h2><p>Bag rules, entry guidance, and practical stadium information for a smoother arrival and access flow.</p></div><a class="btn" href="bag-policy.html">View rules</a></article>
-      <article class="card stadiums"><div><h2>🏟️ Stadium Navigation</h2><p>Jump to the shared stadium index to reach official stadium-specific pages and deeper matchday layers.</p></div><a class="btn" href="/worldcup-2026/stadiums/">View all stadiums</a></article>
+      <article class="card stadiums"><div><h2>🏟️ Stadium Navigation</h2><p>Jump to the shared stadium index to reach stadium-specific pages and deeper matchday layers.</p></div><a class="btn" href="/worldcup-2026/stadiums/">View all stadiums</a></article>
     </section>
-    <section class="match-layer" aria-labelledby="matches-title">
-      <h2 id="matches-title">🗓 Upcoming Matches – SoFi Stadium</h2>
-      <ul class="match-list">
-        <li><a href="match-usa-brazil.html">USA vs Brazil — June 18 — 20:00</a></li>
-        <li><a href="match-france-spain.html">France vs Spain — June 21 — 18:00</a></li>
-        <li><a href="match-argentina-germany.html">Argentina vs Germany — June 25 — 21:00</a></li>
-      </ul>
-    </section>
-    <footer>City gateway page • CTA restored at the city level • four-path structure: transport, before/after match, bag policy, stadium index, and match pages</footer>
+
+    <footer>City gateway page • WhatsApp-first support • verified group-stage match layer • transport, experience, rules, and stadium navigation</footer>
   </div>
 </body>
 </html>
