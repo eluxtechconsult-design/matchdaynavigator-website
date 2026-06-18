@@ -22,27 +22,21 @@ async function startCheckout(meta) {
   try {
     const response = await fetch(baseUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-
     const data = await response.json().catch(() => ({}));
-
     if (!response.ok) {
       const errorCode = data.error || `checkout_http_${response.status}`;
       console.error('Checkout session creation failed:', errorCode, data);
       alert('Unable to start checkout right now. Please try again in a moment.');
       return;
     }
-
     if (!data.url) {
       console.error('Checkout session response missing url:', data);
       alert('Unable to start checkout right now. Please try again in a moment.');
       return;
     }
-
     window.location.href = data.url;
   } catch (error) {
     console.error('Checkout request failed:', error);
