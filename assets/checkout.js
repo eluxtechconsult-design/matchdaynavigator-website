@@ -1,6 +1,5 @@
 async function startCheckout(meta) {
   const baseUrl = "https://mdn-bird-backend.onrender.com/create-checkout-session";
-
   const payload = {
     product_type: meta.product_type || 'planning_pass',
     sender: meta.sender || meta.user_id || '',
