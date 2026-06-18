@@ -3,12 +3,10 @@ const STADIUMS_DATA = [
     "id": "metlife-stadium",
     "card_id": "metlife",
     "name": "MetLife Stadium",
-    "host_label": "New York / New Jersey Stadium",
     "city": "New York / New Jersey",
     "country": "USA",
     "region": "New Jersey",
     "city_slug": "new-york-new-jersey",
-    "stadium_slug": "metlife-stadium",
     "wa_text": "START MetLife Stadium",
     "hosted_count": 8,
     "knockout": "Round of 32 • Round of 16 • Final",
@@ -28,12 +26,10 @@ const STADIUMS_DATA = [
     "id": "att-stadium",
     "card_id": "att",
     "name": "AT&T Stadium",
-    "host_label": "Dallas Stadium",
     "city": "Dallas",
     "country": "USA",
     "region": "Texas",
     "city_slug": "dallas",
-    "stadium_slug": "att-stadium",
     "wa_text": "START AT&T Stadium",
     "hosted_count": 9,
     "knockout": "Two Round of 32 • Round of 16 • Semi-final",
@@ -54,12 +50,10 @@ const STADIUMS_DATA = [
     "id": "sofi-stadium",
     "card_id": "sofi",
     "name": "SoFi Stadium",
-    "host_label": "Los Angeles Stadium",
     "city": "Los Angeles",
     "country": "USA",
     "region": "California",
     "city_slug": "los-angeles",
-    "stadium_slug": "sofi-stadium",
     "wa_text": "START SoFi Stadium",
     "hosted_count": 8,
     "knockout": "Two Round of 32 • Quarter-final",
@@ -79,12 +73,10 @@ const STADIUMS_DATA = [
     "id": "nrg-stadium",
     "card_id": "nrg",
     "name": "NRG Stadium",
-    "host_label": "Houston Stadium / NRG Stadium",
     "city": "Houston",
     "country": "USA",
     "region": "Texas",
     "city_slug": "houston",
-    "stadium_slug": "nrg-stadium",
     "wa_text": "START Houston NRG Stadium",
     "hosted_count": 7,
     "knockout": "Round of 32 • Round of 16",
@@ -103,12 +95,10 @@ const STADIUMS_DATA = [
     "id": "arrowhead-stadium",
     "card_id": "arrowhead",
     "name": "GEHA Field at Arrowhead Stadium",
-    "host_label": "Kansas City Stadium / Arrowhead Stadium",
     "city": "Kansas City",
     "country": "USA",
     "region": "Missouri / Kansas",
     "city_slug": "kansas-city",
-    "stadium_slug": "arrowhead-stadium",
     "wa_text": "START Kansas City GEHA Field at Arrowhead Stadium",
     "hosted_count": 6,
     "knockout": "Round of 32 • Quarter-final",
@@ -126,12 +116,10 @@ const STADIUMS_DATA = [
     "id": "mercedes-benz-stadium",
     "card_id": "mbs",
     "name": "Mercedes-Benz Stadium",
-    "host_label": "Atlanta Stadium / Mercedes-Benz Stadium",
     "city": "Atlanta",
     "country": "USA",
     "region": "Georgia",
     "city_slug": "atlanta",
-    "stadium_slug": "mercedes-benz-stadium",
     "wa_text": "START Atlanta Mercedes-Benz Stadium",
     "hosted_count": 8,
     "knockout": "Round of 32 • Round of 16 • Semi-final",
@@ -151,12 +139,10 @@ const STADIUMS_DATA = [
     "id": "lumen-field",
     "card_id": "lumen",
     "name": "Lumen Field",
-    "host_label": "Seattle Stadium / Lumen Field",
     "city": "Seattle",
     "country": "USA",
     "region": "Washington",
     "city_slug": "seattle",
-    "stadium_slug": "seattle",
     "wa_text": "START Lumen Field",
     "hosted_count": 6,
     "knockout": "Round of 32 • Round of 16",
@@ -174,12 +160,10 @@ const STADIUMS_DATA = [
     "id": "levis-stadium",
     "card_id": "levis",
     "name": "Levi’s Stadium",
-    "host_label": "San Francisco Bay Area Stadium",
     "city": "San Francisco Bay Area",
     "country": "USA",
     "region": "California",
     "city_slug": "san-francisco-bay-area",
-    "stadium_slug": "san-francisco-bay-area",
     "wa_text": "START Levi’s Stadium",
     "hosted_count": 6,
     "knockout": "Round of 32",
@@ -197,12 +181,10 @@ const STADIUMS_DATA = [
     "id": "hard-rock-stadium",
     "card_id": "hardrock",
     "name": "Hard Rock Stadium",
-    "host_label": "Miami Stadium / Hard Rock Stadium",
     "city": "Miami",
     "country": "USA",
     "region": "Florida",
     "city_slug": "miami",
-    "stadium_slug": "hard-rock-stadium",
     "wa_text": "START Miami Hard Rock Stadium",
     "hosted_count": 7,
     "knockout": "Round of 32 • Quarter-final • Third-place play-off",
@@ -221,12 +203,10 @@ const STADIUMS_DATA = [
     "id": "gillette-stadium",
     "card_id": "gillette",
     "name": "Gillette Stadium",
-    "host_label": "Boston Stadium / Gillette Stadium",
     "city": "Boston",
     "country": "USA",
     "region": "Massachusetts",
     "city_slug": "boston",
-    "stadium_slug": "gillette-stadium",
     "wa_text": "START Boston Gillette Stadium",
     "hosted_count": 7,
     "knockout": "Round of 32 • Quarter-final",
@@ -245,12 +225,10 @@ const STADIUMS_DATA = [
     "id": "lincoln-financial-field",
     "card_id": "lincoln",
     "name": "Lincoln Financial Field",
-    "host_label": "Philadelphia Stadium / Lincoln Financial Field",
     "city": "Philadelphia",
     "country": "USA",
     "region": "Pennsylvania",
     "city_slug": "philadelphia",
-    "stadium_slug": "lincoln-financial-field-stadium",
     "wa_text": "START Philadelphia Lincoln Financial Field",
     "hosted_count": 6,
     "knockout": "Round of 16",
@@ -268,12 +246,10 @@ const STADIUMS_DATA = [
     "id": "bc-place",
     "card_id": "bcplace",
     "name": "BC Place",
-    "host_label": "BC Place Vancouver",
     "city": "Vancouver",
     "country": "Canada",
     "region": "British Columbia",
     "city_slug": "vancouver",
-    "stadium_slug": "bc-place-vancouver",
     "wa_text": "START Vancouver BC Place",
     "hosted_count": 7,
     "knockout": "Round of 32 • Round of 16",
@@ -292,12 +268,10 @@ const STADIUMS_DATA = [
     "id": "bmo-field",
     "card_id": "bmo",
     "name": "BMO Field",
-    "host_label": "Toronto Stadium / BMO Field",
     "city": "Toronto",
     "country": "Canada",
     "region": "Ontario",
     "city_slug": "toronto",
-    "stadium_slug": "bmo-field",
     "wa_text": "START Toronto BMO Field",
     "hosted_count": 6,
     "knockout": "Round of 32",
@@ -315,12 +289,10 @@ const STADIUMS_DATA = [
     "id": "estadio-azteca",
     "card_id": "azteca",
     "name": "Estadio Azteca",
-    "host_label": "Mexico City Stadium / Estadio Azteca",
     "city": "Mexico City",
     "country": "Mexico",
     "region": "Mexico City",
     "city_slug": "mexico-city",
-    "stadium_slug": "mexico-city-stadium",
     "wa_text": "START Mexico City Estadio Azteca",
     "hosted_count": 5,
     "knockout": "Round of 32 • Round of 16",
@@ -337,12 +309,10 @@ const STADIUMS_DATA = [
     "id": "estadio-bbva",
     "card_id": "bbva",
     "name": "Estadio BBVA",
-    "host_label": "Monterrey Stadium / Estadio BBVA",
     "city": "Monterrey",
     "country": "Mexico",
     "region": "Nuevo León",
     "city_slug": "monterrey",
-    "stadium_slug": "monterrey-stadium",
     "wa_text": "START Monterrey Estadio BBVA",
     "hosted_count": 4,
     "knockout": "Round of 32",
@@ -358,12 +328,10 @@ const STADIUMS_DATA = [
     "id": "estadio-akron",
     "card_id": "akron",
     "name": "Estadio Akron",
-    "host_label": "Guadalajara Stadium / Estadio Akron",
     "city": "Guadalajara",
     "country": "Mexico",
     "region": "Jalisco",
     "city_slug": "guadalajara",
-    "stadium_slug": "guadalajara-stadium",
     "wa_text": "START Guadalajara Estadio Akron",
     "hosted_count": 4,
     "knockout": "Group stage only",
@@ -405,12 +373,14 @@ const STADIUMS_DATA = [
           <span class="meta-pill">${stadium.hosted_count} hosted matches</span>
           <span class="meta-pill">${stadium.knockout}</span>
         </div>
+        <div class="card-actions card-actions-primary">
+          <a class="wa-btn" href="https://wa.me/15558273850?text=${encodeURIComponent(stadium.wa_text)}">Get matchday guidance on WhatsApp</a>
+        </div>
         <div class="fixture-preview">
           <div class="fixture-preview-title">Hosted fixtures</div>
           <ul>${previewMatches}${moreLabel}</ul>
         </div>
-        <div class="card-actions">
-          <a class="wa-btn" href="https://wa.me/15558273850?text=${encodeURIComponent(stadium.wa_text)}">Get matchday guidance on WhatsApp</a>
+        <div class="card-actions card-actions-secondary">
           <a class="secondary-btn" href="/worldcup-2026/${stadium.city_slug}/">Open host city page</a>
           <a class="secondary-btn" href="/worldcup-2026/stadiums/?id=${stadium.id}">View stadium overview</a>
         </div>
@@ -432,8 +402,10 @@ const STADIUMS_DATA = [
             <span class="meta-pill">${stadium.hosted_count} hosted matches</span>
             <span class="meta-pill">${stadium.knockout}</span>
           </div>
-          <div class="hero-actions">
+          <div class="card-actions card-actions-primary" style="margin-top:14px; max-width:360px;">
             <a class="wa-btn" href="https://wa.me/15558273850?text=${encodeURIComponent(stadium.wa_text)}">Open WhatsApp matchday guidance</a>
+          </div>
+          <div class="card-actions card-actions-secondary" style="margin-top:10px; max-width:360px;">
             <a class="secondary-btn" href="/worldcup-2026/${stadium.city_slug}/">Open host city gateway</a>
             <a class="secondary-btn" href="/worldcup-2026/stadiums/">← Back to stadium list</a>
           </div>
@@ -483,8 +455,8 @@ const STADIUMS_DATA = [
       return matchesSearch && matchesCountry;
     });
 
-    countNode.textContent = String(filtered.length);
-    knockoutNode.textContent = String(filtered.filter(s => s.knockout !== 'Group stage only').length);
+    if (countNode) countNode.textContent = String(filtered.length);
+    if (knockoutNode) knockoutNode.textContent = String(filtered.filter(s => s.knockout !== 'Group stage only').length);
 
     const grouped = filtered.reduce((acc, stadium) => {
       acc[stadium.country] = acc[stadium.country] || [];
@@ -508,10 +480,10 @@ const STADIUMS_DATA = [
 
   if (stadiumId) {
     const stadium = byId[stadiumId];
-    listView.style.display = 'none';
-    detailView.style.display = 'block';
+    if (listView) listView.style.display = 'none';
+    if (detailView) detailView.style.display = 'block';
     if (!stadium) {
-      detailView.innerHTML = '<section class="stadium-detail-shell"><div class="detail-hero"><h2>Stadium not found</h2><p class="detail-summary">Please return to the stadium list and choose another venue.</p><div class="hero-actions"><a class="secondary-btn" href="/worldcup-2026/stadiums/">← Back to stadium list</a></div></div></section>';
+      detailView.innerHTML = '<section class="stadium-detail-shell"><div class="detail-hero"><h2>Stadium not found</h2><p class="detail-summary">Please return to the stadium list and choose another venue.</p><div class="card-actions card-actions-secondary" style="margin-top:12px; max-width:320px;"><a class="secondary-btn" href="/worldcup-2026/stadiums/">← Back to stadium list</a></div></div></section>';
       return;
     }
     detailView.innerHTML = detailTemplate(stadium);
