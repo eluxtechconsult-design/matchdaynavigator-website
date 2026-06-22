@@ -91,13 +91,13 @@
         <span class="pill">Stage: Group D</span>
         <span class="pill">City: Los Angeles</span>
         <span class="pill status-played" data-status-pill>Status: Played</span>
-        <span class="pill status-played" data-score-pill>Score: 4-1</span>
+        <span class="pill status-played" data-score-pill style="display:none">Score: </span>
       </div>
       <div class="cta-zone">
-        <a class="cta-main" href="https://wa.me/15558273850?text=START%20Los%20Angeles%20SoFi%20Stadium%20USA%20vs%20Paraguay" aria-label="Open the USA vs Paraguay page on WhatsApp">🎯 Open this match page on WhatsApp</a>
-        <button type="button" class="cta-main cta-hard" onclick="startCheckout({product_type:'planning_pass',stadium_id:'sofi',stadium_name:'Los Angeles Stadium / SoFi Stadium',stadium_city:'Los Angeles',city_slug:'los_angeles',match_id:'usa_paraguay',match_label:'USA vs Paraguay',kickoff_text:'June 13 18:00 PT',entry_context:'match_page',intent_context:'full_plan',language:'en'})" aria-label="Get the full USA vs Paraguay matchday plan">🔥 Get full matchday plan</button>
+        <a class="cta-main" data-match-wa-cta href="https://wa.me/15558273850?text=START%20Los%20Angeles%20SoFi%20Stadium%20USA%20vs%20Paraguay" aria-label="Open the USA vs Paraguay page on WhatsApp">🎯 Open this match page on WhatsApp</a>
+        <button type="button" class="cta-main cta-hard" data-match-plan-cta onclick="startCheckout({product_type:'planning_pass',stadium_id:'sofi',stadium_name:'Los Angeles Stadium / SoFi Stadium',stadium_city:'Los Angeles',city_slug:'los_angeles',match_id:'usa_paraguay',match_label:'USA vs Paraguay',kickoff_text:'June 13 18:00 PT',entry_context:'match_page',intent_context:'full_plan',language:'en'})" aria-label="Get the full USA vs Paraguay matchday plan">🔥 Get full matchday plan</button>
       </div>
-      <div class="cta-subtext">This page is API-ready: once /api/matches is configured, status and score pills update automatically from your backend.</div>
+      <div class="cta-subtext" data-cta-subtext>This page is API-ready: once /api/matches is configured, status and score pills update automatically from your backend.</div>
     </section>
     <section class="focus-layer">
       <div class="focus-header">
@@ -122,37 +122,99 @@
 
 <script>
 const MATCH_API_URL = 'https://mdn-bird-backend.onrender.com/api/matches';
+
+function humanStatus(status) {
+  const s = String(status || '').toUpperCase();
+  if (s === 'UPCOMING') return 'Upcoming';
+  if (s === 'LIVE') return 'Live';
+  if (s === 'FT') return 'Final';
+  if (s === 'AET') return 'Final (AET)';
+  if (s === 'PEN') return 'Final (Pens)';
+  if (s === 'PLAYED') return 'Played';
+  return 'Upcoming';
+}
+
+function isCompleted(status) {
+  const s = String(status || '').toUpperCase();
+  return s === 'PLAYED' || s === 'FT' || s === 'AET' || s === 'PEN';
+}
+
 async function hydrateMatchPage() {
   try {
     const response = await fetch(MATCH_API_URL, { method: 'GET' });
     const allMatches = await response.json();
     const matchId = document.body.getAttribute('data-match-id');
     if (!matchId || !allMatches[matchId]) return;
+
     const match = allMatches[matchId];
+    const status = String(match.status || '').toUpperCase();
     const statusPill = document.querySelector('[data-status-pill]');
     const scorePill = document.querySelector('[data-score-pill]');
     const badge = document.querySelector('[data-stage-badge]');
-    const status = String(match.status || '').toUpperCase();
+    const waCta = document.querySelector('[data-match-wa-cta]');
+    const planCta = document.querySelector('[data-match-plan-cta]');
+    const subtext = document.querySelector('[data-cta-subtext]');
+
     if (statusPill) {
-      statusPill.textContent = `Status: ${status === 'UPCOMING' ? 'Upcoming' : status === 'LIVE' ? 'Live' : 'Played'}`;
+      statusPill.textContent = `Status: ${humanStatus(status)}`;
       statusPill.classList.remove('status-played', 'status-upcoming', 'status-live');
       statusPill.classList.add(status === 'UPCOMING' ? 'status-upcoming' : status === 'LIVE' ? 'status-live' : 'status-played');
     }
+
     if (scorePill) {
-      if (status === 'LIVE' || status === 'FT' || status === 'AET' || status === 'PEN') {
+      if ((status === 'LIVE' || status === 'FT' || status === 'AET' || status === 'PEN') && match.home_score != null && match.away_score != null) {
         scorePill.textContent = `${status === 'LIVE' ? 'Live score' : 'Score'}: ${match.home_score}-${match.away_score}`;
         scorePill.style.display = 'inline-flex';
+        scorePill.classList.add('status-played');
       } else {
         scorePill.style.display = 'none';
       }
     }
-    if (badge && status === 'LIVE') badge.classList.add('live');
+
+    if (badge) {
+      badge.classList.toggle('live', status === 'LIVE');
+    }
+
+    if (waCta) {
+      if (isCompleted(status)) {
+        waCta.textContent = status === 'PLAYED' ? '✅ Match played' : `✅ ${match.badge_text || humanStatus(status)}`;
+        waCta.setAttribute('aria-disabled', 'true');
+        waCta.style.opacity = '0.72';
+        waCta.style.pointerEvents = 'none';
+        waCta.removeAttribute('href');
+      } else {
+        waCta.setAttribute('aria-disabled', 'false');
+        waCta.style.opacity = '1';
+        waCta.style.pointerEvents = 'auto';
+      }
+    }
+
+    if (planCta) {
+      if (status === 'UPCOMING' || status === 'LIVE') {
+        planCta.textContent = '🔥 Get full matchday plan';
+        planCta.disabled = false;
+        planCta.setAttribute('aria-disabled', 'false');
+        planCta.style.opacity = '1';
+        planCta.style.pointerEvents = 'auto';
+      } else {
+        planCta.textContent = status === 'PLAYED' ? '✅ Match played' : `✅ ${match.badge_text || humanStatus(status)}`;
+        planCta.disabled = true;
+        planCta.setAttribute('aria-disabled', 'true');
+        planCta.style.opacity = '0.72';
+        planCta.style.pointerEvents = 'none';
+        planCta.removeAttribute('onclick');
+      }
+    }
+
+    if (subtext && isCompleted(status)) {
+      subtext.textContent = 'This match page remains available as a result and venue reference. Planning actions are disabled once the fixture is completed.';
+    }
   } catch (error) {
     console.error('Match score hydrate failed', error);
   }
 }
+
 hydrateMatchPage();
 </script>
-
 </body>
 </html>
