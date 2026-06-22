@@ -118,32 +118,49 @@ const MATCH_API_URL = 'https://mdn-bird-backend.onrender.com/api/matches';
 function renderBadge(match) {
   if (!match || !match.status) return 'Plan this match';
   const status = String(match.status).toUpperCase();
-  if (status === 'FT' || status === 'AET' || status === 'PEN') {
-    return `${status} ${match.home_score}-${match.away_score}`;
+
+  if ((status === 'FT' || status === 'AET' || status === 'PEN') && match.home_score != null && match.away_score != null) {
+    return match.badge_text || `${status} ${match.home_score}-${match.away_score}`;
   }
-  if (status === 'LIVE') {
+  if (status === 'LIVE' && match.home_score != null && match.away_score != null) {
     return `LIVE ${match.home_score}-${match.away_score}`;
   }
+  if (status === 'PLAYED') {
+    return 'Played';
+  }
   return 'Plan this match';
+}
+
+function statusLabel(match) {
+  const status = String((match && match.status) || '').toUpperCase();
+  if (status === 'UPCOMING') return 'Upcoming';
+  if (status === 'LIVE') return 'Live';
+  if (status === 'FT') return 'Final';
+  if (status === 'AET') return 'Final (AET)';
+  if (status === 'PEN') return 'Final (Pens)';
+  if (status === 'PLAYED') return 'Played';
+  return 'Upcoming';
 }
 
 async function updateScoreBadges() {
   try {
     const response = await fetch(MATCH_API_URL, { method: 'GET' });
     const allMatches = await response.json();
+
     document.querySelectorAll('[data-match-id]').forEach(card => {
       const matchId = card.getAttribute('data-match-id');
       const badge = card.querySelector('[data-score-badge]');
       const meta = card.querySelector('[data-score-meta]');
       if (!badge || !matchId || !allMatches[matchId]) return;
+
       const match = allMatches[matchId];
       badge.textContent = renderBadge(match);
       badge.classList.toggle('live', String(match.status).toUpperCase() === 'LIVE');
+
       if (meta) {
-        const playedOrUpcoming = (String(match.status).toUpperCase() === 'UPCOMING') ? 'Upcoming' : (String(match.status).toUpperCase() === 'LIVE' ? 'Live' : 'Played');
         const parts = meta.textContent.split(' · ');
         if (parts.length >= 3) {
-          parts[parts.length - 1] = playedOrUpcoming;
+          parts[parts.length - 1] = statusLabel(match);
           meta.textContent = parts.join(' · ');
         }
       }
@@ -152,6 +169,7 @@ async function updateScoreBadges() {
     console.error('Score update failed', error);
   }
 }
+
 updateScoreBadges();
 </script>
 
