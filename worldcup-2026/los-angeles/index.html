@@ -85,9 +85,9 @@
       </div>
       <div class="cta-zone">
         <a class="cta-main" href="https://wa.me/15558273850?text=START%20Los%20Angeles%20SoFi%20Stadium" aria-label="Start your Los Angeles matchday plan on WhatsApp">💬 Start your matchday plan on WhatsApp</a>
-        <button type="button" class="cta-main cta-hard" onclick="startCheckout({product_type:'planning_pass',stadium_id:'sofi',stadium_name:'Los Angeles Stadium / SoFi Stadium',stadium_city:'Los Angeles',city_slug:'los_angeles',entry_context:'city_page',intent_context:'full_plan',language:'en'})" aria-label="Get the full Los Angeles matchday plan">🔥 Get full matchday plan</button>
+        <button type="button" class="cta-main cta-hard" data-city-plan-cta onclick="startCheckout({product_type:'planning_pass',stadium_id:'sofi',stadium_name:'Los Angeles Stadium / SoFi Stadium',stadium_city:'Los Angeles',city_slug:'los_angeles',entry_context:'city_page',intent_context:'full_plan',language:'en'})" aria-label="Get the full Los Angeles matchday plan">🔥 Get full matchday plan</button>
       </div>
-      <div class="cta-subtext">Use the city gateway for broad planning, then switch to a fixture page if you want match-specific context, timing, and official results where applicable.</div>
+      <div class="cta-subtext" data-city-cta-subtext>Use the city gateway for broad planning, then switch to a fixture page if you want match-specific context, timing, and official results where applicable.</div>
     </section>
     <section class="match-layer" aria-labelledby="matches-title">
       <div class="match-layer-header">
@@ -142,6 +142,41 @@ function statusLabel(match) {
   return 'Upcoming';
 }
 
+function updateCityCta(matchesById) {
+  const cityPlanCta = document.querySelector('[data-city-plan-cta]');
+  const cityCtaSubtext = document.querySelector('[data-city-cta-subtext]');
+  if (!cityPlanCta) return;
+
+  const cards = Array.from(document.querySelectorAll('[data-match-id]'));
+  const hasUpcomingOrLive = cards.some(card => {
+    const matchId = card.getAttribute('data-match-id');
+    const match = matchesById[matchId];
+    const status = String((match && match.status) || '').toUpperCase();
+    return status === 'UPCOMING' || status === 'LIVE';
+  });
+
+  if (hasUpcomingOrLive) {
+    cityPlanCta.textContent = '🔥 Get full matchday plan';
+    cityPlanCta.disabled = false;
+    cityPlanCta.setAttribute('aria-disabled', 'false');
+    cityPlanCta.style.opacity = '1';
+    cityPlanCta.style.pointerEvents = 'auto';
+    if (cityCtaSubtext) {
+      cityCtaSubtext.textContent = 'Use the city gateway for broad planning, then switch to a fixture page if you want match-specific context, timing, and official results where applicable.';
+    }
+  } else {
+    cityPlanCta.textContent = '✅ City schedule completed';
+    cityPlanCta.disabled = true;
+    cityPlanCta.setAttribute('aria-disabled', 'true');
+    cityPlanCta.style.opacity = '0.72';
+    cityPlanCta.style.pointerEvents = 'none';
+    cityPlanCta.removeAttribute('onclick');
+    if (cityCtaSubtext) {
+      cityCtaSubtext.textContent = 'All hosted fixtures on this city page are now completed. Match cards remain available as result and venue reference pages.';
+    }
+  }
+}
+
 async function updateScoreBadges() {
   try {
     const response = await fetch(MATCH_API_URL, { method: 'GET' });
@@ -165,6 +200,8 @@ async function updateScoreBadges() {
         }
       }
     });
+
+    updateCityCta(allMatches);
   } catch (error) {
     console.error('Score update failed', error);
   }
