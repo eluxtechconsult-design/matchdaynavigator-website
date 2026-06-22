@@ -52,8 +52,72 @@
     .status-live { border-color:rgba(255,77,77,.45); background:rgba(255,77,77,.14); }
     @media (max-width:1120px) { .grid, .grid-3 { grid-template-columns:repeat(2,minmax(0,1fr)); } h1 { font-size:3rem; } }
     @media (max-width:720px) { .wrap { padding:18px 16px 34px; } .hero { padding:28px 22px; } h1 { font-size:2.35rem; } .grid, .grid-3 { grid-template-columns:1fr; } .nav-links { width:100%; justify-content:flex-start; } .match-card, .score-strip { grid-template-columns:1fr; } }
-</style></head><body data-match-id="spain_cabo_verde"><div class="wrap"><div class="topbar"><div class="brand">MatchDay Navigator</div><div class="nav-links"><a class="nav-pill" href="index.html">← Back to Atlanta</a><a class="nav-pill" href="/worldcup-2026/stadiums/">All Stadiums →</a></div></div><section class="hero"><div class="eyebrow">World Cup 2026 Matchday</div><h1>Spain vs Cabo Verde</h1><p class="summary">Fixture-specific guidance for arrival timing, transport, stadium entry, movement around the venue, and before / after match decisions for Mercedes-Benz Stadium.</p><div class="score-strip"><div class="team-badge team-a"><span class="flag">🇪🇸</span><span>Spain</span></div><div class="vs-orb">VS</div><div class="team-badge team-b"><span class="flag">🇨🇻</span><span>Cabo Verde</span></div></div><div class="meta"><span class="pill">Venue: Mercedes-Benz Stadium</span><span class="pill">Date: June 15</span><span class="pill">Kickoff: 12:00 EDT</span><span class="pill">Stage: Group H</span><span class="pill status-played" data-status-pill>Status: Played</span><span class="pill status-played" data-score-pill style="display:inline-flex">Score: 0-0</span></div><div class="cta-zone"><a class="cta-main" href="https://wa.me/15558273850?text=START%20Atlanta%20Mercedes-Benz%20Stadium%20Spain%20vs%20Cabo%20Verde">🎯 Open this match page on WhatsApp</a><button type="button" class="cta-main cta-hard" onclick="startCheckout({product_type:'planning_pass',stadium_id:'atlanta',stadium_name:'Atlanta Stadium / Mercedes-Benz Stadium',stadium_city:'Atlanta',city_slug:'atlanta',match_id:'spain_cabo_verde',match_label:'Spain vs Cabo Verde',kickoff_text:'June 15 12:00 EDT',entry_context:'match_page',intent_context:'full_plan',language:'en'})">🔥 Get full matchday plan</button></div><div class="cta-subtext">This page is API-ready: once /api/matches is configured, status and score pills update automatically from your backend.</div></section><section class="focus-layer"><div class="focus-header"><h2>🏆 Matchday focus</h2><span class="match-badge">Group H</span></div><p class="focus-intro">Use this page when you already know your fixture. The goal is to reduce friction around arrival, entry, and departure while keeping the fan experience sharp and World Cup-ready.</p><div class="grid-3"><article class="info-card"><h3>🕒 Arrival strategy</h3><ul><li>Arrive early for security, access, and surrounding crowd flow.</li><li>Use city transport guidance if you are approaching from a hotel or nearby district.</li><li>For played matches, keep this page as a reference pattern for future fixture planning in the same venue.</li></ul></article><article class="info-card"><h3>🚗 Transport & entry</h3><ul><li>Check routes, parking, drop-off, or public transport before leaving.</li><li>Review bag policy and entry expectations before you travel.</li><li>Use WhatsApp for stadium-specific follow-up if your route or timing changes.</li></ul></article><article class="info-card"><h3>🍽️ Before / after match</h3><ul><li>Use the before-and-after page if you want food, gathering, or post-match planning ideas.</li><li>This page stays useful even after full-time if you want venue-specific context.</li><li>Switch back to the city hub to compare other fixtures in the same host city.</li></ul></article></div></section></div><script>
-const MATCH_API_URL='https://mdn-bird-backend.onrender.com/api/matches';
-async function hydrateMatchPage(){try{const response=await fetch(MATCH_API_URL,{method:'GET'});const allMatches=await response.json();const matchId=document.body.getAttribute('data-match-id');if(!matchId||!allMatches[matchId])return;const match=allMatches[matchId];const s=String(match.status||'').toUpperCase();const statusPill=document.querySelector('[data-status-pill]');const scorePill=document.querySelector('[data-score-pill]');if(statusPill){statusPill.textContent=`Status: ${s==='UPCOMING'?'Upcoming':s==='LIVE'?'Live':'Played'}`;statusPill.classList.remove('status-played','status-upcoming','status-live');statusPill.classList.add(s==='UPCOMING'?'status-upcoming':s==='LIVE'?'status-live':'status-played');}if(scorePill){if(s==='LIVE'||s==='FT'||s==='AET'||s==='PEN'){scorePill.textContent=`${s==='LIVE'?'Live score':'Score'}: ${match.home_score}-${match.away_score}`;scorePill.style.display='inline-flex';}else{scorePill.style.display='none';}}}catch(error){console.error('Match score hydrate failed',error);}}
+</style></head><body data-match-id="spain_cabo_verde"><div class="wrap"><div class="topbar"><div class="brand">MatchDay Navigator</div><div class="nav-links"><a class="nav-pill" href="index.html">← Back to Atlanta</a><a class="nav-pill" href="/worldcup-2026/stadiums/">All Stadiums →</a></div></div><section class="hero"><div class="eyebrow">World Cup 2026 Matchday</div><h1>Spain vs Cabo Verde</h1><p class="summary">Fixture-specific guidance for arrival timing, transport, stadium entry, movement around the venue, and before / after match decisions for Mercedes-Benz Stadium.</p><div class="score-strip"><div class="team-badge team-a"><span class="flag">🇪🇸</span><span>Spain</span></div><div class="vs-orb">VS</div><div class="team-badge team-b"><span class="flag">🇨🇻</span><span>Cabo Verde</span></div></div><div class="meta"><span class="pill">Venue: Mercedes-Benz Stadium</span><span class="pill">Date: June 15</span><span class="pill">Kickoff: 12:00 EDT</span><span class="pill">Stage: Group H</span><span class="pill status-played" data-status-pill>Status: Played</span><span class="pill status-played" data-score-pill style="display:inline-flex">Score: 0-0</span></div><div class="cta-zone"><a class="cta-main" href="https://wa.me/15558273850?text=START%20Atlanta%20Mercedes-Benz%20Stadium%20Spain%20vs%20Cabo%20Verde">🎯 Open this match page on WhatsApp</a><button type="button" class="cta-main cta-hard" data-match-plan-cta onclick="startCheckout({product_type:'planning_pass',stadium_id:'atlanta',stadium_name:'Atlanta Stadium / Mercedes-Benz Stadium',stadium_city:'Atlanta',city_slug:'atlanta',match_id:'spain_cabo_verde',match_label:'Spain vs Cabo Verde',kickoff_text:'June 15 12:00 EDT',entry_context:'match_page',intent_context:'full_plan',language:'en'})">🔥 Get full matchday plan</button></div><div class="cta-subtext">This page syncs match status and score from /api/matches and now also updates the match CTA when a fixture has already been played.</div></section><section class="focus-layer"><div class="focus-header"><h2>🏆 Matchday focus</h2><span class="match-badge">Group H</span></div><p class="focus-intro">Use this page when you already know your fixture. The goal is to reduce friction around arrival, entry, and departure while keeping the fan experience sharp and World Cup-ready.</p><div class="grid-3"><article class="info-card"><h3>🕒 Arrival strategy</h3><ul><li>Arrive early for security, access, and surrounding crowd flow.</li><li>Use city transport guidance if you are approaching from a hotel or nearby district.</li><li>For played matches, keep this page as a reference pattern for future fixture planning in the same venue.</li></ul></article><article class="info-card"><h3>🚗 Transport & entry</h3><ul><li>Check routes, parking, drop-off, or public transport before leaving.</li><li>Review bag policy and entry expectations before you travel.</li><li>Use WhatsApp for stadium-specific follow-up if your route or timing changes.</li></ul></article><article class="info-card"><h3>🍽️ Before / after match</h3><ul><li>Use the before-and-after page if you want food, gathering, or post-match planning ideas.</li><li>This page stays useful even after full-time if you want venue-specific context.</li><li>Switch back to the city hub to compare other fixtures in the same host city.</li></ul></article></div></section></div><script>
+const MATCH_API_URL = 'https://mdn-bird-backend.onrender.com/api/matches';
+
+async function hydrateMatchPage() {
+  try {
+    const response = await fetch(MATCH_API_URL, { method: 'GET' });
+    const allMatches = await response.json();
+    const matchId = document.body.getAttribute('data-match-id');
+    if (!matchId || !allMatches[matchId]) return;
+
+    const match = allMatches[matchId];
+    const s = String(match.status || '').toUpperCase();
+
+    const statusPill = document.querySelector('[data-status-pill]');
+    const scorePill = document.querySelector('[data-score-pill]');
+    const planCta = document.querySelector('[data-match-plan-cta]');
+
+    if (statusPill) {
+      let statusLabel = 'Upcoming';
+      if (s === 'LIVE') statusLabel = 'Live';
+      else if (s === 'FT') statusLabel = 'Final';
+      else if (s === 'AET') statusLabel = 'Final (AET)';
+      else if (s === 'PEN') statusLabel = 'Final (Pens)';
+      else if (s === 'PLAYED') statusLabel = 'Played';
+
+      statusPill.textContent = `Status: ${statusLabel}`;
+      statusPill.classList.remove('status-played', 'status-upcoming', 'status-live');
+      if (s === 'UPCOMING') statusPill.classList.add('status-upcoming');
+      else if (s === 'LIVE') statusPill.classList.add('status-live');
+      else statusPill.classList.add('status-played');
+    }
+
+    if (scorePill) {
+      if ((s === 'LIVE' || s === 'FT' || s === 'AET' || s === 'PEN') && match.home_score != null && match.away_score != null) {
+        scorePill.textContent = `${s === 'LIVE' ? 'Live score' : 'Score'}: ${match.home_score}-${match.away_score}`;
+        scorePill.style.display = 'inline-flex';
+      } else {
+        scorePill.style.display = 'none';
+      }
+    }
+
+    if (planCta) {
+      if (s === 'UPCOMING' || s === 'LIVE') {
+        planCta.textContent = '🔥 Get full matchday plan';
+        planCta.disabled = false;
+        planCta.style.opacity = '1';
+        planCta.style.pointerEvents = 'auto';
+        planCta.setAttribute('aria-disabled', 'false');
+      } else if (s === 'FT' || s === 'AET' || s === 'PEN') {
+        planCta.textContent = match.badge_text ? `✅ ${match.badge_text}` : '✅ Match completed';
+        planCta.disabled = true;
+        planCta.style.opacity = '0.72';
+        planCta.style.pointerEvents = 'none';
+        planCta.setAttribute('aria-disabled', 'true');
+      } else if (s === 'PLAYED') {
+        planCta.textContent = '✅ Match played';
+        planCta.disabled = true;
+        planCta.style.opacity = '0.72';
+        planCta.style.pointerEvents = 'none';
+        planCta.setAttribute('aria-disabled', 'true');
+      }
+    }
+  } catch (error) {
+    console.error('Match score hydrate failed', error);
+  }
+}
+
 hydrateMatchPage();
 </script></body></html>
