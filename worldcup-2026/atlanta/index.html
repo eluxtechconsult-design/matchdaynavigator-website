@@ -67,8 +67,68 @@
 <article class="card rules"><div><h2>🎒 Stadium Rules</h2><p>Bag rules, entry guidance, and practical stadium information for a smoother arrival and access flow.</p></div><a class="btn" href="bag-policy.html">View rules</a></article>
 <article class="card stadiums"><div><h2>🏟️ Stadium Navigation</h2><p>Jump to the shared stadium index to reach official stadium-specific pages and deeper matchday layers.</p></div><a class="btn" href="/worldcup-2026/stadiums/">View all stadiums</a></article>
 </section><footer>City gateway page • dual CTA structure • official match layer • transport, before/after match, bag policy, and stadium index</footer></div><script>
-const MATCH_API_URL='https://mdn-bird-backend.onrender.com/api/matches';
-function renderBadge(match){if(!match||!match.status)return 'Plan this match';const s=String(match.status).toUpperCase();if(s==='FT'||s==='AET'||s==='PEN')return `${s} ${match.home_score}-${match.away_score}`;if(s==='LIVE')return `LIVE ${match.home_score}-${match.away_score}`;return 'Plan this match';}
-async function updateScoreBadges(){try{const response=await fetch(MATCH_API_URL,{method:'GET'});const allMatches=await response.json();document.querySelectorAll('[data-match-id]').forEach(card=>{const matchId=card.getAttribute('data-match-id');const badge=card.querySelector('[data-score-badge]');const meta=card.querySelector('[data-score-meta]');if(!badge||!matchId||!allMatches[matchId])return;const match=allMatches[matchId];badge.textContent=renderBadge(match);badge.classList.toggle('live',String(match.status).toUpperCase()==='LIVE');if(meta){const label=String(match.status).toUpperCase()==='UPCOMING'?'Upcoming':(String(match.status).toUpperCase()==='LIVE'?'Live':'Played');const parts=meta.textContent.split(' · ');if(parts.length>=3){parts[parts.length-1]=label;meta.textContent=parts.join(' · ');}}});}catch(error){console.error('Score update failed',error);}}
+const MATCH_API_URL = 'https://mdn-bird-backend.onrender.com/api/matches';
+
+function renderBadge(match) {
+  if (!match || !match.status) return 'Plan this match';
+  const s = String(match.status).toUpperCase();
+
+  if ((s === 'FT' || s === 'AET' || s === 'PEN') && match.home_score != null && match.away_score != null) {
+    return match.badge_text || `${s} ${match.home_score}-${match.away_score}`;
+  }
+  if (s === 'LIVE' && match.home_score != null && match.away_score != null) {
+    return `LIVE ${match.home_score}-${match.away_score}`;
+  }
+  if (s === 'PLAYED') {
+    return 'Played';
+  }
+  return 'Plan this match';
+}
+
+function badgeStateClass(match) {
+  const s = String((match && match.status) || '').toUpperCase();
+  if (s === 'LIVE') return 'live';
+  return '';
+}
+
+function statusLabel(match) {
+  const s = String((match && match.status) || '').toUpperCase();
+  if (s === 'UPCOMING') return 'Upcoming';
+  if (s === 'LIVE') return 'Live';
+  if (s === 'FT') return 'Final';
+  if (s === 'AET') return 'Final (AET)';
+  if (s === 'PEN') return 'Final (Pens)';
+  if (s === 'PLAYED') return 'Played';
+  return 'Upcoming';
+}
+
+async function updateScoreBadges() {
+  try {
+    const response = await fetch(MATCH_API_URL, { method: 'GET' });
+    const allMatches = await response.json();
+
+    document.querySelectorAll('[data-match-id]').forEach(card => {
+      const matchId = card.getAttribute('data-match-id');
+      const badge = card.querySelector('[data-score-badge]');
+      const meta = card.querySelector('[data-score-meta]');
+      if (!badge || !matchId || !allMatches[matchId]) return;
+
+      const match = allMatches[matchId];
+      badge.textContent = renderBadge(match);
+      badge.classList.toggle('live', badgeStateClass(match) === 'live');
+
+      if (meta) {
+        const parts = meta.textContent.split(' · ');
+        if (parts.length >= 3) {
+          parts[parts.length - 1] = statusLabel(match);
+          meta.textContent = parts.join(' · ');
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Score update failed', error);
+  }
+}
+
 updateScoreBadges();
 </script></body></html>
