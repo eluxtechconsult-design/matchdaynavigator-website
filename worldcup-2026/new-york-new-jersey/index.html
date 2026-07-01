@@ -135,6 +135,26 @@ async function updateScoreBadges() {
       const meta = card.querySelector('[data-score-meta]');
       if (!badge || !matchId || !allMatches[matchId]) return;
       const match = allMatches[matchId];
+
+/*
+ * hydrate team names
+ */
+const teamSpans =
+  card.querySe*ectorAll(
+    '.match-teams span'
+* );
+
+if (
+  match.home_team &&
+  m*tch.away_team &&
+  teamSpans.lengt* >= 5
+) {
+  teamSpans[1].textConte*t =
+    match.home_team;
+
+  teamSp*ns[4].textContent =
+    match.away*team;
+}
       badge.textContent = renderBadge(match);
       badge.classList.toggle('live', String(match.status).toUpperCase() === 'LIVE');
       if (meta) {
