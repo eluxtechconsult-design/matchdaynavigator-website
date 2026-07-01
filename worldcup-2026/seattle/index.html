@@ -133,6 +133,35 @@ async function updateScoreBadges() {
       const meta = card.querySelector('[data-score-meta]');
       if (!badge || !matchId || !allMatches[matchId]) return;
       const match = allMatches[matchId];
+      /*
+       * PATCH: hydrate resolved knockout teams
+       */
+      const teamSpans =
+        card.querySelectorAll(
+          '.match-teams span'
+        );
+
+      if (
+        match.home_team &&
+        match.away_team &&
+        teamSpans.length >= 5
+      ) {
+
+        /*
+         * Structure:
+         * 0 flag
+         * 1 home team
+         * 2 vs
+         * 3 flag
+         * 4 away team
+         */
+
+        teamSpans[1].textContent =
+          match.home_team;
+
+        teamSpans[4].textContent =
+          match.away_team;
+      }
       badge.textContent = renderBadge(match);
       badge.classList.toggle('live', String(match.status).toUpperCase() === 'LIVE');
       if (meta) {
