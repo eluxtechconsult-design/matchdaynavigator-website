@@ -117,7 +117,79 @@ async function hydrateMatchPage() {
     const matchId = document.body.getAttribute('data-match-id');
     if (!matchId || !allMatches[matchId]) return;
     const match = allMatches[matchId];
-    const status = String(match.status || '').toUpperCase();
+
+/*
+ * PATCH: hydrate resolved teams from API
+ */
+const titleNode = document.querySelector('h1');
+
+const teamNodes =
+  document.querySelectorAll(
+    '.team-badge span:last-child'
+  );
+
+if (
+  match.home_team &&
+  teamNodes.length >= 2
+) {
+  teamNodes[0].textContent =
+    match.home_team;
+}
+
+if (
+  match.away_team &&
+  teamNodes.length >= 2
+) {
+  teamNodes[1].textContent =
+    match.away_team;
+}
+
+if (
+  titleNode &&
+  match.home_team &&
+  match.away_team
+) {
+  titleNode.textContent =
+    `${match.home_team} vs ${match.away_team}`;
+}
+
+/*
+ * Keep CTA aligned with resolved teams
+ */
+const matchLabel =
+  match.home_team && match.away_team
+    ? `${match.home_team} vs ${match.away_team}`
+    : null;
+
+if (matchLabel) {
+
+  const ctaButton =
+    document.querySelector(
+      '.cta-hard'
+    );
+
+  if (
+    ctaButton &&
+    ctaButton.hasAttribute(
+      'onclick'
+    )
+  ) {
+    ctaButton.setAttribute(
+      'onclick',
+      ctaButton
+        .getAttribute('onclick')
+        .replace(
+          /match_label:'[^']*'/,
+          `match_label:'${matchLabel}'`
+        )
+    );
+  }
+}
+
+const status =
+  String(
+    match.status || ''
+  ).toUpperCase();
     const statusPill = document.querySelector('[data-status-pill]');
     const scorePill = document.querySelector('[data-score-pill]');
     if (statusPill) {
